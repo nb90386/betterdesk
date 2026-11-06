@@ -1,0 +1,43 @@
+import Link from "next/link";
+import type { ComponentProps } from "react";
+
+type Variant = "primary" | "secondary" | "ghost" | "light";
+const base =
+  "press inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap select-none min-h-11 px-5 text-[0.95rem]";
+const variants: Record<Variant, string> = {
+  primary: "bg-ink text-card hover:bg-ink-2 shadow-[0_1px_0_rgb(255_255_255/0.12)_inset,0_8px_20px_-10px_rgb(21_24_31/0.6)]",
+  secondary: "border border-rule-strong bg-card/60 text-ink hover:border-ink/40 hover:bg-card",
+  ghost: "text-ink underline decoration-rule-strong underline-offset-[6px] hover:decoration-ink px-1 min-h-11",
+  light: "bg-card text-ink hover:bg-white",
+};
+
+export function ButtonLink({
+  variant = "primary",
+  className = "",
+  children,
+  arrow,
+  ...props
+}: ComponentProps<typeof Link> & { variant?: Variant; arrow?: boolean }) {
+  return (
+    <Link className={`${base} ${variants[variant]} ${className}`} {...props}>
+      {children}
+      {arrow ? <Arrow /> : null}
+    </Link>
+  );
+}
+
+export function Button({
+  variant = "primary",
+  className = "",
+  ...props
+}: ComponentProps<"button"> & { variant?: Variant }) {
+  return <button className={`${base} ${variants[variant]} disabled:opacity-50 ${className}`} {...props} />;
+}
+
+export function Arrow() {
+  return (
+    <svg viewBox="0 0 16 16" className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
+      <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}

@@ -1,0 +1,422 @@
+BetterDesk
+How it works
+Platform
+ROI
+Pricing
+FAQ
+Sign in
+Book a demo
+How it works
+Platform
+ROI
+Pricing
+FAQ
+Book a demo
+Always-on AI Front Desk
+The AI front desk that never misses revenue.
+BetterDesk captures missed calls, replies instantly, follows up automatically, books appointments, and helps local service businesses turn conversations into revenue.
+Book a demo
+See how it works
+Built for busy service businesses that cannot afford slow replies.
+Dentists
+Med spas
+HVAC
+Contractors
+Salons
+Auto shops
+Cleaning
+betterdesk.ai · inbox
+Missed call · Maya R.
+Voicemail captured · marked as lead
+0s
+AI replied in 8 seconds
+"Hi Maya, we have Thursday at 2pm…"
+8s
+Appointment booked
+Thu · 2:00 PM · Consultation · Confirmed
+42s
+Review requested
+Auto-sent 24h after appointment · Google
++1d
+Revenue recovered
++$485 from a call you didn't answer
+Today
+● 24/7 coverage
+● Replies in 8s
+● +$1,240 recovered
+● Gets smarter weekly
+Built for service businesses where every missed conversation is a missed dollar
+Dentists
+Med spas
+HVAC
+Contractors
+Salons
+Auto shops
+Cleaning
+Agencies
+Watch a missed lead become booked revenue
+Without BetterDesk, money disappears quietly.
+Every busy day costs you leads you'll never hear about. The phone rings while you're with a customer. A text comes in after hours. A website form sits for 23 minutes. By Friday, the revenue is just gone. Below, a real day, replayed in real time.
+Live walkthrough
+Same lead. Two endings.
+Press play, click a step, or just scroll, the phone progresses through the actual sequence BetterDesk runs every day.
+1
+A customer reaches out
+Maya needs a quote today. The team is mid-appointment. The call rings out.
+Potential value · $420
+2
+A text arrives instead
+"Hi, do you have any openings this week?" Nobody sees it yet.
+Waiting for reply
+3
+The lead starts cooling
+23 minutes go by. Maya opens the next result and starts comparing competitors.
+Wait · 23 min
+4
+BetterDesk responds instantly
+AI replies in 8 seconds with two real openings, in your business's voice and policies.
+Reply time · 8s
+5
+The appointment is booked
+"Thursday works." BetterDesk locks it into your calendar and confirms.
+Recovered · +$420
+6
+The system follows up
+A reminder is scheduled. You get an owner alert. The front desk handles the rest.
+Front desk · automated
+7
+The business gets smarter
+The pattern is logged. Next time a similar question lands, the reply is faster and tighter.
+Smarter · +1 pattern
+01 / 07
+● Calls 1 missed
+● Reply time awaiting
+↘ Status Lead cooling
+✓ Recovered +$420 booked
+10:42
+Phone Incoming
+Incoming call
+M
+Maya R.
++1 (415) 555-0162
+Missed · went to voicemail
+10:43 AM
+Hi, do you have any openings this week?
+Looking for a quote for the consultation
+Waiting · 00:42
+10:43 AM
+Hi, do you have any openings this week?
+Looking for a quote for the consultation
+…
+Waiting · 23:00
+Cooling
+10:43 AM
+Hi, do you have any openings this week?
+Yes, we have openings Thursday at 2:30 or Friday at 10. Want me to book one?
+Replied · 8s
+10:43 AM
+Yes, we have openings Thursday at 2:30 or Friday at 10. Want me to book one?
+Thursday works
+Appointment booked
+Thu · 2:30 PM
+Consultation · Confirmed
+Owner alert · new booking
+10:43 AM
+All set, Maya, see you Thursday at 2:30. We'll send a reminder 24h before.
+Reminder scheduled
+SMS · Wed 2:30 PM
+After
+Pattern logged
+"Openings this week?" is now in your FAQ. Next reply will be 3s faster.
+You stay in control
+Review, edit, or approve any pattern
+Worth the money? Run the math.
+See what missed revenue looks like in real numbers.
+Drag the sliders to match your business. We'll show how much recoverable revenue is leaking out every week, every month, and every year, and exactly how few recovered jobs it takes to cover BetterDesk.
+Based on industry-average response, close, and follow-up rates
+Recovered revenue assumes BetterDesk replies within 60 seconds
+No spreadsheet, no login, just honest math
+See what BetterDesk could recover for you
+Home services
+Medical · Dental
+Beauty · Wellness
+Missed calls / messages per week 12
+Average job or appointment value $485
+Your current close rate 28%
+Hours your team spends on replies / week 14h
+Recovered per month $0
+Recovered per year $0
+Hours back per week 0h
+Pays for itself after 1 booking
+One recovered appointment usually covers most of the monthly cost. Most accounts recover 1 appointment worth in the first week.
+The cost of slow replies
+A few missed calls a week adds up to real money.
+Honest, model-based math, no fake case studies. The numbers below assume industry-average job values and conversion rates. Adjust them to your business above.
+Lead value drops fast after the first minute.
+Industry studies on inbound speed-to-lead consistently show conversion rates collapsing past the 5-minute mark.
+Likely-to-book
+Missed calls compound. Weekly leak → annual gap.
+Average local-service job value of $485, 28% close rate.
+Lost revenue
+$543 per week 4 missed
+$1,629 per week 12 missed
+$3,257 per week 24 missed
+Recovered revenue scenarios for a typical local business.
+12 missed leads/week · $485 average job · 28% close rate · BetterDesk replies inside 60 seconds.
+Conservative, 35% recovery $986 / mo
+Moderate, 62% recovery $1,746 / mo
+Aggressive, 80% recovery $2,253 / mo
+Hours back
+Time your team gets back.
+~8 h / week
+A typical 14-hour/week reply workload shrinks by more than half once BetterDesk handles routine replies, intake, and reminders.
+These are model-based estimates, not customer testimonials. They use industry-standard speed-to-lead curves and average job values. Your numbers will vary, use the calculator above to model your own.
+The platform
+One connected system. Every part makes the others stronger.
+BetterDesk isn't ten disconnected tools stitched together. Lead capture feeds the AI reply. The AI feeds booking. Booking feeds follow-up. Every conversation makes the next one smarter.
+BetterDesk
+AI Core
+● Lead Capture
+● Missed-call Recovery
+● AI Replies
+● Booking
+● Follow-up
+● Reviews
+● Unified Inbox
+● Analytics
+● Owner Alerts
+● Knowledge Base
+Hover or tap a node
+Every part of BetterDesk connects to the next. The system is the product, not any one feature.
+Self-improving AI
+BetterDesk gets better with every conversation.
+Every booking, missed lead, customer question, and owner edit becomes signal. BetterDesk turns that signal into sharper replies, smarter follow-up timing, and an AI that sounds more like your business, with you fully in control.
+Learns from your approved business data FAQs, services, hours, pricing, never made-up claims.
+Improves from real outcomes Which replies booked. Which timing worked. Better suggestions next time.
+You stay in control Approve, edit, or override any pattern. The AI improves around your business, not instead of you.
+What it doesn't do: invent claims, promise services you don't offer, or run unsupervised. BetterDesk is calibrated to your real business, and only your real business.
+1 Capture
+2 Respond
+3 Book
+4 Follow up
+5 Analyze
+6 Improve
+Every loop sharpens the next.
+Owner-approved learning
+What's inside
+Ten capabilities. One platform. Built for service businesses.
+Every card maps to a real moment in the day where conversations either become revenue, or quietly disappear.
+Featured
+Instant AI replies in your voice
+Calls, texts, web forms, DMs, and emails answered in under 10 seconds. Trained on your services, hours, and policies, not generic templates.
+Inbound call · 8s · Booked
+SMS · 6s · Quote sent
+Web form · 4s · Confirmed
+Email · 12s · Awaiting reply
+Missed-call recovery
+Every unanswered call gets an immediate, personalized text-back. Most callers reply within 2 minutes, and stop calling competitors.
+Real-time appointment booking
+BetterDesk sees your calendar, qualifies the request, and books on the spot. No back-and-forth, no double-booking, no front-desk overload.
+Automated follow-up
+Multi-step sequences for quotes, no-shows, and warm leads. Stops when they book.
+Review generation
+The right ask at the right moment, sent automatically to happy customers.
+Unified inbox
+Calls, texts, web chat, Instagram DMs, Google Business. One thread per customer.
+Smart lead scoring
+Hot leads bubble to the top with urgency, value, and source signals.
+Owner alerts
+VIP leads, complaints, and big-ticket opportunities pinged to your phone. No noise.
+Analytics that read like English
+"You recovered $3,420 this week. Tuesday afternoons are your biggest leak. Want to fix that?", not pie charts you'll never open.
+Industry-tuned templates
+Pre-built scripts, automations, and intake flows for dentists, med spas, HVAC, contractors, salons, and more, live in under an hour.
+Built for your industry
+If your customers reach out, BetterDesk reaches back.
+Calibrated playbooks for the businesses that lose the most revenue to slow replies, and gain the most when they're fixed.
+Dentists
+New-patient calls go to voicemail during cleanings.
+BetterDesk answers, qualifies insurance, and books new-patient appointments while your team is in operatories.
+Recovers 4–7 new patients / month
+Med spas
+High-intent consult requests go cold within 10 minutes.
+Replies in seconds with treatment info, pricing ranges, and a booking link, before they DM the next spa.
+2–3× consultation booking rate
+HVAC
+Emergency leads call three companies, first responder wins.
+BetterDesk responds in under 30 seconds, qualifies the issue, and dispatches the lead to your on-call tech.
+First-to-respond on emergency jobs
+Contractors
+Estimate requests sit in the inbox while you're on site.
+Qualifies job type, timeline, and budget; books the estimate; sends a confirmation, all before lunch.
+Cleaner pipeline, fewer tire-kickers
+Plumbers
+After-hours emergencies route to voicemail.
+Triage urgent vs. routine, dispatch on-call, schedule non-urgent work for the morning, automatically.
+24/7 coverage without an on-call shift
+Salons & beauty
+DMs and texts pile up between clients.
+Replies with availability, service options, and prices, and books straight into your system.
+Fewer no-shows, more rebooks
+Auto shops
+Diagnostic questions overwhelm the service writer.
+Handles common questions, books drop-offs, and texts updates so your writer can focus on the bay.
+Calmer counter, faster turnaround
+Cleaning companies
+Quotes need square footage, frequency, add-ons.
+BetterDesk runs the intake conversation, returns a quote range, and books a walkthrough.
+10× faster quote turnaround
+Before vs. after
+From chaos to calm , without adding headcount.
+Same business. Same volume of inbound. The difference is whether anyone's catching it.
+Before BetterDesk
+−$1,629 / wk lost
+Leads slip through the cracks.
+Missed calls go to voicemail and stay there.
+Texts and DMs wait hours for a reply.
+Customers move on to the next business.
+Follow-up is "if we remember."
+Owners never know what they lost.
+The front desk is overloaded by 11am.
+Inbox today
+Missed call · Maya R. 11:02 · went to voicemail
+Unread
+SMS · 555-0162 Waiting 23 min for a reply
+Waiting
+Web form · Cleaning quote Submitted last night
+Cold
+After BetterDesk
++$1,629 / wk recovered
+Every conversation lands somewhere.
+Missed calls trigger an instant text-back.
+Replies in seconds, in your business's voice.
+Appointments booked automatically.
+Follow-up runs every time, on schedule.
+Owners see saved revenue, weekly.
+Front desk stays focused on customers in the door.
+Inbox today
+Missed call · Maya R. Replied 8s · text-back sent
+Recovered
+SMS · Maya R. Booked Thu 2:30 PM
+Booked
+Web form · Cleaning quote Auto-replied with range
+Replied
+What happens after install
+From setup to booked leads in days.
+A real human walks you through onboarding, calibrates BetterDesk to your services, and stays available for the first 30 days. No DIY puzzles.
+1
+Connect your channels
+Phone, SMS, web forms, Google Business, Instagram, email, connected in one guided session. Day 1
+2
+Add services & FAQs
+We import what you already have. BetterDesk learns your hours, services, pricing, and tone. Day 1–2
+3
+BetterDesk starts answering
+Run in assisted mode first, you approve drafts. Graduate to autonomous once you trust it. Day 2
+4
+Leads get booked & followed up
+Missed-call recovery, instant replies, calendar booking, and follow-up sequences live. Day 3+
+5
+You review performance
+Weekly digest in plain English: what was saved, what slipped, what to do next. Week 1
+6
+The system improves
+Patterns get logged. Replies get faster. The AI sounds more like your business each week. Ongoing
+Pricing
+Priced around recovered revenue, not seats.
+Every plan includes setup, calibration, and live human support. Cancel any time. No annual lock-in.
+Starter
+$ 149 /mo
+For solo operators and single-location service businesses just plugging the leaks.
+Best for: 1 location, < 25 leads / week
+Pays for itself at ~1 recovered job / month
+Get started
+AI replies on calls, SMS, and web forms
+Missed-call recovery
+Appointment booking
+Basic follow-up sequences
+Unified inbox
+Onboarding included
+Most popular
+Growth
+$ 299 /mo
+For businesses that want missed-call recovery, booking, follow-up, and analytics, all working together.
+Best for: 1–3 locations, 25–100 leads / week
+Pays for itself at ~1–2 recovered jobs / month
+Book a demo
+Everything in Starter
+Instagram DMs, Google Business, email
+Advanced multi-step follow-up
+Review generation
+Smart lead scoring + owner alerts
+English-language analytics
+Priority human support
+Scale
+$ 599 /mo
+For multi-location operators, franchises, and high-volume teams that need deeper integrations.
+Best for: 3+ locations, 100+ leads / week
+Pays for itself at ~2 recovered jobs / month
+Talk to sales
+Everything in Growth
+Multi-location routing
+Custom CRM + booking integrations
+Custom voice + brand training
+Dedicated success manager
+SLA + premium support
+Quarterly business reviews
+One recovered appointment usually covers a big chunk of the monthly cost. BetterDesk is built to recover revenue you're already losing, without adding another receptionist.
+Frequently asked
+Real answers to real questions.
+What does BetterDesk actually do?
+BetterDesk is an AI-powered front desk for service businesses. It answers inbound calls, texts, web forms, DMs, and emails in seconds, in your business's voice. It qualifies leads, books appointments, runs follow-up sequences, requests reviews, and surfaces the conversations and revenue your business would otherwise miss.
+Does BetterDesk replace my receptionist?
+No. BetterDesk works alongside the people you already have. It handles the overflow, the calls when your team is busy, the texts after hours, the web forms at 11pm. Your team focuses on customers in front of them; BetterDesk handles the rest.
+Can I approve responses before they go out?
+Yes. You decide. Autonomous mode (it replies on its own), assisted mode (it drafts, you approve), or escalation mode (it handles routine, you handle sensitive). Most accounts start in assisted for the first week, then graduate to autonomous as trust builds.
+Does it work after hours and on weekends?
+Yes, that's one of the biggest reasons businesses adopt it. BetterDesk replies 24/7. You can configure quiet hours, emergency routing, and what gets booked vs. queued for the next morning.
+Can it book real appointments on a real calendar?
+Yes. BetterDesk integrates with the calendar and scheduling tools you already use, Google Calendar, popular practice-management systems, and major field-service platforms. It checks availability live and books on the spot, with confirmations and reminders included.
+What businesses is it best for?
+Local service businesses with high-intent inbound: dentists, med spas, HVAC, plumbers, contractors, salons, auto shops, cleaning companies, fitness studios, and small agencies. If a missed call costs you a real customer, BetterDesk is built for you.
+How does it improve over time?
+BetterDesk learns from your approved business data, real customer language, booking patterns, and your edits. It improves suggestions, follow-up timing, and FAQs week over week. It does not invent claims about your business, and you can override or correct any pattern.
+How fast can I launch?
+Most businesses are live in under 48 hours. Onboarding is a guided session, we calibrate BetterDesk to your services, hours, pricing, and tone, connect your phone and inbox, and run test conversations before you flip the switch.
+How much revenue can it recover?
+It depends on your job value, missed-lead volume, and current close rate. Use the calculator above to model it for your business. Most service businesses see BetterDesk pay for itself within 1–3 recovered appointments per month.
+Is it worth the monthly cost?
+For most service businesses, one recovered job per month covers a big share of the cost. After that, every recovered conversation is net new revenue you weren't going to earn otherwise. Cancel any time if it doesn't deliver.
+Stop the leak
+Stop letting good leads disappear.
+Every missed lead is a chance to recover revenue. BetterDesk replies faster, follows up every time, and books the appointment before the customer moves on.
+Book a demo
+Calculate recovered revenue
+No credit card. No long-term contract. Real humans onboard you.
+Live in under 48 hours
+BetterDesk
+The AI front desk that never misses revenue. Built for busy service businesses.
+Product
+Features
+How it works
+Platform
+ROI calculator
+Pricing
+Solutions
+Dentists
+Med spas
+HVAC & plumbing
+Contractors
+Salons & beauty
+Company
+About
+Contact
+Book a demo
+FAQ
+Legal
+Privacy
+Terms
+Security
+DPA
+© 2026 BetterDesk. The AI front desk that never misses revenue.
+Status Changelog hello@betterdesk.ai

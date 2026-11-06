@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   BetterDesk design tokens · "The through-line"
+   Paper and ink, one signal colour for the unanswered moment,
+   one resolution colour for handled. Everything else is restraint.
+   ------------------------------------------------------------------ */
+@theme inline {
+  --font-display: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@theme {
+  /* Surfaces */
+  --color-paper: #f3eee4;
+  --color-paper-2: #ebe4d7;
+  --color-paper-3: #e2d9c9;
+  --color-card: #fbf8f2;
+  --color-night: #13161c;
+  --color-night-2: #1b1f27;
+  --color-night-3: #262b35;
+
+  /* Ink */
+  --color-ink: #15181f;
+  --color-ink-2: #2b2f38;
+  --color-muted: #5a5e6a;
+  --color-faint: #8b8d95;
+  --color-rule: #d8cfbf;
+  --color-rule-strong: #c4b9a5;
+  --color-night-muted: #a6a9b1;
+  --color-night-rule: #2f3440;
+
+  /* Meaning */
+  --color-signal: #c23b1e;
+  --color-signal-soft: #f4dccf;
+  --color-signal-glow: #ff7a52;
+  --color-handled: #1e5a46;
+  --color-handled-soft: #d9e7dd;
+  --color-handled-bright: #6fcf9f;
+  --color-amber: #9a6a12;
+  --color-amber-soft: #f3e6c4;
+
+  /* Radii: tight for UI, softer for cards and devices */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Elevation: contact shadows like card stock on a desk */
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 1px 2px rgb(21 24 31 / 0.06), 0 6px 18px -8px rgb(21 24 31 / 0.18);
+  --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 2px 4px rgb(21 24 31 / 0.06), 0 22px 40px -18px rgb(21 24 31 / 0.32);
+  --shadow-device: 0 0 0 1px rgb(21 24 31 / 0.08), 0 30px 60px -30px rgb(21 24 31 / 0.45), 0 12px 24px -16px rgb(21 24 31 / 0.25);
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-soft: cubic-bezier(0.55, 0, 0.78, 0.4);
+  --duration-quick: 160ms;
+  --duration-base: 220ms;
+  --duration-slow: 420ms;
+
+  --breakpoint-xs: 25rem;
+}
+
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background: var(--color-signal-soft);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+/* Paper grain: a fixed, very quiet noise layer. Pure SVG, ~600 bytes. */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@layer components {
+  .container-bd {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-bd { padding-inline: 2rem; }
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 380;
+    letter-spacing: -0.022em;
+    line-height: 1.02;
+    font-optical-sizing: auto;
+  }
+  .display em {
+    font-style: italic;
+    font-weight: 360;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .lede {
+    font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.22rem);
+    line-height: 1.6;
+    color: var(--color-ink-2);
+    max-width: 60ch;
+  }
+  .prose-bd p + p { margin-top: 1em; }
+
+  /* Ledger rule: the through-line's quiet sibling, used as section dividers */
+  .rule-thread {
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-rule-strong), var(--color-rule) 40%, transparent);
+  }
+
+  .card-stock {
+    background: var(--color-card);
+    border: 1px solid color-mix(in oklab, var(--color-rule) 80%, white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+  }
+
+  .sample-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    border: 1px dashed var(--color-rule-strong);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  /* Pressable controls: physical feedback, no tween while held */
+  .press {
+    transition: transform var(--duration-quick) var(--ease-out-soft), background-color var(--duration-quick), color var(--duration-quick), border-color var(--duration-quick), box-shadow var(--duration-quick);
+  }
+  .press:active:not(:disabled) {
+    transform: scale(0.975);
+    transition-duration: 0ms;
+  }
+}
+
+/* Scroll reveals: CSS only, progressive. Content is visible when unsupported. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: bd-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 38%;
+    }
+  }
+  @supports (animation-timeline: scroll()) {
+    .header-scrolled {
+      animation: bd-header linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 120px;
+    }
+  }
+}
+
+@keyframes bd-reveal {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes bd-header {
+  from { background-color: rgb(243 238 228 / 0); border-color: transparent; }
+  to { background-color: rgb(243 238 228 / 0.86); border-color: var(--color-rule); }
+}
+
+/* Thread drawing (hero + diagrams) */
+@keyframes bd-draw {
+  from { stroke-dashoffset: var(--len, 600); }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes bd-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.82); }
+}
+.pulse-dot { animation: bd-pulse 1.6s var(--ease-out-soft) infinite; transform-origin: center; }
+
+@keyframes bd-flow {
+  to { stroke-dashoffset: -40; }
+}
+.thread-flow { stroke-dasharray: 2 8; animation: bd-flow 2.4s linear infinite; }
+
+/* Hero sequence */
+.hs-card { animation: hs-in 560ms var(--ease-out-soft) both; }
+.hs-seg { stroke-dasharray: 100; stroke-dashoffset: 100; animation: hs-draw 1000ms var(--ease-out-soft) both; }
+.hs-fray { animation: hs-fade 700ms ease-out both; }
+[data-paused] .hs-card, [data-paused] .hs-seg, [data-paused] .hs-fray { animation-play-state: paused; }
+@keyframes hs-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes hs-draw { to { stroke-dashoffset: 0; } }
+@keyframes hs-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-delay: 0s !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Range input, styled once */
+.bd-range { appearance: none; height: 28px; background: transparent; }
+.bd-range::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: var(--color-rule); }
+.bd-range::-moz-range-track { height: 4px; border-radius: 4px; background: var(--color-rule); }
+.bd-range::-webkit-slider-thumb { appearance: none; margin-top: -9px; width: 22px; height: 22px; border-radius: 50%; background: var(--color-card); border: 2px solid var(--color-ink); box-shadow: 0 2px 6px rgb(21 24 31 / 0.2); }
+.bd-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--color-card); border: 2px solid var(--color-ink); }
+.bd-range:focus-visible { outline: none; }
+.bd-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--color-signal); outline-offset: 2px; }
+.bd-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--color-signal); outline-offset: 2px; }
