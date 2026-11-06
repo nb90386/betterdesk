@@ -36,15 +36,17 @@ export function PricingPlans({ compact = false }: { compact?: boolean }) {
               ))}
             </ul>
           ) : null}
-          <Link
-            href={`/contact?plan=${p.id}`}
-            className={`press mt-auto inline-flex min-h-11 items-center justify-center rounded-full px-5 text-[0.92rem] font-medium ${
-              compact ? "mt-6" : "mt-8"
-            } ${p.featured ? "bg-card text-ink hover:bg-white" : "border border-rule-strong text-ink hover:border-ink/50"}`}
-          >
-            {p.cta}
-            <span className="sr-only"> with the {p.name} plan</span>
-          </Link>
+          <div className={`mt-auto ${compact ? "pt-6" : "pt-8"}`}>
+            <Link
+              href={`/contact?plan=${p.id}`}
+              className={`press inline-flex min-h-11 w-full items-center justify-center rounded-full px-5 text-[0.92rem] font-medium ${
+                p.featured ? "bg-card text-ink hover:bg-white" : "border border-rule-strong text-ink hover:border-ink/50"
+              }`}
+            >
+              {p.cta}
+              <span className="sr-only"> with the {p.name} plan</span>
+            </Link>
+          </div>
         </article>
       ))}
     </div>

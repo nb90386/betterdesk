@@ -26,7 +26,7 @@ export default function DemoPage() {
           <p><strong className="font-medium text-ink">What depends on you:</strong> the questions it asks, what counts as urgent, and which calendar it books into. You set those during setup.</p>
         </div>
       </section>
-      <CtaBand title={<>See it with <em>your</em> business in it.</>} body="On a demo we'll build the walkthrough around your services, hours and the questions your customers actually ask." />
+      <CtaBand title={<>See it with <em>your</em> business in it.</>} body="On a demo we'll build the walkthrough around your services, hours and the questions your customers actually ask." secondary={{ href: "/pricing", label: "Or compare plans first" }} />
     </>
   );
 }

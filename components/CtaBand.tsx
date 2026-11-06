@@ -6,10 +6,12 @@ export function CtaBand({
       Talk through <em>your</em> front desk.
     </>
   ),
+  secondary = { href: "/demo", label: "Or try the sample walkthrough" },
   body = "A short call with a person, not a pitch deck. Bring how calls and messages reach you today; we'll show you what BetterDesk would do with them and what it costs.",
 }: {
   title?: React.ReactNode;
   body?: string;
+  secondary?: { href: string; label: string };
 }) {
   return (
     <section className="relative overflow-hidden bg-night text-card" aria-labelledby="cta-title">
@@ -26,8 +28,8 @@ export function CtaBand({
           <ButtonLink href="/contact" variant="light" arrow className="group">
             Book a demo
           </ButtonLink>
-          <ButtonLink href="/demo" variant="ghost" className="!text-card decoration-night-muted hover:decoration-card">
-            Or try the sample walkthrough
+          <ButtonLink href={secondary.href} variant="ghost" className="!text-card decoration-night-muted hover:decoration-card">
+            {secondary.label}
           </ButtonLink>
         </div>
       </div>

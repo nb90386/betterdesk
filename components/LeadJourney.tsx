@@ -128,8 +128,8 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
           </p>
         )}
 
-        <div className="flex items-center gap-3">
-          <span className="sample-tag">Illustration · sample data</span>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <span className="sample-tag">Illustration<span className="hidden sm:inline"> · sample data</span></span>
           <div className="inline-flex rounded-full border border-rule-strong bg-paper p-1" role="group" aria-label="Compare outcomes">
             {(["without", "with"] as const).map((m) => (
               <button
@@ -141,7 +141,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
                   setIdx(0);
                   setPlaying(false);
                 }}
-                className={`press relative rounded-full px-3 py-1.5 text-[0.8rem] font-medium ${mode === m ? "text-card" : "text-muted hover:text-ink"}`}
+                className={`press relative whitespace-nowrap rounded-full px-3 py-1.5 text-[0.8rem] font-medium ${mode === m ? "text-card" : "text-muted hover:text-ink"}`}
               >
                 {mode === m ? (
                   <motion.span
@@ -185,7 +185,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
         </ol>
 
         {/* Phone */}
-        <div className="relative flex items-center justify-center bg-paper-2/50 px-4 py-8 sm:px-8">
+        <div className="relative flex items-center justify-center bg-paper-2/50 px-4 py-6 sm:px-8 sm:py-8">
           <div className="w-full max-w-[340px] rounded-[34px] bg-ink p-2 shadow-[var(--shadow-device)]">
             <div className="overflow-hidden rounded-[27px] bg-card">
               <div className="flex items-center justify-between border-b border-rule px-5 pb-3 pt-4">
@@ -193,11 +193,11 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
                   <p className="text-[0.82rem] font-medium text-ink">{mode === "with" ? scenario.business : scenario.customer}</p>
                   <p className="font-mono text-[0.64rem] uppercase tracking-[0.06em] text-muted">{scenario.channel}</p>
                 </div>
-                <span className={`rounded-full border px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.06em] ${toneClass[step.status.tone]}`}>
+                <span className={`shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.06em] ${toneClass[step.status.tone]}`}>
                   {step.status.text}
                 </span>
               </div>
-              <div ref={threadRef} className="h-[340px] space-y-2 overflow-y-auto px-4 py-4" aria-label="Conversation" role="log">
+              <div ref={threadRef} className="h-[270px] space-y-2 overflow-y-auto px-4 py-4 sm:h-[340px]" aria-label="Conversation" role="log">
                 <AnimatePresence initial={false}>
                   {messages.map((m) => (
                     <motion.div
@@ -218,7 +218,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
 
         {/* Context panel */}
         <div className="flex flex-col border-t border-rule p-5 sm:p-7 lg:border-l lg:border-t-0">
-          <div aria-live="polite" className="min-h-[200px]">
+          <div aria-live="polite" className="min-h-[160px] sm:min-h-[200px]">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={`${scenario.id}-${mode}-${i}`}
@@ -276,7 +276,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
                 {String(i + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
               </span>
             </div>
-            <p className="mt-3 text-[0.75rem] text-faint">Tip: use the ← → keys to step through.</p>
+            <p className="mt-3 hidden text-[0.75rem] text-faint sm:block">Tip: use the ← → keys to step through.</p>
           </div>
         </div>
       </div>
