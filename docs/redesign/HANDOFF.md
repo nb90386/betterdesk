@@ -4,7 +4,7 @@ _Last updated 2026-11-06 03:21 PST._
 
 ## URLs (real, checked)
 - **Public:** https://betterdesk-redesign.vercel.app (alias of the new project's production deployment). Anonymous `curl` returns 200 on every route and 404 on unknown paths. **It still serves the first build (commit `84e7eaa`, 02:55 PST)**; see "Making the latest build public" below.
-- **Latest build (preview of HEAD, behind Vercel login):** https://betterdesk-redesign-fi9sr8h14-neel-s-projects9.vercel.app. Verified with `vercel curl`: 200 on all routes, 404 on unknown.
+- **Latest build (preview of HEAD, behind Vercel login):** https://betterdesk-redesign-eaioporgk-neel-s-projects9.vercel.app. Verified with `vercel curl`: 200 on all routes, 404 on unknown.
 - **betterdesk.ai was not changed.** The domain is not in Vercel team `neel-s-projects9` (`vercel domains inspect betterdesk.ai` → not found) and DNS points at Cloudflare. No original BetterDesk repo exists on this machine. Both preconditions for a production cut-over failed, so production was held.
 
 ## Making the latest build public (one command, needs your approval)
@@ -12,7 +12,7 @@ The unattended session isn't permitted to run production deploys, even to the ne
 ```bash
 vercel deploy --prod --scope neel-s-projects9      # builds HEAD and moves betterdesk-redesign.vercel.app to it
 # or promote the already-built preview:
-vercel promote https://betterdesk-redesign-fi9sr8h14-neel-s-projects9.vercel.app --scope neel-s-projects9
+vercel promote https://betterdesk-redesign-eaioporgk-neel-s-projects9.vercel.app --scope neel-s-projects9
 ```
 Rollback: `vercel rollback dpl_DaYrnbGTmcNB219wayLCP3REhw5s --scope neel-s-projects9` (the first deployment).
 

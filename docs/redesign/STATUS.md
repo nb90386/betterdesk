@@ -2,7 +2,7 @@
 
 ## Where things stand
 - **Public URL (older build, commit 84e7eaa, 02:55 PST):** https://betterdesk-redesign.vercel.app. Anonymous 200, indexable, canonicals point at https://betterdesk.ai.
-- **Latest preview (HEAD, behind Vercel login):** https://betterdesk-redesign-fi9sr8h14-neel-s-projects9.vercel.app. `vercel curl`: 200 on all 13 routes, 404 on unknown.
+- **Latest preview (HEAD b45c840, dpl_G6pTFyFGwXMtb5TxN2hvZhjaea4S, behind Vercel login):** https://betterdesk-redesign-eaioporgk-neel-s-projects9.vercel.app. `vercel curl`: 200 on all 13 routes, 404 on unknown.
 - **Blocked:** this unattended session can't run `vercel deploy --prod`, even for the new project. The founder runs one command to publish HEAD (see HANDOFF.md).
 - **betterdesk.ai is untouched.** It isn't in this Vercel team, and its DNS points at Cloudflare.
 
