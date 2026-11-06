@@ -89,7 +89,7 @@ export default function PricingPage() {
       </section>
 
       <section className="container-bd pb-20 md:pb-28" aria-labelledby="compare-title">
-        <SectionHeading eyebrow="Compare" id="compare-title" title="Every plan, side by side." />
+        <SectionHeading mark="ink" id="compare-title" title="Every plan, side by side." />
         <div className="reveal relative mt-10 overflow-x-auto rounded-[var(--radius-lg)] border border-rule bg-card" role="region" aria-label="Plan comparison table, scrolls sideways on small screens" tabIndex={0}>
           <table className="w-full min-w-[640px] border-collapse text-left text-[0.9rem]">
             <caption className="sr-only">Feature comparison of Starter, Growth and Scale plans</caption>
@@ -125,7 +125,7 @@ export default function PricingPage() {
       </section>
 
       <section className="container-bd grid gap-10 pb-24 lg:grid-cols-[1fr_1.6fr] lg:gap-16" aria-labelledby="pfaq">
-        <SectionHeading eyebrow="Pricing questions" id="pfaq" title="Before you ask." />
+        <SectionHeading mark="handled" id="pfaq" title="Before you ask." />
         <Faq items={PRICING_FAQ} />
       </section>
       <CtaBand title={<>Not sure which plan? Ask us.</>} body="We'll look at how many inquiries you get and how they reach you, and recommend a plan, or tell you BetterDesk isn't the right fit yet." />

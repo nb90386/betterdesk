@@ -1,6 +1,6 @@
 # BetterDesk redesign · handoff
 
-_Last updated 2026-11-06 03:35 PST._
+_Last updated 2026-11-06 03:21 PST._
 
 ## URLs (real, checked)
 - **Public:** https://betterdesk-redesign.vercel.app (alias of the new project's production deployment). Anonymous `curl` returns 200 on every route and 404 on unknown paths. **It still serves the first build (commit `84e7eaa`, 02:55 PST)**; see "Making the latest build public" below.

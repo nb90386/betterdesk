@@ -43,20 +43,20 @@ export default function HowItWorksPage() {
       </PageHero>
 
       <section className="container-bd py-16 md:py-24" aria-labelledby="daily-title">
-        <SectionHeading eyebrow="Every day" id="daily-title" title={<>What happens to each inquiry.</>} />
+        <SectionHeading mark="ink" id="daily-title" title={<>What happens to each inquiry.</>} />
         <div className="mt-12"><ThroughLine /></div>
       </section>
 
       <section className="border-y border-rule bg-paper-2/50 py-16 md:py-24" aria-labelledby="setup-title">
         <div className="container-bd grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-          <SectionHeading eyebrow="Getting started" id="setup-title" title={<>From first call to first booking.</>}>
+          <SectionHeading mark="ink" id="setup-title" title={<>From first call to first booking.</>}>
             <p>The order things happen in. Timing depends on your business and your tools, so we confirm a date with you rather than promise one here.</p>
           </SectionHeading>
           <ol className="reveal relative space-y-0">
             <span className="absolute bottom-4 left-[15px] top-4 w-px bg-gradient-to-b from-signal via-ink-2 to-handled" aria-hidden="true" />
             {SETUP.map((s, i) => (
               <li key={s.k} className="relative grid grid-cols-[32px_1fr] gap-5 pb-9 last:pb-0">
-                <span className={`relative z-10 grid size-[31px] place-items-center rounded-full border-2 bg-paper font-mono text-[0.72rem] ${i === SETUP.length - 1 ? "border-handled bg-handled text-card" : i === 0 ? "border-signal text-signal" : "border-ink text-ink"}`}>
+                <span className={`relative z-10 grid size-[31px] place-items-center rounded-full border-2 font-mono text-[0.72rem] ${i === SETUP.length - 1 ? "border-handled bg-handled text-card" : i === 0 ? "border-signal bg-paper text-signal" : "border-ink bg-paper text-ink"}`}>
                   {i + 1}
                 </span>
                 <div className="pt-0.5">
@@ -71,7 +71,7 @@ export default function HowItWorksPage() {
       </section>
 
       <section className="container-bd py-16 md:py-24" aria-labelledby="need-title">
-        <SectionHeading eyebrow="What you'll need" id="need-title" title="Four things. You probably have them already." />
+        <SectionHeading mark="ink" id="need-title" title="Four things. You probably have them already." />
         <dl className="reveal mt-12 grid gap-px overflow-hidden rounded-[var(--radius-lg)] border border-rule bg-rule sm:grid-cols-2">
           {NEED.map(([k, v]) => (
             <div key={k} className="bg-card p-6">
@@ -83,7 +83,7 @@ export default function HowItWorksPage() {
       </section>
 
       <section className="container-bd grid gap-10 pb-24 lg:grid-cols-[1fr_1.6fr] lg:gap-16" aria-labelledby="hfaq">
-        <SectionHeading eyebrow="Setup questions" id="hfaq" title="The practical stuff." />
+        <SectionHeading mark="handled" id="hfaq" title="The practical stuff." />
         <Faq items={HOW_FAQ} />
       </section>
       <CtaBand />

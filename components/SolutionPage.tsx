@@ -30,7 +30,7 @@ export function SolutionPage({ s }: { s: Solution }) {
       </section>
 
       <section className="container-bd py-16 md:py-24" aria-labelledby="pain-title">
-        <SectionHeading eyebrow="Sound familiar?" id="pain-title" title={<>Where the work slips away.</>} />
+        <SectionHeading mark="signal" id="pain-title" title={<>Where the work slips away.</>} />
         <ol className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-lg)] border border-rule bg-rule md:grid-cols-3">
           {s.pains.map((p, i) => (
             <li key={p.k} className="reveal bg-card p-6 sm:p-7">
@@ -45,7 +45,7 @@ export function SolutionPage({ s }: { s: Solution }) {
       <section className="border-y border-rule bg-paper-2/50 py-16 md:py-24" aria-labelledby="flow-title">
         <div className="container-bd grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
           <div>
-            <SectionHeading eyebrow="How it would run" id="flow-title" title={<>A workflow that sounds like your shop.</>} />
+            <SectionHeading mark="ink" id="flow-title" title={<>A workflow that sounds like your shop.</>} />
             <ol className="mt-10 space-y-6">
               {s.flow.map((f, i) => (
                 <li key={f.k} className="reveal grid grid-cols-[40px_1fr] gap-3 border-t border-rule pt-5">
@@ -70,12 +70,12 @@ export function SolutionPage({ s }: { s: Solution }) {
       </section>
 
       <section id="walkthrough" className="container-bd scroll-mt-20 py-16 md:py-24" aria-labelledby="walk-title">
-        <SectionHeading eyebrow="Sample conversation" id="walk-title" title="Step through it." />
+        <SectionHeading mark="ink" id="walk-title" title="Step through it." />
         <div className="reveal mt-10"><LeadJourney scenarioIds={[s.scenarioId]} /></div>
       </section>
 
       <section className="container-bd grid gap-10 pb-24 lg:grid-cols-[1fr_1.6fr] lg:gap-16" aria-labelledby="sfaq">
-        <SectionHeading eyebrow={`${s.name} questions`} id="sfaq" title="Asked on almost every call." />
+        <SectionHeading mark="handled" id="sfaq" title="Asked on almost every call." />
         <Faq items={s.faq} />
       </section>
       <CtaBand />

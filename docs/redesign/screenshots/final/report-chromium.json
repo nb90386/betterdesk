@@ -1,7 +1,28 @@
 [
   {
-    "path": "/pricing",
-    "width": 320,
+    "path": "/how-it-works",
+    "width": 390,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  },
+  {
+    "path": "/how-it-works",
+    "width": 1440,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  },
+  {
+    "path": "/solutions/home-services",
+    "width": 390,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  },
+  {
+    "path": "/solutions/home-services",
+    "width": 1440,
     "browser": "chromium",
     "overflowPx": 0,
     "errors": []
@@ -9,6 +30,27 @@
   {
     "path": "/pricing",
     "width": 390,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  },
+  {
+    "path": "/pricing",
+    "width": 1440,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  },
+  {
+    "path": "/platform",
+    "width": 390,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  },
+  {
+    "path": "/platform",
+    "width": 1440,
     "browser": "chromium",
     "overflowPx": 0,
     "errors": []

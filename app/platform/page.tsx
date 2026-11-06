@@ -67,7 +67,7 @@ export default function PlatformPage() {
       </section>
 
       <section className="container-bd py-16 md:py-24" aria-labelledby="parts-title">
-        <SectionHeading eyebrow="How the pieces fit" id="parts-title" title={<>Six jobs a front desk does. And where each one stops.</>}>
+        <SectionHeading mark="ink" id="parts-title" title={<>Six jobs a front desk does. And where each one stops.</>}>
           <p>Each part below says what it does and what it doesn&rsquo;t. We&rsquo;d rather you know the edges before the demo.</p>
         </SectionHeading>
         <ol className="mt-14 divide-y divide-rule border-y border-rule">

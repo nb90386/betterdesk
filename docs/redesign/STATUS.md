@@ -1,4 +1,4 @@
-# STATUS (updated 2026-11-06 03:35 PST)
+# STATUS (updated 2026-11-06 03:21 PST)
 
 ## Where things stand
 - **Public URL (older build, commit 84e7eaa, 02:55 PST):** https://betterdesk-redesign.vercel.app. Anonymous 200, indexable, canonicals point at https://betterdesk.ai.
