@@ -1,9 +1,10 @@
 import { ButtonLink } from "./Button";
+import { ThreadMark } from "./Section";
 
 export function CtaBand({
   title = (
     <>
-      Talk through <em>your</em> front desk.
+      Talk through your front desk.
     </>
   ),
   secondary = { href: "/demo", label: "Or try the sample walkthrough" },
@@ -18,14 +19,14 @@ export function CtaBand({
       <ThreadArt />
       <div className="container-bd relative grid gap-10 py-20 md:grid-cols-[1.4fr_1fr] md:items-end md:py-28">
         <div>
-          <p className="eyebrow !text-night-muted">Next step</p>
+          <ThreadMark tone="handled" className="[--color-handled:var(--color-handled-bright)]" />
           <h2 id="cta-title" className="display mt-4 text-[clamp(2.4rem,1.6rem+3vw,4.4rem)]">
             {title}
           </h2>
           <p className="mt-5 max-w-[52ch] text-[1.05rem] leading-relaxed text-card/80">{body}</p>
         </div>
         <div className="flex flex-col gap-3 md:items-end">
-          <ButtonLink href="/contact" variant="light" arrow className="group">
+          <ButtonLink href="/contact" variant="resolve" arrow className="group">
             Book a demo
           </ButtonLink>
           <ButtonLink href={secondary.href} variant="ghost" className="!text-card decoration-night-muted hover:decoration-card">

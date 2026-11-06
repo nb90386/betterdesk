@@ -9,7 +9,7 @@ export function SiteFooter() {
         <div className="max-w-sm">
           <Logo />
           <p className="mt-5 font-display text-[1.6rem] leading-tight tracking-[-0.02em] text-ink">
-            The front desk that <em>follows through.</em>
+            The front desk that follows through.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-muted">
             For service businesses that lose work when nobody can get to the phone.

@@ -154,3 +154,25 @@ test("reduced motion: hero shows the finished scene immediately", async ({ brows
   expect(Number(await booked.evaluate((el) => getComputedStyle(el.closest("li")!).opacity))).toBe(1);
   await ctx.close();
 });
+
+test("mobile sticky CTA appears after the hero, hides at the closing band and on /contact", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const bar = page.locator("div.fixed.bottom-0").filter({ hasText: "Plans from $149/mo" });
+  await expect(bar).toHaveAttribute("aria-hidden", "true");
+  await page.evaluate(() => window.scrollTo(0, 2400));
+  await expect(bar).toHaveAttribute("aria-hidden", "false");
+  await bar.getByRole("link", { name: "Book a demo" }).click();
+  await expect(page).toHaveURL(/\/contact$/);
+  await expect(page.locator("div.fixed.bottom-0").filter({ hasText: "Plans from $149/mo" })).toHaveCount(0);
+  await page.goto("/");
+  await page.locator("#cta-title").scrollIntoViewIfNeeded();
+  await expect(bar).toHaveAttribute("aria-hidden", "true");
+});
+
+test("explorer: filtering away the open thread selects one that is visible", async ({ page }) => {
+  await page.goto("/platform");
+  await expect(page.getByRole("log", { name: /Dana M\./ })).toBeVisible();
+  await page.getByRole("button", { name: /^Email/ }).click();
+  await expect(page.getByRole("log", { name: /Omar R\./ })).toBeVisible();
+});

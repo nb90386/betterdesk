@@ -38,18 +38,18 @@ const HOW_FAQ = [
 export default function HowItWorksPage() {
   return (
     <>
-      <PageHero eyebrow="How it works" title={<>Set up with a person. <em>Live on your terms.</em></>}>
+      <PageHero eyebrow="How it works" title={<>Set up with a person. Live on your terms.</>}>
         <p>No DIY software puzzle. Someone from BetterDesk sets it up with you, you approve what it says, and you decide when it runs on its own.</p>
       </PageHero>
 
       <section className="container-bd py-16 md:py-24" aria-labelledby="daily-title">
-        <SectionHeading n="01" eyebrow="Every day" id="daily-title" title={<>What happens to each <em>inquiry.</em></>} />
+        <SectionHeading eyebrow="Every day" id="daily-title" title={<>What happens to each inquiry.</>} />
         <div className="mt-12"><ThroughLine /></div>
       </section>
 
       <section className="border-y border-rule bg-paper-2/50 py-16 md:py-24" aria-labelledby="setup-title">
         <div className="container-bd grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-          <SectionHeading n="02" eyebrow="Getting started" id="setup-title" title={<>From first call to <em>first booking.</em></>}>
+          <SectionHeading eyebrow="Getting started" id="setup-title" title={<>From first call to first booking.</>}>
             <p>The order things happen in. Timing depends on your business and your tools, so we confirm a date with you rather than promise one here.</p>
           </SectionHeading>
           <ol className="reveal relative space-y-0">
@@ -60,7 +60,7 @@ export default function HowItWorksPage() {
                   {i + 1}
                 </span>
                 <div className="pt-0.5">
-                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-muted">{s.when}</p>
+                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">{s.when}</p>
                   <h3 className="mt-1 text-[1.15rem] font-semibold tracking-[-0.01em] text-ink">{s.k}</h3>
                   <p className="mt-1.5 max-w-[60ch] text-[0.96rem] leading-relaxed text-ink-2">{s.p}</p>
                 </div>
@@ -71,7 +71,7 @@ export default function HowItWorksPage() {
       </section>
 
       <section className="container-bd py-16 md:py-24" aria-labelledby="need-title">
-        <SectionHeading n="03" eyebrow="What you'll need" id="need-title" title="Four things. You probably have them already." />
+        <SectionHeading eyebrow="What you'll need" id="need-title" title="Four things. You probably have them already." />
         <dl className="reveal mt-12 grid gap-px overflow-hidden rounded-[var(--radius-lg)] border border-rule bg-rule sm:grid-cols-2">
           {NEED.map(([k, v]) => (
             <div key={k} className="bg-card p-6">
@@ -83,7 +83,7 @@ export default function HowItWorksPage() {
       </section>
 
       <section className="container-bd grid gap-10 pb-24 lg:grid-cols-[1fr_1.6fr] lg:gap-16" aria-labelledby="hfaq">
-        <SectionHeading n="04" eyebrow="Setup questions" id="hfaq" title="The practical stuff." />
+        <SectionHeading eyebrow="Setup questions" id="hfaq" title="The practical stuff." />
         <Faq items={HOW_FAQ} />
       </section>
       <CtaBand />

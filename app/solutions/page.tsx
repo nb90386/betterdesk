@@ -20,14 +20,14 @@ const OTHERS = [
 export default function SolutionsPage() {
   return (
     <>
-      <PageHero eyebrow="Solutions" title={<>If customers call you to <em>book work,</em> it fits.</>}>
+      <PageHero eyebrow="Solutions" title={<>If customers call you to book work, it fits.</>}>
         <p>BetterDesk is built for local service businesses where an unanswered call is usually a lost job. Two industries have their own pages; the rest follow the same pattern.</p>
       </PageHero>
       <section className="container-bd grid gap-4 py-14 md:grid-cols-2 md:py-20">
         {SOLUTIONS.map((s, i) => (
           <Link key={s.slug} href={`/solutions/${s.slug}`} className={`group rounded-[var(--radius-xl)] p-7 sm:p-9 ${i === 0 ? "bg-ink text-card" : "border border-rule bg-card text-ink"}`}>
             <p className={`font-mono text-[0.7rem] uppercase tracking-[0.08em] ${i === 0 ? "text-night-muted" : "text-muted"}`}>{s.name}</p>
-            <h2 className="mt-3 font-display text-[2rem] leading-[1.08] tracking-[-0.02em]">{s.title} <em>{s.titleEm}</em></h2>
+            <h2 className="mt-3 font-display text-[2rem] leading-[1.08] tracking-[-0.02em]">{s.title} {s.titleEm}</h2>
             <p className={`mt-3 text-[0.95rem] leading-relaxed ${i === 0 ? "text-card/75" : "text-ink-2"}`}>{s.who.slice(0, 5).join(" · ")}</p>
             <span className="mt-8 inline-flex items-center gap-2 text-[0.92rem] font-medium">Read more <span className="transition-transform group-hover:translate-x-1">→</span></span>
           </Link>

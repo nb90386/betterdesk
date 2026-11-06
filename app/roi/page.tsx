@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RoiPage() {
   return (
     <>
-      <PageHero eyebrow="ROI calculator" title={<>Do the math with <em>your</em> numbers.</>}>
+      <PageHero eyebrow="ROI calculator" title={<>Do the math with your numbers.</>}>
         <p>Four inputs, one formula you can see. The defaults are deliberately modest; change them to match your call log and your typical job.</p>
       </PageHero>
       <section className="container-bd py-12 md:py-16">

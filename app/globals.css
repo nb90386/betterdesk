@@ -90,7 +90,7 @@
   h1, h2, h3 {
     text-wrap: balance;
   }
-  p {
+  p, li, dd {
     text-wrap: pretty;
   }
   button {
@@ -127,12 +127,11 @@
     font-optical-sizing: auto;
   }
   .display em {
-    font-style: italic;
-    font-weight: 360;
+    font-style: normal;
   }
   .eyebrow {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-muted);
@@ -163,7 +162,7 @@
     align-items: center;
     gap: 0.4rem;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-muted);
@@ -200,6 +199,17 @@
   }
 }
 
+/* "booked" underline thread: drawn once, transform only */
+.booked-thread { transform-origin: left center; animation: bd-underline 900ms var(--ease-out-soft) 450ms both; }
+@keyframes bd-underline { from { transform: scaleX(0); } to { transform: none; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .gutter-thread { transform-origin: top center; animation: bd-grow linear both; animation-timeline: scroll(root); }
+  }
+}
+@keyframes bd-grow { from { transform: scaleY(0); } to { transform: none; } }
+
 @keyframes bd-reveal {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: none; }
@@ -234,7 +244,7 @@
   from { opacity: 0; transform: translateY(10px) scale(0.985); }
   to { opacity: 1; transform: none; }
 }
-@keyframes hs-draw { to { stroke-dashoffset: 0; } }
+@keyframes hs-draw { from { stroke-dashoffset: 100; opacity: 0; } 4% { opacity: 1; } to { stroke-dashoffset: 0; opacity: 1; } }
 @keyframes hs-fade { from { opacity: 0; } to { opacity: 1; } }
 
 @media (prefers-reduced-motion: reduce) {

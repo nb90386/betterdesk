@@ -14,7 +14,7 @@ export default function OG() {
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 84, lineHeight: 1.02, letterSpacing: -2 }}>
           <span>Missed calls become</span>
-          <span style={{ color: "#1e5a46", fontStyle: "italic" }}>booked appointments.</span>
+          <span style={{ color: "#1e5a46" }}>booked appointments.</span>
         </div>
         <svg width="1056" height="40" viewBox="0 0 1056 40">
           <path d="M0 20 C 40 4, 60 36, 100 18 S 160 8, 220 20 L 1040 20" fill="none" stroke="#c23b1e" strokeWidth="3" />

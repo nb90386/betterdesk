@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/Button";
 import { HeroScene } from "@/components/HeroScene";
 import { LeadJourney } from "@/components/LeadJourney";
 import { ThroughLine } from "@/components/ThroughLine";
-import { SectionHeading, Eyebrow } from "@/components/Section";
+import { SectionHeading, ThreadMark } from "@/components/Section";
 import { PricingPlans } from "@/components/PricingPlans";
 import { Faq } from "@/components/Faq";
 import { CtaBand } from "@/components/CtaBand";
@@ -64,17 +64,22 @@ const HOME_FAQ = [
 export default function Home() {
   return (
     <>
+      <GutterThread />
       {/* ---------------- Hero ---------------- */}
       <section className="relative overflow-hidden" aria-labelledby="hero-title">
-        <div className="container-bd grid items-center gap-12 pb-16 pt-10 sm:pt-14 xl:min-h-[calc(100dvh-4rem)] xl:grid-cols-[1.05fr_1fr] xl:gap-10 xl:pb-20">
+        <div className="container-bd grid items-center gap-12 pb-16 pt-10 sm:pt-14 xl:grid-cols-[1.05fr_1fr] xl:gap-10 xl:pb-24 xl:pt-20">
           <div className="max-w-[640px]">
-            <Eyebrow>The front desk for service businesses</Eyebrow>
-            <h1 id="hero-title" className="display mt-5 text-[clamp(2.7rem,1.5rem+4.6vw,5.1rem)] text-ink">
-              Missed calls become <em className="text-handled">booked</em> appointments.
+            <h1 id="hero-title" className="display text-[clamp(2.7rem,1.5rem+4.6vw,5.1rem)] text-ink">
+              Missed calls become{" "}
+              <span className="relative inline-block text-handled">
+                booked
+                <BookedThread />
+              </span>{" "}
+              appointments.
             </h1>
-            <p className="lede mt-6">
-              When your team can&rsquo;t get to the phone, BetterDesk texts the caller back, answers from what you&rsquo;ve taught it,
-              offers your open times, and tells you what happened. No extra receptionist.
+            <p className="lede mt-7">
+              BetterDesk is the front desk for busy service businesses. When your team can&rsquo;t get to the phone, it texts the caller back,
+              answers from what you&rsquo;ve taught it, offers your open times, and tells you what happened. No extra receptionist.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
               <ButtonLink href="/contact" arrow className="group">
@@ -84,15 +89,15 @@ export default function Home() {
                 Try the sample walkthrough
               </ButtonLink>
             </div>
-            <ul className="mt-10 grid max-w-[560px] grid-cols-1 gap-x-6 gap-y-2 border-t border-rule pt-5 text-[0.88rem] text-ink-2 xs:grid-cols-3">
+            <ul className="mt-10 grid max-w-[560px] grid-cols-3 gap-x-4 border-t border-rule pt-5 text-[0.85rem] leading-snug text-ink-2 sm:gap-x-6 sm:text-[0.88rem]">
               <li>
-                <span className="block font-mono text-[0.68rem] uppercase tracking-[0.06em] text-muted">From</span>$149 / month
+                <span className="block font-mono text-[0.6875rem] uppercase tracking-[0.06em] text-muted">From</span>$149 / month
               </li>
               <li>
-                <span className="block font-mono text-[0.68rem] uppercase tracking-[0.06em] text-muted">Setup</span>With a real person
+                <span className="block font-mono text-[0.6875rem] uppercase tracking-[0.06em] text-muted">Setup</span>With a real person
               </li>
               <li>
-                <span className="block font-mono text-[0.68rem] uppercase tracking-[0.06em] text-muted">Control</span>You approve replies
+                <span className="block font-mono text-[0.6875rem] uppercase tracking-[0.06em] text-muted">Control</span>You approve replies
               </li>
             </ul>
           </div>
@@ -100,49 +105,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------------- Three moments (problem) ---------------- */}
+      {/* ---------------- Three moments (problem): the ledger is the layout ---------------- */}
       <section className="border-y border-rule bg-paper-2/50" aria-labelledby="moments-title">
         <div className="container-bd py-20 md:py-28">
-          <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-            <SectionHeading
-              n="01"
-              eyebrow="The problem"
-              id="moments-title"
-              title={
-                <>
-                  The phone rings when your hands are <em>full.</em>
-                </>
-              }
-            >
-              <p>
-                A lot of missed work is lost to a slow reply, not a better price. The customer needed someone now, and someone else picked up.
-              </p>
-            </SectionHeading>
-            <div className="reveal">
-              <div className="hidden grid-cols-[110px_1fr_1fr] gap-6 border-b border-rule-strong pb-3 md:grid">
-                <span className="eyebrow">When</span>
-                <span className="eyebrow">Today</span>
-                <span className="eyebrow !text-handled">With BetterDesk</span>
-              </div>
-              <ul className="divide-y divide-rule">
-                {MOMENTS.map((m) => (
-                  <li key={m.time} className="grid gap-3 py-6 md:grid-cols-[110px_1fr_1fr] md:gap-6">
-                    <div>
-                      <p className="font-mono text-[0.9rem] text-ink">{m.time}</p>
-                      <p className="text-[0.82rem] text-muted">{m.where}</p>
-                    </div>
-                    <p className="text-[0.98rem] leading-relaxed text-ink-2">
-                      <span className="mr-2 font-mono text-[0.66rem] uppercase tracking-[0.06em] text-signal md:hidden">Today</span>
-                      {m.today}
-                    </p>
-                    <p className="text-[0.98rem] leading-relaxed text-ink">
-                      <span className="mr-2 font-mono text-[0.66rem] uppercase tracking-[0.06em] text-handled md:hidden">With BetterDesk</span>
-                      {m.after}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+          <SectionHeading mark="signal" id="moments-title" title="The phone rings when your hands are full.">
+            <p>A lot of missed work is lost to a slow reply, not a better price. The customer needed someone now, and someone else picked up.</p>
+          </SectionHeading>
+          <div className="reveal mt-12" role="table" aria-label="Three moments, today and with BetterDesk">
+            <div role="row" className="hidden md:grid md:grid-cols-[150px_1fr_1fr]">
+              <span role="columnheader" className="eyebrow border-b border-rule-strong pb-3">When</span>
+              <span role="columnheader" className="eyebrow border-b border-rule-strong pb-3 pl-6 !text-signal">Today</span>
+              <span role="columnheader" className="eyebrow rounded-t-[var(--radius-md)] border-b border-handled/30 bg-handled-soft/70 px-6 pb-3 pt-3 !text-handled">
+                With BetterDesk
+              </span>
             </div>
+            {MOMENTS.map((m, i) => (
+              <div
+                role="row"
+                key={m.time}
+                className="grid gap-3 border-b border-rule py-6 md:grid-cols-[150px_1fr_1fr] md:gap-0 md:border-b-0 md:py-0"
+              >
+                <div role="rowheader" className="md:border-b md:border-rule md:py-7">
+                  <p className="font-mono text-[0.95rem] text-ink">{m.time}</p>
+                  <p className="text-[0.85rem] text-muted">{m.where}</p>
+                </div>
+                <p role="cell" className="text-[1rem] leading-relaxed text-ink-2 md:border-b md:border-rule md:py-7 md:pl-6 md:pr-8">
+                  <span className="mr-2 font-mono text-[0.6875rem] uppercase tracking-[0.06em] text-signal md:hidden">Today</span>
+                  {m.today}
+                </p>
+                <p
+                  role="cell"
+                  className={`rounded-[var(--radius-md)] bg-handled-soft/70 px-4 py-3 text-[1rem] leading-relaxed text-ink md:rounded-none md:border-b md:border-handled/20 md:px-6 md:py-7 ${
+                    i === MOMENTS.length - 1 ? "md:rounded-b-[var(--radius-md)] md:border-b-0" : ""
+                  }`}
+                >
+                  <span className="mr-2 font-mono text-[0.6875rem] uppercase tracking-[0.06em] text-handled md:hidden">With BetterDesk</span>
+                  {m.after}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -150,17 +151,8 @@ export default function Home() {
       {/* ---------------- Through-line ---------------- */}
       <section className="container-bd py-20 md:py-28" aria-labelledby="flow-title">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading
-            n="02"
-            eyebrow="How it works"
-            id="flow-title"
-            title={
-              <>
-                One thread, from first ring to <em>on the calendar.</em>
-              </>
-            }
-          />
-          <ButtonLink href="/how-it-works" variant="ghost" className="reveal shrink-0">
+          <SectionHeading mark="ink" id="flow-title" title="One thread, from first ring to on the calendar." />
+          <ButtonLink href="/how-it-works" variant="ghost" className="reveal shrink-0 self-start md:self-auto">
             Setup, step by step
           </ButtonLink>
         </div>
@@ -173,16 +165,7 @@ export default function Home() {
       <section className="bg-paper-2/50 py-20 md:py-28" aria-labelledby="walk-title">
         <div className="container-bd">
           <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
-            <SectionHeading
-              n="03"
-              eyebrow="See it happen"
-              id="walk-title"
-              title={
-                <>
-                  Same call. <em>Two endings.</em>
-                </>
-              }
-            >
+            <SectionHeading mark="ink" id="walk-title" title="Same call. Two endings.">
               <p>Step through a missed call at a plumbing company, then flip to &ldquo;Without&rdquo; and watch the same evening go differently.</p>
             </SectionHeading>
             <Link href="/demo" className="reveal text-[0.95rem] text-ink underline decoration-rule-strong underline-offset-[6px] hover:decoration-ink">
@@ -196,14 +179,12 @@ export default function Home() {
       </section>
 
       {/* ---------------- Control (dark) ---------------- */}
-      <section className="bg-night text-card" aria-labelledby="control-title">
+      <section className="bg-night text-card [--mark-fill:var(--color-night)]" aria-labelledby="control-title">
         <div className="container-bd grid gap-12 py-20 md:py-28 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
           <div className="reveal">
-            <p className="eyebrow flex items-center gap-3 !text-night-muted">
-              <span className="text-signal-glow">04</span> You stay in charge
-            </p>
+            <ThreadMark tone="light" />
             <h2 id="control-title" className="display mt-4 text-[clamp(2.1rem,1.4rem+2.6vw,3.6rem)]">
-              It works <em>your</em> way, from what you&rsquo;ve told it.
+              It works your way, from what you&rsquo;ve told it.
             </h2>
             <p className="mt-5 max-w-[52ch] text-[1.05rem] leading-relaxed text-card/80">
               Start with every reply waiting for your OK. Loosen the reins when you trust it. Your rules decide which conversations go to a person, with the whole thread attached.
@@ -220,59 +201,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------------- Platform teaser ---------------- */}
+      {/* ---------------- Platform teaser: four jobs, then the rest in one line ---------------- */}
       <section className="container-bd py-20 md:py-28" aria-labelledby="inside-title">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
-          <div>
-            <SectionHeading
-              n="05"
-              eyebrow="What's inside"
-              id="inside-title"
-              title={
-                <>
-                  Everything a good front desk does, <em>written down.</em>
-                </>
-              }
-            >
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.25fr] lg:gap-20">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <SectionHeading mark="ink" id="inside-title" title="Four jobs a good front desk does every time.">
               <p>One inbox for your channels, bookings on your calendar, and a short list of the conversations that need you.</p>
             </SectionHeading>
             <ButtonLink href="/platform" variant="secondary" arrow className="group reveal mt-8">
               Explore the platform
             </ButtonLink>
           </div>
-          <dl className="reveal grid gap-x-10 sm:grid-cols-2">
-            {[
-              ["Missed-call text-back", "Every unanswered call gets a text in your business's name."],
-              ["Replies on your channels", "Calls, texts and web forms on every plan. Instagram, Google Business and email on Growth."],
-              ["Booking", "Offers open times and books them, or hands the request to your team."],
-              ["Follow-up", "Reminders before appointments and a nudge when a quote goes quiet."],
-              ["Handoff to a person", "Emergencies and anything it isn't sure about go to the right person."],
-              ["Owner alerts and summaries", "A ping for big or urgent leads and a plain-English weekly summary, on Growth and Scale."],
-              ["Review generation", "A timely ask after the job, on Growth and Scale."],
-              ["Unified inbox", "One thread per customer, whichever way they reached you."],
-            ].map(([k, v]) => (
-              <div key={k} className="border-t border-rule py-5">
-                <dt className="text-[1rem] font-semibold tracking-[-0.01em] text-ink">{k}</dt>
-                <dd className="mt-1 text-[0.92rem] leading-relaxed text-ink-2">{v}</dd>
-              </div>
-            ))}
-          </dl>
+          <div className="reveal">
+            <ol className="border-t border-rule">
+              {INSIDE.map(([k, v, tag], i) => (
+                <li key={k} className="grid grid-cols-[2.25rem_1fr] gap-x-4 border-b border-rule py-7">
+                  <span className={`mt-2 size-2.5 rounded-full border-2 ${i === INSIDE.length - 1 ? "border-handled bg-handled" : i === 0 ? "border-signal" : "border-ink"}`} aria-hidden="true" />
+                  <div>
+                    <h3 className="font-display text-[1.65rem] leading-tight tracking-[-0.015em] text-ink">{k}</h3>
+                    <p className="mt-1.5 max-w-[52ch] text-[0.98rem] leading-relaxed text-ink-2">{v}</p>
+                    <p className="mt-2 font-mono text-[0.6875rem] uppercase tracking-[0.06em] text-muted">{tag}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-6 text-[0.95rem] leading-relaxed text-ink-2">
+              <span className="font-medium text-ink">Also included:</span> replies on texts and web forms on every plan, one unified inbox,
+              and on Growth and Scale, Instagram, Google Business and email, review generation, owner alerts and a plain-English weekly summary.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* ---------------- Solutions ---------------- */}
       <section className="border-y border-rule bg-paper-2/50 py-20 md:py-28" aria-labelledby="who-title">
         <div className="container-bd">
-          <SectionHeading
-            n="06"
-            eyebrow="Who it's for"
-            id="who-title"
-            title={
-              <>
-                Built for businesses where a missed call is a <em>missed job.</em>
-              </>
-            }
-          />
+          <SectionHeading mark="ink" id="who-title" title="Built for businesses where a missed call is a missed job." />
           <div className="mt-12 grid gap-4 lg:grid-cols-[1.25fr_1fr]">
             <Link href="/solutions/home-services" className="reveal group relative overflow-hidden rounded-[var(--radius-xl)] bg-ink p-7 text-card sm:p-9">
               <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-night-muted">Home services</p>
@@ -311,19 +275,10 @@ export default function Home() {
       {/* ---------------- Pricing teaser ---------------- */}
       <section className="container-bd py-20 md:py-28" aria-labelledby="price-title">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading
-            n="07"
-            eyebrow="Pricing"
-            id="price-title"
-            title={
-              <>
-                Priced per business, <em>not per seat.</em>
-              </>
-            }
-          >
+          <SectionHeading mark="handled" id="price-title" title="Priced per business, not per seat.">
             <p>Setup, calibration and human support are included on every plan. No annual contract.</p>
           </SectionHeading>
-          <div className="reveal flex shrink-0 flex-col gap-2 md:items-end">
+          <div className="reveal flex shrink-0 flex-col items-start gap-2 md:items-end">
             <ButtonLink href="/pricing" variant="ghost">
               Compare every feature
             </ButtonLink>
@@ -339,7 +294,7 @@ export default function Home() {
 
       {/* ---------------- FAQ ---------------- */}
       <section className="container-bd grid gap-10 pb-24 md:pb-32 lg:grid-cols-[1fr_1.6fr] lg:gap-16" aria-labelledby="faq-title">
-        <SectionHeading n="08" eyebrow="Questions" id="faq-title" title="Straight answers." />
+        <SectionHeading mark="handled" id="faq-title" title="Straight answers." />
         <Faq items={HOME_FAQ} className="reveal" />
       </section>
 
@@ -348,10 +303,38 @@ export default function Home() {
   );
 }
 
+const INSIDE = [
+  ["Text back every missed call", "The caller hears from your business while they're still looking at their phone, not after they've called someone else.", "Every plan"],
+  ["Offer real times, or hand off", "Where your calendar is connected it offers open slots and books them. Otherwise it collects the request for your team.", "Every plan"],
+  ["Know when to get a person", "Emergencies, complaints and anything outside what you've taught it go to the person you choose, with the thread attached.", "Your rules"],
+  ["Follow up so nothing slips", "Reminders before appointments and a nudge when a quote goes quiet. Multi-step sequences on Growth and Scale.", "Every plan · advanced on Growth"],
+] as const;
+
+/** Hand-drawn thread under "booked": frays in, then runs straight. Drawn once with a transform (compositor-only). */
+function BookedThread() {
+  return (
+    <span className="booked-thread pointer-events-none absolute -bottom-[0.06em] left-[-0.04em] right-[-0.04em] block h-[0.2em]" aria-hidden="true">
+      <svg viewBox="0 0 200 20" preserveAspectRatio="none" className="size-full overflow-visible">
+        <path d="M2 12 C 8 4, 13 18, 19 10 S 30 5, 36 11 S 46 14, 52 10" fill="none" stroke="var(--color-signal)" strokeWidth="2.2" strokeDasharray="2 4" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        <path d="M52 10 C 80 8, 140 9, 194 9" fill="none" stroke="var(--color-handled)" strokeWidth="2.6" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      </svg>
+    </span>
+  );
+}
+
+/** A quiet vertical thread in the wide-screen gutter, drawn as you read. CSS scroll timeline; static elsewhere. */
+function GutterThread() {
+  return (
+    <div className="pointer-events-none absolute inset-y-0 left-[max(16px,calc((100vw-1240px)/2-40px))] z-0 hidden w-px min-[1400px]:block" aria-hidden="true">
+      <div className="gutter-thread sticky top-0 h-dvh w-px bg-gradient-to-b from-signal/70 via-ink/25 to-handled/70" />
+    </div>
+  );
+}
+
 function WorkOrder() {
   return (
     <div className="mt-7 max-w-[420px] rotate-[-1.2deg] rounded-md bg-card p-4 text-ink shadow-[var(--shadow-lift)] transition-transform duration-300 group-hover:rotate-0" aria-hidden="true">
-      <div className="flex items-center justify-between border-b border-dashed border-rule-strong pb-2 font-mono text-[0.64rem] uppercase tracking-[0.08em] text-muted">
+      <div className="flex items-center justify-between border-b border-dashed border-rule-strong pb-2 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">
         <span>Work order · sample</span>
         <span>Thu 8–10 AM</span>
       </div>
@@ -376,7 +359,7 @@ function AppointmentStrip() {
     <div className="mt-7 grid max-w-[360px] grid-cols-2 gap-2" aria-hidden="true">
       {cols.map((c) => (
         <div key={c.who} className="rounded-md border border-rule bg-paper p-2">
-          <p className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-muted">{c.who} · Sat</p>
+          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">{c.who} · Sat</p>
           <div className="mt-1.5 space-y-1.5">
             {c.slots.map((s) => (
               <div

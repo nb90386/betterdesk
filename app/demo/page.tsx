@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function DemoPage() {
   return (
     <>
-      <PageHero eyebrow="Sample walkthrough" title={<>Watch one inquiry, <em>start to finish.</em></>}>
+      <PageHero eyebrow="Sample walkthrough" title={<>Watch one inquiry, start to finish.</>}>
         <p>
           Three common moments, played step by step. Switch between &ldquo;Without&rdquo; and &ldquo;With BetterDesk&rdquo; to compare the same evening.
           The businesses and conversations are fictional examples, not customer data.
@@ -27,7 +27,7 @@ export default function DemoPage() {
           <p><strong className="font-medium text-ink">What depends on you:</strong> the questions it asks, what counts as urgent, and which calendar it books into. You set those during setup.</p>
         </div>
       </section>
-      <CtaBand title={<>See it with <em>your</em> business in it.</>} body="On a demo we'll build the walkthrough around your services, hours and the questions your customers actually ask." secondary={{ href: "/pricing", label: "Or compare plans first" }} />
+      <CtaBand title={<>See it with your business in it.</>} body="On a demo we'll build the walkthrough around your services, hours and the questions your customers actually ask." secondary={{ href: "/pricing", label: "Or compare plans first" }} />
     </>
   );
 }

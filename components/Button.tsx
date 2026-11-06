@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentProps } from "react";
 
-type Variant = "primary" | "secondary" | "ghost" | "light";
+type Variant = "primary" | "secondary" | "ghost" | "light" | "resolve";
 const base =
   "press inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap select-none min-h-11 px-5 text-[0.95rem]";
 const variants: Record<Variant, string> = {
@@ -9,6 +9,7 @@ const variants: Record<Variant, string> = {
   secondary: "border border-rule-strong bg-card/60 text-ink hover:border-ink/40 hover:bg-card",
   ghost: "text-ink underline decoration-rule-strong underline-offset-[6px] hover:decoration-ink px-1 min-h-11",
   light: "bg-card text-ink hover:bg-white",
+  resolve: "bg-handled text-card hover:bg-[#184a3a] shadow-[0_1px_0_rgb(255_255_255/0.14)_inset,0_10px_24px_-12px_rgb(30_90_70/0.8)]",
 };
 
 export function ButtonLink({

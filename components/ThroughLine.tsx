@@ -26,7 +26,7 @@ export function ThroughLine() {
         {STOPS.map((s, i) => (
           <li key={s.k} className="reveal relative pl-9 md:pl-0" style={{ animationDelay: `${i * 40}ms` }}>
             <span
-              className={`absolute left-0 top-0 grid size-[23px] place-items-center rounded-full border-2 bg-paper font-mono text-[0.62rem] md:relative ${
+              className={`absolute left-0 top-0 grid size-[23px] place-items-center rounded-full border-2 bg-paper font-mono text-[0.6875rem] md:relative ${
                 s.tone === "signal" ? "border-signal text-signal" : s.tone === "handled" ? "border-handled bg-handled text-card" : "border-ink text-ink"
               }`}
             >

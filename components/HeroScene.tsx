@@ -28,7 +28,7 @@ export function HeroScene() {
           <button
             type="button"
             onClick={() => setPaused((p) => !p)}
-            className="press rounded-full px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-muted hover:bg-paper-2 hover:text-ink"
+            className="press inline-flex min-h-11 items-center rounded-full px-3.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted hover:bg-paper-2 hover:text-ink"
             aria-pressed={paused}
           >
             {paused ? "Play" : "Pause"}
@@ -39,7 +39,7 @@ export function HeroScene() {
               setPaused(false);
               setRun((r) => r + 1);
             }}
-            className="press rounded-full px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-muted hover:bg-paper-2 hover:text-ink"
+            className="press inline-flex min-h-11 items-center rounded-full px-3.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted hover:bg-paper-2 hover:text-ink"
           >
             Replay
           </button>
@@ -132,7 +132,7 @@ export function HeroScene() {
             <Dot tone="ink" />
             <div className="rounded-[18px] border border-ink/10 bg-ink p-1.5 shadow-[var(--shadow-device)]">
               <div className="rounded-[13px] bg-card p-3">
-                <p className="flex items-center justify-between font-mono text-[0.66rem] uppercase tracking-[0.08em] text-muted">
+                <p className="flex items-center justify-between font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">
                   <span>Text · Ridgeline Plumbing</span>
                   <span>6:42</span>
                 </p>
@@ -180,7 +180,7 @@ export function HeroScene() {
           <li className="hs-card sm:absolute sm:left-[8%] sm:top-[85%] sm:w-[60%]" style={{ animationDelay: `${D[4] + 1}s` }}>
             <Dot tone="handled" />
             <div className="card-stock flex items-start gap-3 p-3.5">
-              <span className="mt-0.5 whitespace-nowrap font-mono text-[0.66rem] uppercase tracking-[0.08em] text-muted">6:47 PM</span>
+              <span className="mt-0.5 whitespace-nowrap font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">6:47 PM</span>
               <p className="text-[0.82rem] leading-snug text-ink">
                 <span className="font-medium">In your inbox:</span> missed call answered, job booked, nothing waiting on you.
               </p>

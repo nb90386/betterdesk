@@ -58,7 +58,7 @@ const PARTS = [
 export default function PlatformPage() {
   return (
     <>
-      <PageHero eyebrow="Platform" title={<>Everything between the first ring and <em>the booking.</em></>}>
+      <PageHero eyebrow="Platform" title={<>Everything between the first ring and the booking.</>}>
         <p>Click around a sample workspace for a plumbing company: the inbox, the calendar it fills, the short list of things that need a person, and the summary the owner reads.</p>
       </PageHero>
       <section className="container-bd py-12 md:py-16" aria-label="Sample product workspace">
@@ -67,7 +67,7 @@ export default function PlatformPage() {
       </section>
 
       <section className="container-bd py-16 md:py-24" aria-labelledby="parts-title">
-        <SectionHeading eyebrow="How the pieces fit" id="parts-title" title={<>Six jobs a front desk does. <em>And where each one stops.</em></>}>
+        <SectionHeading eyebrow="How the pieces fit" id="parts-title" title={<>Six jobs a front desk does. And where each one stops.</>}>
           <p>Each part below says what it does and what it doesn&rsquo;t. We&rsquo;d rather you know the edges before the demo.</p>
         </SectionHeading>
         <ol className="mt-14 divide-y divide-rule border-y border-rule">
@@ -80,7 +80,7 @@ export default function PlatformPage() {
                 <p className="mt-2 text-[0.96rem] leading-relaxed text-ink-2">{s.p}</p>
               </div>
               <p className="self-start rounded-[var(--radius-md)] border border-dashed border-rule-strong px-4 py-3 text-[0.88rem] leading-relaxed text-ink-2">
-                <span className="mb-1 block font-mono text-[0.64rem] uppercase tracking-[0.08em] text-muted">Where it stops</span>
+                <span className="mb-1 block font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">Where it stops</span>
                 {s.limit}
               </p>
             </li>

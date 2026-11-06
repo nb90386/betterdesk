@@ -16,7 +16,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       <div>
         <Eyebrow>Book a demo</Eyebrow>
         <h1 className="display mt-5 text-[clamp(2.6rem,1.6rem+4vw,4.6rem)] text-ink">
-          Talk through <em>your</em> setup.
+          Talk through your setup.
         </h1>
         <p className="lede mt-6">Tell us a little about the business and we&rsquo;ll reply by email to find a time.</p>
         <div className="mt-10 border-t border-rule pt-6">

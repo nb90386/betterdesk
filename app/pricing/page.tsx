@@ -80,7 +80,7 @@ const PRICING_FAQ = [
 export default function PricingPage() {
   return (
     <>
-      <PageHero eyebrow="Pricing" title={<>Simple plans. <em>No seat math.</em></>}>
+      <PageHero eyebrow="Pricing" title={<>Simple plans. No seat math.</>}>
         <p>Every plan includes setup, calibration and live human support. Monthly, with no annual contract.</p>
       </PageHero>
       <section className="container-bd py-14 md:py-20" aria-labelledby="plans-h">
@@ -128,7 +128,7 @@ export default function PricingPage() {
         <SectionHeading eyebrow="Pricing questions" id="pfaq" title="Before you ask." />
         <Faq items={PRICING_FAQ} />
       </section>
-      <CtaBand title={<>Not sure which plan? <em>Ask us.</em></>} body="We'll look at how many inquiries you get and how they reach you, and recommend a plan, or tell you BetterDesk isn't the right fit yet." />
+      <CtaBand title={<>Not sure which plan? Ask us.</>} body="We'll look at how many inquiries you get and how they reach you, and recommend a plan, or tell you BetterDesk isn't the right fit yet." />
     </>
   );
 }

@@ -117,7 +117,7 @@ export function RoiCalculator() {
       </form>
 
       <div className="flex flex-col bg-night p-5 text-card sm:p-8" aria-live="polite">
-        <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-night-muted">Your projection</p>
+        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-night-muted">Your projection</p>
         <p className="mt-3 font-display text-[clamp(2.6rem,2rem+2vw,3.6rem)] leading-none tracking-[-0.02em]">
           {usd(r.revenuePerMonth)}
           <span className="ml-2 font-sans text-[1rem] tracking-normal text-night-muted">/ month</span>
@@ -141,7 +141,7 @@ export function RoiCalculator() {
         </dl>
 
         <div className="mt-7 rounded-[var(--radius-md)] border border-night-rule p-4">
-          <p className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-night-muted">The formula</p>
+          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-night-muted">The formula</p>
           <p className="mt-2 font-mono text-[0.8rem] leading-relaxed text-card/90">
             {v.missedPerWeek} / wk × {WEEKS_PER_MONTH.toFixed(2)} wks × {v.engagePct}% × {v.bookPct}% × {usd(v.jobValue)}
             <br />= {usd(r.revenuePerMonth)} / month

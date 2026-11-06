@@ -117,7 +117,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
                   ) : null}
                   <span className="relative">
                     {s.name}
-                    <span className={`ml-2 font-mono text-[0.66rem] uppercase tracking-[0.06em] ${active ? "text-card/70" : "text-faint"}`}>{s.industry}</span>
+                    <span className={`ml-2 font-mono text-[0.6875rem] uppercase tracking-[0.06em] ${active ? "text-card/70" : "text-faint"}`}>{s.industry}</span>
                   </span>
                 </button>
               );
@@ -170,7 +170,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
                 className={`press group flex w-full items-start gap-3 rounded-[var(--radius-md)] px-3 py-2.5 text-left ${si === i ? "bg-paper-2" : "hover:bg-paper-2/60"}`}
               >
                 <span
-                  className={`mt-0.5 grid size-5 shrink-0 place-items-center rounded-full border font-mono text-[0.62rem] ${
+                  className={`mt-0.5 grid size-5 shrink-0 place-items-center rounded-full border font-mono text-[0.6875rem] ${
                     si < i ? "border-ink bg-ink text-card" : si === i ? (mode === "with" ? "border-handled text-handled" : "border-signal text-signal") : "border-rule-strong text-faint"
                   }`}
                 >
@@ -178,7 +178,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
                 </span>
                 <span>
                   <span className={`block text-[0.88rem] leading-snug ${si === i ? "font-medium text-ink" : "text-ink-2"}`}>{s.label}</span>
-                  <span className="font-mono text-[0.68rem] text-faint">{s.time}</span>
+                  <span className="font-mono text-[0.6875rem] text-faint">{s.time}</span>
                 </span>
               </button>
             </li>
@@ -192,9 +192,9 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
               <div className="flex items-center justify-between border-b border-rule px-5 pb-3 pt-4">
                 <div>
                   <p className="text-[0.82rem] font-medium text-ink">{mode === "with" ? scenario.business : scenario.customer}</p>
-                  <p className="font-mono text-[0.64rem] uppercase tracking-[0.06em] text-muted">{scenario.channel}</p>
+                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.06em] text-muted">{scenario.channel}</p>
                 </div>
-                <span className={`shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.06em] ${toneClass[step.status.tone]}`}>
+                <span className={`shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.06em] ${toneClass[step.status.tone]}`}>
                   {step.status.text}
                 </span>
               </div>
@@ -235,7 +235,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
                 <p className="mt-2 max-w-[46ch] text-[0.98rem] leading-relaxed text-ink-2">{step.note}</p>
                 {step.rule ? (
                   <div className="mt-4 rounded-[var(--radius-md)] border border-dashed border-rule-strong bg-paper px-4 py-3">
-                    <p className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-muted">Your rule</p>
+                    <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">Your rule</p>
                     <p className="mt-1 text-[0.88rem] leading-snug text-ink">{step.rule}</p>
                   </div>
                 ) : null}
@@ -304,7 +304,7 @@ function CtlButton({ onClick, disabled, label, children }: { onClick: () => void
 export function Bubble({ m }: { m: Message }) {
   if (m.from === "system") {
     return (
-      <p className="mx-auto w-fit rounded-full bg-paper-2 px-3 py-1 text-center font-mono text-[0.66rem] text-muted">
+      <p className="mx-auto w-fit rounded-full bg-paper-2 px-3 py-1 text-center font-mono text-[0.6875rem] text-muted">
         {m.text}
         {m.meta ? ` · ${m.meta}` : ""}
       </p>
@@ -344,7 +344,7 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
   if (card.kind === "handoff")
     return (
       <div className="mt-5 rounded-[var(--radius-md)] border border-amber/30 bg-amber-soft/60 p-4">
-        <p className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-amber">Handed to {card.to}</p>
+        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-amber">Handed to {card.to}</p>
         <p className="mt-1 text-[0.95rem] font-medium text-ink">{card.title}</p>
         <p className="text-[0.85rem] text-ink-2">{card.detail}</p>
       </div>
@@ -352,7 +352,7 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
   if (card.kind === "recap")
     return (
       <div className="mt-5 rounded-[var(--radius-md)] bg-ink p-4 text-card">
-        <p className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-night-muted">What you see</p>
+        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-night-muted">What you see</p>
         <ul className="mt-2 space-y-1.5">
           {card.lines.map((l) => (
             <li key={l} className="flex items-start gap-2 text-[0.88rem]">
@@ -365,7 +365,7 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
     );
   return (
     <div className="mt-5 rounded-[var(--radius-md)] border border-rule bg-paper-2 p-4">
-      <p className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-signal">Outcome</p>
+      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-signal">Outcome</p>
       <p className="mt-1 text-[0.95rem] font-medium text-ink">{card.title}</p>
       <p className="text-[0.85rem] text-muted">{card.detail}</p>
     </div>
