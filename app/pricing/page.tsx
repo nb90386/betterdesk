@@ -90,7 +90,7 @@ export default function PricingPage() {
 
       <section className="container-bd pb-20 md:pb-28" aria-labelledby="compare-title">
         <SectionHeading eyebrow="Compare" id="compare-title" title="Every plan, side by side." />
-        <div className="reveal mt-10 overflow-x-auto rounded-[var(--radius-lg)] border border-rule bg-card" role="region" aria-label="Plan comparison table, scrolls sideways on small screens" tabIndex={0}>
+        <div className="reveal relative mt-10 overflow-x-auto rounded-[var(--radius-lg)] border border-rule bg-card" role="region" aria-label="Plan comparison table, scrolls sideways on small screens" tabIndex={0}>
           <table className="w-full min-w-[640px] border-collapse text-left text-[0.9rem]">
             <caption className="sr-only">Feature comparison of Starter, Growth and Scale plans</caption>
             <thead>

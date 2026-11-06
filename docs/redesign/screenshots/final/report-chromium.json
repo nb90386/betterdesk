@@ -1,0 +1,16 @@
+[
+  {
+    "path": "/pricing",
+    "width": 320,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  },
+  {
+    "path": "/pricing",
+    "width": 390,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  }
+]

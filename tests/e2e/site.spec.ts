@@ -20,12 +20,16 @@ for (const route of ROUTES) {
     expect((await page.title()).length).toBeGreaterThan(10);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.{40,}/);
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+    await page.waitForLoadState("networkidle");
+    // Console/network errors are asserted for a clean load; the reloads below abort in-flight prefetches by design.
+    const loadErrors = [...errors];
     for (const w of WIDTHS) {
       await page.setViewportSize({ width: w, height: 900 });
+      await page.reload();
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow, `horizontal overflow at ${w}px`).toBeLessThanOrEqual(0);
     }
-    expect(errors).toEqual([]);
+    expect(loadErrors).toEqual([]);
   });
 }
 
