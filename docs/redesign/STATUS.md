@@ -16,9 +16,12 @@
 - `vercel` CLI needs the sandbox disabled (Node fetch ignores proxy).
 
 ## Next 3 actions
-1. Deploy to new Vercel project `betterdesk-redesign`; verify anonymous access; record URL here.
-2. Playwright e2e: routes 200, nav/footer links, demo/explorer/ROI/contact interactions, overflow at 320–1920.
+1. Visual polish pass on every page (390/1440), fix issues, redeploy with `vercel deploy --prod` to the new project only.
+2. Lighthouse/perf measurement; a11y contrast check; HANDOFF.md.
 3. Visual polish pass on each subpage at 390/1440 (screenshots in `screenshots/r2+`).
 
-## Preview URL
-(pending)
+## Live URL
+- **https://betterdesk-redesign.vercel.app** (Vercel project `betterdesk-redesign`, `prj_huXJszKZP8QZbkl9ncUSshS8B9DN`, team `neel-s-projects9`). Public: anonymous curl returns 200 on all routes, 404 on unknown.
+- Per-deployment URLs (e.g. `betterdesk-redesign-j4yblr94r-neel-s-projects9.vercel.app`) are behind Vercel Authentication (302). Share the project alias above.
+- First deploy `dpl_DaYrnbGTmcNB219wayLCP3REhw5s` (02:55 PST) was auto-assigned production of the NEW project. betterdesk.ai is untouched.
+- e2e: 18/18 pass against local and against the live URL (Chromium).
