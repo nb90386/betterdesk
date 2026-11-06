@@ -48,7 +48,7 @@ function ThreadArt() {
         </linearGradient>
       </defs>
       <path d="M-20 380 C 120 340, 160 400, 260 370 S 380 330, 470 350 C 600 375, 700 300, 1220 120" fill="none" stroke="url(#cta-g)" strokeWidth="1.4" />
-      <path d="M-20 395 C 140 360, 200 410, 300 385 S 420 350, 520 365 C 650 385, 760 320, 1220 140" fill="none" stroke="url(#cta-g)" strokeWidth="0.8" strokeOpacity="0.5" className="thread-flow" />
+      <path d="M-20 395 C 140 360, 200 410, 300 385 S 420 350, 520 365 C 650 385, 760 320, 1220 140" fill="none" stroke="url(#cta-g)" strokeWidth="0.8" strokeOpacity="0.5" />
       
     </svg>
   );

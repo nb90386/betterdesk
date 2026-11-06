@@ -102,7 +102,7 @@ export function ProductExplorer() {
                     {CHANNELS.map((c) => (
                       <Chip key={c.id} active={filter === c.id} onClick={() => setFilter(c.id)}>
                         {c.label}
-                        {c.plan ? <span className="ml-1 font-mono text-[0.58rem] uppercase opacity-70">{c.plan}+</span> : null}
+                        {c.plan ? <span className="ml-1 font-mono text-[0.58rem] uppercase">{c.plan}+</span> : null}
                       </Chip>
                     ))}
                   </div>

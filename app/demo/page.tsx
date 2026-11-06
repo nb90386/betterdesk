@@ -18,7 +18,8 @@ export default function DemoPage() {
           The businesses and conversations are fictional examples, not customer data.
         </p>
       </PageHero>
-      <section className="container-bd py-12 md:py-16">
+      <section className="container-bd py-12 md:py-16" aria-labelledby="walk-h">
+        <h2 id="walk-h" className="sr-only">Interactive walkthrough</h2>
         <LeadJourney />
         <div className="mt-10 grid gap-6 border-t border-rule pt-8 text-[0.92rem] leading-relaxed text-ink-2 md:grid-cols-3">
           <p><strong className="font-medium text-ink">What&rsquo;s real here:</strong> the flow. Text-back, intake questions, rules for urgent work, offered times, handoff to staff and the recap are how BetterDesk is designed to work.</p>

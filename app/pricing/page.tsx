@@ -83,13 +83,14 @@ export default function PricingPage() {
       <PageHero eyebrow="Pricing" title={<>Simple plans. <em>No seat math.</em></>}>
         <p>Every plan includes setup, calibration and live human support. Monthly, with no annual contract.</p>
       </PageHero>
-      <section className="container-bd py-14 md:py-20">
+      <section className="container-bd py-14 md:py-20" aria-labelledby="plans-h">
+        <h2 id="plans-h" className="sr-only">Plans</h2>
         <PricingPlans />
       </section>
 
       <section className="container-bd pb-20 md:pb-28" aria-labelledby="compare-title">
         <SectionHeading eyebrow="Compare" id="compare-title" title="Every plan, side by side." />
-        <div className="reveal mt-10 overflow-x-auto rounded-[var(--radius-lg)] border border-rule bg-card">
+        <div className="reveal mt-10 overflow-x-auto rounded-[var(--radius-lg)] border border-rule bg-card" role="region" aria-label="Plan comparison table, scrolls sideways on small screens" tabIndex={0}>
           <table className="w-full min-w-[640px] border-collapse text-left text-[0.9rem]">
             <caption className="sr-only">Feature comparison of Starter, Growth and Scale plans</caption>
             <thead>

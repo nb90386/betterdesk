@@ -5,15 +5,16 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SITE_URL } from "@/lib/site";
 
-// Self-hosted OFL fonts (Newsreader, Geist, Geist Mono), latin subset, variable axes.
+// Self-hosted OFL fonts, latin subset. Newsreader is a static display instance (opsz 72; 380 roman, 360 italic) to keep it ~60 KB per style.
 const newsreader = localFont({
   src: [
-    { path: "./fonts/Newsreader.woff2", style: "normal", weight: "200 800" },
-    { path: "./fonts/Newsreader-italic.woff2", style: "italic", weight: "200 800" },
+    { path: "./fonts/Newsreader.woff2", style: "normal", weight: "380" },
+    { path: "./fonts/Newsreader-italic.woff2", style: "italic", weight: "360" },
   ],
   variable: "--font-newsreader",
   display: "swap",
   fallback: ["Iowan Old Style", "Georgia", "serif"],
+  adjustFontFallback: "Times New Roman",
 });
 const geist = localFont({ src: "./fonts/Geist.woff2", weight: "100 900", variable: "--font-geist", display: "swap" });
 const geistMono = localFont({ src: "./fonts/GeistMono.woff2", weight: "100 900", variable: "--font-geist-mono", display: "swap", preload: false });
