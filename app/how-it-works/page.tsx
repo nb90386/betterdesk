@@ -30,9 +30,9 @@ const NEED = [
 const HOW_FAQ = [
   { q: "How long does setup take?", a: "Setup is one guided session plus your review of test conversations. How quickly you go live depends mostly on how fast you can get us your services, prices and rules, and on what your calendar supports. We'll give you a realistic date on the demo call." },
   { q: "Do I keep my phone number?", a: "BetterDesk is meant to work with the number your customers already call. The exact setup depends on your phone provider, and we go through it with you before you commit." },
-  { q: "What if it says something wrong?", a: "In assisted mode nothing goes out without your approval. In the other modes, it only answers from what you've approved and hands anything else to a person. If a reply needs changing, edit it once and that becomes the answer." },
+  { q: "What if it says something wrong?", a: "In assisted mode nothing goes out without your approval. In the other modes, it answers from the business information you've given it, and your rules decide what goes to a person. Your edits improve future replies." },
   { q: "Can I turn it off?", a: "Yes. You can pause it, switch modes, or cancel your plan. Plans are monthly with no annual contract." },
-  { q: "Is customer data private?", a: "Conversations are used to run your front desk and are not sold. If you're a clinic or practice, or need specific compliance terms, ask us about your requirements before connecting patient or client data." },
+  { q: "What about customer data and privacy?", a: "Ask us on the demo call. If you're a clinic or practice, or need specific privacy or compliance terms, raise it before connecting any customer data." },
 ];
 
 export default function HowItWorksPage() {

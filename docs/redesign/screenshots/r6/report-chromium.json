@@ -1,0 +1,16 @@
+[
+  {
+    "path": "/",
+    "width": 1024,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  },
+  {
+    "path": "/",
+    "width": 1280,
+    "browser": "chromium",
+    "overflowPx": 0,
+    "errors": []
+  }
+]

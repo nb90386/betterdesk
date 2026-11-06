@@ -41,13 +41,12 @@ export function ModeSwitcher() {
         <span className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-night-muted">Reply mode</span>
         <span className="rounded-full border border-dashed border-night-rule px-2.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-night-muted">Sample</span>
       </div>
-      <div className="mt-3 grid grid-cols-3 gap-1 rounded-[var(--radius-md)] bg-night p-1" role="radiogroup" aria-label="Reply mode">
+      <div className="mt-3 grid grid-cols-3 gap-1 rounded-[var(--radius-md)] bg-night p-1" role="group" aria-label="Reply mode">
         {MODES.map((x) => (
           <button
             key={x.id}
             type="button"
-            role="radio"
-            aria-checked={mode === x.id}
+            aria-pressed={mode === x.id}
             onClick={() => setMode(x.id)}
             className="press relative rounded-[8px] px-2 py-2.5 text-left"
           >

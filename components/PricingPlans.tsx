@@ -16,7 +16,7 @@ export function PricingPlans({ compact = false }: { compact?: boolean }) {
             <h3 id={`plan-${p.id}`} className="text-[1.05rem] font-semibold tracking-[-0.01em]">
               {p.name}
             </h3>
-            {p.featured ? <span className="rounded-full bg-card/10 px-2.5 py-0.5 font-mono text-[0.64rem] uppercase tracking-[0.08em] text-card/80">Most chosen</span> : null}
+            {p.featured ? <span className="rounded-full bg-card/10 px-2.5 py-0.5 font-mono text-[0.64rem] uppercase tracking-[0.08em] text-card/80">Most popular</span> : null}
           </div>
           <p className="mt-5 flex items-baseline gap-1">
             <span className="font-display text-[3.4rem] leading-none tracking-[-0.03em]">${p.price}</span>

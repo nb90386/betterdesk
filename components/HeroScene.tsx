@@ -176,13 +176,13 @@ export function HeroScene() {
             </div>
           </li>
 
-          {/* 5. Owner recap */}
+          {/* 5. Inbox record */}
           <li className="hs-card sm:absolute sm:left-[8%] sm:top-[85%] sm:w-[60%]" style={{ animationDelay: `${D[4] + 1}s` }}>
             <Dot tone="handled" />
             <div className="card-stock flex items-start gap-3 p-3.5">
-              <span className="mt-0.5 whitespace-nowrap font-mono text-[0.66rem] uppercase tracking-[0.08em] text-muted">7:00 AM</span>
+              <span className="mt-0.5 whitespace-nowrap font-mono text-[0.66rem] uppercase tracking-[0.08em] text-muted">6:47 PM</span>
               <p className="text-[0.82rem] leading-snug text-ink">
-                <span className="font-medium">Morning recap:</span> 1 missed call answered, 1 job booked, nothing waiting on you.
+                <span className="font-medium">In your inbox:</span> missed call answered, job booked, nothing waiting on you.
               </p>
             </div>
           </li>
@@ -190,7 +190,7 @@ export function HeroScene() {
       </div>
       <figcaption className="sr-only">
         Sample sequence: a call to a plumbing company is missed at 6:42 PM. BetterDesk texts the caller back, learns the water heater has a
-        slow leak, offers two open times, books Thursday 8 to 10 AM, and includes it in the owner&rsquo;s morning recap.
+        slow leak, offers two open times, books Thursday 8 to 10 AM, and logs the whole conversation in the business&rsquo;s inbox.
       </figcaption>
     </figure>
   );

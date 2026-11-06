@@ -6,7 +6,7 @@ import { CtaBand } from "@/components/CtaBand";
 
 export const metadata: Metadata = {
   title: "Platform",
-  description: "Inside BetterDesk: missed-call text-back, replies on every channel, booking, handoff to staff, follow-up and the owner recap.",
+  description: "Inside BetterDesk: missed-call text-back, replies on your channels, booking, handoff to staff, follow-up and owner summaries.",
   alternates: { canonical: "/platform" },
 };
 
@@ -16,7 +16,7 @@ const PARTS = [
     k: "Capture",
     h: "Every way a customer reaches you, in one place.",
     p: "Missed calls trigger a text back. Texts and website forms land in the same inbox on every plan. Instagram DMs, Google Business messages and email join on Growth and Scale.",
-    limit: "BetterDesk doesn't change your phone number's ringing. Your team still answers when they can; BetterDesk covers the calls they can't.",
+    limit: "Your team still answers when they can. How unanswered calls reach BetterDesk depends on your phone provider; we set it up with you.",
   },
   {
     n: "02",
@@ -48,10 +48,10 @@ const PARTS = [
   },
   {
     n: "06",
-    k: "Recap",
+    k: "Summary",
     h: "Know what happened without reading every thread.",
-    p: "A plain-English summary of what came in, what got booked, what went to your team, and suggested FAQ additions waiting for your approval.",
-    limit: "Analytics and owner alerts are on Growth and Scale.",
+    p: "A plain-English weekly summary of what came in, what got booked, what went to your team, and suggested FAQ additions waiting for your approval. Owner alerts flag big or urgent leads as they happen.",
+    limit: "Owner alerts and English-language analytics are on Growth and Scale.",
   },
 ];
 
@@ -59,7 +59,7 @@ export default function PlatformPage() {
   return (
     <>
       <PageHero eyebrow="Platform" title={<>Everything between the first ring and <em>the booking.</em></>}>
-        <p>Click around a sample workspace for a plumbing company: the inbox, the calendar it fills, the short list of things that need a person, and the recap the owner reads.</p>
+        <p>Click around a sample workspace for a plumbing company: the inbox, the calendar it fills, the short list of things that need a person, and the summary the owner reads.</p>
       </PageHero>
       <section className="container-bd py-12 md:py-16" aria-label="Sample product workspace">
         <ProductExplorer />

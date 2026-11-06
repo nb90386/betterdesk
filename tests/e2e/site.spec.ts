@@ -108,7 +108,8 @@ test("product explorer: filter, calendar, handoff, approve draft", async ({ page
   await page.getByRole("listitem").filter({ hasText: "Marcus T." }).getByRole("button", { name: "Open conversation" }).click();
   await page.getByRole("button", { name: "Approve and send" }).click();
   await expect(page.getByText("sent after your approval")).toBeVisible();
-  await page.getByRole("tab", { name: "Owner recap" }).click();
+  await page.getByRole("tab", { name: "Weekly summary" }).click();
+  await expect(page.getByText(/6 conversations this week/)).toBeVisible();
   await expect(page.getByText(/nothing waiting on you/)).toBeVisible();
 });
 

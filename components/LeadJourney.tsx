@@ -89,6 +89,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
                 <button
                   key={s.id}
                   role="tab"
+                  id={`${uid}-tab-${s.id}`}
                   type="button"
                   aria-selected={active}
                   aria-controls={`${uid}-panel`}
@@ -157,7 +158,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
         </div>
       </div>
 
-      <div id={`${uid}-panel`} className={`grid gap-0 ${compact ? "lg:grid-cols-[1fr_1.05fr]" : "lg:grid-cols-[280px_1fr_1fr]"}`}>
+      <div id={`${uid}-panel`} {...(scenarios.length > 1 ? { role: "tabpanel", "aria-labelledby": `${uid}-tab-${scenario.id}` } : {})} className={`grid gap-0 ${compact ? "lg:grid-cols-[1fr_1.05fr]" : "lg:grid-cols-[280px_1fr_1fr]"}`}>
         {/* Step list */}
         <ol className={`border-rule ${compact ? "hidden" : "hidden border-r lg:block"} max-h-[560px] overflow-y-auto p-3`} aria-label="Steps">
           {steps.map((s, si) => (
@@ -351,7 +352,7 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
   if (card.kind === "recap")
     return (
       <div className="mt-5 rounded-[var(--radius-md)] bg-ink p-4 text-card">
-        <p className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-night-muted">Owner recap</p>
+        <p className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-night-muted">What you see</p>
         <ul className="mt-2 space-y-1.5">
           {card.lines.map((l) => (
             <li key={l} className="flex items-start gap-2 text-[0.88rem]">

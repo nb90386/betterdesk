@@ -26,3 +26,12 @@ Source of truth available tonight: the live marketing site only. There is no pro
 | Testimonials, logos, review counts, certifications | None on live site | None added. |
 | Privacy / Terms / Security / DPA | `href="#"` placeholders on live site | Not fabricated. No legal pages shipped; footer has no dead legal links. Listed as a blocker. |
 | HIPAA / medical triage | Not claimed explicitly, but dentist card says "qualifies insurance" | Removed. Healthcare is mentioned only as "clinics and practices: ask us about your requirements before connecting patient data". |
+
+## Independent red-team pass (03:2x PST) and fixes
+A separate reviewer agent checked the code against the baseline. Fixed:
+- Removed invented privacy/policy statements: "conversations ... are not sold", "we only use it to reply to you", an overage policy ("not hard caps").
+- Removed behaviour that appeared only in sample conversations: "we'll text when the tech is on the way", reply-keyword confirm/reschedule, rescheduling (replaced with a quote follow-up, which the baseline supports), matching staff and durations.
+- Replaced the invented daily "morning recap" with what the baseline describes: the conversation in the unified inbox, owner alerts (Growth+), and a plain-English weekly summary/analytics (Growth+).
+- Softened guarantees: "only says what you've approved", "always go to a person", "edit it once and that becomes the answer", "doesn't change your phone number's ringing", "a calendar that fills itself", "replies on every channel".
+- Removed unsourced generalisations ("Most people don't leave one", "Most missed work isn't lost to price...").
+- Restored plan copy word for word from the baseline (e.g. "Review generation", "Smart lead scoring + owner alerts", "English-language analytics", "Talk to sales", "Most popular").

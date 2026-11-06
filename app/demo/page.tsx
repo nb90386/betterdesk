@@ -22,7 +22,7 @@ export default function DemoPage() {
         <h2 id="walk-h" className="sr-only">Interactive walkthrough</h2>
         <LeadJourney />
         <div className="mt-10 grid gap-6 border-t border-rule pt-8 text-[0.92rem] leading-relaxed text-ink-2 md:grid-cols-3">
-          <p><strong className="font-medium text-ink">What&rsquo;s real here:</strong> the flow. Text-back, intake questions, rules for urgent work, offered times, handoff to staff and the recap are how BetterDesk is designed to work.</p>
+          <p><strong className="font-medium text-ink">What&rsquo;s real here:</strong> the flow. Text-back, intake questions, rules for urgent work, offered times, handoff to staff and the inbox record are how BetterDesk is designed to work.</p>
           <p><strong className="font-medium text-ink">What&rsquo;s sample:</strong> every name, number, price and time. Nothing on this page is connected to a live phone line or calendar.</p>
           <p><strong className="font-medium text-ink">What depends on you:</strong> the questions it asks, what counts as urgent, and which calendar it books into. You set those during setup.</p>
         </div>

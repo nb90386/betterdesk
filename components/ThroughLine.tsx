@@ -4,7 +4,7 @@ const STOPS = [
   { k: "Reply", t: "The customer hears back right away, in your business's name.", tone: "ink" },
   { k: "Ask", t: "It asks your intake questions: what's wrong, where, how soon.", tone: "ink" },
   { k: "Book or hand off", t: "Routine work gets offered real times. Anything urgent or unusual goes to a person.", tone: "ink" },
-  { k: "Follow up", t: "Reminders, a nudge if they go quiet, and a recap for you.", tone: "handled" },
+  { k: "Follow up", t: "Reminders, a nudge if they go quiet, and a weekly summary for you.", tone: "handled" },
 ] as const;
 
 export function ThroughLine() {

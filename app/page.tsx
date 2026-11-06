@@ -25,8 +25,8 @@ const MOMENTS = [
   {
     time: "9:48 PM",
     where: "After close",
-    today: "A customer ready to book tonight finds a business that answers tonight.",
-    after: "They get real openings and a confirmation. You see it in the morning recap.",
+    today: "A customer ready to book tonight books with whoever answers tonight.",
+    after: "They get open times and a confirmation. The conversation is waiting in your inbox.",
   },
 ];
 
@@ -66,7 +66,7 @@ export default function Home() {
     <>
       {/* ---------------- Hero ---------------- */}
       <section className="relative overflow-hidden" aria-labelledby="hero-title">
-        <div className="container-bd grid items-center gap-12 pb-16 pt-10 sm:pt-14 lg:min-h-[calc(100dvh-4rem)] lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:pb-20">
+        <div className="container-bd grid items-center gap-12 pb-16 pt-10 sm:pt-14 xl:min-h-[calc(100dvh-4rem)] xl:grid-cols-[1.05fr_1fr] xl:gap-10 xl:pb-20">
           <div className="max-w-[640px]">
             <Eyebrow>The front desk for service businesses</Eyebrow>
             <h1 id="hero-title" className="display mt-5 text-[clamp(2.7rem,1.5rem+4.6vw,5.1rem)] text-ink">
@@ -115,8 +115,7 @@ export default function Home() {
               }
             >
               <p>
-                Most missed work isn&rsquo;t lost to a competitor&rsquo;s price. It&rsquo;s lost to a slow reply. The customer needed someone now, and
-                someone else picked up.
+                A lot of missed work is lost to a slow reply, not a better price. The customer needed someone now, and someone else picked up.
               </p>
             </SectionHeading>
             <div className="reveal">
@@ -204,11 +203,10 @@ export default function Home() {
               <span className="text-signal-glow">04</span> You stay in charge
             </p>
             <h2 id="control-title" className="display mt-4 text-[clamp(2.1rem,1.4rem+2.6vw,3.6rem)]">
-              It works <em>your</em> way, and only says what you&rsquo;ve approved.
+              It works <em>your</em> way, from what you&rsquo;ve told it.
             </h2>
             <p className="mt-5 max-w-[52ch] text-[1.05rem] leading-relaxed text-card/80">
-              Start with every reply waiting for your OK. Loosen the reins when you trust it. Urgent, unusual or sensitive conversations always go to a
-              person, with the whole thread attached.
+              Start with every reply waiting for your OK. Loosen the reins when you trust it. Your rules decide which conversations go to a person, with the whole thread attached.
             </p>
             <ul className="mt-8 space-y-3 text-[0.95rem] text-card/85">
               <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-handled-bright" aria-hidden="true" />Answers come from your services, hours, prices and policies</li>
@@ -236,7 +234,7 @@ export default function Home() {
                 </>
               }
             >
-              <p>One inbox for every channel, a calendar that fills itself, and a short list of the conversations that need you.</p>
+              <p>One inbox for your channels, bookings on your calendar, and a short list of the conversations that need you.</p>
             </SectionHeading>
             <ButtonLink href="/platform" variant="secondary" arrow className="group reveal mt-8">
               Explore the platform
@@ -245,12 +243,12 @@ export default function Home() {
           <dl className="reveal grid gap-x-10 sm:grid-cols-2">
             {[
               ["Missed-call text-back", "Every unanswered call gets a text in your business's name."],
-              ["Replies on every channel", "Calls, texts and web forms on every plan. Instagram, Google Business and email on Growth."],
+              ["Replies on your channels", "Calls, texts and web forms on every plan. Instagram, Google Business and email on Growth."],
               ["Booking", "Offers open times and books them, or hands the request to your team."],
               ["Follow-up", "Reminders before appointments and a nudge when a quote goes quiet."],
               ["Handoff to a person", "Emergencies and anything it isn't sure about go to the right person."],
-              ["Owner recap", "A plain-English summary of what came in and what happened."],
-              ["Review requests", "A timely ask after the job, on Growth and Scale."],
+              ["Owner alerts and summaries", "A ping for big or urgent leads and a plain-English weekly summary, on Growth and Scale."],
+              ["Review generation", "A timely ask after the job, on Growth and Scale."],
               ["Unified inbox", "One thread per customer, whichever way they reached you."],
             ].map(([k, v]) => (
               <div key={k} className="border-t border-rule py-5">
@@ -293,7 +291,7 @@ export default function Home() {
               <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Beauty & wellness</p>
               <h3 className="mt-3 max-w-[16ch] font-display text-[2.1rem] leading-[1.05] tracking-[-0.02em] text-ink">Salons, spas, studios.</h3>
               <p className="mt-3 max-w-[40ch] text-[0.95rem] text-ink-2">
-                Texts and DMs pile up between clients. BetterDesk answers with your menu and books the right person for the right length of time.
+                Texts and DMs pile up between clients. BetterDesk replies with availability, services and prices, and books into your system.
               </p>
               <AppointmentStrip />
               <span className="mt-6 inline-flex items-center gap-2 text-[0.92rem] font-medium text-ink">

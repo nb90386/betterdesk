@@ -45,7 +45,7 @@ export const SOLUTIONS: Solution[] = [
     name: "Beauty & wellness",
     title: "Booked between clients,",
     titleEm: "even after close.",
-    lede: "For salons, barbers, spas, nail and lash studios, massage and fitness studios. BetterDesk answers texts and DMs with your service menu, books the right person for the right length of time, and cuts down on no-shows with reminders.",
+    lede: "For salons, barbers, spas, nail and lash studios, massage and fitness studios. BetterDesk answers texts and DMs with your availability, services and prices, books into your booking tool where it's connected, and sends reminders.",
     who: ["Hair salons", "Barbers", "Day spas", "Nail studios", "Lash & brow", "Massage", "Fitness studios"],
     pains: [
       { k: "Messages pile up mid-service", v: "Nobody can answer a DM with foils in. By the break there are twelve." },
@@ -54,8 +54,7 @@ export const SOLUTIONS: Solution[] = [
     ],
     flow: [
       { k: "Answer from your menu", v: "Services, durations, starting prices and who does what, straight from what you set up." },
-      { k: "Match the right provider", v: "A cut and gloss goes to someone who does color, for the right length of time." },
-      { k: "Book the slot", v: "Where your booking tool is connected, it offers real openings. Otherwise it collects the request for your front desk." },
+            { k: "Book the slot", v: "Where your booking tool is connected, it offers real openings. Otherwise it collects the request for your front desk." },
       { k: "Remind and rebook", v: "A reminder the day before with an easy reschedule option, so a conflict becomes a moved appointment, not a gap." },
       { k: "Ask for the review", v: "On Growth and Scale, a review request after the visit, at a sensible time." },
     ],

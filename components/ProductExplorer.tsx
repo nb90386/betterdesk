@@ -9,7 +9,7 @@ const VIEWS = [
   { id: "inbox", label: "Inbox" },
   { id: "calendar", label: "Calendar" },
   { id: "handoff", label: "Needs a person" },
-  { id: "recap", label: "Owner recap" },
+  { id: "recap", label: "Weekly summary" },
 ] as const;
 type View = (typeof VIEWS)[number]["id"];
 
@@ -26,6 +26,12 @@ export function ProductExplorer() {
   const list = THREADS.filter((t) => filter === "all" || t.channel === filter);
   const thread = THREADS.find((t) => t.id === selected) ?? THREADS[0];
   const stateOf = (t: Thread) => (t.state === "awaiting-approval" && approved[t.id] ? "answered" : t.state);
+
+  const applyFilter = (f: Channel | "all") => {
+    setFilter(f);
+    const visible = THREADS.filter((t) => f === "all" || t.channel === f);
+    if (visible.length && !visible.some((t) => t.id === selected)) setSelected(visible[0].id);
+  };
 
   const counts = {
     total: THREADS.length,
@@ -53,7 +59,7 @@ export function ProductExplorer() {
             <span className="size-2.5 rounded-full bg-rule-strong" />
           </span>
           <p className="text-[0.85rem] font-medium text-ink">{EXPLORER_BUSINESS}</p>
-          <span className="sample-tag hidden md:inline-flex">Sample workspace</span>
+          <span className="sample-tag">Sample<span className="hidden md:inline">&nbsp;workspace</span></span>
         </div>
         <div role="tablist" aria-label="Views" className="-mx-1 flex gap-1 overflow-x-auto px-1">
           {VIEWS.map((v, at) => (
@@ -96,11 +102,11 @@ export function ProductExplorer() {
               <div className="grid md:grid-cols-[minmax(0,300px)_1fr]">
                 <div className="border-b border-rule md:border-b-0 md:border-r">
                   <div className="flex gap-1.5 overflow-x-auto border-b border-rule px-3 py-3" role="group" aria-label="Filter by channel">
-                    <Chip active={filter === "all"} onClick={() => setFilter("all")}>
+                    <Chip active={filter === "all"} onClick={() => applyFilter("all")}>
                       All
                     </Chip>
                     {CHANNELS.map((c) => (
-                      <Chip key={c.id} active={filter === c.id} onClick={() => setFilter(c.id)}>
+                      <Chip key={c.id} active={filter === c.id} onClick={() => applyFilter(c.id)}>
                         {c.label}
                         {c.plan ? <span className="ml-1 font-mono text-[0.58rem] uppercase">{c.plan}+</span> : null}
                       </Chip>
@@ -182,13 +188,13 @@ export function ProductExplorer() {
             {view === "recap" ? (
               <div className="grid gap-6 p-5 sm:p-7 lg:grid-cols-[1.1fr_1fr]">
                 <div className="rounded-[var(--radius-lg)] bg-night p-6 text-card">
-                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-night-muted">Thursday recap · sent 7:00 PM</p>
+                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-night-muted">Weekly summary · sample week · Growth and Scale</p>
                   <p className="mt-3 font-display text-[1.6rem] leading-snug tracking-[-0.015em]">
-                    {counts.total} conversations today. {counts.booked} on the calendar, {counts.handed} sent to your team
+                    {counts.total} conversations this week. {counts.booked} on the calendar, {counts.handed} sent to your team
                     {counts.waiting ? `, ${counts.waiting} draft waiting for your OK.` : ", nothing waiting on you."}
                   </p>
                   <ul className="mt-5 space-y-2 border-t border-night-rule pt-4 text-[0.88rem] text-card/90">
-                    <li>Busiest stretch: 12–3 PM, while both techs were on jobs.</li>
+                    <li>Busiest stretch: Thursday afternoon, while both techs were on jobs.</li>
                     <li>One customer outside your service area was told so politely.</li>
                     <li>Suggested FAQ: &ldquo;Do you service Round Rock?&rdquo; Approve to reuse the answer.</li>
                   </ul>
@@ -196,7 +202,7 @@ export function ProductExplorer() {
                 <dl className="grid grid-cols-2 gap-3 self-start">
                   {[
                     ["Conversations", counts.total],
-                    ["Booked or moved", counts.booked],
+                    ["Booked", counts.booked],
                     ["Sent to a person", counts.handed],
                     ["Drafts waiting", counts.waiting],
                   ].map(([k, v]) => (
@@ -205,7 +211,7 @@ export function ProductExplorer() {
                       <dd className="mt-1 font-display text-[2.2rem] leading-none text-ink">{v}</dd>
                     </div>
                   ))}
-                  <p className="col-span-2 text-[0.75rem] text-faint">Counts are computed from the six sample conversations in this workspace.</p>
+                  <p className="col-span-2 text-[0.75rem] text-faint">Counts are computed from the six sample conversations in this workspace. The weekly summary and analytics are part of the Growth and Scale plans.</p>
                 </dl>
               </div>
             ) : null}

@@ -28,17 +28,17 @@ const ROWS: { group: string; items: [string, Cell, Cell, Cell][] }[] = [
     items: [
       ["Appointment booking", true, true, true],
       ["Follow-up sequences", "Basic", "Advanced, multi-step", "Advanced, multi-step"],
-      ["Review requests", false, true, true],
+      ["Review generation", false, true, true],
       ["Multi-location routing", false, false, true],
-      ["Custom CRM and booking integrations", false, false, true],
+      ["Custom CRM + booking integrations", false, false, true],
     ],
   },
   {
     group: "Insight and control",
     items: [
-      ["Lead scoring and owner alerts", false, true, true],
-      ["Plain-English analytics", false, true, true],
-      ["Custom voice and brand training", false, false, true],
+      ["Smart lead scoring + owner alerts", false, true, true],
+      ["English-language analytics", false, true, true],
+      ["Custom voice + brand training", false, false, true],
     ],
   },
   {
@@ -46,7 +46,7 @@ const ROWS: { group: string; items: [string, Cell, Cell, Cell][] }[] = [
     items: [
       ["Setup and onboarding with a person", true, true, true],
       ["Support", "Live human support", "Priority", "Dedicated success manager"],
-      ["SLA and premium support", false, false, "Terms set in your contract"],
+      ["SLA + premium support", false, false, true],
       ["Quarterly business reviews", false, false, true],
     ],
   },
@@ -61,7 +61,7 @@ const PRICING_FAQ = [
   },
   {
     q: "What counts as a lead?",
-    a: "A new inquiry from a person: a missed call, a text, a form, a message. The weekly ranges on each plan are guidance for fit, not hard caps. Ask us what happens if you go over.",
+    a: "A new inquiry from a person: a missed call, a text, a form, a message. The weekly ranges show which plan usually fits. Tell us your volume and we'll recommend one.",
   },
   {
     q: "Will it pay for itself?",
@@ -113,7 +113,7 @@ export default function PricingPage() {
                     <th scope="row" className="px-5 py-3 font-normal text-ink">{label}</th>
                     {cells.map((c, i) => (
                       <td key={i} className="px-4 py-3 text-ink-2">
-                        {c === true ? <span className="text-handled" aria-label="Included">✓</span> : c === false ? <span className="text-faint" aria-label="Not included">—</span> : c}
+                        {c === true ? (<><span className="text-handled" aria-hidden="true">✓</span><span className="sr-only">Included</span></>) : c === false ? (<><span className="text-faint" aria-hidden="true">—</span><span className="sr-only">Not included</span></>) : c}
                       </td>
                     ))}
                   </tr>

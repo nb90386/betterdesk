@@ -29,9 +29,13 @@ export function SiteHeader() {
     };
     document.addEventListener("keydown", onKey);
     document.documentElement.style.overflow = "hidden";
+    // Keep keyboard and screen-reader focus inside the open menu.
+    const behind = [document.getElementById("main"), document.querySelector("footer")].filter(Boolean) as HTMLElement[];
+    behind.forEach((el) => (el.inert = true));
     return () => {
       document.removeEventListener("keydown", onKey);
       document.documentElement.style.overflow = "";
+      behind.forEach((el) => (el.inert = false));
     };
   }, [open]);
 

@@ -176,7 +176,7 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
       </div>
       <div className="flex flex-col gap-4 border-t border-rule pt-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-[44ch] text-[0.82rem] leading-relaxed text-muted">
-          Pressing the button opens your email app with this message addressed to {CONTACT_EMAIL}. We only use it to reply to you.
+          Pressing the button opens your email app with this message addressed to {CONTACT_EMAIL}. Nothing is sent until you press send there.
         </p>
         <button type="submit" className="press min-h-12 shrink-0 rounded-full bg-ink px-6 text-[0.95rem] font-medium text-card hover:bg-ink-2">
           Write the email

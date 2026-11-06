@@ -102,17 +102,17 @@ export const SCENARIOS: Scenario[] = [
         label: "The job is booked",
         note: "The booking lands on your calendar with the details your tech needs.",
         status: { tone: "handled", text: "Booked" },
-        messages: [{ from: "desk", text: "You're set for tomorrow, 8–10 AM. We'll text when the tech is on the way.", meta: "6:47 PM" }],
+        messages: [{ from: "desk", text: "You're set for tomorrow, 8–10 AM. We'll send a reminder before the visit.", meta: "6:47 PM" }],
         card: { kind: "booking", title: "Water heater · slow leak", when: "Thu · 8:00–10:00 AM", detail: "Dana M. · 78704 · garage unit" },
       },
       {
-        time: "7:00 AM",
+        time: "6:47 PM",
         label: "You see what happened",
-        note: "The morning recap shows every conversation from the night, in plain language.",
-        status: { tone: "handled", text: "In your recap" },
+        note: "The whole conversation is in your inbox. It also counts toward your plain-English weekly summary.",
+        status: { tone: "handled", text: "In your inbox" },
         card: {
           kind: "recap",
-          lines: ["1 missed call answered by text", "1 job booked for this morning", "0 conversations waiting on you"],
+          lines: ["Missed call answered by text", "Job booked for tomorrow 8–10 AM", "Nothing waiting on you"],
         },
       },
     ],
@@ -127,7 +127,7 @@ export const SCENARIOS: Scenario[] = [
       {
         time: "6:43 PM",
         label: "Voicemail, no message",
-        note: "Dana hears the greeting and hangs up. Most people don't leave one.",
+        note: "Dana hears the greeting and hangs up without leaving a message.",
         status: { tone: "signal", text: "No voicemail" },
         messages: [{ from: "system", text: "Call ended after greeting · 0:14", meta: "6:43 PM" }],
       },
@@ -165,7 +165,7 @@ export const SCENARIOS: Scenario[] = [
       {
         time: "9:48 PM",
         label: "It answers from your menu",
-        note: "Services, durations and stylists come from what you taught it during setup.",
+        note: "Services, prices and availability come from what you set up and the booking tool you connect.",
         status: { tone: "amber", text: "Answering" },
         messages: [
           {
@@ -187,8 +187,8 @@ export const SCENARIOS: Scenario[] = [
       },
       {
         time: "9:52 PM",
-        label: "Booked into the right column",
-        note: "The appointment goes to Mei's column for the right length of time.",
+        label: "Booked",
+        note: "The appointment goes into your booking tool, and the client gets a confirmation.",
         status: { tone: "handled", text: "Booked" },
         messages: [
           { from: "customer", text: "10 with Mei!", meta: "9:52 PM" },
@@ -199,16 +199,16 @@ export const SCENARIOS: Scenario[] = [
       {
         time: "Fri 10:00 AM",
         label: "The reminder goes out",
-        note: "A reminder the day before, with an easy way to reschedule instead of a no-show.",
+        note: "A reminder goes out ahead of the appointment, so it doesn't slip anyone's mind.",
         status: { tone: "handled", text: "Reminder sent" },
-        messages: [{ from: "desk", text: "Reminder: Saturday 10:00 AM with Mei. Reply C to confirm or R to reschedule.", meta: "Fri 10:00 AM" }],
+        messages: [{ from: "desk", text: "Reminder: Saturday 10:00 AM with Mei. Reply here if you need to change it.", meta: "Fri 10:00 AM" }],
       },
       {
         time: "Sat 9:00 AM",
         label: "The owner's view",
-        note: "The front desk opens to a full book and a clear list, not a pile of unread texts.",
-        status: { tone: "handled", text: "In your recap" },
-        card: { kind: "recap", lines: ["3 after-hours texts answered", "2 appointments booked", "1 price question saved to your FAQ for approval"] },
+        note: "The front desk opens to a booked chair and a clear inbox, not a pile of unread texts.",
+        status: { tone: "handled", text: "In your inbox" },
+        card: { kind: "recap", lines: ["After-hours text answered", "Saturday 10:00 AM booked with Mei", "Price question suggested for your FAQ, waiting for approval"] },
       },
     ],
     without: [
@@ -442,14 +442,14 @@ export const THREADS: Thread[] = [
     customer: "J. Alvarez",
     channel: "sms",
     received: "Thu 4:25 PM",
-    preview: "Need to move my Monday appointment",
-    state: "rescheduled",
+    preview: "Following up on that drain quote",
+    state: "booked",
     messages: [
-      { from: "customer", text: "Need to move my Monday appointment, something came up", meta: "4:25 PM" },
-      { from: "desk", text: "No problem. I can move you to Tue 10 AM–12 PM or Wed 1–3 PM.", meta: "4:25 PM" },
-      { from: "customer", text: "Tuesday", meta: "4:31 PM" },
+      { from: "desk", text: "Hi Jordan, following up on the drain cleaning quote from Monday. Want to get it on the schedule?", meta: "Follow-up · 4:25 PM" },
+      { from: "customer", text: "Yes, can you do Friday morning?", meta: "4:31 PM" },
+      { from: "desk", text: "Friday 10 AM–12 PM is open. You're booked.", meta: "4:31 PM" },
     ],
-    knew: ["Reschedule policy: free with 24 hr notice", "Calendar: Tue 10–12 open"],
-    booking: { day: 1, start: 10, end: 12, title: "Drain cleaning · J. Alvarez" },
+    knew: ["Follow-up sequence: quote sent, no reply after 3 days", "Calendar: Fri 10–12 open"],
+    booking: { day: 4, start: 10, end: 12, title: "Drain cleaning · J. Alvarez" },
   },
 ];
