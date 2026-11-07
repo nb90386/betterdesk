@@ -15,13 +15,29 @@ export const toneClass: Record<Tone, string> = {
   ink: "bg-ink text-card border-ink",
 };
 
-export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: string[]; compact?: boolean }) {
+export function LeadJourney({ scenarioIds, compact = false, autoplay = false }: { scenarioIds?: string[]; compact?: boolean; autoplay?: boolean }) {
   const scenarios = scenarioIds ? SCENARIOS.filter((s) => scenarioIds.includes(s.id)) : SCENARIOS;
   const [scenarioId, setScenarioId] = useState(scenarios[0].id);
   const [mode, setMode] = useState<"with" | "without">("with");
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(false);
   const reduce = useReducedMotion();
+  const rootRef = useRef<HTMLDivElement>(null);
+  // Homepage only: start the walkthrough once when it is mostly in view, so it is never a static first frame.
+  useEffect(() => {
+    if (!autoplay || reduce || !rootRef.current) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setPlaying(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.55 },
+    );
+    io.observe(rootRef.current);
+    return () => io.disconnect();
+  }, [autoplay, reduce]);
   const uid = useId();
   const threadRef = useRef<HTMLDivElement>(null);
 
@@ -76,6 +92,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
   return (
     <section
       aria-label="Interactive walkthrough: how an inquiry becomes a booking"
+      ref={rootRef}
       className="overflow-hidden rounded-[var(--radius-xl)] border border-rule bg-card/70 shadow-[var(--shadow-card)]"
       onKeyDown={onKeyDown}
     >

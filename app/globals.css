@@ -278,7 +278,7 @@
   .nd-thread { stroke-dasharray: 1; stroke-dashoffset: 1; animation: nd-draw 1100ms var(--ease-travel) forwards; animation-delay: var(--d, 0ms); }
   .nd-settle { animation: nd-settle 900ms var(--ease-out-soft) both; animation-delay: var(--d, 0ms); }
   .nd-typing { animation: nd-typing 900ms steps(1) both; animation-delay: var(--d, 0ms); }
-  .nd-out { animation: nd-out 360ms ease-out forwards; animation-delay: calc(var(--d, 0ms) + 200ms); }
+  .nd-out { animation: nd-out 180ms ease-out forwards; animation-delay: var(--d, 0ms); }
 }
 @keyframes nd-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
 @keyframes nd-pop { from { opacity: 0; transform: translateY(8px) scale(0.96); } to { opacity: 1; transform: none; } }

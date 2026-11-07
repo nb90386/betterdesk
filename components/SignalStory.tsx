@@ -65,7 +65,7 @@ export function SignalStory() {
             ref={(el) => {
               refs.current[i] = el;
             }}
-            className="relative py-8 lg:flex lg:min-h-[46svh] lg:flex-col lg:justify-center lg:py-0"
+            className="relative py-8 lg:flex lg:min-h-[40svh] lg:flex-col lg:justify-center lg:py-0"
           >
             <div className={`transition-opacity duration-300 lg:pl-8 ${active === s.id ? "is-active" : "is-idle"}`}>
               <span className="absolute left-0 top-[2.6rem] hidden h-[calc(100%-2.6rem)] w-px bg-white/[0.08] lg:top-1/2 lg:block lg:h-full lg:-translate-y-1/2" aria-hidden="true" />
@@ -100,7 +100,7 @@ function Stage({ step, index, still = false }: { step: StepId; index: number; st
   const reduce = useReducedMotion();
   const calm = reduce || still;
   return (
-    <div className="stage-pane relative flex flex-col overflow-hidden p-5 sm:p-6 lg:min-h-[31rem]">
+    <div className="stage-pane relative flex flex-col overflow-hidden p-5 sm:p-6 lg:min-h-[27rem]">
       <div className="flex items-center justify-between border-b border-white/[0.06] pb-3.5 text-[0.8rem]">
         <span className="font-medium text-[#f7f6f3]">Ridgeline Plumbing &amp; Heating</span>
         <span className="text-night-muted">Sample data</span>

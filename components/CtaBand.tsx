@@ -1,9 +1,8 @@
 import { ButtonLink } from "./Button";
-import { Check } from "./NightDesk";
 
-/** The close: morning. The call from last night is on today's schedule. */
+/** The close: first light. The night's conversations, sorted, waiting in the owner's inbox. */
 export function CtaBand({
-  title = <>Wake up to bookings, <span className="text-muted">not voicemails.</span></>,
+  title = <>Wake up to bookings, <span className="text-night-muted">not voicemails.</span></>,
   secondary = { href: "/demo", label: "Or watch a sample call" },
   body = "A short call with a person, not a pitch deck. Bring how calls and messages reach you today; we'll show you what BetterDesk would do with them and what it costs.",
 }: {
@@ -13,55 +12,57 @@ export function CtaBand({
 }) {
   return (
     <section
-      className="relative overflow-hidden border-t border-rule bg-[radial-gradient(90%_120%_at_100%_100%,rgb(244_169_71/0.22)_0%,rgb(244_169_71/0.06)_38%,transparent_70%)] bg-paper"
+      className="on-night relative overflow-hidden bg-[linear-gradient(180deg,#0d0e10_0%,#121315_52%,#1d1915_80%,#2b2117_100%)]"
       aria-labelledby="cta-title"
     >
-      <div className="container-bd relative grid gap-12 py-20 md:py-28 lg:grid-cols-[1.3fr_1fr] lg:items-center lg:gap-16">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-lamp/60 to-transparent" aria-hidden="true" />
+      <div className="container-bd relative grid gap-12 py-20 md:py-28 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16">
         <div>
-          <h2 id="cta-title" className="display max-w-[15ch] text-[clamp(2.4rem,1.4rem+3.2vw,4.3rem)] text-ink">
+          <h2 id="cta-title" className="display max-w-[15ch] text-[clamp(2.4rem,1.4rem+3.2vw,4.3rem)] text-[#f7f6f3]">
             {title}
           </h2>
-          <p className="mt-6 max-w-[50ch] text-[1.05rem] leading-relaxed text-ink-2">{body}</p>
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <ButtonLink href="/contact" variant="resolve" arrow className="group">
+          <p className="mt-6 max-w-[50ch] text-[1.05rem] leading-relaxed text-[#d4d6da]">{body}</p>
+          <div className="mt-8 grid gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-3">
+            <ButtonLink href="/contact" variant="light" arrow className="group w-full sm:w-auto">
               Book a demo
             </ButtonLink>
-            <ButtonLink href={secondary.href} variant="ghost">
+            <ButtonLink href={secondary.href} variant="ghost" className="justify-self-center sm:justify-self-auto">
               {secondary.label}
             </ButtonLink>
           </div>
         </div>
-        <MorningCard />
+        <MorningInbox />
       </div>
     </section>
   );
 }
 
-function MorningCard() {
+const ROWS = [
+  { who: "Dana M.", what: "Booked Thu 8–10 AM", tone: "done" },
+  { who: "J. Alvarez", what: "Quote request · needs your price", tone: "you" },
+  { who: "(512) 555-0193", what: "Answered: yes, tankless units", tone: "done" },
+  { who: "K. Whitfield", what: "Handed to you · billing question", tone: "you" },
+] as const;
+
+function MorningInbox() {
   return (
-    <div className="relative mx-auto w-full max-w-[420px] lg:mr-0" aria-hidden="true">
-      <div className="absolute inset-x-6 -bottom-3 top-6 rotate-[3deg] rounded-[18px] bg-[#e4e3de] shadow-[var(--shadow-card)]" />
-      <div className="relative rounded-[18px] bg-[linear-gradient(180deg,#fdfcfa_0%,#f2f1ec_100%)] p-6 shadow-[var(--shadow-lift)]">
-        <div className="flex items-center justify-between">
-          <p className="text-[0.78rem] font-medium text-muted">Thursday · 7:52 AM</p>
-          <p className="text-[0.72rem] text-muted">Sample</p>
+    <div className="relative mx-auto w-full max-w-[440px] lg:mr-0" aria-hidden="true">
+      <div className="pearl-card relative p-5 sm:p-6">
+        <div className="flex items-baseline justify-between">
+          <p className="font-display text-[1.35rem] font-[600] leading-none tracking-[-0.03em] text-[#111214]">This morning</p>
+          <p className="text-[0.74rem] text-[#55585e]">7:52 AM · sample</p>
         </div>
-        <p className="mt-3 font-display text-[1.7rem] leading-[1.05] tracking-[-0.03em] text-ink">Dana M. at 8:00</p>
-        <p className="mt-1 text-[0.9rem] text-ink-2">Water heater, slow leak · garage · 78704</p>
-        <ul className="mt-5 space-y-2 border-t border-rule pt-4 text-[0.86rem] text-ink-2">
-          <li className="flex items-center gap-2.5">
-            <span className="grid size-5 place-items-center rounded-full bg-ink text-lamp"><Check className="size-3" /></span>
-            Booked by text at 6:47 PM
-          </li>
-          <li className="flex items-center gap-2.5">
-            <span className="grid size-5 place-items-center rounded-full bg-ink text-lamp"><Check className="size-3" /></span>
-            Reminder sent
-          </li>
-          <li className="flex items-center gap-2.5">
-            <span className="grid size-5 place-items-center rounded-full bg-ink text-lamp"><Check className="size-3" /></span>
-            Whole thread in your inbox
-          </li>
+        <p className="mt-2 text-[0.86rem] text-[#2a2c30]">4 conversations came in after you closed. 2 are waiting on you.</p>
+        <ul className="mt-4 divide-y divide-[#dedcd6] border-y border-[#dedcd6]">
+          {ROWS.map((r) => (
+            <li key={r.who} className="flex items-center gap-3 py-2.5 text-[0.86rem]">
+              <span className={`size-2 shrink-0 rounded-full ${r.tone === "you" ? "bg-[#c47a12]" : "bg-[#111214]"}`} />
+              <span className="w-[7.5rem] shrink-0 truncate font-medium text-[#111214]">{r.who}</span>
+              <span className="min-w-0 truncate text-[#55585e]">{r.what}</span>
+            </li>
+          ))}
         </ul>
+        <p className="mt-3 text-[0.76rem] text-[#55585e]">Every thread is in your inbox with the whole conversation attached.</p>
       </div>
     </div>
   );

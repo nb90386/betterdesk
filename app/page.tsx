@@ -146,7 +146,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="reveal mt-12">
-            <LeadJourney scenarioIds={["missed-call"]} />
+            <LeadJourney scenarioIds={["missed-call"]} autoplay />
           </div>
         </div>
       </section>
