@@ -187,17 +187,18 @@ export function analyzeSnapshot(snap: Snapshot): PresenceReport {
       id: "robots-unknown", category: "access", severity: "medium", confidence: "unknown", title: "We couldn't read your robots.txt file",
       whyItMatters: "Crawlers read robots.txt before visiting. If it fails to load, some crawlers hold back, so it's worth knowing which it is.",
       url: robotsUrl, excerpt: snap.robots.status === null ? "No response" : `HTTP ${snap.robots.status}`,
-      fix: "Open yourdomain/robots.txt in a browser. It should either load as plain text or return \"not found\" (404), never a server error.",
+      fix: `Open ${domain}/robots.txt in a browser. It should either load as plain text or return \"not found\" (404), never a server error.`,
       owner: "Developer", nextCheck: "Re-run the audit; if it keeps failing, ask your host to check the file.",
     });
   } else {
     const sev: Record<string, { s: Severity; owner: Owner }> = {
       Googlebot: { s: "high", owner: "Developer" }, Bingbot: { s: "high", owner: "Developer" }, "OAI-SearchBot": { s: "medium", owner: "Developer" },
-      "ChatGPT-User": { s: "low", owner: "Developer" }, PerplexityBot: { s: "low", owner: "Developer" }, Applebot: { s: "low", owner: "Developer" },
-      GPTBot: { s: "info", owner: "Owner" }, ClaudeBot: { s: "info", owner: "Owner" }, "Google-Extended": { s: "info", owner: "Owner" },
+      "Claude-SearchBot": { s: "medium", owner: "Developer" }, PerplexityBot: { s: "medium", owner: "Developer" }, Applebot: { s: "medium", owner: "Developer" },
+      GPTBot: { s: "info", owner: "Owner" }, ClaudeBot: { s: "info", owner: "Owner" }, "Google-Extended": { s: "info", owner: "Owner" }, "Applebot-Extended": { s: "info", owner: "Owner" },
     };
     for (const b of botAccess) {
       if (b.status !== "blocked" && b.status !== "partly") continue;
+      if (b.kind === "user") continue; // user-triggered fetchers: reported in botAccess, never a finding
       const cfg = sev[b.bot] ?? { s: "low" as Severity, owner: "Developer" as Owner };
       const choice = cfg.s === "info";
       bad({
@@ -205,14 +206,14 @@ export function analyzeSnapshot(snap: Snapshot): PresenceReport {
         title: `${b.bot} is ${b.status === "blocked" ? "blocked" : "partly blocked"} in your robots.txt`,
         whyItMatters: b.explanation, url: robotsUrl, excerpt: b.matchedRule,
         fix: choice
-          ? `If you chose this on purpose, no change is needed. If it was copied from a "block AI bots" snippet by accident, remove the ${b.bot} rule.`
+          ? `If you chose this on purpose, no change is needed; it is a training choice, separate from search. If it was copied from a "block AI bots" snippet by accident, remove the ${b.bot} rule.`
           : `Remove or narrow the rule that blocks ${b.bot} unless you blocked it deliberately.`,
-        owner: cfg.owner, nextCheck: "Open yourdomain/robots.txt and confirm the rule is gone, then re-run this audit.",
+        owner: cfg.owner, nextCheck: `Open ${domain}/robots.txt and confirm the rule is gone, then re-run this audit.`,
       });
     }
-    const crit = botAccess.filter((b) => ["Googlebot", "Bingbot", "OAI-SearchBot"].includes(b.bot));
+    const crit = botAccess.filter((b) => ["Googlebot", "Bingbot", "OAI-SearchBot", "Claude-SearchBot", "PerplexityBot", "Applebot"].includes(b.bot));
     if (crit.every((b) => b.status === "allowed")) {
-      good({ id: "robots-ok", category: "access", title: "robots.txt allows Google, Bing and OpenAI's search crawler", whyItMatters: "The crawlers behind Google Search, Bing and ChatGPT search are not blocked from the pages we checked.", url: robotsUrl });
+      good({ id: "robots-ok", category: "access", title: "robots.txt allows the major search crawlers", whyItMatters: "Crawlers for Google, Bing, ChatGPT search, Claude search, Perplexity and Apple are not blocked from the pages we checked.", url: robotsUrl });
     }
   }
 
@@ -243,7 +244,7 @@ export function analyzeSnapshot(snap: Snapshot): PresenceReport {
       id: "sitemap-not-found", category: "indexing", severity: "medium", confidence: "likely", title: "We didn't find a sitemap",
       whyItMatters: "Without a sitemap, search engines rely only on links to discover your pages, so new or deep pages can be missed.",
       url: smUrl, excerpt: "Checked the Sitemap line in robots.txt and /sitemap.xml",
-      fix: "Generate a sitemap (your site builder or an SEO plugin can do it) and add a line to robots.txt: Sitemap: https://yourdomain/sitemap.xml",
+      fix: `Generate a sitemap (your site builder or an SEO plugin can do it) and add a line to robots.txt: Sitemap: https://${domain}/sitemap.xml`,
       owner: "Developer", nextCheck: "Open /sitemap.xml in a browser. We only looked at the robots.txt Sitemap line and /sitemap.xml, so a sitemap elsewhere would not have been seen.",
     });
   }
@@ -482,7 +483,7 @@ export function analyzeSnapshot(snap: Snapshot): PresenceReport {
 
   // thin pages
   for (const p of live) {
-    const min = p.role === "contact" ? 40 : 175;
+    const min = p.role === "contact" ? 40 : 100;
     if (p.doc!.wordCount < min) {
       bad({
         id: `thin:${urlKey(pu(p))}`, category: "content", severity: p.role === "services" || p.role === "service-area" || p.isHome ? "medium" : "low",

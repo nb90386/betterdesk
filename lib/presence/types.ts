@@ -78,6 +78,8 @@ export type Finding = {
 
 export type BotAccess = {
   bot: string;
+  /** search = affects inclusion in that product's results; training = owner choice; user = user-triggered fetcher (reported, not scored). */
+  kind?: "search" | "training" | "user";
   /** Plain description of what the bot is for. */
   purpose: string;
   status: "allowed" | "blocked" | "partly" | "unknown";

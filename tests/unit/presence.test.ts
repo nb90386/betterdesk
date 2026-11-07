@@ -175,7 +175,11 @@ test("robots: bot report statuses, 404 = allowed, 5xx = unknown, partly", () => 
   const r = botAccessReport(200, body, ["/", "/secret"]);
   const by = Object.fromEntries(r.map((b) => [b.bot, b]));
   assert.equal(by["OAI-SearchBot"].status, "blocked");
-  assert.match(by["GPTBot"].explanation, /does not remove you from ChatGPT search/);
+  assert.match(by["GPTBot"].explanation, /training choice, separate from search/);
+  assert.match(by["OAI-SearchBot"].explanation, /will not be shown in ChatGPT search answers/);
+  assert.equal(by["Claude-SearchBot"].kind, "search");
+  assert.equal(by["Applebot-Extended"].kind, "training");
+  assert.equal(by["Claude-User"].kind, "user");
   assert.equal(by["Applebot"].status, "partly");
   assert.equal(by["Googlebot"].status, "allowed");
   assert.match(by["Google-Extended"].explanation, /not a Search crawler/);
@@ -275,6 +279,16 @@ test("sample: passes, coverage heuristic, schema draft, limitations", () => {
   // never claims outcomes
   const blob = JSON.stringify(rep).toLowerCase();
   for (const bad of ["guarantee", "will rank", "will appear in chatgpt", "cited by"]) assert.ok(!blob.includes(bad) || bad === "guarantee", bad);
+});
+
+test("bot policy: user fetchers never become findings; nextCheck uses audited domain", () => {
+  const s = sampleSnapshot();
+  const r = analyzeSnapshot({ ...s, robots: { status: 200, body: "User-agent: Claude-User\nDisallow: /\nUser-agent: Claude-SearchBot\nDisallow: /\nUser-agent: Applebot-Extended\nDisallow: /\n" } });
+  assert.ok(!r.findings.some((f) => f.id === "robots-claude-user"));
+  assert.equal(r.botAccess.find((b) => b.bot === "Claude-User")!.status, "blocked");
+  assert.equal(r.findings.find((f) => f.id === "robots-claude-searchbot")!.severity, "medium");
+  assert.equal(r.findings.find((f) => f.id === "robots-applebot-extended")!.severity, "info");
+  assert.match(r.findings.find((f) => f.id === "robots-claude-searchbot")!.nextCheck, /clearline\.example\/robots\.txt/);
 });
 
 test("analyzer: unreachable home, robots 503 and a clean site", () => {

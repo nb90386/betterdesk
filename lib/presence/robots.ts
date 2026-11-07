@@ -95,62 +95,99 @@ export function isAllowed(parsed: ParsedRobots, uaToken: string, pathWithQuery: 
   return { allowed: best.allow, matchedRule: `${best.allow ? "Allow" : "Disallow"}: ${best.pattern}` };
 }
 
-type BotDef = { bot: string; token: string; purpose: string; blockedNote: string };
+type BotDef = { bot: string; token: string; purpose: string; blockedNote: string; kind: "search" | "training" | "user" };
 
 export const BOTS: BotDef[] = [
   {
     bot: "Googlebot",
+    kind: "search",
     token: "googlebot",
     purpose: "Google's Search crawler.",
     blockedNote: "Blocking Googlebot affects Google Search, including eligibility for AI Overviews and AI Mode, which draw on pages Google can crawl and index.",
   },
   {
     bot: "Bingbot",
+    kind: "search",
     token: "bingbot",
     purpose: "Bing's Search crawler.",
     blockedNote: "Blocking Bingbot affects Bing Search and products that rely on Bing's index.",
   },
   {
     bot: "OAI-SearchBot",
+    kind: "search",
     token: "oai-searchbot",
     purpose: "OpenAI's crawler used for ChatGPT search results.",
-    blockedNote: "Blocking OAI-SearchBot can keep your pages out of ChatGPT search results. Whether a given page would appear is still not something we can observe.",
+    blockedNote: "OpenAI says sites that block OAI-SearchBot \"will not be shown in ChatGPT search answers\" (they may still appear as navigational links). We cannot observe whether any page would otherwise appear.",
   },
   {
     bot: "GPTBot",
+    kind: "training",
     token: "gptbot",
     purpose: "OpenAI's training crawler.",
-    blockedNote: "GPTBot is the training crawler. Blocking it is a content-use choice and does not remove you from ChatGPT search, which uses OAI-SearchBot.",
+    blockedNote: "GPTBot is the training crawler. Blocking it is a training choice, separate from search; ChatGPT search uses OAI-SearchBot.",
   },
   {
     bot: "ChatGPT-User",
+    kind: "user",
     token: "chatgpt-user",
     purpose: "Fetches pages when a ChatGPT user asks for them directly.",
-    blockedNote: "Blocking ChatGPT-User can stop ChatGPT from opening your page when a user asks it to.",
+    blockedNote: "This fetcher acts when a user asks ChatGPT to open a page. OpenAI notes robots.txt rules may not apply to it, so this is reported but not scored.",
   },
   {
     bot: "PerplexityBot",
+    kind: "search",
     token: "perplexitybot",
-    purpose: "Perplexity's crawler for its search index.",
-    blockedNote: "Blocking PerplexityBot can keep pages out of Perplexity's search index.",
+    purpose: "Perplexity's crawler that surfaces and links sites in its search results (not used for model training).",
+    blockedNote: "Perplexity recommends allowing PerplexityBot so a site can be included in its search results.",
   },
   {
     bot: "ClaudeBot",
+    kind: "training",
     token: "claudebot",
-    purpose: "Anthropic's crawler for collecting public web content.",
-    blockedNote: "Blocking ClaudeBot is a content-use choice by the site owner.",
+    purpose: "Anthropic's crawler that collects content which may contribute to model training.",
+    blockedNote: "ClaudeBot is a training crawler. Blocking it is a training choice, separate from search.",
   },
   {
     bot: "Google-Extended",
+    kind: "training",
     token: "google-extended",
     purpose: "A control token for whether Google may use your content for Gemini training and grounding.",
-    blockedNote: "Google-Extended is a control token, not a Search crawler. Blocking it does not affect Google Search inclusion.",
+    blockedNote: "Google-Extended is a control token, not a Search crawler. Google says it does not impact inclusion in Google Search and is not a ranking signal. Blocking it is a training choice.",
+  },
+  {
+    bot: "Claude-SearchBot",
+    kind: "search",
+    token: "claude-searchbot",
+    purpose: "Anthropic's crawler that indexes content to improve search results in Claude.",
+    blockedNote: "Anthropic says blocking Claude-SearchBot \"may reduce your site's visibility and accuracy in user search results\".",
+  },
+  {
+    bot: "Applebot-Extended",
+    kind: "training",
+    token: "applebot-extended",
+    purpose: "A control token (it does not crawl) for whether Apple may use your content to train its foundation models.",
+    blockedNote: "Apple says pages can still be included in search results. Blocking it is a training choice, separate from search.",
+  },
+  {
+    bot: "Claude-User",
+    kind: "user",
+    token: "claude-user",
+    purpose: "Fetches a page when a Claude user asks for it.",
+    blockedNote: "This fetcher acts when a user asks Claude to open a page. It is reported but not scored.",
+  },
+  {
+    bot: "Perplexity-User",
+    kind: "user",
+    token: "perplexity-user",
+    purpose: "Fetches a page when a Perplexity user asks for it.",
+    blockedNote: "Perplexity says this fetcher generally ignores robots.txt, so it is reported but not scored.",
   },
   {
     bot: "Applebot",
+    kind: "search",
     token: "applebot",
     purpose: "Apple's crawler used for Siri and Spotlight suggestions.",
-    blockedNote: "Blocking Applebot can keep pages out of Apple search features.",
+    blockedNote: "Blocking Applebot means the pages are not crawled for Apple search features (Spotlight, Siri, Safari).",
   },
 ];
 
@@ -167,24 +204,26 @@ export function botAccessReport(robotsStatus: number | null, body: string | null
     if (unknown) {
       return {
         bot: b.bot,
+        kind: b.kind,
         purpose: b.purpose,
         status: "unknown" as const,
         explanation: `We couldn't read robots.txt (${robotsStatus === null ? "no response" : "HTTP " + robotsStatus}), so access for ${b.bot} is unknown. Crawlers may treat a persistently failing robots.txt cautiously.`,
       };
     }
     if (!parsed) {
-      return { bot: b.bot, purpose: b.purpose, status: "allowed" as const, explanation: "No robots.txt file was found, which means crawlers are allowed by default." };
+      return { bot: b.bot, kind: b.kind, purpose: b.purpose, status: "allowed" as const, explanation: "No robots.txt file was found, which means crawlers are allowed by default." };
     }
     const results = testPaths.map((p) => ({ p, ...isAllowed(parsed, b.token, p) }));
     const blockedCount = results.filter((r) => !r.allowed).length;
     const rootRule = results[0];
     if (blockedCount === 0) {
-      return { bot: b.bot, purpose: b.purpose, status: "allowed" as const, explanation: `${b.bot} is allowed on the pages we checked. ${b.purpose}${b.bot === "Google-Extended" || b.bot === "GPTBot" ? " " + b.blockedNote : ""}` };
+      return { bot: b.bot, kind: b.kind, purpose: b.purpose, status: "allowed" as const, explanation: `${b.bot} is allowed on the pages we checked. ${b.purpose}${b.bot === "Google-Extended" || b.bot === "GPTBot" ? " " + b.blockedNote : ""}` };
     }
     const first = results.find((r) => !r.allowed)!;
     if (blockedCount === results.length) {
       return {
         bot: b.bot,
+        kind: b.kind,
         purpose: b.purpose,
         status: "blocked" as const,
         matchedRule: rootRule.matchedRule ?? first.matchedRule,
@@ -193,6 +232,7 @@ export function botAccessReport(robotsStatus: number | null, body: string | null
     }
     return {
       bot: b.bot,
+      kind: b.kind,
       purpose: b.purpose,
       status: "partly" as const,
       matchedRule: first.matchedRule,

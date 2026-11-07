@@ -1,37 +1,72 @@
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://betterdesk.ai").replace(/\/$/, "");
 export const CONTACT_EMAIL = "hello@betterdesk.ai";
 
+/** The three lenses over one record. Order follows the customer journey: be found, find, respond. */
+export const LENSES = [
+  { href: "/presence", name: "Presence", line: "How customers find you in Google, Maps and AI search", status: "Live beta audit" },
+  { href: "/scout", name: "Scout", line: "Businesses worth contacting, with the evidence", status: "Demo" },
+  { href: "/desk", name: "Desk", line: "Inquiries, replies, walkthroughs and the pipeline", status: "Demo" },
+] as const;
+
 export const NAV = [
-  { href: "/product", label: "Product" },
-  { href: "/scout", label: "Scout" },
-  { href: "/how-it-works", label: "How it works" },
+  { href: "/solutions/commercial-cleaning", label: "For cleaning companies" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/security", label: "Security" },
+  { href: "/resources", label: "Guides" },
+] as const;
+
+export const PRODUCT_MENU = [
+  ...LENSES.map((l) => ({ href: l.href, label: l.name, line: l.line })),
+  { href: "/product", label: "How they connect", line: "One record from first contact to signed contract" },
+  { href: "/how-it-works", label: "Setup and support", line: "What you provide, what we do, what you get" },
+  { href: "/demo", label: "Interactive demo", line: "Run the whole journey on a sample company" },
 ] as const;
 
 export const FOOTER = [
   {
     title: "Product",
     links: [
-      { href: "/product", label: "Overview" },
+      { href: "/product", label: "How it connects" },
+      { href: "/presence", label: "Presence" },
       { href: "/scout", label: "Scout" },
-      { href: "/how-it-works", label: "How it works" },
+      { href: "/desk", label: "Desk" },
+      { href: "/demo", label: "Interactive demo" },
       { href: "/app", label: "Sample workspace" },
-      { href: "/pricing", label: "Pricing" },
     ],
   },
   {
-    title: "For",
-    links: [{ href: "/solutions/commercial-cleaning", label: "Commercial cleaning" }],
+    title: "Learn",
+    links: [
+      { href: "/solutions/commercial-cleaning", label: "For commercial cleaning" },
+      { href: "/how-it-works", label: "Setup and support" },
+      { href: "/resources", label: "Guides" },
+      { href: "/resources/ai-search-for-service-businesses", label: "AI search, plainly" },
+    ],
   },
   {
     title: "Company",
     links: [
+      { href: "/pricing", label: "Pricing" },
+      { href: "/contact", label: "Request a review" },
       { href: "/security", label: "Security and data" },
-      { href: "/demo", label: "Product tour" },
-      { href: "/contact", label: "Request a demo" },
     ],
   },
+] as const;
+
+/** Public, indexable marketing routes. Tests crawl this list; the sitemap is built from it. */
+export const PUBLIC_ROUTES = [
+  "/",
+  "/product",
+  "/presence",
+  "/scout",
+  "/desk",
+  "/solutions/commercial-cleaning",
+  "/how-it-works",
+  "/demo",
+  "/pricing",
+  "/resources",
+  "/resources/ai-search-for-service-businesses",
+  "/contact",
+  "/security",
 ] as const;
 
 export type PlanId = "essential" | "growth" | "team";

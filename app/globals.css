@@ -1,4 +1,8 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+/* Scan only product source; docs and prompt files must never generate CSS. */
+@source "../app";
+@source "../components";
+@source "../lib";
 
 /* ------------------------------------------------------------------
    BetterDesk · "The Directory"
@@ -77,6 +81,20 @@
   color: var(--color-ink);
 }
 
+/* Stone scope: a paper object set on a graphite board gets the light tokens back. */
+.on-stone {
+  --color-ink: #151719;
+  --color-ink-2: #3a3d41;
+  --color-muted: #5d6065;
+  --color-rule: #d3d2cb;
+  --color-rule-strong: #b5b4ac;
+  --color-field: #7f7e77;
+  --color-surface: #f7f6f2;
+  --color-paper: #fbfbf9;
+  --color-lamp-ink: #8a5200;
+  color: var(--color-ink);
+}
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
@@ -122,8 +140,8 @@
   .t-hero {
     font-family: var(--font-display);
     font-weight: 620;
-    font-size: clamp(2.55rem, 1.35rem + 4.6vw, 5.4rem);
-    line-height: 0.97;
+    font-size: clamp(2.45rem, 1.2rem + 4.1vw, 4.75rem);
+    line-height: 0.98;
     letter-spacing: -0.038em;
   }
   .t-display {

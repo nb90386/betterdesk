@@ -23,7 +23,7 @@ export const LIMITS = {
 
 export type RawResponse = {
   status: number;
-  headers: Record<string, string>;
+  headers: Record<string, string | undefined>;
   body: string | null;
   truncated: boolean;
   /** Set when the body was not read because the content type was not acceptable. */
