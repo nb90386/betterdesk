@@ -39,7 +39,7 @@ export default function Guide() {
               ))}
             </ul>
             <div className="mt-8">
-              <TextLink href="/presence#check">Check your website</TextLink>
+              <TextLink href="/product/presence#check">Check your website</TextLink>
             </div>
           </nav>
         </aside>
@@ -49,7 +49,7 @@ export default function Guide() {
             <p className="text-[1.25rem] font-[600] tracking-[-0.015em]">Want to see where your own site stands?</p>
             <p className="mt-2 text-ink-2">Presence runs the checks in this guide on a site you own, free during early access.</p>
             <div className="mt-5 flex flex-wrap items-center gap-x-7 gap-y-3">
-              <ButtonLink href="/presence#check">Check your website</ButtonLink>
+              <ButtonLink href="/product/presence#check">Check your website</ButtonLink>
               <TextLink href="/contact">Ask a person instead</TextLink>
             </div>
           </div>

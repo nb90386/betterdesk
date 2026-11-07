@@ -32,7 +32,7 @@ export default function PresenceScreen() {
             <Btn tone="primary" onClick={() => act((w, at, me) => recordPresenceAudit(w, { ...auditRecord(report, AUDIT_ID), fetchedAt: at }, at, me), "Sample audit recorded.")} disabled={ws.presenceAudits.some((a) => a.id === AUDIT_ID)}>
               {ws.presenceAudits.some((a) => a.id === AUDIT_ID) ? "Sample audit recorded" : "Run the sample audit"}
             </Btn>
-            <Link href="/presence#check" className="inline-flex min-h-10 items-center px-2 text-[0.875rem] font-[560] underline underline-offset-4">Check a real site</Link>
+            <Link href="/product/presence#check" className="inline-flex min-h-10 items-center px-2 text-[0.875rem] font-[560] underline underline-offset-4">Check a real site</Link>
           </>
         }
       />

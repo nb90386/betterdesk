@@ -57,7 +57,7 @@ test.describe("navigation lands at the top", () => {
   });
 
   test("footer link from the bottom of presence", async ({ page }) => {
-    const from = await startAtBottom(page, "/presence");
+    const from = await startAtBottom(page, "/product/presence");
     await page.locator("#site-footer").getByRole("link", { name: "Desk", exact: true }).click();
     await expectArrivedAtTop(page, /\/desk$/, from);
   });
@@ -88,7 +88,7 @@ test.describe("navigation lands at the top", () => {
 
   test("footer link on a phone", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    const from = await startAtBottom(page, "/scout");
+    const from = await startAtBottom(page, "/product/scout");
     await page.locator("#site-footer").getByRole("link", { name: "Security and data" }).click();
     await expectArrivedAtTop(page, /\/security$/, from);
   });

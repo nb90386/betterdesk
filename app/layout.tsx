@@ -3,8 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
 
-// General Sans (Indian Type Foundry, ITF Free Font License 2.0: self-hosting permitted, no subsetting or modification),
-// one variable file carries display, UI and text. Martian Mono (OFL) is only for code-like evidence: robots.txt lines,
+// General Sans (Indian Type Foundry, ITF Free Font License 2.0: self-hosting permitted, no subsetting or modification)
+// carries UI and text. Martian Mono (OFL) is only for code-like evidence: robots.txt lines,
 // JSON-LD and event IDs.
 const general = localFont({
   src: "./fonts/GeneralSans-Variable.woff2",
@@ -13,6 +13,15 @@ const general = localFont({
   display: "swap",
   fallback: ["Helvetica Neue", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
   adjustFontFallback: "Arial",
+});
+// Sentient (ITF, same licence terms) is the display voice: headlines and the wordmark only.
+const sentient = localFont({
+  src: "./fonts/Sentient-Variable.woff2",
+  weight: "200 700",
+  variable: "--font-sentient",
+  display: "swap",
+  fallback: ["Iowan Old Style", "Georgia", "serif"],
+  adjustFontFallback: "Times New Roman",
 });
 const martian = localFont({ src: "./fonts/MartianMono-Variable.woff2", weight: "100 800", variable: "--font-martian", display: "swap", preload: false });
 
@@ -35,6 +44,8 @@ export const viewport: Viewport = {
   themeColor: "#ecebe6",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover", // lets env(safe-area-inset-*) report real values on notched phones
+  interactiveWidget: "resizes-content",
 };
 
 // Only facts visible on the site itself.
@@ -50,7 +61,7 @@ const orgJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${general.variable} ${martian.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${general.variable} ${sentient.variable} ${martian.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh">
         {/* Marks the page as scripted before paint, so scroll-revealed content is only hidden when JS can reveal it. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />

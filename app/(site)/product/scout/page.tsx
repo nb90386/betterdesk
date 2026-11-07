@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink, SampleNote, StateGlyph, StatusMark, TextLink } from "@/components/site/primitives";
+import { ScoutReview } from "@/components/site/ScoutReview";
 import { scoutExample } from "@/lib/marketing/samples";
 import { RUN_TASKS } from "@/lib/workspace/actions";
 import { RULE_VERSION } from "@/lib/scout/qualify";
@@ -7,7 +8,7 @@ import { RULE_VERSION } from "@/lib/scout/qualify";
 export const metadata: Metadata = {
   title: "Scout: businesses worth contacting, with the evidence",
   description: "Scout checks the businesses on your list against your service area and the buildings you want, shows why, and drafts introductions you approve. It never sends.",
-  alternates: { canonical: "/scout" },
+  alternates: { canonical: "/product/scout" },
 };
 
 const NEVER = [
@@ -21,7 +22,6 @@ const NEVER = [
 
 export default function Scout() {
   const s = scoutExample();
-  const tierLabel = { strong: "Good fit", possible: "Worth checking", weak: "Weak fit", excluded: "Not a fit" } as const;
   return (
     <>
       <section className="wrap pb-16 pt-32 md:pt-40">
@@ -59,34 +59,13 @@ export default function Scout() {
 
       <section className="wrap py-20 md:py-28">
         <div className="grid gap-8 lg:grid-cols-12">
-          <h2 className="t-title max-w-[16ch] lg:col-span-5">The sample list, checked.</h2>
+          <h2 className="t-title max-w-[16ch] lg:col-span-5">Review a prospect the way you would.</h2>
           <p className="text-ink-2 lg:col-span-7">
             {s.rows} rows in. {s.summary.imported.length} imported, {s.summary.duplicates.map((d) => `${d.name} matched ${d.matched}`).join("; ")}, and {s.summary.withheld} note withheld. Every result below comes from the same code the workspace runs.
           </p>
         </div>
-        <div className="mt-10 overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
-          <table className="w-full min-w-[44rem] border-collapse text-left">
-            <thead>
-              <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">
-                <th scope="col" className="py-3 pr-6 font-[560]">Business</th>
-                <th scope="col" className="py-3 pr-6 font-[560]">Result</th>
-                <th scope="col" className="py-3 pr-6 text-right font-[560]">Score</th>
-                <th scope="col" className="py-3 pr-6 text-right font-[560]">Known</th>
-                <th scope="col" className="py-3 font-[560]">Recommendation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {s.all.map((a) => (
-                <tr key={a.name} className="border-b border-rule align-top">
-                  <th scope="row" className="py-3.5 pr-6 font-[600]">{a.name}</th>
-                  <td className="whitespace-nowrap py-3.5 pr-6">{a.q.recommendation.startsWith("Do not contact") ? "Do not contact" : tierLabel[a.q.tier]}</td>
-                  <td className="py-3.5 pr-6 text-right tabular-nums">{a.q.score}</td>
-                  <td className="py-3.5 pr-6 text-right tabular-nums">{a.q.coverage}%</td>
-                  <td className="py-3.5 text-[0.9375rem] text-ink-2">{a.withheld ? "A note read like instructions; withheld and flagged for a person. " : ""}{a.q.recommendation}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="mt-10">
+          <ScoutReview prospects={s.all} org={s.org} />
         </div>
         <SampleNote className="mt-4">Fictional businesses on reserved .example domains.</SampleNote>
       </section>

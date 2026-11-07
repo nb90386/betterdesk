@@ -4,26 +4,33 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { SPRING } from "@/lib/motion";
 import { Logo } from "@/components/Logo";
-import { NAV, PRODUCT_MENU } from "@/lib/site";
+import { NAV, PRODUCT_MENU, SOLUTIONS_MENU } from "@/lib/site";
 
-const ENTER = { duration: 0.18, ease: [0.22, 1, 0.36, 1] as const };
-const EXIT = { duration: 0.14, ease: [0.4, 0, 1, 1] as const };
+const MENUS = [
+  { id: "product", label: "Product", items: PRODUCT_MENU, dividerAt: 3 },
+  { id: "solutions", label: "Solutions", items: SOLUTIONS_MENU, dividerAt: -1 },
+] as const;
+type MenuId = (typeof MENUS)[number]["id"];
+
+const ENTER = SPRING.ui;
+const EXIT = SPRING.snap;
 
 export function Header() {
   const pathname = usePathname();
-  const [menu, setMenu] = useState(false); // product popover
+  const [menu, setMenu] = useState<MenuId | null>(null); // which popover is open
   const [sheet, setSheet] = useState(false); // mobile sheet
   const [scrolled, setScrolled] = useState(false);
   const [lastPath, setLastPath] = useState(pathname);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRefs = useRef<Partial<Record<MenuId, HTMLButtonElement | null>>>({});
   const popRef = useRef<HTMLDivElement>(null);
   const sheetBtn = useRef<HTMLButtonElement>(null);
   const popId = useId();
 
   if (lastPath !== pathname) {
     setLastPath(pathname);
-    setMenu(false);
+    setMenu(null);
     setSheet(false);
   }
 
@@ -39,13 +46,13 @@ export function Header() {
     if (!menu) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setMenu(false);
-        triggerRef.current?.focus();
+        setMenu(null);
+        if (menu) triggerRefs.current[menu]?.focus();
       }
     };
     const onDown = (e: PointerEvent) => {
       const t = e.target as Node;
-      if (!popRef.current?.contains(t) && !triggerRef.current?.contains(t)) setMenu(false);
+      if (!popRef.current?.contains(t) && !(menu && triggerRefs.current[menu]?.contains(t))) setMenu(null);
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("pointerdown", onDown);
@@ -82,16 +89,16 @@ export function Header() {
     document.documentElement.style.overflow = "";
     document.querySelectorAll<HTMLElement>("#main, #site-footer").forEach((el) => (el.inert = false));
     setSheet(false);
-    setMenu(false);
+    setMenu(null);
   };
 
   const active = (href: string) => pathname === href || pathname.startsWith(href + "/");
-  const productActive = PRODUCT_MENU.some((m) => active(m.href));
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300 ${
-        scrolled || sheet ? "bg-stone/85 shadow-[var(--shadow-bar)] backdrop-blur-xl backdrop-saturate-150" : "bg-stone/0"
+      data-scrolled={scrolled || sheet || undefined}
+      className={`site-bar fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-[background-color,box-shadow] duration-300 ${
+        scrolled || sheet ? "bg-stone/80 backdrop-blur-xl backdrop-saturate-150" : "bg-stone/0"
       }`}
     >
       <div className="wrap flex h-[4.25rem] items-center gap-4 lg:gap-8">
@@ -101,51 +108,59 @@ export function Header() {
 
         <nav aria-label="Main" className="mr-auto hidden md:block">
           <ul className="flex items-center gap-1">
-            <li className="relative">
-              <button
-                ref={triggerRef}
-                type="button"
-                aria-expanded={menu}
-                aria-controls={popId}
-                onClick={() => setMenu((m) => !m)}
-                className={`inline-flex h-10 items-center gap-1.5 rounded-[var(--radius-sm)] px-3 text-[0.9375rem] transition-colors hover:text-ink ${productActive || menu ? "text-ink" : "text-ink-2"}`}
-              >
-                Product
-                <motion.svg animate={{ rotate: menu ? 180 : 0 }} transition={ENTER} viewBox="0 0 12 12" className="h-3 w-3" aria-hidden="true" fill="none">
-                  <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                </motion.svg>
-              </button>
-              <AnimatePresence>
-                {menu ? (
-                  <motion.div
-                    ref={popRef}
-                    id={popId}
-                    onClickCapture={releaseOnNavigate}
-                    initial={{ opacity: 0, scale: 0.95, y: -4 }}
-                    animate={{ opacity: 1, scale: 1, y: 0, transition: ENTER }}
-                    exit={{ opacity: 0, scale: 0.97, y: -2, transition: EXIT }}
-                    style={{ transformOrigin: "24px 0px" }}
-                    className="absolute left-0 top-[calc(100%+8px)] w-[26rem] rounded-[var(--radius-md)] bg-paper p-2 shadow-[var(--shadow-pop)]"
+            {MENUS.map((m) => {
+              const isOpen = menu === m.id;
+              const isActive = m.items.some((it) => active(it.href));
+              return (
+                <li key={m.id} className="relative">
+                  <button
+                    ref={(el) => {
+                      triggerRefs.current[m.id] = el;
+                    }}
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={isOpen ? popId : undefined}
+                    onClick={() => setMenu((cur) => (cur === m.id ? null : m.id))}
+                    className={`inline-flex h-10 items-center gap-1.5 rounded-[var(--radius-sm)] px-3 text-[0.9375rem] transition-colors hover:text-ink ${isActive || isOpen ? "text-ink" : "text-ink-2"}`}
                   >
-                    <ul>
-                      {PRODUCT_MENU.map((m, i) => (
-                        <motion.li key={m.href} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0, transition: { ...ENTER, delay: 0.03 * i } }}>
-                          {i === 3 ? <div className="mx-3 my-1.5 h-px bg-rule" aria-hidden="true" /> : null}
-                          <Link
-                            href={m.href}
-                            aria-current={active(m.href) ? "page" : undefined}
-                            className="group flex items-baseline gap-4 rounded-[8px] px-3 py-2.5 hover:bg-stone-2 focus-visible:bg-stone-2"
-                          >
-                            <span className="w-[7.5rem] shrink-0 font-[600] text-ink">{m.label}</span>
-                            <span className="text-[0.875rem] leading-snug text-muted">{m.line}</span>
-                          </Link>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
-            </li>
+                    {m.label}
+                    <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} transition={SPRING.snap} viewBox="0 0 12 12" className="h-3 w-3" aria-hidden="true" fill="none">
+                      <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </motion.svg>
+                  </button>
+                  <AnimatePresence>
+                    {isOpen ? (
+                      <motion.div
+                        ref={popRef}
+                        id={popId}
+                        onClickCapture={releaseOnNavigate}
+                        initial={{ opacity: 0, scale: 0.96, y: -4, filter: "blur(4px)" }}
+                        animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)", transition: SPRING.snap }}
+                        exit={{ opacity: 0, scale: 0.97, y: -3, filter: "blur(2px)", transition: EXIT }}
+                        style={{ transformOrigin: "24px 0px" }}
+                        className="absolute left-0 top-[calc(100%+8px)] w-[26rem] rounded-[var(--radius-md)] bg-paper p-2 shadow-[var(--shadow-pop)]"
+                      >
+                        <ul>
+                          {m.items.map((it, i) => (
+                            <motion.li key={it.href} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0, transition: { ...SPRING.ui, delay: 0.03 * i } }}>
+                              {i === m.dividerAt ? <div className="mx-3 my-1.5 h-px bg-rule" aria-hidden="true" /> : null}
+                              <Link
+                                href={it.href}
+                                aria-current={active(it.href) ? "page" : undefined}
+                                className="group flex items-baseline gap-4 rounded-[var(--radius-sm)] px-3 py-2.5 hover:bg-stone-2 focus-visible:bg-stone-2"
+                              >
+                                <span className="w-[9rem] shrink-0 font-[600] text-ink">{it.label}</span>
+                                <span className="text-[0.875rem] leading-snug text-muted">{it.line}</span>
+                              </Link>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    ) : null}
+                  </AnimatePresence>
+                </li>
+              );
+            })}
             {NAV.map((n) => (
               <li key={n.href} className={n.href === "/resources" ? "hidden lg:block" : undefined}>
                 <Link
@@ -205,10 +220,10 @@ export function Header() {
         {sheet ? (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: ENTER }}
-            exit={{ opacity: 0, transition: EXIT }}
-            className="h-[calc(100dvh-4.25rem)] overflow-y-auto bg-stone md:hidden"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0, transition: ENTER }}
+            exit={{ opacity: 0, y: -10, transition: EXIT }}
+            className="h-[calc(100dvh-4.25rem-env(safe-area-inset-top))] pb-[env(safe-area-inset-bottom)] overflow-y-auto bg-stone md:hidden"
           >
             <nav aria-label="Mobile" onClickCapture={releaseOnNavigate} className="wrap flex min-h-full flex-col pb-8 pt-2">
               <p className="t-label pt-4">Product</p>
@@ -220,6 +235,17 @@ export function Header() {
                       <span className="text-[0.875rem] text-muted">{m.line}</span>
                     </Link>
                   </motion.li>
+                ))}
+              </ul>
+              <p className="t-label pt-6">Solutions</p>
+              <ul className="mt-2">
+                {SOLUTIONS_MENU.map((m) => (
+                  <li key={m.href} className="border-b border-rule">
+                    <Link href={m.href} aria-current={active(m.href) ? "page" : undefined} className="flex min-h-14 flex-col justify-center py-2">
+                      <span className="text-[1.125rem] font-[600] tracking-[-0.01em]">{m.label}</span>
+                      <span className="text-[0.875rem] text-muted">{m.line}</span>
+                    </Link>
+                  </li>
                 ))}
               </ul>
               <ul className="mt-6">

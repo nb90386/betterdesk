@@ -64,7 +64,7 @@ export default function Product() {
           <h2 className="t-title max-w-[20ch]">The journey, floor by floor.</h2>
           <ol className="mt-12">
             {JOURNEY.map(([step, lens, what], i) => (
-              <li key={step} className="grid gap-2 border-t border-rule py-5 md:grid-cols-12 md:items-baseline md:gap-6" data-reveal="stagger">
+              <li key={step} className="grid gap-2 border-t border-rule py-5 md:grid-cols-12 md:items-baseline md:gap-6">
                 <span className="tabular-nums text-muted md:col-span-1">{String(i + 1).padStart(2, "0")}</span>
                 <span className="text-[1.375rem] font-[600] tracking-[-0.018em] md:col-span-3">{step}</span>
                 <span className="text-[0.875rem] text-muted md:col-span-2">{lens}</span>

@@ -13,7 +13,7 @@
    ------------------------------------------------------------------ */
 @theme inline {
   --font-sans: var(--font-general), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-general), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sentient), "Iowan Old Style", Georgia, serif;
   --font-mono: var(--font-martian), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
@@ -139,6 +139,7 @@
   input, textarea, select { caret-color: var(--color-lamp-ink); }
   a { text-underline-offset: 0.24em; text-decoration-thickness: 1px; }
   h1, h2, h3 { text-wrap: balance; font-weight: 600; }
+  .t-hero, .t-display, .t-title { font-weight: 480; }
   p, li, dd { text-wrap: pretty; }
   button { cursor: pointer; }
   button:disabled { cursor: not-allowed; }
@@ -157,27 +158,30 @@
   @media (min-width: 640px) { .wrap { padding-inline: 2rem; } }
   @media (min-width: 1280px) { .wrap { padding-inline: 3.5rem; } }
 
-  /* Type. One family (General Sans) that tightens as it grows. */
+  /* Type. Sentient (serif) for display, General Sans for everything people read and operate. Tracking relaxes as size drops. */
   .t-hero {
     font-family: var(--font-display);
-    font-weight: 620;
-    font-size: clamp(2.45rem, 1.25rem + 3.9vw, 4.6rem);
-    line-height: 0.98;
-    letter-spacing: -0.038em;
+    font-weight: 480;
+    font-size: clamp(2.6rem, 1.3rem + 4.2vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.026em;
+    font-optical-sizing: auto;
   }
   .t-display {
     font-family: var(--font-display);
-    font-weight: 610;
-    font-size: clamp(2.1rem, 1.3rem + 3vw, 3.9rem);
-    line-height: 1;
-    letter-spacing: -0.034em;
+    font-weight: 480;
+    font-size: clamp(2.2rem, 1.35rem + 3.1vw, 4.1rem);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+    font-optical-sizing: auto;
   }
   .t-title {
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(1.7rem, 1.15rem + 1.95vw, 3rem);
-    line-height: 1.04;
-    letter-spacing: -0.03em;
+    font-weight: 480;
+    font-size: clamp(1.8rem, 1.2rem + 2vw, 3.1rem);
+    line-height: 1.06;
+    letter-spacing: -0.018em;
+    font-optical-sizing: auto;
   }
   .t-head {
     font-weight: 600;
@@ -222,7 +226,7 @@
 
   /* Text link with a drawn underline. */
   .link { text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 0.26em; transition: text-decoration-color 180ms; }
-  .link:hover { text-decoration-color: currentColor; }
+  @media (hover: hover) and (pointer: fine) { .link:hover { text-decoration-color: currentColor; } }
 
   .field {
     width: 100%;
@@ -236,7 +240,7 @@
     transition: border-color 160ms; /* the focus ring appears instantly */
   }
   .field::placeholder { color: var(--color-muted); }
-  .field:hover { border-color: var(--color-ink-2); }
+  @media (hover: hover) and (pointer: fine) { .field:hover { border-color: var(--color-ink-2); } }
   .field:focus-visible { outline: none; border-color: var(--color-ink); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ink) 14%, transparent); }
   .field[aria-invalid="true"] { border-color: var(--color-danger); }
   select.field {
@@ -250,8 +254,6 @@
 }
 
 /* Reveal: content is visible by default; only scripted pages hide it until in view. */
-.js [data-reveal] { opacity: 0; transform: translateY(14px); transition: opacity 620ms var(--ease-out), transform 720ms var(--ease-out); }
-.js [data-reveal].is-in { opacity: 1; transform: none; }
 
 @keyframes bd-lamp { 0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-lamp) 16%, transparent), 0 0 12px color-mix(in srgb, var(--color-lamp) 50%, transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-lamp) 8%, transparent), 0 0 18px color-mix(in srgb, var(--color-lamp) 65%, transparent); } }
 .mark-lamp.is-live { animation: bd-lamp 2.4s var(--ease-move) infinite; }
@@ -261,5 +263,35 @@
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  .js [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* ---------- Chrome material (apple-design §12) ----------
+   The bar is a translucent layer content scrolls under. Instead of a hard divider, a short fade
+   appears only once content actually passes beneath it. */
+.site-bar::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: 14px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--color-carbon) 7%, transparent), transparent);
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out);
+}
+.site-bar[data-scrolled]::after { opacity: 1; }
+@media (prefers-reduced-transparency: reduce) {
+  .site-bar[data-scrolled] { background: var(--color-stone) !important; backdrop-filter: none !important; }
+}
+@media (prefers-contrast: more) {
+  .site-bar[data-scrolled] { background: var(--color-stone) !important; backdrop-filter: none !important; box-shadow: 0 1px 0 var(--color-carbon); }
+  .site-bar::after { display: none; }
+  :root { --color-muted: var(--color-carbon-2); --color-rule: var(--color-hair-strong); }
+}
+
+/* ---------- Touch baseline (mobile-native) ---------- */
+html { -webkit-tap-highlight-color: transparent; }
+a, button, [role="button"], label, summary { touch-action: manipulation; }
+button, [role="button"], summary { -webkit-user-select: none; user-select: none; }
+/* iOS zooms into any field under 16px; on touch screens every field is at least 16px. */
+@media (pointer: coarse) { input, select, textarea { font-size: max(16px, 1em) !important; } }

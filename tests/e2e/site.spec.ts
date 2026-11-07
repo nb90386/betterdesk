@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 
 const ROUTES = [
-  "/", "/product", "/presence", "/scout", "/desk", "/solutions/commercial-cleaning", "/how-it-works",
+  "/", "/product", "/product/presence", "/product/scout", "/product/desk", "/solutions/commercial-cleaning", "/how-it-works",
   "/demo", "/pricing", "/resources", "/resources/ai-search-for-service-businesses", "/contact", "/security",
 ];
 const WIDTHS = [320, 390, 768, 1024, 1440, 1920];
@@ -15,7 +15,7 @@ function watch(page: Page) {
 }
 
 for (const route of ROUTES) {
-  test(`route ${route}: 200, one h1, metadata, General Sans, no errors, no overflow`, async ({ page }) => {
+  test(`route ${route}: 200, one h1, metadata, Sentient + General Sans, no errors, no overflow`, async ({ page }) => {
     const errors = watch(page);
     const res = await page.goto(route);
     expect(res?.status()).toBe(200);
@@ -24,8 +24,10 @@ for (const route of ROUTES) {
     expect(await page.locator('meta[name="description"]').getAttribute("content")).toBeTruthy();
     expect(await page.locator('link[rel="canonical"]').getAttribute("href")).toContain(route === "/" ? "" : route);
     const font = await page.evaluate(() => getComputedStyle(document.querySelector("h1")!).fontFamily);
-    expect(font).toMatch(/general/i);
+    expect(font).toMatch(/sentient/i);
     expect(font).not.toMatch(/funnel|geist|instrument/i);
+    const body = await page.evaluate(() => getComputedStyle(document.querySelector("main p")!).fontFamily);
+    expect(body).toMatch(/general/i);
     for (const w of WIDTHS) {
       await page.setViewportSize({ width: w, height: 900 });
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -144,7 +146,7 @@ test("review API rejects bots, bad input and wrong content types", async ({ requ
 });
 
 test("presence: sample explorer creates a task; live audit refuses private addresses and missing authorization", async ({ page, request }) => {
-  await page.goto("/presence");
+  await page.goto("/product/presence");
   await page.locator("#sample").getByRole("button", { name: "Make this a task" }).first().click();
   await expect(page.locator("#sample").getByText(/^Task created for/).filter({ visible: true }).first()).toBeVisible();
   const noAuth = await request.post("/api/presence/audit", { data: { url: "https://example.com", businessName: "X", serviceArea: "Y", serviceCategory: "Z" } });
@@ -193,7 +195,7 @@ test("homepage without JavaScript still says who it's for and what it does", asy
   const page = await ctx.newPage();
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Find better accounts.");
-  await expect(page.getByText(/one workspace for commercial cleaning companies/)).toBeVisible();
+  await expect(page.getByText(/one workspace for commercial cleaning companies/i)).toBeVisible();
   await expect(page.getByText("One Tuesday, five places to look.")).toBeVisible();
   await ctx.close();
 });

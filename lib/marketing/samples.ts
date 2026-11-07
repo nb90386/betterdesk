@@ -21,6 +21,26 @@ export function scoutExample(name = "Juniper Lane Law") {
   const draft = templateGenerator.generate({ org: ws.org, account, contact: contacts[0], evidence });
   const all = ws.accounts
     .filter((a) => a.source.kind === "csv-import")
-    .map((a) => ({ name: a.name, withheld: ws.evidence.some((e) => e.accountId === a.id && e.flagged), q: qualify(ws.org, a, ws.contacts.filter((c) => c.accountId === a.id), ws.evidence.filter((e) => e.accountId === a.id), ws.suppressions, SAMPLE_AT) }));
+    .map((a) => {
+      const cs = ws.contacts.filter((c) => c.accountId === a.id);
+      const ev = ws.evidence.filter((e) => e.accountId === a.id);
+      const q = qualify(ws.org, a, cs, ev, ws.suppressions, SAMPLE_AT);
+      const business = cs.find((c) => c.emailKind === "business") ?? null;
+      const suppressed = q.recommendation.startsWith("Do not contact");
+      // Same rule as the run: drafts only for good or possible fits with a business contact, never suppressed.
+      const draft = business && !suppressed && (q.tier === "strong" || q.tier === "possible") ? templateGenerator.generate({ org: ws.org, account: a, contact: business, evidence: ev }) : null;
+      return {
+        id: a.id,
+        name: a.name,
+        category: a.category,
+        sqft: a.sqft?.value ?? null,
+        street: a.address.street,
+        contact: business ? `${business.name}${business.role ? `, ${business.role}` : ""}` : null,
+        withheld: ev.some((e) => e.flagged),
+        evidence: ev.filter((e) => !e.flagged).map((e) => ({ claim: e.claim, source: e.source.label })),
+        q,
+        draft,
+      };
+    });
   return { org: ws.org, account, contact: contacts[0], evidence, q, draft, summary, rows: parsed.rows.length, all };
 }

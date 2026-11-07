@@ -3,13 +3,17 @@ export const CONTACT_EMAIL = "hello@betterdesk.ai";
 
 /** The three lenses over one record. Order follows the customer journey: be found, find, respond. */
 export const LENSES = [
-  { href: "/presence", name: "Presence", line: "How customers find you in Google, Maps and AI search", status: "Live beta audit" },
-  { href: "/scout", name: "Scout", line: "Businesses worth contacting, with the evidence", status: "Demo" },
-  { href: "/desk", name: "Desk", line: "Inquiries, replies, walkthroughs and the pipeline", status: "Demo" },
+  { href: "/product/presence", name: "Presence", line: "How customers find you in Google, Maps and AI search", status: "Live beta audit" },
+  { href: "/product/scout", name: "Scout", line: "Businesses worth contacting, with the evidence", status: "Demo" },
+  { href: "/product/desk", name: "Desk", line: "Inquiries, replies, walkthroughs and the pipeline", status: "Demo" },
+] as const;
+
+export const SOLUTIONS_MENU = [
+  { href: "/solutions/commercial-cleaning", label: "Commercial cleaning", line: "Recurring office, medical and property accounts" },
+  { href: "/solutions/b2b-services", label: "Other B2B services", line: "Facility, pest, window and grounds contractors" },
 ] as const;
 
 export const NAV = [
-  { href: "/solutions/commercial-cleaning", label: "For cleaning companies" },
   { href: "/pricing", label: "Pricing" },
   { href: "/resources", label: "Guides" },
 ] as const;
@@ -26,9 +30,9 @@ export const FOOTER = [
     title: "Product",
     links: [
       { href: "/product", label: "How it connects" },
-      { href: "/presence", label: "Presence" },
-      { href: "/scout", label: "Scout" },
-      { href: "/desk", label: "Desk" },
+      { href: "/product/presence", label: "Presence" },
+      { href: "/product/scout", label: "Scout" },
+      { href: "/product/desk", label: "Desk" },
       { href: "/demo", label: "Interactive demo" },
       { href: "/app", label: "Sample workspace" },
     ],
@@ -37,6 +41,7 @@ export const FOOTER = [
     title: "Learn",
     links: [
       { href: "/solutions/commercial-cleaning", label: "For commercial cleaning" },
+      { href: "/solutions/b2b-services", label: "For other B2B services" },
       { href: "/how-it-works", label: "Setup and support" },
       { href: "/resources", label: "Guides" },
       { href: "/resources/ai-search-for-service-businesses", label: "AI search, plainly" },
@@ -47,7 +52,10 @@ export const FOOTER = [
     links: [
       { href: "/pricing", label: "Pricing" },
       { href: "/contact", label: "Get a free check" },
+      { href: "/about", label: "About" },
+      { href: "/integrations", label: "Integrations" },
       { href: "/security", label: "Security and data" },
+      { href: "/privacy", label: "Privacy (draft)" },
     ],
   },
 ] as const;
@@ -56,17 +64,21 @@ export const FOOTER = [
 export const PUBLIC_ROUTES = [
   "/",
   "/product",
-  "/presence",
-  "/scout",
-  "/desk",
+  "/product/presence",
+  "/product/scout",
+  "/product/desk",
   "/solutions/commercial-cleaning",
+  "/solutions/b2b-services",
   "/how-it-works",
+  "/integrations",
   "/demo",
   "/pricing",
   "/resources",
   "/resources/ai-search-for-service-businesses",
   "/contact",
   "/security",
+  "/about",
+  "/privacy",
 ] as const;
 
 /**

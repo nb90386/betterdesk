@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { MotionConfig } from "motion/react";
 import { DemoWorkspaceProvider, useWorkspace } from "@/lib/demo/store";
 import { Mark } from "@/components/Logo";
 import { Icon } from "./icons";
@@ -123,8 +124,10 @@ function Shell({ children }: { children: React.ReactNode }) {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <DemoWorkspaceProvider>
-      <Shell>{children}</Shell>
-    </DemoWorkspaceProvider>
+    <MotionConfig reducedMotion="user">
+      <DemoWorkspaceProvider>
+        <Shell>{children}</Shell>
+      </DemoWorkspaceProvider>
+    </MotionConfig>
   );
 }

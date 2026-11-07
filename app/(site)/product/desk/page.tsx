@@ -6,7 +6,7 @@ import { STAGES, STAGE_LABEL } from "@/lib/domain/types";
 export const metadata: Metadata = {
   title: "Desk: from inquiry to booked walkthrough",
   description: "Inquiries, replies, walkthrough booking and the pipeline in one record per account, with how each customer says they found you.",
-  alternates: { canonical: "/desk" },
+  alternates: { canonical: "/product/desk" },
 };
 
 const PARTS: [string, string, Status][] = [

@@ -42,7 +42,7 @@ export default function Home() {
           <span className="block">Book more walkthroughs.</span>
         </h1>
         <p className="t-lede mt-7 max-w-[46ch] lg:mt-8">
-          BetterDesk is one workspace for commercial cleaning companies. It researches businesses worth contacting, shows how your company appears in Google and AI search, and keeps every inquiry moving until the walkthrough is on the calendar.
+          One workspace for commercial cleaning companies: research businesses worth contacting, see how you appear in Google and AI search, and keep every inquiry moving to a booked walkthrough.
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
           <ButtonLink href="/demo">Try the demo</ButtonLink>
@@ -75,7 +75,7 @@ export default function Home() {
               </thead>
               <tbody>
                 {SCATTERED.map(([t, what, where]) => (
-                  <tr key={t} className="border-b border-rule align-baseline" data-reveal="stagger">
+                  <tr key={t} className="border-b border-rule align-baseline">
                     <td className="py-4 text-[0.875rem] tabular-nums text-muted">{t}</td>
                     <td className="py-4 pr-4 text-[1.0313rem]">
                       {what}
@@ -114,7 +114,7 @@ export default function Home() {
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-5">
           <SampleNote>Real audit logic, run in your browser on the fictional Clearline site.</SampleNote>
           <div className="flex flex-wrap gap-x-7">
-            <TextLink href="/presence#check">Check your own website</TextLink>
+            <TextLink href="/product/presence#check">Check your own website</TextLink>
             <TextLink href="/resources/ai-search-for-service-businesses">What AI search changes, plainly</TextLink>
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function Home() {
             <p className="max-w-[70ch] text-[0.9375rem] text-ink-2">
               Scout never sends, never estimates a building’s size, never writes to personal addresses and skips anyone who asked not to be contacted.
             </p>
-            <TextLink href="/scout" className="text-ink">How Scout decides</TextLink>
+            <TextLink href="/product/scout" className="text-ink">How Scout decides</TextLink>
           </div>
         </div>
       </section>
@@ -198,6 +198,54 @@ export default function Home() {
         </div>
         <DeskMoment />
         <SampleNote className="mt-6">Fictional inquiry. Replies and bookings here are simulated in your browser; nothing is sent.</SampleNote>
+      </section>
+
+      {/* 6 · Why not the tools you already have */}
+      <section className="border-t border-rule bg-surface">
+        <div className="wrap py-20 md:py-28">
+          <h2 className="t-title max-w-[22ch]">Why not ChatGPT, a spreadsheet and a calendar?</h2>
+          <p className="t-lede mt-5 max-w-[60ch]">You can get a long way with them, and many owners do. The trouble starts when the same customer lives in all three.</p>
+          <div className="mt-12 overflow-x-auto" tabIndex={0} role="region" aria-label="Comparison (scrolls sideways on small screens)">
+            <table className="w-full min-w-[46rem] border-collapse text-left">
+              <thead>
+                <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">
+                  <th scope="col" className="w-[22%] py-3 pr-6 font-[560]">Tool</th>
+                  <th scope="col" className="py-3 pr-6 font-[560]">What it does well</th>
+                  <th scope="col" className="py-3 font-[560]">What it can’t do on its own</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["ChatGPT", "Writes a decent introduction or reply when you paste in the details.", "Remember who you already contacted, who opted out, or which facts came from where. Every chat starts from zero."],
+                  ["A spreadsheet", "Holds a list. Sorts and filters it.", "Check each business against your criteria with sources, stop duplicates, or connect a reply to the row it came from."],
+                  ["Your calendar", "Shows when you’re free.", "Know which inquiry a walkthrough came from, or what happens after it."],
+                  ["BetterDesk", "Keeps one record per account: where it came from, why it fits, what was said, what’s booked, what’s next.", "Send anything without your approval, or promise results it can’t see."],
+                ].map(([t, good, missing]) => (
+                  <tr key={t} className="border-b border-rule align-top">
+                    <th scope="row" className={`py-5 pr-6 text-[1.0625rem] font-[600] ${t === "BetterDesk" ? "text-ink" : ""}`}>{t}</th>
+                    <td className="py-5 pr-6 text-ink-2">{good}</td>
+                    <td className="py-5 text-ink-2">{missing}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <dl className="mt-16 grid gap-x-12 md:grid-cols-2">
+            {[
+              ["Can I import my own list?", "Yes. A spreadsheet or CSV with company, ZIP, and whatever else you have. Duplicates are caught, and anything that looks like instructions hidden in the data is withheld."],
+              ["Does Scout send messages without asking?", "No. Scout can’t send at all. It drafts; a person approves; sending needs your own mailbox connected, which isn’t built yet."],
+              ["Can you guarantee ChatGPT mentions my business?", "No one honestly can. Presence checks what you control: whether AI and search crawlers can read your site and whether it says clearly what you do and where."],
+              ["Does it work with my inbox and calendar?", "Not yet. Gmail, Microsoft 365 and calendar connections are planned. Today the sample shows how it will work."],
+              ["What if I don’t connect anything?", "The website check and list checking still work. Connections make things faster; they’re not required to start."],
+              ["Can I manage approvals myself?", "Yes. You choose who approves introductions, and nothing goes out without that person."],
+            ].map(([q, a]) => (
+              <div key={q} className="border-t border-rule py-5">
+                <dt className="text-[1.0625rem] font-[600]">{q}</dt>
+                <dd className="mt-1.5 text-ink-2">{a}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </section>
 
       {/* 7 · Honest status */}

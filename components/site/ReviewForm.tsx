@@ -2,13 +2,14 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { SPRING } from "@/lib/motion";
 import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { BUSINESS_KINDS, PAINS, STEP_FIELDS, formatReview, validateReview, type ReviewErrors, type ReviewInput } from "@/lib/lead/review";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 type Phase = { kind: "editing" } | { kind: "sending" } | { kind: "sent"; id: string } | { kind: "blocked"; message: string } | { kind: "failed"; message: string };
 const EMPTY: ReviewInput = { business: "", website: "", serviceArea: "", kind: "Commercial cleaning", name: "", email: "", phone: "", pain: "", note: "", heardFrom: "", consent: false };
-const ENTER = { duration: 0.26, ease: [0.22, 1, 0.36, 1] as const };
+const ENTER = SPRING.ui;
 
 export function ReviewForm() {
   const uid = useId();

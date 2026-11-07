@@ -47,7 +47,7 @@ export default function Pricing() {
         <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
             <ButtonLink href="/contact">Get a free check</ButtonLink>
-            <TextLink href="/presence#check">Run the free website check</TextLink>
+            <TextLink href="/product/presence#check">Run the free website check</TextLink>
           </div>
           <p className="max-w-[44ch] text-[0.875rem] text-muted">Larger team or several locations? Tell us in the review request and we’ll quote it plainly.</p>
         </div>

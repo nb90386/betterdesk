@@ -4,6 +4,7 @@ import { fmtWhen } from "@/lib/format";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { SPRING } from "@/lib/motion";
 import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { useWorkspace } from "@/lib/demo/store";
 import { runSampleAudit } from "@/lib/presence/sample";
@@ -24,8 +25,8 @@ import { StateGlyph } from "./primitives";
 
 const TARGET = "Juniper Lane Law";
 const AUDIT_ID = PREPARED_AUDIT_ID;
-const ENTER = { duration: 0.32, ease: [0.22, 1, 0.36, 1] as const };
-const MOVE = { duration: 0.55, ease: [0.65, 0, 0.35, 1] as const };
+const ENTER = SPRING.ui;
+const MOVE = SPRING.move;
 const fmt = (iso: string) => fmtWhen(iso);
 
 const STEPS = [

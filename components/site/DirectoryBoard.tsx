@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion, useInView } from "motion/react";
+import { SPRING } from "@/lib/motion";
 import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { runSampleAudit } from "@/lib/presence/sample";
 
@@ -27,8 +28,8 @@ const STEPS = [
   { floor: 4, detail: "Nightly cleaning, five nights a week", right: "Won", needsYou: false, caption: "Juniper Lane Law becomes a customer, with every step from first research to signed contract on one timeline." },
 ] as const;
 
-const MOVE = { layout: { duration: 0.8, ease: [0.65, 0, 0.35, 1] as const } };
-const SWAP_IN = { duration: 0.32, ease: [0.22, 1, 0.36, 1] as const };
+const MOVE = { layout: SPRING.move };
+const SWAP_IN = SPRING.ui;
 const LINE_GRID = "grid grid-cols-[0.75rem_1fr_auto] items-baseline gap-x-3 md:grid-cols-[0.75rem_minmax(11rem,15rem)_1fr_auto]";
 
 export function DirectoryBoard() {
@@ -94,7 +95,7 @@ export function DirectoryBoard() {
                 {s.floor === f.n ? (
                   <motion.li key="journey" layoutId="journey-line" transition={reduce ? { duration: 0 } : MOVE} className="relative z-10 -mx-2.5 rounded-[8px] bg-graphite-3 px-2.5 py-2 shadow-[var(--shadow-held)]">
                     <div className={LINE_GRID}>
-                      <span className={`${s.needsYou ? "mark-lamp is-live" : "mark-off"} self-center`} aria-hidden="true" />
+                      <span className={`${s.needsYou ? "mark-lamp" : "mark-off"} self-center`} aria-hidden="true" />
                       <span className="font-[600] text-ink">Juniper Lane Law</span>
                       <span className="relative col-start-2 row-start-2 min-h-[1.4em] min-w-0 text-[0.875rem] text-ink-2 md:col-start-3 md:row-start-1">
                         <AnimatePresence mode="popLayout" initial={false}>

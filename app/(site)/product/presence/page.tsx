@@ -8,7 +8,7 @@ import { runSampleAudit } from "@/lib/presence/sample";
 export const metadata: Metadata = {
   title: "Presence: how customers find your cleaning company",
   description: "See whether Google, maps and AI search can read your website, what information is missing, and a practical fix list with owners. No ranking promises.",
-  alternates: { canonical: "/presence" },
+  alternates: { canonical: "/product/presence" },
 };
 
 const WAYS = [

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { SPRING } from "@/lib/motion";
 import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { runSampleAudit } from "@/lib/presence/sample";
 import type { Finding, PresenceReport } from "@/lib/presence/types";
@@ -30,7 +31,7 @@ const CATEGORY: Record<Finding["category"], string> = {
   identity: "Business identity",
   contact: "Contact path",
 };
-const ENTER = { duration: 0.28, ease: [0.22, 1, 0.36, 1] as const };
+const ENTER = SPRING.ui;
 
 export function auditRecord(r: PresenceReport, id = "aud_sample") {
   return {
@@ -156,7 +157,7 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
                     onClick={() => setSelected(x.id)}
                     className="group relative isolate flex w-full items-start gap-3 py-3.5 text-left"
                   >
-                    {on ? <motion.span layoutId="finding-cursor" transition={reduce ? { duration: 0 } : { duration: 0.3, ease: [0.65, 0, 0.35, 1] }} className="absolute inset-y-1 -inset-x-3 -z-10 rounded-[8px] bg-paper shadow-[var(--shadow-paper)]" aria-hidden="true" /> : null}
+                    {on ? <motion.span layoutId="finding-cursor" transition={reduce ? { duration: 0 } : SPRING.snap} className="absolute inset-y-1 -inset-x-3 -z-10 rounded-[8px] bg-paper shadow-[var(--shadow-paper)]" aria-hidden="true" /> : null}
                     <span className="mt-[0.45rem] grid w-2 place-items-center" aria-hidden="true"><span className={SEVERITY[x.severity].mark} /></span>
                     <span className="min-w-0 flex-1">
                       <span className={`block text-[0.9688rem] leading-snug ${on ? "font-[600] text-ink" : "text-ink-2 group-hover:text-ink"}`}>{x.title}</span>
