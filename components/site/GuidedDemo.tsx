@@ -203,7 +203,7 @@ export function GuidedDemo() {
                   transition={MOVE}
                   initial={m.direction === "inbound" && !reduce ? { opacity: 0, y: 10 } : false}
                   animate={{ opacity: 1, y: 0, transition: ENTER }}
-                  className={`rounded-[10px] px-4 py-3 text-[0.875rem] leading-relaxed ${m.direction === "inbound" ? "mr-8 bg-stone-2" : "ml-8 max-h-32 overflow-hidden bg-graphite-2 text-graphite-ink"}`}
+                  className={`rounded-[var(--radius-sm)] px-4 py-3 text-[0.875rem] leading-relaxed ${m.direction === "inbound" ? "mr-8 bg-stone-2" : "ml-8 max-h-32 overflow-hidden bg-graphite-2 text-graphite-ink"}`}
                 >
                   <p className={`mb-1 text-[0.75rem] ${m.direction === "inbound" ? "text-muted" : "text-graphite-muted"}`}>{m.from} · {fmt(m.at)} · simulated</p>
                   <p className="whitespace-pre-line">{m.body}</p>

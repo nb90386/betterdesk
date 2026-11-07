@@ -5,7 +5,7 @@ import type { ComponentProps, ReactNode } from "react";
 const base =
   "press inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-sm)] px-5 text-[1rem] font-[560] tracking-[-0.01em] whitespace-nowrap";
 const variants = {
-  primary: "bg-ink text-stone shadow-[0_1px_0_rgb(255_255_255/0.12)_inset,0_8px_18px_-12px_rgb(21_23_25/0.7)] hover:bg-ink-2 [.on-graphite_&]:bg-graphite-ink [.on-graphite_&]:text-graphite [.on-graphite_&]:hover:bg-white",
+  primary: "bg-ink text-stone shadow-[var(--shadow-button)] hover:bg-ink-2 [.on-graphite_&]:bg-graphite-ink [.on-graphite_&]:text-graphite [.on-graphite_&]:hover:bg-white",
   outline: "border border-field text-ink hover:border-ink bg-transparent",
 } as const;
 type Variant = keyof typeof variants;

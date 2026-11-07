@@ -67,7 +67,7 @@ export function DeskMoment() {
                   layout={reduce ? false : "position"}
                   initial={m.id !== "msg_alder1" && !reduce ? { opacity: 0, y: 10 } : false}
                   animate={{ opacity: 1, y: 0, transition: ENTER }}
-                  className={`max-w-[46ch] rounded-[10px] px-4 py-3 text-[0.9375rem] leading-relaxed ${m.direction === "inbound" ? "bg-stone-2" : "ml-auto bg-graphite-2 text-graphite-ink"}`}
+                  className={`max-w-[46ch] rounded-[var(--radius-sm)] px-4 py-3 text-[0.9375rem] leading-relaxed ${m.direction === "inbound" ? "bg-stone-2" : "ml-auto bg-graphite-2 text-graphite-ink"}`}
                 >
                   <p className={`mb-1 text-[0.75rem] ${m.direction === "inbound" ? "text-muted" : "text-graphite-muted"}`}>
                     {m.from} · {fmt(m.at)}

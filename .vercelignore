@@ -1,5 +1,19 @@
-.pw-browsers
-docs
-test-results
-playwright-report
-.betterdesk-overnight
+# Only what the site needs to build and run. Never upload founder prompt files, review captures or local tooling.
+docs/
+tests/
+test-results/
+playwright-report/
+scripts/
+.pw-browsers/
+.jury/
+.hallmark/
+.impeccable/
+.betterdesk-sayable/
+.betterdesk-overnight/
+BETTERDESK_*.md
+START_HERE.md
+VISUAL_REVIEW_SCORECARD.md
+BACKUP-AND-ROLLBACK.md
+run_betterdesk_*.py
+*.tsbuildinfo
+.env*

@@ -1,0 +1,18 @@
+--- robots.txt (preview)
+User-Agent: *
+Disallow: /
+
+
+--- meta robots on /
+<meta name="robots" content="noindex, nofollow"/>
+--- review API without webhook
+{"ok":false,"code":"delivery_not_configured","message":"Our request inbox isn't connected on this preview yet, so this form can't deliver your request. Nothing was saved."} HTTP 503
+--- presence SSRF refusal
+{"ok":false,"code":"blocked_url","message":"That address points to a private or reserved network, so it can't be audited."} HTTP 422
+--- live presence audit of example.com (IANA reserved demo domain)
+ok example.com live pages 1 findings 13 passes 6 fetchedAt 2026-11-07T21:57:25.328Z
+- high: We couldn't find any way to contact you on the pages checked
+- medium: We didn't find a sitemap
+- medium: Your homepage doesn't clearly say "Commercial cleaning"
+- medium: 1 page has no main heading (H1)
+- medium: 1 page has no meta description

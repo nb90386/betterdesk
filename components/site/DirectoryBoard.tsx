@@ -142,7 +142,7 @@ export function DirectoryBoard() {
               onClick={() => go(i)}
               aria-pressed={step === i}
               aria-label={`Step ${i + 1}: ${FLOORS.find((f) => f.n === st.floor)!.label}`}
-              className="press grid h-10 w-10 place-items-center rounded-[6px] text-[0.8125rem] font-[600] tabular-nums text-muted hover:text-ink aria-pressed:bg-graphite-3 aria-pressed:text-ink"
+              className="press grid h-10 w-10 place-items-center rounded-[var(--radius-sm)] text-[0.8125rem] font-[600] tabular-nums text-muted hover:text-ink aria-pressed:bg-graphite-3 aria-pressed:text-ink"
             >
               {i + 1}
             </button>
@@ -154,7 +154,7 @@ export function DirectoryBoard() {
                 if (step >= STEPS.length - 1) setStep(0);
                 setPlaying((p) => !(p && step < STEPS.length - 1));
               }}
-              className="press ml-2 inline-flex h-10 items-center rounded-[6px] px-3 text-[0.8125rem] font-[600] text-ink hover:bg-graphite-3"
+              className="press ml-2 inline-flex h-10 items-center rounded-[var(--radius-sm)] px-3 text-[0.8125rem] font-[600] text-ink hover:bg-graphite-3"
             >
               {playing && step < STEPS.length - 1 ? "Pause" : step >= STEPS.length - 1 ? "Replay" : "Play"}
             </button>

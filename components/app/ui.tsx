@@ -71,7 +71,7 @@ export function StageMark({ stage }: { stage: Stage }) {
 export function TierMark({ q }: { q: Qualification | undefined }) {
   if (!q) return <span className="text-[0.8125rem] text-muted">Not evaluated</span>;
   const label = { strong: "Strong fit", possible: "Worth checking", weak: "Weak fit", excluded: "Excluded" }[q.tier];
-  const tone = { strong: "text-ink", possible: "text-lamp-ink", weak: "text-muted", excluded: "text-muted" }[q.tier];
+  const tone = { strong: "text-ink", possible: "text-ink-2", weak: "text-muted", excluded: "text-muted" }[q.tier];
   return (
     <span className={`inline-flex items-baseline gap-1.5 text-[0.8125rem] font-medium ${tone}`}>
       {label}

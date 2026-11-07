@@ -9,7 +9,7 @@ export function Footer() {
     <footer id="site-footer" className="on-graphite bg-graphite">
       <div className="wrap grid gap-14 pb-10 pt-16 lg:grid-cols-12 md:pt-20">
         <div className="lg:col-span-4">
-          <Link href="/" aria-label="BetterDesk home" className="inline-block rounded-[6px] text-[1.15rem] text-ink">
+          <Link href="/" aria-label="BetterDesk home" className="inline-block rounded-[var(--radius-sm)] text-[1.15rem] text-ink">
             <Logo />
           </Link>
           <p className="mt-5 max-w-[30ch] text-[1.0625rem] leading-snug text-ink-2">

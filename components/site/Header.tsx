@@ -85,7 +85,7 @@ export function Header() {
       }`}
     >
       <div className="wrap flex h-[4.25rem] items-center gap-4 lg:gap-8">
-        <Link href="/" className="-ml-1 rounded-[6px] px-1 py-1 text-[1.06rem] text-ink" aria-label="BetterDesk home">
+        <Link href="/" className="-ml-1 rounded-[var(--radius-sm)] px-1 py-1 text-[1.06rem] text-ink" aria-label="BetterDesk home">
           <Logo />
         </Link>
 
@@ -98,7 +98,7 @@ export function Header() {
                 aria-expanded={menu}
                 aria-controls={popId}
                 onClick={() => setMenu((m) => !m)}
-                className={`inline-flex h-10 items-center gap-1.5 rounded-[6px] px-3 text-[0.9375rem] transition-colors hover:text-ink ${productActive || menu ? "text-ink" : "text-ink-2"}`}
+                className={`inline-flex h-10 items-center gap-1.5 rounded-[var(--radius-sm)] px-3 text-[0.9375rem] transition-colors hover:text-ink ${productActive || menu ? "text-ink" : "text-ink-2"}`}
               >
                 Product
                 <motion.svg animate={{ rotate: menu ? 180 : 0 }} transition={ENTER} viewBox="0 0 12 12" className="h-3 w-3" aria-hidden="true" fill="none">
@@ -140,7 +140,7 @@ export function Header() {
                 <Link
                   href={n.href}
                   aria-current={active(n.href) ? "page" : undefined}
-                  className="inline-flex h-10 items-center whitespace-nowrap rounded-[6px] px-3 text-[0.9375rem] text-ink-2 transition-colors hover:text-ink aria-[current=page]:text-ink"
+                  className="inline-flex h-10 items-center whitespace-nowrap rounded-[var(--radius-sm)] px-3 text-[0.9375rem] text-ink-2 transition-colors hover:text-ink aria-[current=page]:text-ink"
                 >
                   {n.label}
                 </Link>
