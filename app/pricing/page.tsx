@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { PlanReceipt } from "@/components/HeroArtifacts";
 import { PricingPlans } from "@/components/PricingPlans";
 import { Faq } from "@/components/Faq";
 import { CtaBand } from "@/components/CtaBand";
@@ -80,7 +81,7 @@ const PRICING_FAQ = [
 export default function PricingPage() {
   return (
     <>
-      <PageHero eyebrow="Pricing" title={<>Simple plans. No seat math.</>}>
+      <PageHero eyebrow="Pricing" title={<>Simple plans. No seat math.</>} aside={<PlanReceipt />}>
         <p>Every plan includes setup, calibration and live human support. Monthly, with no annual contract.</p>
       </PageHero>
       <section className="container-bd py-14 md:py-20" aria-labelledby="plans-h">

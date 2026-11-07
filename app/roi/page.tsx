@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 export default function RoiPage() {
   return (
     <>
-      <PageHero eyebrow="ROI calculator" title={<>Do the math with your numbers.</>}>
+      <PageHero overlap eyebrow="ROI calculator" title={<>Do the math with your numbers.</>}>
         <p>Four inputs, one formula you can see. The defaults are deliberately modest; change them to match your call log and your typical job.</p>
       </PageHero>
-      <section className="container-bd py-12 md:py-16">
+      <section className="container-bd relative z-10 -mt-28 pb-12 md:-mt-36 md:pb-16">
         <RoiCalculator />
         <div className="mt-10 grid gap-6 text-[0.92rem] leading-relaxed text-ink-2 md:grid-cols-3">
           <p><strong className="font-medium text-ink">Where to find &ldquo;unanswered&rdquo;:</strong> your phone&rsquo;s missed-call log for a normal week, plus texts and forms that waited more than an hour.</p>

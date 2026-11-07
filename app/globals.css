@@ -203,6 +203,15 @@
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-pearl-on-night);
   }
+  /* Hero focal object: the lamp catches its upper-left edge. */
+  .nd-focal {
+    box-shadow:
+      inset 1px 1px 0 rgb(244 169 71 / 0.22),
+      0 0 0 1px rgb(255 255 255 / 0.06),
+      0 2px 3px rgb(0 0 0 / 0.55),
+      28px 56px 90px -30px rgb(0 0 0 / 0.95),
+      -30px -40px 90px -50px rgb(244 169 71 / 0.35);
+  }
   /* The lamp: light falling on the ground surface from upper left, not a floating blob. */
   .lamp-ground {
     background:
@@ -269,13 +278,15 @@
   .nd-thread { stroke-dasharray: 1; stroke-dashoffset: 1; animation: nd-draw 1100ms var(--ease-travel) forwards; animation-delay: var(--d, 0ms); }
   .nd-settle { animation: nd-settle 900ms var(--ease-out-soft) both; animation-delay: var(--d, 0ms); }
   .nd-typing { animation: nd-typing 900ms steps(1) both; animation-delay: var(--d, 0ms); }
+  .nd-out { animation: nd-out 360ms ease-out forwards; animation-delay: calc(var(--d, 0ms) + 200ms); }
 }
 @keyframes nd-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
 @keyframes nd-pop { from { opacity: 0; transform: translateY(8px) scale(0.96); } to { opacity: 1; transform: none; } }
 @keyframes nd-draw { to { stroke-dashoffset: 0; } }
+@keyframes nd-out { to { opacity: 0; } }
 @keyframes nd-settle {
-  0% { opacity: 0; transform: translate(-28px, -40px) rotate(-4deg) scale(1.04); filter: blur(3px); }
-  60% { opacity: 1; filter: none; }
+  0% { opacity: 0; transform: translate(-22px, -30px) rotate(-3deg) scale(1.03); }
+  45% { opacity: 1; }
   100% { opacity: 1; transform: none; }
 }
 @keyframes nd-typing { 0% { opacity: 1; } 99% { opacity: 1; } 100% { opacity: 0; } }
@@ -289,6 +300,7 @@
     scroll-behavior: auto !important;
   }
   .nd-ring { display: none; }
+  .nd-out { display: none !important; }
   .nd-in, .nd-pop, .nd-settle, .nd-thread, .nd-typing { animation: none !important; opacity: 1; transform: none; filter: none; }
 }
 

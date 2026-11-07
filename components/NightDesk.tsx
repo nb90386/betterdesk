@@ -11,7 +11,7 @@ const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 export function NightDesk() {
   return (
     <figure className="relative m-0" aria-labelledby="nd-caption">
-      <div className="relative grid gap-4 sm:gap-5 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)_minmax(0,0.9fr)] md:items-start md:gap-6 lg:gap-8">
+      <div className="relative grid gap-4 sm:gap-5 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1.3fr)_minmax(0,0.98fr)] md:items-start md:gap-6 lg:gap-8">
         <Thread />
         <CallNode />
         <Conversation />
@@ -29,7 +29,7 @@ function CallNode() {
   return (
     <div className="relative md:pt-6">
       <div className="relative flex items-center gap-4 md:flex-col md:items-start md:gap-5">
-        <div className="relative grid size-[76px] shrink-0 place-items-center md:size-[128px]">
+        <div className="relative grid size-[60px] shrink-0 place-items-center md:size-[120px]">
           <svg viewBox="0 0 100 100" className="absolute inset-0 size-full overflow-visible" aria-hidden="true">
             <circle className="nd-ring" cx="50" cy="50" r="49" fill="none" stroke="var(--color-lamp)" strokeWidth="0.8" />
             <circle className="nd-ring" cx="50" cy="50" r="49" fill="none" stroke="var(--color-lamp)" strokeWidth="0.8" />
@@ -41,7 +41,8 @@ function CallNode() {
         </div>
         <div className="min-w-0">
           <p className="text-[0.95rem] font-medium text-[#f7f6f3]">Missed call</p>
-          <p className="font-mono text-[0.86rem] tabular text-night-muted">(512) 555-0148 · 6:42 PM</p>
+          <p className="font-mono text-[0.86rem] tabular text-night-muted">(512) 555-0148</p>
+          <p className="font-mono text-[0.86rem] tabular text-lamp">6:42 PM</p>
           <p className="mt-2 max-w-[24ch] text-[0.82rem] leading-snug text-night-muted">
             Office closed at 5. Both techs are still on jobs.
           </p>
@@ -53,7 +54,7 @@ function CallNode() {
 
 function Conversation() {
   return (
-    <div className="nd-in stage-pane relative z-10 p-4 sm:p-5" style={d(300)}>
+    <div className="nd-in stage-pane nd-focal relative z-10 p-4 sm:p-5 md:-mt-4 md:p-6" style={d(300)}>
       <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-3">
         <div className="flex items-center gap-2.5">
           <span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#2a2d32] text-[0.68rem] font-semibold text-[#f7f6f3]">RP</span>
@@ -64,7 +65,7 @@ function Conversation() {
         </div>
         <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-[6px] bg-lamp/12 px-1.5 py-1 text-[0.7rem] font-medium text-lamp"><LogoMark className="size-3.5 text-[#f7f6f3]" rings={1} />Replying</span>
       </div>
-      <ol className="mt-4 space-y-2.5 text-[0.86rem] leading-snug">
+      <ol className="mt-4 space-y-2.5 text-[0.88rem] leading-snug md:text-[0.92rem]">
         <Bubble from="desk" delay={600} time="6:42">
           Hi, this is Ridgeline Plumbing. Sorry we missed your call. What&rsquo;s going on? I can get you on the schedule.
         </Bubble>
@@ -116,26 +117,21 @@ function Schedule() {
         {SLOTS.map((s) =>
           s.kind === "booked" ? (
             <li key={s.t} className="relative">
-              <div className="absolute inset-0 hidden items-start gap-3 rounded-[14px] border border-dashed border-lamp/40 px-3 py-2.5 text-[0.78rem] text-lamp md:flex" aria-hidden="true">
+              <div className="absolute inset-0 hidden items-start gap-3 nd-out rounded-[14px] border border-dashed border-lamp/40 px-3 py-2.5 text-[0.78rem] text-lamp md:flex" style={d(3100)} aria-hidden="true">
                 <span className="w-10 font-mono tabular">8:00</span>
-                <span>Holding for Dana M.</span>
+                <span className="flex items-center gap-2"><span className="pulse-dot size-1.5 rounded-full bg-lamp" />Holding for Dana M.</span>
               </div>
-              <div className="nd-settle pearl-card relative p-4" style={d(3100)}>
+              <div className="nd-settle pearl-card relative p-3.5" style={d(3100)}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-[0.72rem] font-medium text-[#55585e]">Booked by BetterDesk · 6:47 PM</p>
-                    <p className="mt-1 font-display text-[1.22rem] leading-tight tracking-[-0.02em] text-[#111214]">Thu · 8:00&ndash;10:00 AM</p>
+                    <p className="text-[0.72rem] font-medium text-[#55585e]">Booked · 6:47 PM</p>
+                    <p className="mt-1 whitespace-nowrap font-display text-[1.02rem] leading-tight tracking-[-0.02em] text-[#111214] lg:text-[1.1rem]">Thu · 8:00&ndash;10:00 AM</p>
                   </div>
                   <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-[#111214] text-lamp">
                     <Check className="size-3.5" />
                   </span>
                 </div>
-                <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 border-t border-[#d8d6d0] pt-2.5 text-[0.76rem] text-[#2a2c30]">
-                  <dt className="text-[#6b6e74]">Job</dt>
-                  <dd>Water heater, slow leak</dd>
-                  <dt className="text-[#6b6e74]">Who</dt>
-                  <dd>Dana M. · 78704 · garage</dd>
-                </dl>
+                <p className="mt-2 truncate border-t border-[#d8d6d0] pt-2 text-[0.76rem] text-[#2a2c30]">Dana M. · water heater · 78704</p>
               </div>
             </li>
           ) : (

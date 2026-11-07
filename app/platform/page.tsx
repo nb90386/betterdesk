@@ -3,6 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { ProductExplorer } from "@/components/ProductExplorer";
 import { SectionHeading } from "@/components/Section";
 import { CtaBand } from "@/components/CtaBand";
+import { ModeSwitcher } from "@/components/ModeSwitcher";
 
 export const metadata: Metadata = {
   title: "Platform",
@@ -58,10 +59,10 @@ const PARTS = [
 export default function PlatformPage() {
   return (
     <>
-      <PageHero eyebrow="Platform" title={<>Everything between the first ring and the booking.</>}>
+      <PageHero overlap eyebrow="Platform" title={<>Everything between the first ring and the booking.</>}>
         <p>Click around a sample workspace for a plumbing company: the inbox, the calendar it fills, the short list of things that need a person, and the summary the owner reads.</p>
       </PageHero>
-      <section className="container-bd py-12 md:py-16" aria-label="Sample product workspace">
+      <section className="container-bd relative z-10 -mt-28 pb-12 md:-mt-36 md:pb-16" aria-label="Sample product workspace">
         <ProductExplorer />
         <p className="mt-4 text-[0.82rem] text-muted">Sample workspace with fictional customers. Buttons change the sample only; nothing is sent.</p>
       </section>
@@ -87,6 +88,28 @@ export default function PlatformPage() {
           ))}
         </ol>
       </section>
+      {/* ---------------- Control (graphite), moved from home ---------------- */}
+      <section className="on-night lamp-ground relative" aria-labelledby="control-title">
+        <div className="container-bd grid gap-12 py-20 md:py-28 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
+          <div className="reveal">
+            <h2 id="control-title" className="display text-[clamp(2.1rem,1.4rem+2.6vw,3.6rem)] text-[#f7f6f3]">
+              You decide how much it handles.
+            </h2>
+            <p className="mt-5 max-w-[52ch] text-[1.05rem] leading-relaxed text-night-muted">
+              Start with every reply waiting for your OK. Loosen the reins when you trust it. Your rules decide which conversations go to a person, with the whole thread attached.
+            </p>
+            <ul className="mt-8 space-y-3 text-[0.95rem] text-[#d4d6da]">
+              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-lamp" aria-hidden="true" />Answers come from your services, hours, prices and policies</li>
+              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-lamp" aria-hidden="true" />Quiet hours and emergency routing you set</li>
+              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-lamp" aria-hidden="true" />Suggested FAQ updates wait for your approval</li>
+            </ul>
+          </div>
+          <div className="reveal">
+            <ModeSwitcher />
+          </div>
+        </div>
+      </section>
+
       <CtaBand />
     </>
   );

@@ -155,21 +155,22 @@ test("reduced motion: hero shows the finished scene immediately", async ({ brows
   await page.goto("/");
   const booked = page.locator("figure").getByText("Thu · 8:00–10:00 AM");
   await expect(booked).toBeVisible();
-  // v2: the booked card (not its list row) carries the entrance animation.
-  expect(Number(await booked.evaluate((el) => getComputedStyle(el.closest(".pearl-card")!).opacity))).toBe(1);
+  // v2: the booked card carries the entrance animation (3.1s delay when motion is allowed).
+  // A 500ms bound still proves "immediate" while tolerating WebKit applying the reduced-motion emulation a frame late.
+  await expect(page.locator("figure .pearl-card").first()).toHaveCSS("opacity", "1", { timeout: 500 });
   await ctx.close();
 });
 
 test("mobile sticky CTA appears after the hero, hides at the closing band and on /contact", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  const bar = page.locator("div.fixed.bottom-0").filter({ hasText: "Plans from $149/mo" });
+  const bar = page.locator("div.fixed.bottom-0").filter({ hasText: "$149/mo" });
   await expect(bar).toHaveAttribute("aria-hidden", "true");
   await page.evaluate(() => window.scrollTo(0, 2400));
   await expect(bar).toHaveAttribute("aria-hidden", "false");
   await bar.getByRole("link", { name: "Book a demo" }).click();
   await expect(page).toHaveURL(/\/contact$/);
-  await expect(page.locator("div.fixed.bottom-0").filter({ hasText: "Plans from $149/mo" })).toHaveCount(0);
+  await expect(page.locator("div.fixed.bottom-0").filter({ hasText: "$149/mo" })).toHaveCount(0);
   await page.goto("/");
   await page.locator("#cta-title").scrollIntoViewIfNeeded();
   await expect(bar).toHaveAttribute("aria-hidden", "true");

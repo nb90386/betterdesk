@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
+import { SetupAgenda } from "@/components/HeroArtifacts";
 import { SectionHeading } from "@/components/Section";
 import { ThroughLine } from "@/components/ThroughLine";
 import { Faq } from "@/components/Faq";
@@ -38,7 +39,7 @@ const HOW_FAQ = [
 export default function HowItWorksPage() {
   return (
     <>
-      <PageHero eyebrow="How it works" title={<>Set up with a person. Live on your terms.</>}>
+      <PageHero eyebrow="How it works" title={<>Set up with a person. Live on your terms.</>} aside={<SetupAgenda />}>
         <p>No DIY software puzzle. Someone from BetterDesk sets it up with you, you approve what it says, and you decide when it runs on its own.</p>
       </PageHero>
 

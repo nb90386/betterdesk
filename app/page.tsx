@@ -7,7 +7,6 @@ import { SectionHeading } from "@/components/Section";
 import { PricingPlans } from "@/components/PricingPlans";
 import { Faq } from "@/components/Faq";
 import { CtaBand } from "@/components/CtaBand";
-import { ModeSwitcher } from "@/components/ModeSwitcher";
 
 const MOMENTS = [
   {
@@ -76,11 +75,11 @@ export default function Home() {
               <p className="max-w-[40ch] text-[1rem] leading-relaxed text-[#d4d6da] sm:text-[1.06rem]">
                 BetterDesk texts back the calls your team can&rsquo;t take, answers from what you&rsquo;ve taught it and offers your real open times. Anything tricky goes to a person.
               </p>
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-                <ButtonLink href="/contact" variant="light" arrow className="group">
+              <div className="mt-7 grid gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-3">
+                <ButtonLink href="/contact" variant="light" arrow className="group w-full sm:w-auto">
                   Book a demo
                 </ButtonLink>
-                <ButtonLink href="/demo" variant="ghost">
+                <ButtonLink href="/demo" variant="ghost" className="justify-self-center sm:justify-self-auto">
                   Watch a sample call
                 </ButtonLink>
               </div>
@@ -132,7 +131,7 @@ export default function Home() {
             <SignalStory />
           </div>
         </div>
-        <div className="h-32 bg-gradient-to-b from-night to-[#eeede9] md:h-48" aria-hidden="true" />
+        <div className="h-40 bg-[linear-gradient(180deg,#0d0e10_0%,#2a2a28_38%,#bdb9b0_78%,#eeede9_100%)] md:h-64" aria-hidden="true" />
       </section>
 
       {/* ---------------- Interactive walkthrough (pearl, morning) ---------------- */}
@@ -148,28 +147,6 @@ export default function Home() {
           </div>
           <div className="reveal mt-12">
             <LeadJourney scenarioIds={["missed-call"]} />
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------- Control (graphite) ---------------- */}
-      <section className="on-night lamp-ground relative" aria-labelledby="control-title">
-        <div className="container-bd grid gap-12 py-20 md:py-28 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
-          <div className="reveal">
-            <h2 id="control-title" className="display text-[clamp(2.1rem,1.4rem+2.6vw,3.6rem)] text-[#f7f6f3]">
-              You decide how much it handles.
-            </h2>
-            <p className="mt-5 max-w-[52ch] text-[1.05rem] leading-relaxed text-night-muted">
-              Start with every reply waiting for your OK. Loosen the reins when you trust it. Your rules decide which conversations go to a person, with the whole thread attached.
-            </p>
-            <ul className="mt-8 space-y-3 text-[0.95rem] text-[#d4d6da]">
-              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-lamp" aria-hidden="true" />Answers come from your services, hours, prices and policies</li>
-              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-lamp" aria-hidden="true" />Quiet hours and emergency routing you set</li>
-              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-lamp" aria-hidden="true" />Suggested FAQ updates wait for your approval</li>
-            </ul>
-          </div>
-          <div className="reveal">
-            <ModeSwitcher />
           </div>
         </div>
       </section>

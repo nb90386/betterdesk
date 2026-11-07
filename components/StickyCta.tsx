@@ -44,7 +44,7 @@ export function StickyCta() {
   if (hidden) return null;
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-paper/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md transition-[transform,opacity] duration-200 ease-out sm:hidden ${
+      className={`on-night fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-night px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md transition-[transform,opacity] duration-200 ease-out sm:hidden ${
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-full opacity-0"
       }`}
       aria-hidden={!show}
@@ -52,9 +52,9 @@ export function StickyCta() {
     >
       <div className="flex items-center gap-3">
         <p className="min-w-0 flex-1 text-[0.82rem] leading-snug text-ink-2">
-          Plans from $149/mo. <span className="text-muted">Setup with a person.</span>
+          From <span className="font-medium text-[#f7f6f3]">$149/mo</span> · setup with a person
         </p>
-        <Link href="/contact" className="press inline-flex min-h-11 shrink-0 items-center rounded-full bg-ink px-5 text-[0.9rem] font-medium text-card">
+        <Link href="/contact" className="press inline-flex min-h-11 shrink-0 items-center rounded-full bg-[#f7f6f3] px-5 text-[0.9rem] font-medium text-[#111214]">
           Book a demo
         </Link>
       </div>

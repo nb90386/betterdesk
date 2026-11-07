@@ -65,7 +65,7 @@ export function SignalStory() {
             ref={(el) => {
               refs.current[i] = el;
             }}
-            className="relative py-8 lg:flex lg:min-h-[60svh] lg:flex-col lg:justify-center lg:py-0"
+            className="relative py-8 lg:flex lg:min-h-[46svh] lg:flex-col lg:justify-center lg:py-0"
           >
             <div className={`transition-opacity duration-300 lg:pl-8 ${active === s.id ? "is-active" : "is-idle"}`}>
               <span className="absolute left-0 top-[2.6rem] hidden h-[calc(100%-2.6rem)] w-px bg-white/[0.08] lg:top-1/2 lg:block lg:h-full lg:-translate-y-1/2" aria-hidden="true" />
@@ -151,7 +151,7 @@ function Rail({ index, calm }: { index: number; calm: boolean }) {
   );
 }
 
-const row = "flex items-center gap-3 rounded-[12px] bg-white/[0.035] px-3.5 py-3 text-[0.86rem]";
+const row = "flex items-center gap-3 rounded-[12px] bg-white/[0.035] px-4 py-3.5 text-[0.92rem]";
 
 function SignalState() {
   const items = [

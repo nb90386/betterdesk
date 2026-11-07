@@ -82,7 +82,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
       {/* Top bar: scenario + with/without */}
       <div className="flex flex-col gap-4 border-b border-rule px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
         {scenarios.length > 1 ? (
-          <div role="tablist" aria-label="Scenario" className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 lg:pb-0">
+          <div role="tablist" aria-label="Scenario" className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 [mask-image:linear-gradient(90deg,#000_90%,transparent)] lg:pb-0">
             {scenarios.map((s) => {
               const active = s.id === scenario.id;
               return (
@@ -130,8 +130,7 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
         )}
 
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="sample-tag">Illustration<span className="hidden sm:inline"> · sample data</span></span>
-          <div className="inline-flex rounded-full border border-rule-strong bg-paper p-1" role="group" aria-label="Compare outcomes">
+                    <div className="inline-flex rounded-full border border-rule-strong bg-paper p-1" role="group" aria-label="Compare outcomes">
             {(["without", "with"] as const).map((m) => (
               <button
                 key={m}
@@ -186,19 +185,19 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
         </ol>
 
         {/* Phone */}
-        <div className="relative flex items-center justify-center bg-paper-2/50 px-4 py-6 sm:px-8 sm:py-8">
-          <div className="w-full max-w-[340px] rounded-[34px] bg-ink p-2 shadow-[var(--shadow-device)]">
+        <div className="relative flex items-center justify-center bg-[radial-gradient(80%_70%_at_30%_10%,#f8f7f4_0%,#e4e3de_70%)] px-4 pb-10 pt-6 sm:px-8 sm:pb-12 sm:pt-8">
+          <div className="w-full max-w-[340px] rounded-[34px] bg-[linear-gradient(160deg,#2a2d32,#121315)] p-[7px] shadow-[var(--shadow-device),inset_0_1px_0_rgb(255_255_255/0.18)]">
             <div className="overflow-hidden rounded-[27px] bg-card">
               <div className="flex items-center justify-between border-b border-rule px-5 pb-3 pt-4">
                 <div>
                   <p className="text-[0.82rem] font-medium text-ink">{mode === "with" ? scenario.business : scenario.customer}</p>
-                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.06em] text-muted">{scenario.channel}</p>
+                  <p className="text-[0.74rem] text-muted">{scenario.channel}</p>
                 </div>
-                <span className={`shrink-0 whitespace-nowrap rounded-full border px-2 py-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.06em] ${toneClass[step.status.tone]}`}>
+                <span className={`shrink-0 whitespace-nowrap rounded-[6px] border px-2 py-0.5 text-[0.72rem] font-medium ${toneClass[step.status.tone]}`}>
                   {step.status.text}
                 </span>
               </div>
-              <div ref={threadRef} className="h-[270px] space-y-2 overflow-y-auto px-4 py-4 sm:h-[340px]" aria-label="Conversation" role="log">
+              <div ref={threadRef} className="h-[270px] space-y-2 overflow-y-auto px-4 py-4 focus-visible:outline-offset-[-2px] sm:h-[340px]" aria-label="Conversation" role="log" tabIndex={0}>
                 <AnimatePresence initial={false}>
                   {messages.map((m) => (
                     <motion.div
@@ -212,9 +211,11 @@ export function LeadJourney({ scenarioIds, compact = false }: { scenarioIds?: st
                   ))}
                 </AnimatePresence>
                 {messages.length === 0 ? <p className="pt-24 text-center text-[0.8rem] text-faint">No messages. Nobody replied.</p> : null}
+                {i === 0 ? <FirstRing label={step.label} /> : null}
               </div>
             </div>
           </div>
+          <span className="sample-tag absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap">Illustration · sample data</span>
         </div>
 
         {/* Context panel */}
@@ -368,6 +369,23 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
       <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-signal">Outcome</p>
       <p className="mt-1 text-[0.95rem] font-medium text-ink">{card.title}</p>
       <p className="text-[0.85rem] text-muted">{card.detail}</p>
+    </div>
+  );
+}
+
+/** Step one, designed: the phone at the moment the call rings out, before anything has happened. */
+function FirstRing({ label }: { label: string }) {
+  return (
+    <div className="flex flex-col items-center pt-8 text-center" aria-hidden="true">
+      <svg viewBox="0 0 120 120" className="size-28 text-signal">
+        {[54, 42, 30].map((r, k) => (
+          <circle key={r} cx="60" cy="60" r={r} fill="none" stroke="currentColor" strokeOpacity={0.18 + k * 0.18} strokeWidth="1" strokeDasharray={k === 0 ? "2 4" : undefined} />
+        ))}
+        <circle cx="60" cy="60" r="18" fill="currentColor" fillOpacity="0.1" />
+        <path d="M52.5 51.5h4l2 5-2.6 1.7a14 14 0 0 0 6.9 6.9l1.7-2.6 5 2v4c0 1.2-1 2.2-2.2 2.1A20 20 0 0 1 50.4 53.7c-.1-1.2.9-2.2 2.1-2.2Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      </svg>
+      <p className="mt-3 text-[0.95rem] font-medium text-ink">{label}</p>
+      <p className="mt-1 max-w-[24ch] text-[0.8rem] leading-snug text-muted">Press play, or use the arrow keys, to see what happens next.</p>
     </div>
   );
 }

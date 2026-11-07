@@ -3,7 +3,7 @@ import { Check } from "./NightDesk";
 
 /** The close: morning. The call from last night is on today's schedule. */
 export function CtaBand({
-  title = <>Wake up to bookings, not voicemails.</>,
+  title = <>Wake up to bookings, <span className="text-muted">not voicemails.</span></>,
   secondary = { href: "/demo", label: "Or watch a sample call" },
   body = "A short call with a person, not a pitch deck. Bring how calls and messages reach you today; we'll show you what BetterDesk would do with them and what it costs.",
 }: {
@@ -18,7 +18,7 @@ export function CtaBand({
     >
       <div className="container-bd relative grid gap-12 py-20 md:py-28 lg:grid-cols-[1.3fr_1fr] lg:items-center lg:gap-16">
         <div>
-          <h2 id="cta-title" className="display max-w-[16ch] text-[clamp(2.5rem,1.5rem+3.6vw,4.8rem)] text-ink">
+          <h2 id="cta-title" className="display max-w-[15ch] text-[clamp(2.4rem,1.4rem+3.2vw,4.3rem)] text-ink">
             {title}
           </h2>
           <p className="mt-6 max-w-[50ch] text-[1.05rem] leading-relaxed text-ink-2">{body}</p>
@@ -41,7 +41,7 @@ function MorningCard() {
   return (
     <div className="relative mx-auto w-full max-w-[420px] lg:mr-0" aria-hidden="true">
       <div className="absolute inset-x-6 -bottom-3 top-6 rotate-[3deg] rounded-[18px] bg-[#e4e3de] shadow-[var(--shadow-card)]" />
-      <div className="relative rotate-[-1.5deg] rounded-[18px] bg-[linear-gradient(180deg,#fdfcfa_0%,#f2f1ec_100%)] p-6 shadow-[var(--shadow-lift)]">
+      <div className="relative rounded-[18px] bg-[linear-gradient(180deg,#fdfcfa_0%,#f2f1ec_100%)] p-6 shadow-[var(--shadow-lift)]">
         <div className="flex items-center justify-between">
           <p className="text-[0.78rem] font-medium text-muted">Thursday · 7:52 AM</p>
           <p className="text-[0.72rem] text-muted">Sample</p>
