@@ -73,3 +73,39 @@ Regression from the batch:
 - Ceiling items (b) to (g) from the review round remain open and are not scored here. Founder approval of the direction is still owed.
 
 disposition: fix
+
+---
+
+# Verdict pass, round 2 (recaptures from commit 6140c3c)
+
+Evidence: valid. desktop.png is 1440x8632 and mobile.png is 780x29332. The pass-11 frame set and the pass-11-sections crops are present and match their names.
+
+## verdict
+1. Seed: partial. The record is now honest. FORM carries `seed: none (roll skipped, brief-pinned; open for the founder)` and no longer misuses the "unavailable" token, so that part is resolved. But the roll itself was still never run, and a skipped roll stays a material finding under the review contract. Writing it down discloses the gap; it does not close it. It closes only if the roll runs once the `impeccable` CLI is installed, or if the founder explicitly accepts the brief-pinned direction in place of the roll.
+2. CtaBand overflow at 390: resolved in round 1.
+3. Eyebrows: resolved.
+   - solutions-index-1440: the cards open on their headings and no industry label sits above them.
+   - "Also a fit for these businesses." is a display h2.
+   - contact-1440: "What the call covers" is a pearl display heading.
+4. Mono as costume: resolved. walkthrough-1440 shows the phone pill "Missed call from (512) 555-0148 · 6:42 PM" and "Step 1 of 8 · 6:42 PM" in sans. Mono remains only on the pure time spans in the step list and on the 01 / 08 counter.
+5. Glyph icons: partial.
+   - pricing-table-1440 shows the authored SVG checks: resolved.
+   - Solutions "Read more" uses the authored arrow: resolved in round 1.
+   - The HeroScene ✓ is gone from source, and a grep finds no ✓ in app/ or components/.
+   - modeswitcher-1440.png captures the Assisted state, and the check only renders in Autonomous. So the claimed visible fix is not in the capture; the authored Check at components/ModeSwitcher.tsx:77 is seen in source only.
+6. Nav translucency: resolved in round 1.
+7. States and spacing: resolved in round 1. In walkthrough-1440, the idle first state now pairs "Press play…" with a "Play walkthrough" button, which is consistent.
+8. Truth placeholders at 320: resolved. home-320-bottom shows the full footer, including "Privacy policy and terms: pending, not yet published.", with nothing covering it.
+- Seam regression from round 1: resolved. In seam-1440 the warmed story floor carries into the night half of the split with no hard edge, and the rail completes at Inbox beside step 5.
+
+No regressions were introduced by this batch.
+
+Observed but not scored: modeswitcher-1440.png shows a defect in components/ModeSwitcher.tsx, which this batch did not touch. The customer bubble (line 65, `bg-card text-ink`) and the "Approve" pill (line 83) render as empty pearl shapes: their text is invisible on the night pane. Line 77 also still sets "Customer said yes · Sat 10 AM booked" in mono.
+
+## remaining
+- Fix 1: the concept roll was never run. This stays open for the founder, or until the roll runs.
+- Fix 5: the ModeSwitcher check is visible in no capture. Capture the Autonomous state.
+- Outside scoring: the empty customer bubble and Approve pill in ModeSwitcher. Ceiling items (b) to (g) from the review round. Founder approval of the direction.
+- This verdict covers only the scored fixes, not the whole surface.
+
+disposition: fix
