@@ -1,10 +1,10 @@
 # BetterDesk V3: final review for founder approval
 
-**Preview (protected by Vercel Authentication; sign in to `neel-s-projects9`):** https://betterdesk-redesign-i88negb7a-neel-s-projects9.vercel.app
-Inspector: https://vercel.com/neel-s-projects9/betterdesk-redesign/DVFG7imDHMGNVGUU3WY31UcJZvaY
+**Preview (protected by Vercel Authentication; sign in to `neel-s-projects9`):** https://betterdesk-redesign-80odjfzds-neel-s-projects9.vercel.app
+Inspector: https://vercel.com/neel-s-projects9/betterdesk-redesign/HucJ9q42atsCW8zaN87JeRG6MQWT
 
-- Deployed commit: `a2a0004` on `feat/betterdesk-v3-apple-editorial`. V2 is preserved untouched on `feat/betterdesk-sayable-quality-v2` at `a0eab3a`.
-- Earlier V3 preview (cycle 1, superseded): https://betterdesk-redesign-42636qyi7-neel-s-projects9.vercel.app
+- Deployed commit: `4f186b5` on `feat/betterdesk-v3-apple-editorial`. V2 is preserved untouched on `feat/betterdesk-sayable-quality-v2` at `a0eab3a`.
+- Earlier V3 previews (superseded): cycle 1 https://betterdesk-redesign-42636qyi7-neel-s-projects9.vercel.app, cycle 2 https://betterdesk-redesign-i88negb7a-neel-s-projects9.vercel.app
 - Production: **not touched.** No `--prod`, no alias, domain or DNS change, and no billing change.
 
 ## What changed
