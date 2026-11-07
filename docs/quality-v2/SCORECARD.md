@@ -18,3 +18,6 @@ The baseline column is my own reading of the baseline screenshots. The pass-02 c
 
 ## Cycle 3 note
 No new numeric scores. The Impeccable finish review issues dispositions rather than scores: it finished at "fix" after two rounds, with 6 of 8 scored items resolved. Page rhythm should have improved with the full-bleed 6:44/6:47 peak, but no fresh scored review has confirmed it. **Founder approval is still required; nothing here is self-approved.**
+
+## Pass-12 (fresh independent reviewer, REVIEW_PASS12.md)
+originality 8 · hero 9 · art direction 8 · product demo 8 · motion 7 · typography 9 · clarity 9 · rhythm 7 · copy 8 · mobile 7 · conversion/trust 6. Verdict: narrow REJECT, about 92% of the Sayable bar. These are opinions, not certificates; founder approval is required.

@@ -100,3 +100,29 @@
 6. Add an axe or contrast check that drives the ModeSwitcher through all three states.
 - **DESIGN.md + .impeccable/design.json** written by the Impeccable documenter from the shipped code (it records the code where ART_DIRECTION.md drifted). It flagged a likely invisible mobile-menu "Book a demo" button (pearl on pearl inside the night header). I confirmed it in source and fixed it (verified: pass-11-sections/mobile-menu-390.png), removed the menu's 01–06 index numerals, folded the 404 kicker into its h1, and set an explorer phrase in sans instead of mono. Its remaining low-severity leftovers (hidden grain divs, an unused Button "resolve" variant, untokenized night text hexes, stale comments) are listed in its report and queued for cleanup.
 **Final preview (cycle 3):** https://betterdesk-redesign-jgw506r02-neel-s-projects9.vercel.app (Ready, commit a7368cb, protected). Signed in, 200 on all 10 routes and 404 on unknown. Playwright 80/80 at this build.
+
+## Cycle 4 (2026-11-06, late night)
+**Changed (the cycle-3 next list, then REVIEW_PASS12):**
+- **Hero depth and lighting:** the Thursday schedule is now a framed calendar tucked behind the conversation pane, and the pearl booking card settles on top of both, overhanging only the pane's padding. Stage panes carry a lamp specular (upper left, falling off). The focal pane rim is stronger. The lamp falloff on the ground is brighter but stays on the surface.
+- **The mark as motif:** the story rail's terminal "Inbox" node becomes the BetterDesk mark once reached.
+- **Day ribbon** (`components/DayRibbon.tsx`): a single 6 AM–midnight object with sample office hours and "After close". The three moments are plotted at their real times and tethered to their notes. This replaces the three-column triptych. Mobile reads as a list.
+- **Trust:** one composed sentence (two marks) instead of four equal tiles. It uses only existing claims.
+- **Close:** "Thursday · Marco's route". The 8:00 slot that was empty at closing is booked ("Booked by text last night at 6:47 PM"). This replaces the duplicate of the step-5 inbox.
+- **Subpage heroes:** /platform has a channel board (plan gating from `lib/sample.ts` CHANNELS) into "One inbox". /roi works the default formula through on a pearl card (`ROI_DEFAULTS` now lives in `lib/roi.ts`, shared with the calculator).
+- **Walkthrough (home):** it opens on the finished thread (`startAtEnd`; Replay walks it from step 1). It is presented as a solid pearl device on a lit night stage, which removes the cream plateau mid-page. /demo still opens on step 1 (tested).
+- **Footer** is graphite. Hero microcopy is brightened.
+- **Cleanup:** removed the hidden grain divs, the retired grain CSS and the unused Button "resolve" variant.
+- **New regression test:** "reply-mode switcher: every text node meets contrast in all three modes". It normalises colours through a canvas, because Tailwind v4 opacity modifiers compute to `oklab()`, and it composites text alpha. **Proven:** with the original pearl-on-pearl bubble reintroduced it fails at 1.01:1, and restored it passes.
+
+**Screenshots:** pass-12, pass-13 and their -sections folders (day-ribbon, close, walkthrough, modeswitcher, and so on).
+**Independent scored review** (REVIEW_PASS12.md, on pass-12): narrow REJECT. Scores rose against pass-05: originality 8 (7), hero 9 (8), art direction 8 (7), product demo 8 (8), motion 7 (6), typography 9 (8), clarity 9 (8), rhythm 7 (5), copy 8 (8), mobile 7 (7), conversion/trust 6 (6). It puts the site at about 92% of the Sayable bar. Its fixes #1 (blank walkthrough), #2 (cream plateau) and part of #5 (graphite footer, brighter microcopy, fewer underlines) landed in pass-13. **Not yet re-reviewed.**
+**Tests at 186949c:** typecheck ✓, lint ✓, unit 4/4 ✓, build ✓, Playwright **82/82** (Chromium + WebKit; axe on every route plus the new contrast test).
+**Lighthouse mobile (local prod):** home perf 92, a11y 96 (mid-animation sampling); /platform 92 / 100. LCP 3.3 s, TBT 30–40 ms, CLS 0.
+**Preview:** https://betterdesk-redesign-pqkunzhdh-neel-s-projects9.vercel.app (Ready, 186949c, protected). Signed in, 200 on all 10 routes and 404 on unknown.
+
+## Next (cycle 5)
+1. A real contact submission (REVIEW_PASS12 #4). This needs a founder decision on a form or email backend through the Vercel Marketplace, so the mailto composer stays honest until then.
+2. Replace the "Built for" card pair and the pricing trio on the homepage with one bespoke strip, or reuse the plan picker (REVIEW_PASS12 #3).
+3. Story step spacing at about 60vh, plus a full re-review of pass-13 by a fresh reviewer.
+4. /demo TBT (510 ms): lazy-mount the non-default scenarios.
+5. Mobile LCP of 3.3 s in the lab.
