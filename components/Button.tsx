@@ -1,43 +1,30 @@
 import Link from "next/link";
 import type { ComponentProps } from "react";
 
-type Variant = "primary" | "secondary" | "ghost" | "light";
+type Variant = "primary" | "secondary" | "quiet";
+
 const base =
-  "press inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap select-none min-h-11 text-[0.95rem]";
+  "press inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-sm)] px-5 text-[1rem] font-[550] tracking-[-0.01em] whitespace-nowrap";
+
 const variants: Record<Variant, string> = {
-  primary: "px-5 bg-ink text-card hover:bg-ink-2 shadow-[0_1px_0_rgb(255_255_255/0.12)_inset,0_10px_22px_-12px_rgb(17_18_20/0.7)]",
-  secondary: "px-5 border border-rule-strong bg-card/60 text-ink hover:border-ink/40 hover:bg-card",
-  ghost: "text-ink underline decoration-rule-strong underline-offset-[6px] hover:decoration-ink px-0 min-h-11",
-  light: "px-5 bg-[#f7f6f3] text-[#111214] hover:bg-white shadow-[0_1px_0_#fff_inset,0_12px_28px_-12px_rgb(244_169_71/0.45)]",
+  // Solid ink is certainty; on the graphite act it inverts through the tone-dark token remap.
+  primary: "bg-ink text-porcelain shadow-[0_1px_0_rgb(255_255_255/0.14)_inset,0_6px_14px_-8px_rgb(16_18_20/0.6)] hover:bg-ink-2 [.tone-dark_&]:text-graphite",
+  secondary: "border border-rule-strong bg-transparent text-ink hover:border-ink",
+  quiet: "px-1 text-ink underline decoration-rule-strong decoration-1 underline-offset-[0.3em] hover:decoration-signal min-h-11",
 };
 
-export function ButtonLink({
-  variant = "primary",
-  className = "",
-  children,
-  arrow,
-  ...props
-}: ComponentProps<typeof Link> & { variant?: Variant; arrow?: boolean }) {
-  return (
-    <Link className={`${base} ${variants[variant]} ${className}`} {...props}>
-      {children}
-      {arrow ? <Arrow /> : null}
-    </Link>
-  );
+export function ButtonLink({ variant = "primary", className = "", ...props }: ComponentProps<typeof Link> & { variant?: Variant }) {
+  return <Link className={`${base} ${variants[variant]} ${className}`} {...props} />;
 }
 
-export function Button({
-  variant = "primary",
-  className = "",
-  ...props
-}: ComponentProps<"button"> & { variant?: Variant }) {
-  return <button className={`${base} ${variants[variant]} disabled:opacity-50 ${className}`} {...props} />;
+export function Button({ variant = "primary", className = "", ...props }: ComponentProps<"button"> & { variant?: Variant }) {
+  return <button className={`${base} ${variants[variant]} ${className}`} {...props} />;
 }
 
-export function Arrow() {
+export function Arrow({ className = "", down = false }: { className?: string; down?: boolean }) {
   return (
-    <svg viewBox="0 0 16 16" className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">
-      <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    <svg viewBox="0 0 16 16" aria-hidden="true" className={`h-4 w-4 shrink-0 ${down ? "rotate-90" : ""} ${className}`} fill="none">
+      <path d="M2.5 8h10M8.5 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

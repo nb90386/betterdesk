@@ -75,61 +75,46 @@ test("mobile menu opens, navigates and closes with Escape", async ({ page }) => 
   await expect(page.locator("#mobile-menu")).toBeHidden();
 });
 
-test("lead journey: step, keyboard, play, and with/without", async ({ page }) => {
-  await page.goto("/demo");
-  const j = page.getByRole("region", { name: /Interactive walkthrough/ });
-  await expect(j.getByText("Step 1 of 8")).toBeVisible();
-  await j.getByRole("button", { name: "Next step" }).click();
-  await expect(j.getByText("Step 2 of 8")).toBeVisible();
-  await expect(j.getByRole("log")).toContainText("Sorry we missed your call");
-  await j.getByRole("button", { name: "Next step" }).press("ArrowRight");
-  await expect(j.getByText("Step 3 of 8")).toBeVisible();
-  await j.getByRole("button", { name: "Without" }).click();
-  await expect(j.getByText("Step 1 of 4")).toBeVisible();
-  for (let i = 0; i < 3; i++) await j.getByRole("button", { name: "Next step" }).click();
-  await expect(j.getByText("Booked with someone else")).toBeVisible();
-  await expect(j.getByRole("button", { name: "Next step" })).toBeDisabled();
-  await j.getByRole("tab", { name: /Late-night quote/ }).click();
-  await expect(j.getByText("Step 1 of 3")).toBeVisible();
-  await j.getByRole("button", { name: "With BetterDesk" }).click();
-  await j.getByRole("button", { name: "Play walkthrough" }).click();
-  await expect(j.getByRole("button", { name: "Pause" })).toBeVisible();
-  await expect(j.getByText("Step 2 of 5")).toBeVisible({ timeout: 6000 });
-  await j.getByRole("button", { name: "Pause" }).click();
-  await expect(j.getByRole("button", { name: "Resume" })).toBeVisible();
+test("signal-to-booking: Play runs the whole conversation without scrolling", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#conversation").scrollIntoViewIfNeeded();
+  await page.evaluate(() => window.scrollBy(0, 40));
+  const play = page.getByRole("button", { name: "Play the conversation" });
+  await expect(play).toBeVisible();
+  await play.click();
+  await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
+  await expect(page.locator("#conversation").getByText("Added to Alder Plumbing", { exact: false })).toBeVisible({ timeout: 15000 });
+  await expect(page.getByRole("button", { name: "Replay the conversation" })).toBeVisible({ timeout: 3000 });
+  // Text equivalent is always present for assistive tech.
+  await expect(page.locator("#conversation ol.sr-only li")).toHaveCount(5);
 });
 
-test("product explorer: filter, calendar, handoff, approve draft", async ({ page }) => {
+test("inbox: choosing a conversation shows its thread", async ({ page }) => {
   await page.goto("/platform");
-  await page.getByRole("button", { name: /^Instagram/ }).click();
   const list = page.getByRole("list", { name: "Conversations" });
-  await expect(list.getByRole("button")).toHaveCount(1);
-  await expect(list).toContainText("Leah K.");
-  await page.getByRole("tab", { name: "Calendar" }).click();
-  await page.getByRole("button", { name: /Water heater leak/ }).click();
-  await expect(page.getByRole("log", { name: /Dana M\./ })).toBeVisible();
-  await page.getByRole("tab", { name: /Needs a person/ }).click();
-  await page.getByRole("listitem").filter({ hasText: "Marcus T." }).getByRole("button", { name: "Open conversation" }).click();
-  await page.getByRole("button", { name: "Approve and send" }).click();
-  await expect(page.getByText("sent after your approval")).toBeVisible();
-  await page.getByRole("tab", { name: "Weekly summary" }).click();
-  await expect(page.getByText(/6 conversations this week/)).toBeVisible();
-  await expect(page.getByText(/nothing waiting on you/)).toBeVisible();
+  await list.getByRole("button", { name: /Dan K\./ }).click();
+  await expect(list.getByRole("button", { name: /Dan K\./ })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("Please leave the house now", { exact: false })).toBeVisible();
+  await list.getByRole("button", { name: /Priya S\./ }).click();
+  await expect(page.getByText("nothing is sent until you approve", { exact: false })).toBeVisible();
 });
 
-test("ROI calculator validates input and shows the formula", async ({ page }) => {
+test("value calculator recomputes from inputs and shows its formula", async ({ page }) => {
   await page.goto("/roi");
-  const missed = page.getByLabel("Unanswered inquiries per week", { exact: true });
-  await missed.fill("abc");
-  await expect(page.getByRole("form", { name: "Your assumptions" }).getByRole("alert")).toContainText("Enter a number from 0 to 200");
-  await missed.fill("10");
-  await expect(page.getByRole("form", { name: "Your assumptions" }).getByRole("alert")).toHaveCount(0);
-  const value = page.getByLabel("Average value of one job", { exact: true });
-  await value.fill("300");
+  // Range inputs can't be typed into; set them the way a drag would (native setter + input event).
+  const setRange = (label: RegExp, v: number) =>
+    page.getByLabel(label).evaluate((el, val) => {
+      const input = el as HTMLInputElement;
+      Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(input, String(val));
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    }, v);
+  await setRange(/miss or answer late, per week/, 10);
+  await setRange(/Average value of one job/, 300);
   // 10 × 4.33 × 40% × 30% × $300 = $1,560
-  await expect(page.getByText("= $1,560 / month")).toBeVisible();
-  await page.getByText(/Scale · \$599/).click();
-  await expect(page.getByText("After Scale ($599)")).toBeVisible();
+  await expect(page.getByText("$1,560", { exact: true })).toBeVisible();
+  await expect(page.getByText(/Math: 10 a week/)).toBeVisible();
+  await page.getByLabel(/Scale/).check();
+  await expect(page.getByText("$499 / mo")).toBeVisible();
 });
 
 test("contact form validates, then composes the email", async ({ page }) => {
@@ -138,7 +123,7 @@ test("contact form validates, then composes the email", async ({ page }) => {
   await expect(page.getByText("Tell us your name.")).toBeVisible();
   await expect(page.getByLabel("Your name")).toBeFocused();
   await page.getByLabel("Your name").fill("Sam Rivera");
-  await page.getByLabel("Business name").fill("Ridgeline Test Co");
+  await page.getByLabel("Business name").fill("Alder Test Co");
   await page.getByLabel("Email").fill("sam@");
   await page.getByRole("button", { name: "Write the email" }).click();
   await expect(page.getByText("That email doesn't look complete.")).toBeVisible();
@@ -146,86 +131,49 @@ test("contact form validates, then composes the email", async ({ page }) => {
   await expect(page.getByLabel(/Plan you/)).toHaveValue("growth");
   await page.getByRole("button", { name: "Write the email" }).click();
   await expect(page.getByRole("status")).toContainText("Your email app should now be open");
-  await expect(page.getByRole("status")).toContainText("Interested in: Growth ($299/mo)");
+  await expect(page.getByRole("status")).toContainText("Interested in: Growth (proposed $249/mo)");
 });
 
-test("reduced motion: hero shows the finished scene immediately", async ({ browser }) => {
+test("pricing: every plan is labelled as a proposal and links to the demo form", async ({ page }) => {
+  await page.goto("/pricing");
+  await expect(page.getByText(/Proposed\. Currently published at/)).toHaveCount(3);
+  for (const id of ["starter", "growth", "scale"]) await expect(page.locator(`a[href="/contact?plan=${id}"]`)).toHaveCount(1);
+});
+
+test("reduced motion: acts render statically with the full story", async ({ browser }) => {
   const ctx = await browser.newContext({ reducedMotion: "reduce" });
   const page = await ctx.newPage();
+  const errors = watch(page);
   await page.goto("/");
-  const booked = page.locator("figure").getByText("Thu · 8:00–10:00 AM");
-  await expect(booked).toBeVisible();
-  // v2: the booked card carries the entrance animation (3.1s delay when motion is allowed).
-  // A 500ms bound still proves "immediate" while tolerating WebKit applying the reduced-motion emulation a frame late.
-  await expect(page.locator("figure .pearl-card").first()).toHaveCSS("opacity", "1", { timeout: 500 });
+  await expect(page.locator("section[data-pinned]")).toHaveCount(0);
+  expect(errors, "no hydration mismatch under reduced motion").toEqual([]);
+  await expect(page.locator("#conversation").getByText("Thanks Jess. We can be there Thursday", { exact: false })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "The call you couldn’t take." })).toBeVisible();
   await ctx.close();
 });
 
-test("mobile sticky CTA appears after the hero, hides at the closing band and on /contact", async ({ page }) => {
+test("mobile sticky CTA appears after the hero, steps aside on pinned acts and the close, absent on /contact", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  const bar = page.locator("div.fixed.bottom-0").filter({ hasText: "$149/mo" });
+  const bar = page.locator("div.fixed.bottom-0").filter({ hasText: "See it on your own missed calls." });
   await expect(bar).toHaveAttribute("aria-hidden", "true");
-  await page.evaluate(() => window.scrollTo(0, 2400));
+  await page.locator("#inbox-title").scrollIntoViewIfNeeded();
   await expect(bar).toHaveAttribute("aria-hidden", "false");
+  await page.locator("[data-close-cta]").scrollIntoViewIfNeeded();
+  await expect(bar).toHaveAttribute("aria-hidden", "true");
+  await page.locator("#inbox-title").scrollIntoViewIfNeeded();
   await bar.getByRole("link", { name: "Book a demo" }).click();
   await expect(page).toHaveURL(/\/contact$/);
-  await expect(page.locator("div.fixed.bottom-0").filter({ hasText: "$149/mo" })).toHaveCount(0);
+  await expect(page.locator("div.fixed.bottom-0").filter({ hasText: "See it on your own missed calls." })).toHaveCount(0);
+});
+
+test("header turns to graphite over the dark act", async ({ page }) => {
   await page.goto("/");
-  await page.locator("#cta-title").scrollIntoViewIfNeeded();
-  await expect(bar).toHaveAttribute("aria-hidden", "true");
-});
-
-test("explorer: filtering away the open thread selects one that is visible", async ({ page }) => {
-  await page.goto("/platform");
-  await expect(page.getByRole("log", { name: /Dana M\./ })).toBeVisible();
-  await page.getByRole("button", { name: /^Email/ }).click();
-  await expect(page.getByRole("log", { name: /Omar R\./ })).toBeVisible();
-});
-
-// Regression: pearl surfaces inside the night token scope once rendered pearl-on-pearl text that axe did not flag.
-test("reply-mode switcher: every text node meets contrast in all three modes", async ({ page }) => {
-  await page.goto("/platform");
-  const section = page.locator('[aria-labelledby="control-title"]');
-  await section.scrollIntoViewIfNeeded();
-  for (const mode of ["Assisted", "Escalation", "Autonomous"]) {
-    await section.getByRole("button", { name: new RegExp(mode) }).first().click();
-    await page.waitForTimeout(350);
-    const failures = await section.evaluate((root) => {
-      // Normalise any CSS colour (rgb, oklab, color-mix…) to sRGBA through a 1×1 canvas.
-      const ctx = document.createElement("canvas").getContext("2d", { willReadFrequently: true })!;
-      const parse = (c: string) => {
-        ctx.clearRect(0, 0, 1, 1);
-        ctx.fillStyle = "#000";
-        ctx.fillStyle = c;
-        ctx.fillRect(0, 0, 1, 1);
-        const [r, g, b, a] = ctx.getImageData(0, 0, 1, 1).data;
-        return [r, g, b, a / 255];
-      };
-      const lum = ([r, g, b]: number[]) => {
-        const f = (v: number) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
-        return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
-      };
-      const out: string[] = [];
-      for (const el of Array.from(root.querySelectorAll<HTMLElement>("*"))) {
-        const own = Array.from(el.childNodes).some((n) => n.nodeType === 3 && n.textContent!.trim());
-        if (!own || el.getClientRects().length === 0) continue;
-        let bg: number[] | null = null;
-        for (let a: HTMLElement | null = el; a; a = a.parentElement) {
-          const cs = getComputedStyle(a);
-          if (cs.backgroundImage !== "none") break; // gradient surface: not resolvable here
-          const c = parse(cs.backgroundColor);
-          if (c[3] > 0.9) { bg = c; break; }
-        }
-        if (!bg) continue;
-        const raw = parse(getComputedStyle(el).color);
-        const fg = [0, 1, 2].map((k) => raw[k] * raw[3] + bg![k] * (1 - raw[3])); // composite text alpha over its surface
-        const [l1, l2] = [lum(fg), lum(bg)].sort((x, y) => y - x);
-        const ratio = (l1 + 0.05) / (l2 + 0.05);
-        if (ratio < 4.5) out.push(`${el.textContent!.trim().slice(0, 40)} (${ratio.toFixed(2)})`);
-      }
-      return out;
-    });
-    expect(failures, `${mode}: ${failures.join(" | ")}`).toEqual([]);
-  }
+  const header = page.locator("header");
+  await expect(header).not.toHaveAttribute("data-dark", /.*/);
+  await page.evaluate(() => {
+    const el = document.querySelector("#conversation") as HTMLElement;
+    window.scrollTo(0, el.offsetTop + 200);
+  });
+  await expect(header).toHaveAttribute("data-dark", "true");
 });

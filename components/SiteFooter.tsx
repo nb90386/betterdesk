@@ -4,28 +4,25 @@ import { CONTACT_EMAIL, FOOTER } from "@/lib/site";
 
 export function SiteFooter() {
   return (
-    <footer className="on-night border-t border-white/[0.06] bg-night">
-      <div className="container-bd grid gap-12 py-16 md:grid-cols-[1.3fr_2fr]">
-        <div className="max-w-sm">
-          <Logo />
-          <p className="mt-5 font-display text-[1.6rem] leading-tight tracking-[-0.02em] text-ink">
-            The front desk that follows through.
+    <footer className="border-t border-rule bg-porcelain-2">
+      <div className="wrap grid gap-12 py-16 md:grid-cols-12 md:py-20">
+        <div className="md:col-span-5">
+          <Logo className="text-[1.15rem]" />
+          <p className="mt-5 max-w-[30ch] text-[1.0625rem] leading-snug text-ink-2">
+            From the first ring to the booked appointment, for service businesses that can&rsquo;t always pick up.
           </p>
-          <p className="mt-4 text-sm leading-relaxed text-muted">
-            For service businesses that lose work when nobody can get to the phone.
-          </p>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="mt-6 inline-block text-sm text-ink underline decoration-rule-strong underline-offset-4 hover:decoration-ink">
+          <a href={`mailto:${CONTACT_EMAIL}`} className="mt-6 inline-block text-[0.9375rem] text-ink underline decoration-rule-strong underline-offset-4 hover:decoration-signal">
             {CONTACT_EMAIL}
           </a>
         </div>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-7">
           {FOOTER.map((col) => (
             <div key={col.title}>
-              <h2 className="eyebrow">{col.title}</h2>
+              <h2 className="t-label">{col.title}</h2>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link href={l.href} className="text-[0.95rem] text-ink-2 hover:text-ink hover:underline hover:underline-offset-4">
+                    <Link href={l.href} className="text-[0.9375rem] text-ink-2 hover:text-ink">
                       {l.label}
                     </Link>
                   </li>
@@ -33,12 +30,11 @@ export function SiteFooter() {
               </ul>
             </div>
           ))}
-        </div>
+        </nav>
       </div>
-      <div className="container-bd flex flex-col gap-2 border-t border-rule py-6 text-xs text-muted sm:flex-row sm:justify-between">
+      <div className="wrap flex flex-col gap-2 border-t border-rule py-6 text-[0.8125rem] text-muted sm:flex-row sm:justify-between">
         <p>© {new Date().getFullYear()} BetterDesk</p>
-        <p>Conversations shown on this site are illustrations with sample data.</p>
-        <p>Privacy policy and terms: pending, not yet published.</p>
+        <p>Conversations shown on this site are illustrative samples, not customer data.</p>
       </div>
     </footer>
   );

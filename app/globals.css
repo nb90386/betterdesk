@@ -1,333 +1,206 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   BetterDesk v2 · "After hours, then morning"
-   Night graphite lit by one amber lamp; pearl for what is settled.
-   Amber is always the incoming signal. Pearl and solid ink are certainty.
-   See docs/quality-v2/ART_DIRECTION.md
+   BetterDesk V3 · "The route"
+   Porcelain daylight, graphite ink, one vermilion signal line.
+   The line is the only color. It is always the customer's inquiry
+   travelling toward a booked appointment. Certainty is solid ink.
+   See docs/v3/BRAND-SYSTEM.md
    ------------------------------------------------------------------ */
 @theme inline {
-  --font-display: var(--font-bricolage), "Avenir Next", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 @theme {
-  /* Pearl (settled, daylight) */
-  --color-paper: #eeede9;
-  --color-paper-2: #e4e3de;
-  --color-paper-3: #d8d6d0;
-  --color-card: #f8f7f4;
-
-  /* Night (after hours) */
-  --color-night: #0d0e10;
-  --color-night-2: #16181b;
-  --color-night-3: #202327;
-  --color-night-rule: #2c3036;
-  --color-night-muted: #a4a8ae;
+  /* Porcelain (daylight) */
+  --color-porcelain: #f2f2ef;
+  --color-porcelain-2: #e9e9e5;
+  --color-porcelain-3: #dcdcd7;
+  --color-surface: #fbfbf9;
 
   /* Ink */
-  --color-ink: #111214;
-  --color-ink-2: #2a2c30;
-  --color-muted: #55585e;
-  --color-faint: #5d6066;
-  --color-rule: #d3d1cb;
-  --color-rule-strong: #b7b4ad;
+  --color-ink: #101214;
+  --color-ink-2: #2b2e33;
+  --color-muted: #595d65;
+  --color-rule: #d5d5d0;
+  --color-rule-strong: #b4b4ae;
 
-  /* Hardware */
-  --color-silver: #c9ccd1;
-  --color-silver-2: #8e939a;
+  /* Graphite (the one dark act) */
+  --color-graphite: #0b0c0e;
+  --color-graphite-2: #141619;
+  --color-graphite-3: #1e2125;
+  --color-graphite-rule: #2a2e34;
+  --color-graphite-muted: #a2a6ad;
+  --color-graphite-ink: #f4f4f1;
 
-  /* Meaning: amber signal, settled status */
-  --color-lamp: #f4a947;
-  --color-signal: #9a5208;
-  --color-signal-soft: #f2e4cc;
-  --color-signal-glow: #f4a947;
-  --color-amber: #8a5a0c;
-  --color-amber-soft: #f2e5c9;
-  --color-handled: #2c5c4c;
-  --color-handled-soft: #dde6e1;
-  --color-handled-bright: #9fd8bb;
+  /* Signal: the route. Line/graphic use #e2462c (3.4:1 on porcelain, graphics only).
+     Text use signal-ink (5.6:1 on porcelain) or signal-bright on graphite (5.9:1). */
+  --color-signal: #e2462c;
+  --color-signal-ink: #b3321b;
+  --color-signal-bright: #ff6a4f;
+  --color-signal-wash: #f6e3dd;
 
   --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 22px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
 
-  /* Elevation: one key light, upper left. Shadows fall down and right. */
-  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.85) inset, 0 1px 2px rgb(17 18 20 / 0.07), 0 10px 24px -14px rgb(17 18 20 / 0.28);
-  --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 2px 4px rgb(17 18 20 / 0.06), 0 28px 48px -24px rgb(17 18 20 / 0.38);
-  --shadow-device: 0 0 0 1px rgb(17 18 20 / 0.1), 0 40px 70px -34px rgb(17 18 20 / 0.5), 0 14px 26px -18px rgb(17 18 20 / 0.3);
-  --shadow-stage: 0 1px 0 rgb(255 255 255 / 0.07) inset, 0 0 0 1px rgb(255 255 255 / 0.045), 0 2px 3px rgb(0 0 0 / 0.5), 24px 44px 70px -30px rgb(0 0 0 / 0.85);
-  --shadow-pearl-on-night: 0 1px 0 rgb(255 255 255 / 0.95) inset, -1px -1px 0 rgb(244 169 71 / 0.35), 0 2px 3px rgb(0 0 0 / 0.5), 18px 26px 34px -18px rgb(0 0 0 / 0.75), 44px 70px 110px -36px rgb(0 0 0 / 0.95), -10px -12px 44px -18px rgb(244 169 71 / 0.26);
+  /* One key light, upper left, like a window. Shadows fall down-right, soft. */
+  --shadow-rest: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 1px 2px rgb(16 18 20 / 0.06), 0 8px 20px -12px rgb(16 18 20 / 0.22);
+  --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.95) inset, 0 2px 4px rgb(16 18 20 / 0.05), 12px 28px 48px -22px rgb(16 18 20 / 0.34);
+  --shadow-object: 0 0 0 1px rgb(16 18 20 / 0.06), 4px 10px 18px -10px rgb(16 18 20 / 0.28), 24px 60px 90px -40px rgb(16 18 20 / 0.45);
+  --shadow-graphite: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 0 0 1px rgb(255 255 255 / 0.05), 18px 40px 80px -30px rgb(0 0 0 / 0.9);
 
-  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-travel: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-in-soft: cubic-bezier(0.55, 0, 0.78, 0.4);
-  --duration-quick: 160ms;
-  --duration-base: 220ms;
-  --duration-slow: 420ms;
 
   --breakpoint-xs: 25rem;
 }
 
-/* Inverted scope: any subtree marked .on-night re-maps the light tokens,
-   so shared components (buttons, explorer, chips) render correctly on graphite. */
-.on-night {
-  --color-paper: #0d0e10;
-  --color-paper-2: #16181b;
-  --color-paper-3: #202327;
-  --color-ink: #f7f6f3;
-  --color-ink-2: #d4d6da;
-  --color-muted: #a4a8ae;
-  --color-faint: #9a9ea5;
-  --color-rule: #2c3036;
-  --color-rule-strong: #3d424a;
-  --color-signal: #f4a947;
-  --color-signal-soft: #3a2a14;
-  --color-handled: #9fd8bb;
-  --color-handled-soft: #1b2b25;
+/* Dark scope: re-maps ink tokens so shared primitives work on the graphite act. */
+.tone-dark {
+  --color-ink: #f4f4f1;
+  --color-ink-2: #d6d8dc;
+  --color-muted: #a2a6ad;
+  --color-rule: #2a2e34;
+  --color-rule-strong: #3c4148;
+  --color-surface: #141619;
+  --color-signal-ink: #ff6a4f;
   color: var(--color-ink);
 }
-/* Light scope inside a night band (forms, receipts): restores the pearl tokens. */
-.on-pearl {
-  --color-paper: #eeede9;
-  --color-paper-2: #e4e3de;
-  --color-paper-3: #d8d6d0;
-  --color-card: #f8f7f4;
-  --color-ink: #111214;
-  --color-ink-2: #2a2c30;
-  --color-muted: #55585e;
-  --color-faint: #5d6066;
-  --color-rule: #d3d1cb;
-  --color-rule-strong: #b7b4ad;
-  --color-signal: #9a5208;
-  --color-signal-soft: #f2e4cc;
-  --color-handled: #2c5c4c;
-  --color-handled-soft: #dde6e1;
-  color: var(--color-ink);
-}
-.on-night ::selection { background: rgb(244 169 71 / 0.35); color: #fff; }
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     scroll-padding-top: 5rem;
-    background: var(--color-night);
+    background: var(--color-porcelain);
+    color-scheme: light;
   }
   body {
-    background: var(--color-paper);
+    background: var(--color-porcelain);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
+    font-size: 1.0625rem;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    caret-color: var(--color-signal);
+    font-feature-settings: "ss01" on;
   }
-  ::selection {
-    background: var(--color-signal-soft);
-    color: var(--color-ink);
-  }
-  :focus-visible {
-    outline: 2px solid var(--color-signal);
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
+  ::selection { background: rgb(226 70 44 / 0.2); color: var(--color-ink); }
+  .tone-dark ::selection { background: rgb(255 106 79 / 0.35); color: #fff; }
+  :focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; border-radius: 2px; }
+  input, textarea, select { caret-color: var(--color-signal); }
+  a { text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
   h1, h2, h3 { text-wrap: balance; }
   p, li, dd { text-wrap: pretty; }
   button { cursor: pointer; }
   button:disabled { cursor: not-allowed; }
   .tabular, time { font-variant-numeric: tabular-nums; }
-  * { scrollbar-color: var(--color-rule-strong) transparent; }
+  html { scrollbar-color: var(--color-rule-strong) var(--color-porcelain); }
 }
-
 
 @layer components {
-  .container-bd {
+  .wrap {
     width: 100%;
-    max-width: 1280px;
+    max-width: 82rem;
     margin-inline: auto;
-    padding-inline: 1.25rem;
+    padding-inline: 1rem;
   }
-  @media (min-width: 640px) {
-    .container-bd { padding-inline: 2rem; }
-  }
-  @media (min-width: 1280px) {
-    .container-bd { padding-inline: 3rem; }
-  }
+  @media (min-width: 640px) { .wrap { padding-inline: 2rem; } }
+  @media (min-width: 1280px) { .wrap { padding-inline: 3rem; } }
 
-  .display {
-    font-family: var(--font-display);
-    font-weight: 540;
-    letter-spacing: -0.034em;
-    line-height: 0.98;
-    font-optical-sizing: auto;
-    font-kerning: normal;
+  /* Display voice: Instrument Sans at semibold, slightly condensed, optically tightened by size. */
+  .t-hero {
+    font-weight: 600;
+    font-stretch: 92%;
+    font-size: clamp(2.6rem, 1.2rem + 5.6vw, 5.75rem);
+    line-height: 0.96;
+    letter-spacing: -0.038em;
   }
-  .display em { font-style: normal; }
-  .eyebrow {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0;
-    color: var(--color-muted);
+  .t-display {
+    font-weight: 600;
+    font-stretch: 94%;
+    font-size: clamp(2.1rem, 1.2rem + 3.4vw, 4rem);
+    line-height: 1.0;
+    letter-spacing: -0.032em;
   }
-  .lede {
-    font-size: clamp(1.02rem, 0.96rem + 0.3vw, 1.18rem);
-    line-height: 1.58;
+  .t-title {
+    font-weight: 600;
+    font-stretch: 96%;
+    font-size: clamp(1.6rem, 1.1rem + 1.6vw, 2.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.024em;
+  }
+  .t-lede {
+    font-size: clamp(1.125rem, 1rem + 0.45vw, 1.35rem);
+    line-height: 1.45;
+    letter-spacing: -0.008em;
     color: var(--color-ink-2);
-    max-width: 58ch;
+    max-width: 38ch;
   }
-  .prose-bd p + p { margin-top: 1em; }
-  .rule-thread { height: 1px; background: var(--color-rule); }
-  .card-stock {
-    background: var(--color-card);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-  }
-  .sample-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-size: 0.75rem;
-    font-weight: 500;
+  .t-small { font-size: 0.875rem; line-height: 1.45; }
+  .t-label { font-size: 0.8125rem; font-weight: 550; letter-spacing: 0.005em; color: var(--color-muted); }
+  .t-mono { font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+
+  .illustrative {
+    font-size: 0.8125rem;
     color: var(--color-muted);
   }
-  .sample-tag::before {
-    content: "";
-    width: 0.4rem;
-    height: 0.4rem;
-    border-radius: 999px;
-    border: 1.25px solid currentColor;
-  }
-  .press { transition: transform 160ms var(--ease-out-soft), background-color 200ms, color 200ms, border-color 200ms, box-shadow 200ms; }
-  .press:active:not(:disabled) { transform: scale(0.97); transition-duration: 60ms; }
 
-  /* Stage surfaces */
-  .stage-pane {
-    /* specular: the lamp catches the upper-left of every stage object, then falls off */
-    background:
-      linear-gradient(135deg, rgb(255 236 205 / 0.07) 0%, rgb(255 236 205 / 0.02) 22%, transparent 42%),
-      linear-gradient(180deg, #1b1d21 0%, #15171a 100%);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-stage);
-  }
-  .pearl-card {
-    background: linear-gradient(180deg, #fbfaf7 0%, #efeee9 100%);
-    color: #111214;
+  .hairline { height: 1px; background: var(--color-rule); }
+
+  /* Surfaces. One radius family; nested elements step down a size. */
+  .panel {
+    background: var(--color-surface);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-pearl-on-night);
+    box-shadow: var(--shadow-rest);
   }
-  /* Hero focal object: the lamp catches its upper-left edge. */
-  .nd-focal {
-    box-shadow:
-      inset 1px 1px 0 rgb(244 169 71 / 0.34),
-      inset 0 1px 0 rgb(255 255 255 / 0.08),
-      0 0 0 1px rgb(255 255 255 / 0.06),
-      0 2px 3px rgb(0 0 0 / 0.55),
-      28px 56px 90px -30px rgb(0 0 0 / 0.95),
-      -30px -40px 90px -50px rgb(244 169 71 / 0.35);
+  .panel-graphite {
+    background: linear-gradient(180deg, #17191d 0%, #121417 100%);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-graphite);
   }
-  /* The lamp: light falling on the ground surface from upper left, not a floating blob. */
-  .lamp-ground {
-    background:
-      radial-gradient(70% 55% at 6% -6%, rgb(244 169 71 / 0.2) 0%, rgb(244 169 71 / 0.07) 38%, transparent 72%),
-      radial-gradient(120% 90% at 8% -10%, rgb(244 169 71 / 0.06) 0%, transparent 60%),
-      radial-gradient(90% 70% at 85% 110%, rgb(201 204 209 / 0.05) 0%, transparent 55%),
-      var(--color-night);
-  }
+
+  .press { transition: transform 160ms var(--ease-out), background-color 200ms, color 200ms, border-color 200ms, box-shadow 200ms; }
+  .press:active:not(:disabled) { transform: scale(0.975); transition-duration: 60ms; }
 }
 
-/* Reveal: content is visible by default; motion only adds travel. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .reveal {
-      animation: bd-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 42%;
-    }
-  }
-  @supports (animation-timeline: scroll()) {
-    .header-scrolled {
-      animation: bd-header linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 140px;
-    }
-  }
-}
-@keyframes bd-reveal {
-  from { transform: translateY(22px); }
-  to { transform: none; }
-}
-@keyframes bd-header {
-  from { background-color: rgb(13 14 16 / 0); border-color: transparent; }
-  to { background-color: rgb(13 14 16 / 0.9); border-color: rgb(255 255 255 / 0.07); }
-}
-
-@keyframes bd-draw { from { stroke-dashoffset: var(--len, 600); } to { stroke-dashoffset: 0; } }
-@keyframes bd-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.35; transform: scale(0.82); }
-}
-.pulse-dot { animation: bd-pulse 1.6s var(--ease-out-soft) infinite; transform-origin: center; }
-@keyframes bd-flow { to { stroke-dashoffset: -40; } }
-.thread-flow { stroke-dasharray: 2 8; animation: bd-flow 2.4s linear infinite; }
-
-/* Legacy sequence classes still used by the walkthrough */
-.hs-card { animation: hs-in 560ms var(--ease-out-soft) both; }
-.hs-seg { stroke-dasharray: 100; stroke-dashoffset: 100; animation: hs-draw 1000ms var(--ease-out-soft) both; }
-.hs-fray { animation: hs-fade 700ms ease-out both; }
-[data-paused] .hs-card, [data-paused] .hs-seg, [data-paused] .hs-fray { animation-play-state: paused; }
-@keyframes hs-in { from { opacity: 0; transform: translateY(10px) scale(0.985); } to { opacity: 1; transform: none; } }
-@keyframes hs-draw { from { stroke-dashoffset: 100; opacity: 0; } 4% { opacity: 1; } to { stroke-dashoffset: 0; opacity: 1; } }
-@keyframes hs-fade { from { opacity: 0; } to { opacity: 1; } }
-
-/* ---------------- Night desk hero sequence ----------------
-   The resolved scene is the static state. With motion allowed, the
-   pieces arrive in story order once, then hold. */
-.nd-ring { transform-box: fill-box; transform-origin: center; animation: nd-ring 2.8s var(--ease-out-soft) infinite; }
-.nd-ring:nth-of-type(2) { animation-delay: 0.9s; }
-.nd-ring:nth-of-type(3) { animation-delay: 1.8s; }
-@keyframes nd-ring { from { transform: scale(0.35); opacity: 0.9; } to { transform: scale(1); opacity: 0; } }
-@media (prefers-reduced-motion: no-preference) {
-  .nd-in { animation: nd-in 640ms var(--ease-out-soft) both; animation-delay: var(--d, 0ms); }
-  .nd-pop { animation: nd-pop 520ms var(--ease-out-soft) both; animation-delay: var(--d, 0ms); }
-  .nd-thread { stroke-dasharray: 1; stroke-dashoffset: 1; animation: nd-draw 1100ms var(--ease-travel) forwards; animation-delay: var(--d, 0ms); }
-  .nd-settle { animation: nd-settle 900ms var(--ease-out-soft) both; animation-delay: var(--d, 0ms); }
-  .nd-typing { animation: nd-typing 900ms steps(1) both; animation-delay: var(--d, 0ms); }
-  .nd-out { animation: nd-out 180ms ease-out forwards; animation-delay: var(--d, 0ms); }
-}
-@keyframes nd-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
-@keyframes nd-pop { from { opacity: 0; transform: translateY(8px) scale(0.96); } to { opacity: 1; transform: none; } }
-@keyframes nd-draw { to { stroke-dashoffset: 0; } }
-@keyframes nd-out { to { opacity: 0; } }
-@keyframes nd-settle {
-  0% { opacity: 0; transform: translate(-22px, -30px) rotate(-3deg) scale(1.03); }
-  45% { opacity: 1; }
-  100% { opacity: 1; transform: none; }
-}
-@keyframes nd-typing { 0% { opacity: 1; } 99% { opacity: 1; } 100% { opacity: 0; } }
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-delay: 0s !important;
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-  .nd-ring { display: none; }
-  .nd-out { display: none !important; }
-  .nd-in, .nd-pop, .nd-settle, .nd-thread, .nd-typing { animation: none !important; opacity: 1; transform: none; filter: none; }
-}
-
-/* Range input */
-.bd-range { appearance: none; height: 28px; background: transparent; }
-.bd-range::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: var(--color-rule); }
-.bd-range::-moz-range-track { height: 4px; border-radius: 4px; background: var(--color-rule); }
-.bd-range::-webkit-slider-thumb { appearance: none; margin-top: -9px; width: 22px; height: 22px; border-radius: 50%; background: var(--color-card); border: 2px solid var(--color-ink); box-shadow: 0 2px 6px rgb(17 18 20 / 0.2); }
-.bd-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--color-card); border: 2px solid var(--color-ink); }
+/* Slider */
+.bd-range { appearance: none; height: 28px; background: transparent; width: 100%; }
+.bd-range::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(to right, var(--color-signal) var(--fill, 50%), var(--color-rule-strong) var(--fill, 50%)); }
+.bd-range::-moz-range-track { height: 2px; background: var(--color-rule-strong); }
+.bd-range::-moz-range-progress { height: 2px; background: var(--color-signal); }
+.bd-range::-webkit-slider-thumb { appearance: none; margin-top: -9px; width: 20px; height: 20px; border-radius: 50%; background: var(--color-surface); border: 1px solid var(--color-rule-strong); box-shadow: 0 1px 0 #fff inset, 2px 4px 8px -2px rgb(16 18 20 / 0.3); }
+.bd-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--color-surface); border: 1px solid var(--color-rule-strong); }
 .bd-range:focus-visible { outline: none; }
 .bd-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--color-signal); outline-offset: 2px; }
 .bd-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--color-signal); outline-offset: 2px; }
+
+/* Grain: one static, tiny, CSS-only noise layer (no SVG filter; cheap to paint). */
+.grain { position: relative; isolation: isolate; }
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.35;
+  background-image:
+    repeating-radial-gradient(circle at 17% 32%, rgb(16 18 20 / 0.018) 0 1px, transparent 1px 3px),
+    repeating-radial-gradient(circle at 73% 61%, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4px);
+}
+
+/* Ringing call: the route leaves the handset as a single expanding arc, not a glow. */
+@keyframes bd-ring { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.6); opacity: 0; } }
+.ring-arc { transform-box: fill-box; transform-origin: center; animation: bd-ring 2.2s var(--ease-out) infinite; }
+.ring-arc.delay { animation-delay: 1.1s; }
+@keyframes bd-caret { 50% { opacity: 0; } }
+.typing-dot { animation: bd-caret 1.1s steps(1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .ring-arc { display: none; }
+}

@@ -1,117 +1,107 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/PageHero";
-import { ProductExplorer } from "@/components/ProductExplorer";
-import { SectionHeading } from "@/components/Section";
-import { CtaBand } from "@/components/CtaBand";
-import { ModeSwitcher } from "@/components/ModeSwitcher";
-import { ChannelBoard } from "@/components/HeroArtifacts";
+import { PageIntro } from "@/components/PageIntro";
+import { InboxCanvas } from "@/components/home/InboxCanvas";
+import { ApprovedAnswers } from "@/components/home/ApprovedAnswers";
+import { YouStayInCharge, CloseCta } from "@/components/home/Sections";
 
 export const metadata: Metadata = {
-  title: "Platform",
-  description: "Inside BetterDesk: missed-call text-back, replies on your channels, booking, handoff to staff, follow-up and owner summaries.",
+  title: "Product",
+  description: "What BetterDesk does: missed-call text-back, replies from your approved answers, follow-up, booking or handoff, and one inbox for every conversation.",
   alternates: { canonical: "/platform" },
 };
 
-const PARTS = [
-  {
-    n: "01",
-    k: "Capture",
-    h: "Every way a customer reaches you, in one place.",
-    p: "Missed calls trigger a text back. Texts and website forms land in the same inbox on every plan. Instagram DMs, Google Business messages and email join on Growth and Scale.",
-    limit: "Your team still answers when they can. How unanswered calls reach BetterDesk depends on your phone provider; we set it up with you.",
-  },
-  {
-    n: "02",
-    k: "Reply",
-    h: "Answers from your business, not the internet.",
-    p: "Replies are built from what you give it during setup: services, prices you're happy to share, hours, service area, policies and tone.",
-    limit: "When a question falls outside that, it says it will check and hands it to a person.",
-  },
-  {
-    n: "03",
-    k: "Qualify",
-    h: "Your intake questions, asked every time.",
-    p: "What's wrong, where, how soon, what kind of appointment. The questions you'd ask on a callback, asked by text in the moment.",
-    limit: "You choose the questions. Healthcare and other regulated businesses should talk to us before collecting sensitive details.",
-  },
-  {
-    n: "04",
-    k: "Book or hand off",
-    h: "Routine work booked. Urgent work routed.",
-    p: "Where your calendar or booking tool is connected, it offers real openings and books them. Your rules decide what goes straight to a person, like an emergency, a complaint or a big job.",
-    limit: "If your booking tool can't be connected, BetterDesk collects the request and your team confirms the time.",
-  },
-  {
-    n: "05",
-    k: "Follow up",
-    h: "Reminders and nudges that actually go out.",
-    p: "Reminders before appointments, a check-in when a quote goes quiet, and on Growth and Scale, a review request after the job.",
-    limit: "Follow-up stops when the customer books or asks you to stop.",
-  },
-  {
-    n: "06",
-    k: "Summary",
-    h: "Know what happened without reading every thread.",
-    p: "A plain-English weekly summary of what came in, what got booked, what went to your team, and suggested FAQ additions waiting for your approval. Owner alerts flag big or urgent leads as they happen.",
-    limit: "Owner alerts and English-language analytics are on Growth and Scale.",
-  },
+const CHANNELS = [
+  { ch: "Phone calls", how: "When a call goes unanswered, the caller gets a text back in your business's name.", plan: "Every plan" },
+  { ch: "Text messages", how: "Replies to customers who text your business number.", plan: "Every plan" },
+  { ch: "Website forms", how: "Replies to form submissions, day or night.", plan: "Every plan" },
+  { ch: "Instagram DMs", how: "Answers direct messages from your business account.", plan: "Growth and Scale" },
+  { ch: "Google Business messages", how: "Answers people who message you from your Google listing.", plan: "Growth and Scale" },
+  { ch: "Email", how: "Replies to inquiries sent to your business inbox.", plan: "Growth and Scale" },
+];
+
+const JOBS = [
+  { k: "Reply", v: "A text back within moments of a missed call, or a reply to a message, in your business's name." },
+  { k: "Ask", v: "The intake questions you'd ask: what's going on, where, how urgent. You write them." },
+  { k: "Follow up", v: "If the customer goes quiet, a follow-up at a sensible time. Basic on Starter, multi-step on Growth and up." },
+  { k: "Book or hand off", v: "Your real open times where your calendar is connected. Otherwise the request goes to your team to confirm." },
+  { k: "Keep you in the loop", v: "Every conversation in one inbox. Owner alerts and a plain-English weekly summary on Growth and up." },
 ];
 
 export default function PlatformPage() {
   return (
     <>
-      <PageHero overlap aside={<ChannelBoard />} eyebrow="Platform" title={<>Everything between the first ring and the booking.</>}>
-        <p>Click around a sample workspace for a plumbing company: the inbox, the calendar it fills, the short list of things that need a person, and the summary the owner reads.</p>
-      </PageHero>
-      <section className="container-bd relative z-10 -mt-28 pb-12 md:-mt-36 md:pb-16" aria-label="Sample product workspace">
-        <ProductExplorer />
-        <p className="mt-4 text-[0.82rem] text-muted">Sample workspace with fictional customers. Buttons change the sample only; nothing is sent.</p>
-      </section>
+      <PageIntro title="One front desk for every way customers reach you.">
+        <p>BetterDesk replies when you can&rsquo;t, asks your questions, follows up, and turns the conversation into a booking or a clean handoff to your team.</p>
+      </PageIntro>
 
-      <section className="container-bd py-16 md:py-24" aria-labelledby="parts-title">
-        <SectionHeading mark="ink" id="parts-title" title={<>Six jobs a front desk does. And where each one stops.</>}>
-          <p>Each part below says what it does and what it doesn&rsquo;t. We&rsquo;d rather you know the edges before the demo.</p>
-        </SectionHeading>
-        <ol className="mt-14 divide-y divide-rule border-y border-rule">
-          {PARTS.map((s) => (
-            <li key={s.k} className="reveal grid gap-4 py-9 md:grid-cols-[80px_200px_1fr_1fr] md:gap-8">
-              <span className="font-mono text-[0.85rem] text-signal">{s.n}</span>
-              <h3 className="text-[1.15rem] font-semibold tracking-[-0.01em] text-ink">{s.k}</h3>
-              <div>
-                <p className="font-display text-[1.45rem] leading-snug tracking-[-0.015em] text-ink">{s.h}</p>
-                <p className="mt-2 text-[0.96rem] leading-relaxed text-ink-2">{s.p}</p>
-              </div>
-              <p className="self-start rounded-[var(--radius-md)] border border-dashed border-rule-strong px-4 py-3 text-[0.88rem] leading-relaxed text-ink-2">
-                <span className="mb-1 block text-[0.74rem] font-medium text-muted">Where it stops</span>
-                {s.limit}
-              </p>
-            </li>
-          ))}
-        </ol>
-      </section>
-      {/* ---------------- Control (graphite), moved from home ---------------- */}
-      <section className="on-night lamp-ground relative" aria-labelledby="control-title">
-        <div className="container-bd grid gap-12 py-20 md:py-28 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
-          <div className="reveal">
-            <h2 id="control-title" className="display text-[clamp(2.1rem,1.4rem+2.6vw,3.6rem)] text-[#f7f6f3]">
-              You decide how much it handles.
-            </h2>
-            <p className="mt-5 max-w-[52ch] text-[1.05rem] leading-relaxed text-night-muted">
-              Start with every reply waiting for your OK. Loosen the reins when you trust it. Your rules decide which conversations go to a person, with the whole thread attached.
-            </p>
-            <ul className="mt-8 space-y-3 text-[0.95rem] text-[#d4d6da]">
-              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-lamp" aria-hidden="true" />Answers come from your services, hours, prices and policies</li>
-              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-lamp" aria-hidden="true" />Quiet hours and emergency routing you set</li>
-              <li className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-lamp" aria-hidden="true" />Suggested FAQ updates wait for your approval</li>
-            </ul>
-          </div>
-          <div className="reveal">
-            <ModeSwitcher />
-          </div>
+      <section aria-labelledby="jobs-title" className="bg-porcelain pb-24">
+        <div className="wrap">
+          <h2 id="jobs-title" className="sr-only">What BetterDesk does</h2>
+          <ol className="grid border-t border-ink md:grid-cols-5">
+            {JOBS.map((j, i) => (
+              <li key={j.k} className={`border-b border-rule py-6 md:border-b-0 md:py-8 md:pr-6 ${i > 0 ? "md:border-l md:pl-6" : ""}`}>
+                <p className="text-[1.25rem] font-semibold tracking-[-0.02em]">{j.k}</p>
+                <p className="mt-2 text-[0.9375rem] leading-snug text-ink-2">{j.v}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      <CtaBand />
+      <section aria-labelledby="inbox-title" className="bg-porcelain-2 py-24 md:py-32">
+        <div className="wrap">
+          <h2 id="inbox-title" className="t-title max-w-[20ch]">The inbox: what happened, and what needs you.</h2>
+        </div>
+        <div className="mx-auto mt-12 max-w-[92rem] px-2 sm:px-6">
+          <InboxCanvas />
+          <p className="illustrative wrap mt-3">Sample inbox. Names, messages and rules are illustrative.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="channels-title" className="bg-porcelain py-24 md:py-32">
+        <div className="wrap grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 id="channels-title" className="t-title max-w-[14ch]">Where it answers.</h2>
+            <p className="mt-5 max-w-[34ch] text-[1.0625rem] leading-relaxed text-ink-2">Which of these connect for your business is confirmed on the demo call, before you sign up.</p>
+          </div>
+          <table className="w-full border-collapse text-left text-[0.9375rem] lg:col-span-8">
+            <thead>
+              <tr className="border-b border-ink">
+                <th scope="col" className="py-3 pr-4 font-[550]">Channel</th>
+                <th scope="col" className="hidden py-3 pr-4 font-[550] sm:table-cell">What BetterDesk does</th>
+                <th scope="col" className="py-3 text-right font-[550]">Plans</th>
+              </tr>
+            </thead>
+            <tbody>
+              {CHANNELS.map((c) => (
+                <tr key={c.ch} className="border-b border-rule align-top">
+                  <th scope="row" className="py-4 pr-4 font-[550]">
+                    {c.ch}
+                    <span className="mt-1 block font-normal text-ink-2 sm:hidden">{c.how}</span>
+                  </th>
+                  <td className="hidden py-4 pr-4 text-ink-2 sm:table-cell">{c.how}</td>
+                  <td className="whitespace-nowrap py-4 text-right text-muted">{c.plan}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="answers-title" className="border-t border-rule bg-porcelain py-24 md:py-32">
+        <div className="wrap grid gap-10 lg:grid-cols-12 lg:gap-x-10">
+          <div className="lg:col-span-4">
+            <h2 id="answers-title" className="t-title max-w-[14ch]">Your answers, your rules.</h2>
+            <p className="mt-5 max-w-[36ch] text-[1.0625rem] leading-relaxed text-ink-2">Hours, service area, what a visit costs, what counts as urgent and who gets alerted. Written with you during setup, changed whenever you like.</p>
+          </div>
+          <div className="lg:col-span-8"><ApprovedAnswers /></div>
+        </div>
+      </section>
+
+      <section aria-label="Control and limits" className="border-t border-rule bg-porcelain py-24 md:py-32">
+        <div className="wrap"><YouStayInCharge /></div>
+      </section>
+      <CloseCta />
     </>
   );
 }

@@ -1,33 +1,33 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/PageHero";
-import { LeadJourney } from "@/components/LeadJourney";
-import { CtaBand } from "@/components/CtaBand";
+import { PageIntro } from "@/components/PageIntro";
+import { SignalToBooking } from "@/components/home/SignalToBooking";
+import { InboxCanvas } from "@/components/home/InboxCanvas";
+import { CloseCta } from "@/components/home/Sections";
 
 export const metadata: Metadata = {
-  title: "Sample walkthrough",
-  description: "Step through three sample conversations: a missed call, an after-hours text and a late-night quote request, with and without BetterDesk.",
+  title: "See a conversation",
+  description: "Watch one illustrative missed call become a booked appointment, then click through a sample BetterDesk inbox.",
   alternates: { canonical: "/demo" },
 };
 
 export default function DemoPage() {
   return (
     <>
-      <PageHero overlap eyebrow="Sample walkthrough" title={<>Watch one inquiry, start to finish.</>}>
-        <p>
-          Three common moments, played step by step. Switch between &ldquo;Without&rdquo; and &ldquo;With BetterDesk&rdquo; to compare the same evening.
-          The businesses and conversations are fictional examples, not customer data.
-        </p>
-      </PageHero>
-      <section className="container-bd relative z-10 -mt-28 pb-12 md:-mt-36 md:pb-16" aria-labelledby="walk-h">
-        <h2 id="walk-h" className="sr-only">Interactive walkthrough</h2>
-        <LeadJourney />
-        <div className="mt-10 grid gap-6 border-t border-rule pt-8 text-[0.92rem] leading-relaxed text-ink-2 md:grid-cols-3">
-          <p><strong className="font-medium text-ink">What&rsquo;s real here:</strong> the flow. Text-back, intake questions, rules for urgent work, offered times, handoff to staff and the inbox record are how BetterDesk is designed to work.</p>
-          <p><strong className="font-medium text-ink">What&rsquo;s sample:</strong> every name, number, price and time. Nothing on this page is connected to a live phone line or calendar.</p>
-          <p><strong className="font-medium text-ink">What depends on you:</strong> the questions it asks, what counts as urgent, and which calendar it books into. You set those during setup.</p>
+      <PageIntro title="See one missed call become a booking.">
+        <p>An illustrative afternoon at a small plumbing company. Press play, or scroll through it at your own pace. Then click through the inbox it lands in.</p>
+      </PageIntro>
+      <SignalToBooking id="walkthrough" />
+      <section aria-labelledby="inbox-title" className="bg-porcelain py-24 md:py-32">
+        <div className="wrap">
+          <h2 id="inbox-title" className="t-title max-w-[20ch]">Where it lands: the owner&rsquo;s inbox.</h2>
+          <p className="mt-5 max-w-[56ch] text-[1.0625rem] leading-relaxed text-ink-2">Tap each conversation. One was booked, one was urgent and went straight to the owner, one is waiting for approval.</p>
+        </div>
+        <div className="mx-auto mt-12 max-w-[92rem] px-2 sm:px-6">
+          <InboxCanvas />
+          <p className="illustrative wrap mt-3">Sample inbox. Names, messages and rules are illustrative, not customer data.</p>
         </div>
       </section>
-      <CtaBand title={<>See it with your business in it.</>} body="On a demo we'll build the walkthrough around your services, hours and the questions your customers actually ask." secondary={{ href: "/pricing", label: "Or compare plans first" }} />
+      <CloseCta />
     </>
   );
 }

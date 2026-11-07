@@ -1,23 +1,18 @@
-/**
- * The BetterDesk "resolve" mark: open signal rings (amber) closing onto a solid D (certainty).
- * Inherits currentColor for the D so it works on night and pearl. `rings` drops to 1 at tiny sizes.
- */
-export function LogoMark({ className = "size-7", rings = 2 }: { className?: string; rings?: 1 | 2 }) {
+/** BetterDesk mark: one continuous route forms the "b"; it lands on the vermilion point (the booked time). */
+export function Mark({ className = "", mono = false }: { className?: string; mono?: boolean }) {
   return (
-    <svg viewBox="0 0 32 32" className={className} aria-hidden="true" fill="none">
-      <path d="M7.5 6.5v19" stroke="currentColor" strokeWidth="3.6" strokeLinecap="round" />
-      <path d="M7.5 6.5h4.5a9.5 9.5 0 0 1 0 19H7.5" stroke="currentColor" strokeWidth="3.2" strokeLinejoin="round" />
-      <path d="M24.4 8.2a12.6 12.6 0 0 1 0 15.6" stroke="var(--color-lamp)" strokeWidth="1.9" strokeLinecap="round" />
-      {rings === 2 ? <path d="M27.9 5.2a17 17 0 0 1 0 21.6" stroke="var(--color-lamp)" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.55" /> : null}
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
+      <path d="M6.6 1.9V16.4A5.1 5.1 0 1 1 8.09 20.01" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+      <circle cx="6.6" cy="21.5" r="1.7" fill={mono ? "currentColor" : "var(--color-signal)"} />
     </svg>
   );
 }
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2 text-ink ${className}`}>
-      <LogoMark className="size-7" />
-      <span className="font-display text-[1.14rem] font-[600] tracking-[-0.03em]">BetterDesk</span>
+    <span className={`inline-flex items-center gap-[0.4em] ${className}`}>
+      <Mark className="h-[1.2em] w-[1.2em] -translate-y-[0.04em]" />
+      <span className="text-[1.1em] font-semibold tracking-[-0.03em] [font-stretch:94%]">BetterDesk</span>
     </span>
   );
 }

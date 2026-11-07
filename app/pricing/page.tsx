@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageHero } from "@/components/PageHero";
-import { PlanPicker } from "@/components/PlanPicker";
-import { Check } from "@/components/NightDesk";
-import { TrustStrip } from "@/components/TwoEndings";
-import { PricingPlans } from "@/components/PricingPlans";
+import { PageIntro } from "@/components/PageIntro";
+import { Pricing } from "@/components/Pricing";
 import { Faq } from "@/components/Faq";
-import { CtaBand } from "@/components/CtaBand";
-import { SectionHeading } from "@/components/Section";
+import { CloseCta } from "@/components/home/Sections";
+import { PLANS } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "BetterDesk plans: Starter $149/mo, Growth $299/mo, Scale $599/mo. Setup and human support included. No annual contract.",
+  description: "Proposed BetterDesk plans: Starter $129/mo, Growth $249/mo, Scale $499/mo, with included conversations and setup with a person. Monthly, no annual contract.",
   alternates: { canonical: "/pricing" },
 };
 
@@ -63,8 +60,16 @@ const PRICING_FAQ = [
     a: "Starter suits one location with a modest number of inquiries handled mostly by phone, text and web forms. Growth adds social and email channels, review requests, alerts and analytics. Scale is for multiple locations or custom integrations. The 'best for' lines are a guide; we'll recommend one on the call.",
   },
   {
-    q: "What counts as a lead?",
-    a: "A new inquiry from a person: a missed call, a text, a form, a message. The weekly ranges show which plan usually fits. Tell us your volume and we'll recommend one.",
+    q: "What counts as a conversation?",
+    a: "One customer thread in a 24-hour window, on any channel: a missed call that gets a text back, a text, a form, a message. If the same customer writes again the next day, that's a second conversation. Spam that BetterDesk ignores doesn't count.",
+  },
+  {
+    q: "What happens if I go over?",
+    a: "In this proposal, extra conversations cost $0.40 each and we tell you before it happens, so you can move up a plan if that's cheaper. Nothing stops replying when you reach the included amount.",
+  },
+  {
+    q: "Why are these prices marked proposed?",
+    a: "They are a lower price proposal for review, about 13 to 17 percent below the currently published $149, $299 and $599. Nothing on this page charges a card. Your quote is confirmed in writing on the demo call.",
   },
   {
     q: "Will it pay for itself?",
@@ -72,7 +77,7 @@ const PRICING_FAQ = [
       <>
         That depends on how many inquiries you miss today and what a job is worth to you. The{" "}
         <Link href="/roi" className="underline underline-offset-4">
-          ROI calculator
+          value calculator
         </Link>{" "}
         shows the math with your numbers. We don&rsquo;t publish average results because we don&rsquo;t want to promise yours.
       </>
@@ -80,61 +85,82 @@ const PRICING_FAQ = [
   },
 ];
 
+const Tick = ({ v }: { v: Cell }) =>
+  v === true ? (
+    <svg viewBox="0 0 16 16" className="mx-auto h-4 w-4" role="img" aria-label="Included"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+  ) : v === false ? (
+    <span className="text-muted" aria-label="Not included">&ndash;</span>
+  ) : (
+    <span>{v}</span>
+  );
+
 export default function PricingPage() {
   return (
     <>
-      <PageHero eyebrow="Pricing" title={<>Simple plans. No seat math.</>} aside={<PlanPicker />}>
-        <p>Every plan includes setup, calibration and live human support. Monthly, with no annual contract.</p>
-      </PageHero>
-      <section className="container-bd py-14 md:py-20" aria-labelledby="plans-h">
-        <h2 id="plans-h" className="sr-only">Plans</h2>
-        <PricingPlans />
-      </section>
-
-      <section className="container-bd pb-14" aria-label="What every plan comes with">
-        <TrustStrip />
-      </section>
-      <section className="container-bd pb-20 md:pb-28" aria-labelledby="compare-title">
-        <SectionHeading mark="ink" id="compare-title" title="Every plan, side by side." />
-        <div className="reveal relative mt-10 overflow-x-auto rounded-[var(--radius-lg)] border border-rule bg-card" role="region" aria-label="Plan comparison table, scrolls sideways on small screens" tabIndex={0}>
-          <table className="w-full min-w-[640px] border-collapse text-left text-[0.9rem]">
-            <caption className="sr-only">Feature comparison of Starter, Growth and Scale plans</caption>
-            <thead>
-              <tr className="border-b border-rule-strong">
-                <th scope="col" className="w-[40%] px-5 py-4 font-medium text-muted">Feature</th>
-                {["Starter · $149", "Growth · $299", "Scale · $599"].map((h) => (
-                  <th key={h} scope="col" className="px-4 py-4 font-semibold text-ink">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            {ROWS.map((g) => (
-              <tbody key={g.group}>
-                <tr>
-                  <th colSpan={4} scope="colgroup" className="bg-paper-2/60 px-5 py-2.5 text-[0.74rem] font-medium text-muted">
-                    {g.group}
-                  </th>
-                </tr>
-                {g.items.map(([label, ...cells]) => (
-                  <tr key={label} className="border-t border-rule/70">
-                    <th scope="row" className="px-5 py-3 font-normal text-ink">{label}</th>
-                    {cells.map((c, i) => (
-                      <td key={i} className="px-4 py-3 text-ink-2">
-                        {c === true ? (<><Check className="inline size-4 text-ink" /><span className="sr-only">Included</span></>) : c === false ? (<><span className="text-faint" aria-hidden="true">—</span><span className="sr-only">Not included</span></>) : c}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            ))}
-          </table>
+      <PageIntro title="Priced per business. Setup included.">
+        <p>Three monthly plans with a set number of conversations, no seat math and no annual contract. A person sets it up with you on every plan.</p>
+      </PageIntro>
+      <section aria-labelledby="plans-h" className="bg-porcelain pb-24">
+        <div className="wrap">
+          <h2 id="plans-h" className="sr-only">Plans</h2>
+          <Pricing />
         </div>
       </section>
 
-      <section className="container-bd grid gap-10 pb-24 lg:grid-cols-[1fr_1.6fr] lg:gap-16" aria-labelledby="pfaq">
-        <SectionHeading mark="handled" id="pfaq" title="Before you ask." />
-        <Faq items={PRICING_FAQ} />
+      <section aria-labelledby="compare-title" className="border-t border-rule bg-porcelain py-24 md:py-32">
+        <div className="wrap">
+          <h2 id="compare-title" className="t-title">Every plan, side by side.</h2>
+          <div className="mt-10 overflow-x-auto" role="region" aria-label="Plan comparison table, scrolls sideways on small screens" tabIndex={0}>
+            <table className="w-full min-w-[640px] border-collapse text-left text-[0.9375rem]">
+              <thead>
+                <tr className="border-b border-ink">
+                  <th scope="col" className="w-[40%] py-3 pr-4 font-normal text-muted"><span className="sr-only">Feature</span></th>
+                  {PLANS.map((p) => (
+                    <th key={p.id} scope="col" className="py-3 text-center font-semibold">{p.name} · ${p.price}</th>
+                  ))}
+                </tr>
+              </thead>
+              {ROWS.map((g) => (
+                <tbody key={g.group}>
+                  <tr>
+                    <th colSpan={4} scope="colgroup" className="pb-2 pt-8 text-[0.8125rem] font-[550] text-muted">{g.group}</th>
+                  </tr>
+                  {g.items.map(([label, a, b, c]) => (
+                    <tr key={label} className="border-b border-rule">
+                      <th scope="row" className="py-3 pr-4 font-normal">{label}</th>
+                      {[a, b, c].map((v, i) => (
+                        <td key={i} className="py-3 text-center"><Tick v={v} /></td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              ))}
+              <tbody>
+                <tr><th colSpan={4} scope="colgroup" className="pb-2 pt-8 text-[0.8125rem] font-[550] text-muted">Usage (proposed)</th></tr>
+                <tr className="border-b border-rule">
+                  <th scope="row" className="py-3 pr-4 font-normal">Conversations included each month</th>
+                  {PLANS.map((p) => <td key={p.id} className="py-3 text-center tabular">{p.includedConversations.toLocaleString()}</td>)}
+                </tr>
+                <tr className="border-b border-rule">
+                  <th scope="row" className="py-3 pr-4 font-normal">Each extra conversation</th>
+                  {PLANS.map((p) => <td key={p.id} className="py-3 text-center tabular">$0.40</td>)}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
-      <CtaBand title={<>Not sure which plan? Ask us.</>} body="We'll look at how many inquiries you get and how they reach you, and recommend a plan, or tell you BetterDesk isn't the right fit yet." />
+
+      <section aria-labelledby="faq-title" className="bg-porcelain-2 py-24 md:py-32">
+        <div className="wrap grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 id="faq-title" className="t-title">Pricing questions.</h2>
+            <p className="mt-4 text-[1rem] text-ink-2">Or try the <Link href="/roi" className="underline underline-offset-4">value calculator</Link> with your own numbers.</p>
+          </div>
+          <Faq items={PRICING_FAQ} className="lg:col-span-8" />
+        </div>
+      </section>
+      <CloseCta />
     </>
   );
 }

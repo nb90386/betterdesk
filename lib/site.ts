@@ -2,38 +2,34 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://betterdesk
 export const CONTACT_EMAIL = "hello@betterdesk.ai";
 
 export const NAV = [
-  { href: "/platform", label: "Platform" },
+  { href: "/platform", label: "Product" },
   { href: "/how-it-works", label: "How it works" },
-  { href: "/solutions", label: "Solutions" },
+  { href: "/solutions", label: "Who it's for" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/demo", label: "Walkthrough" },
 ] as const;
 
 export const FOOTER = [
   {
     title: "Product",
     links: [
-      { href: "/platform", label: "Platform" },
+      { href: "/platform", label: "Product" },
       { href: "/how-it-works", label: "How it works" },
-      { href: "/demo", label: "Sample walkthrough" },
+      { href: "/demo", label: "See a conversation" },
       { href: "/pricing", label: "Pricing" },
-      { href: "/roi", label: "ROI calculator" },
+      { href: "/roi", label: "Value calculator" },
     ],
   },
   {
-    title: "Solutions",
+    title: "Who it's for",
     links: [
       { href: "/solutions/home-services", label: "Home services" },
-      { href: "/solutions/beauty-wellness", label: "Beauty & wellness" },
-      { href: "/solutions", label: "All solutions" },
+      { href: "/solutions/beauty-wellness", label: "Salons and spas" },
+      { href: "/solutions", label: "Other service businesses" },
     ],
   },
   {
-    title: "Company",
-    links: [
-      { href: "/contact", label: "Book a demo" },
-      { href: "/contact", label: "Contact" },
-    ],
+    title: "Talk to us",
+    links: [{ href: "/contact", label: "Book a demo" }],
   },
 ] as const;
 
@@ -42,64 +38,82 @@ export type PlanId = "starter" | "growth" | "scale";
 export type Plan = {
   id: PlanId;
   name: string;
+  /** V3 proposed monthly price (preview only, not wired to billing). */
   price: number;
+  /** Currently published price, kept so the proposal is never mistaken for the live offer. */
+  currentPrice: number;
   blurb: string;
   bestFor: string;
+  /** Proposed included usage; see docs/v3/BUSINESS-TRUTH.md for the unit-economics reasoning. */
+  includedConversations: number;
+  locations: string;
   cta: string;
   featured?: boolean;
   includes: string[];
 };
 
-/** Public pricing, preserved exactly from betterdesk.ai on 2026-11-06. */
+/** Pricing is a PROPOSAL for founder approval. There is no checkout in this site; every plan CTA goes to /contact. */
+export const PRICING_IS_PROPOSAL = true;
+export const OVERAGE_PROPOSAL = "$0.40 per conversation over the included amount";
+
 export const PLANS: Plan[] = [
   {
     id: "starter",
     name: "Starter",
-    price: 149,
-    blurb: "For solo operators and single-location service businesses just plugging the leaks.",
-    bestFor: "1 location, under 25 leads a week",
-    cta: "Get started",
+    price: 129,
+    currentPrice: 149,
+    blurb: "One location that mostly hears from customers by phone, text and your website.",
+    bestFor: "1 location, up to about 25 new inquiries a week",
+    includedConversations: 150,
+    locations: "1 location",
+    cta: "Start with Starter",
     includes: [
-      "AI replies on calls, SMS, and web forms",
-      "Missed-call recovery",
-      "Appointment booking",
-      "Basic follow-up sequences",
+      "Missed-call text-back",
+      "Replies on calls, SMS and web forms",
+      "Appointment booking, or handoff to your team",
+      "Basic follow-up",
       "Unified inbox",
-      "Onboarding included",
+      "Setup with a person",
     ],
   },
   {
     id: "growth",
     name: "Growth",
-    price: 299,
-    blurb: "For businesses that want missed-call recovery, booking, follow-up, and analytics, all working together.",
-    bestFor: "1–3 locations, 25–100 leads a week",
+    price: 249,
+    currentPrice: 299,
+    blurb: "Busier shops that also hear from customers on Instagram, Google and email.",
+    bestFor: "1–3 locations, about 25–100 inquiries a week",
+    includedConversations: 500,
+    locations: "Up to 3 locations",
     cta: "Book a demo",
     featured: true,
     includes: [
       "Everything in Starter",
       "Instagram DMs, Google Business, email",
-      "Advanced multi-step follow-up",
-      "Review generation",
-      "Smart lead scoring + owner alerts",
-      "English-language analytics",
+      "Multi-step follow-up",
+      "Review requests",
+      "Lead scoring and owner alerts",
+      "Plain-English weekly summary",
       "Priority human support",
     ],
   },
   {
     id: "scale",
     name: "Scale",
-    price: 599,
-    blurb: "For multi-location operators, franchises, and high-volume teams that need deeper integrations.",
-    bestFor: "3+ locations, 100+ leads a week",
-    cta: "Talk to sales",
+    price: 499,
+    currentPrice: 599,
+    blurb: "Multi-location operators and franchises that need routing and custom integrations.",
+    bestFor: "3+ locations, 100+ inquiries a week",
+    includedConversations: 1500,
+    locations: "Multiple locations",
+    cta: "Talk to us",
     includes: [
       "Everything in Growth",
       "Multi-location routing",
-      "Custom CRM + booking integrations",
-      "Custom voice + brand training",
+      "Custom CRM and booking integrations",
+      "Custom voice and brand training",
       "Dedicated success manager",
-      "SLA + premium support",
+      "SLA and premium support (terms in contract)",
       "Quarterly business reviews",
     ],
   },

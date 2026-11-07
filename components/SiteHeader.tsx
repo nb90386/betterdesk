@@ -3,21 +3,51 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
 import { Logo } from "./Logo";
 import { NAV } from "@/lib/site";
 
+/**
+ * Frosted only where it earns readability: the bar blurs what scrolls under it and
+ * switches to graphite glass while a [data-tone=dark] act passes beneath it.
+ */
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [dark, setDark] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [lastPath, setLastPath] = useState(pathname);
 
-  // Close the menu on navigation (derived during render, not in an effect).
   if (lastPath !== pathname) {
     setLastPath(pathname);
     setOpen(false);
   }
+
+  useEffect(() => {
+    let raf = 0;
+    const probe = () => {
+      raf = 0;
+      const y = 32;
+      let isDark = false;
+      document.querySelectorAll<HTMLElement>("[data-tone=dark]").forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top <= y && r.bottom >= y) isDark = true;
+      });
+      setDark(isDark);
+      setScrolled(window.scrollY > 8);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(probe);
+    };
+    probe();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -29,7 +59,6 @@ export function SiteHeader() {
     };
     document.addEventListener("keydown", onKey);
     document.documentElement.style.overflow = "hidden";
-    // Keep keyboard and screen-reader focus inside the open menu.
     const behind = [document.getElementById("main"), document.querySelector("footer")].filter(Boolean) as HTMLElement[];
     behind.forEach((el) => (el.inert = true));
     return () => {
@@ -40,31 +69,34 @@ export function SiteHeader() {
   }, [open]);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+  const toneDark = dark && !open;
 
   return (
-    <header className="on-night sticky top-0 z-50 border-b border-white/[0.06] bg-night">
-      <div className="container-bd flex h-16 items-center justify-between gap-6">
-        <Link href="/" className="rounded-md" aria-label="BetterDesk home">
-          <Logo />
+    <header
+      data-dark={toneDark || undefined}
+      className={`group/h fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,color] duration-300 ${toneDark ? "tone-dark" : ""} ${
+        scrolled || open
+          ? toneDark
+            ? "bg-graphite/72 shadow-[0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl backdrop-saturate-150"
+            : "bg-porcelain/78 shadow-[0_1px_0_rgb(16_18_20/0.08)] backdrop-blur-xl backdrop-saturate-150"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="wrap flex h-16 items-center justify-between gap-6">
+        <Link href="/" className="rounded-[4px] text-ink" aria-label="BetterDesk home">
+          <Logo className="text-[1.05rem]" />
         </Link>
 
-        <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
+        <nav aria-label="Main" className="hidden md:block">
+          <ul className="flex items-center gap-7">
             {NAV.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className="relative rounded-full px-3.5 py-2 text-[0.92rem] text-ink-2 transition-colors hover:text-ink aria-[current=page]:text-ink"
+                  className="relative py-2 text-[0.9375rem] text-ink-2 transition-colors hover:text-ink aria-[current=page]:text-ink after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-signal after:transition-transform after:duration-300 hover:after:scale-x-100 aria-[current=page]:after:scale-x-100"
                 >
                   {item.label}
-                  {isActive(item.href) ? (
-                    <motion.span
-                      layoutId="nav-active"
-                      className="absolute inset-x-3.5 -bottom-0.5 h-px bg-lamp"
-                      transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                    />
-                  ) : null}
                 </Link>
               </li>
             ))}
@@ -74,81 +106,52 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/contact"
-            className="press group hidden min-h-10 items-center gap-2 rounded-full bg-[#f7f6f3] px-4 text-[0.9rem] font-medium text-[#111214] shadow-[0_1px_0_#fff_inset,0_6px_18px_-8px_rgb(244_169_71/0.45)] hover:bg-white sm:inline-flex"
+            className="press hidden min-h-10 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[550] text-porcelain hover:bg-ink-2 sm:inline-flex [.tone-dark_&]:text-graphite"
           >
-            <span className="size-1.5 rounded-full bg-lamp transition-colors group-hover:bg-handled" aria-hidden="true" />
             Book a demo
           </Link>
           <button
             ref={buttonRef}
             type="button"
-            className="press inline-flex size-11 items-center justify-center rounded-full border border-rule-strong bg-night-2 lg:hidden"
+            className="press -mr-2 inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)] text-ink md:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => setOpen((o) => !o)}
           >
-            <svg viewBox="0 0 20 20" className="size-5" aria-hidden="true">
-              <path
-                d={open ? "M5 5l10 10M15 5 5 15" : "M3 7h14M3 13h14"}
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                fill="none"
-              />
+            <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden="true">
+              <path d={open ? "M5 5l10 10M15 5L5 15" : "M3 7h14M3 13h14"} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
         </div>
       </div>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            id="mobile-menu"
-            key="menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6, transition: { duration: 0.16 } }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 top-16 h-[calc(100dvh-4rem)] overflow-y-auto border-t border-rule bg-paper lg:hidden"
-          >
-            <nav aria-label="Mobile" className="container-bd py-6">
-              <ul className="divide-y divide-rule border-y border-rule">
-                {NAV.map((item, i) => (
-                  <motion.li
-                    key={item.href}
-                    initial={{ opacity: 0, x: -6 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.03 * i, duration: 0.2 }}
+      {open ? (
+        <div id="mobile-menu" className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-rule bg-porcelain md:hidden">
+          <nav aria-label="Mobile" className="wrap flex h-full flex-col pb-8 pt-4">
+            <ul>
+              {[...NAV, { href: "/demo", label: "See a conversation" }].map((item) => (
+                <li key={item.href} className="border-b border-rule">
+                  <Link
+                    href={item.href}
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                    className="flex min-h-16 items-center justify-between text-[1.6rem] font-semibold tracking-[-0.025em] text-ink [font-stretch:94%]"
                   >
-                    <Link
-                      href={item.href}
-                      aria-current={isActive(item.href) ? "page" : undefined}
-                      className="flex items-center justify-between py-4 font-display text-[1.7rem] tracking-[-0.02em] aria-[current=page]:text-signal"
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.li>
-                ))}
-                <li>
-                  <Link href="/roi" className="flex items-center justify-between py-4 font-display text-[1.7rem] tracking-[-0.02em]">
-                    ROI calculator
+                    {item.label}
+                    <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-signal opacity-0 [[aria-current=page]_&]:opacity-100" />
                   </Link>
                 </li>
-              </ul>
-              <Link
-                href="/contact"
-                className="press mt-8 flex min-h-12 items-center justify-center rounded-full bg-[#f7f6f3] font-medium text-[#111214]"
-              >
+              ))}
+            </ul>
+            <div className="mt-auto pt-8">
+              <Link href="/contact" className="press flex min-h-13 items-center justify-center rounded-[var(--radius-sm)] bg-ink text-[1.05rem] font-[550] text-porcelain">
                 Book a demo
               </Link>
-              <p className="mt-4 text-center text-sm text-muted">
-                Or email <a className="underline underline-offset-4" href="mailto:hello@betterdesk.ai">hello@betterdesk.ai</a>
-              </p>
-            </nav>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+              <p className="t-small mt-3 text-center text-muted">Opens a short form. We reply by email to find a time.</p>
+            </div>
+          </nav>
+        </div>
+      ) : null}
     </header>
   );
 }
