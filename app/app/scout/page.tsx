@@ -89,7 +89,7 @@ export default function ScoutPage() {
               <p className="text-[0.8125rem] text-muted">Columns: company, zip (required), website, street, city, category, sqft, contact name, role, email, notes. <a href="/demo/sample-prospects.csv" className="underline underline-offset-2">Download the sample</a>.</p>
               <div className="flex items-center gap-2 border-t border-rule pt-2 text-[0.8125rem]">
                 <span className="text-muted">Licensed business-data provider:</span>
-                <span className="font-medium text-attention">Not connected</span>
+                <span className="font-medium text-lamp-ink">Not connected</span>
                 <button onClick={tryProvider} className="ml-auto text-ink-2 underline underline-offset-2 hover:text-ink">Try it anyway</button>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function ScoutPage() {
       {/* Drafts */}
       <section id="drafts" aria-labelledby="drafts-h" className="scroll-mt-24 space-y-3">
         <div className="flex items-baseline justify-between">
-          <h2 id="drafts-h" className="text-[1rem] font-semibold">Introductions waiting for you <span className="font-mono text-[0.875rem] text-muted">{pending.length}</span></h2>
+          <h2 id="drafts-h" className="text-[1rem] font-semibold">Introductions waiting for you <span className="tabular-nums text-[0.875rem] text-muted">{pending.length}</span></h2>
         </div>
         {pending.length === 0 ? (
           <Panel><Empty title="Nothing to approve" body="When Scout drafts an introduction, it waits here until you approve, edit or reject it." /></Panel>
@@ -148,10 +148,10 @@ export default function ScoutPage() {
 function ListPreview({ list, onStart, onClear, disabled }: { list: { name: string; parsed: ParseResult }; onStart: () => void; onClear: () => void; disabled: boolean }) {
   const { rows, issues } = list.parsed;
   return (
-    <div className="mt-4 rounded-[var(--radius-md)] border border-rule bg-mineral p-3.5">
+    <div className="mt-4 rounded-[var(--radius-md)] border border-rule bg-stone p-3.5">
       <p className="text-[0.875rem]"><span className="font-medium">{list.name}</span>: {rows.length} rows ready{issues.length ? `, ${issues.length} skipped` : ""}.</p>
       {issues.length ? (
-        <ul className="mt-2 space-y-0.5 text-[0.8125rem] text-attention">
+        <ul className="mt-2 space-y-0.5 text-[0.8125rem] text-lamp-ink">
           {issues.slice(0, 4).map((i, n) => <li key={n}>Line {i.line}: {i.message}</li>)}
         </ul>
       ) : null}
@@ -173,12 +173,12 @@ function RunCard({ run }: { run: ScoutRun }) {
   return (
     <Panel>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-        <span className={`inline-flex items-center gap-2 text-[0.8125rem] font-medium ${run.state === "blocked" || run.state === "failed" ? "text-danger" : run.state === "waiting-approval" ? "text-attention" : "text-ink"}`}>
-          <span aria-hidden="true" className={`h-2 w-2 rounded-full ${live ? "animate-pulse bg-signal" : run.state === "completed" ? "bg-ink" : run.state === "blocked" || run.state === "failed" ? "bg-danger" : run.state === "waiting-approval" ? "bg-attention" : "bg-rule-strong"}`} />
+        <span className={`inline-flex items-center gap-2 text-[0.8125rem] font-medium ${run.state === "blocked" || run.state === "failed" ? "text-danger" : run.state === "waiting-approval" ? "text-lamp-ink" : "text-ink"}`}>
+          <span aria-hidden="true" className={`h-2 w-2 rounded-full ${live ? "animate-pulse bg-ink" : run.state === "completed" ? "bg-ink" : run.state === "blocked" || run.state === "failed" ? "bg-danger" : run.state === "waiting-approval" ? "bg-lamp" : "bg-rule-strong"}`} />
           {label[run.state]}
         </span>
         <span className="min-w-0 flex-1 truncate text-[0.9375rem]">{run.goal}</span>
-        <span className="font-mono text-[0.75rem] text-muted">{run.id.slice(-8)}</span>
+        <span className="tabular-nums text-[0.75rem] text-muted">{run.id.slice(-8)}</span>
         {live ? <Btn size="sm" tone="danger" onClick={() => act((w, at, me) => A.cancelRun(w, run.id, at, me), "Run canceled.")}>Cancel run</Btn> : null}
         {run.state === "blocked" ? <Btn size="sm" onClick={() => act((w, at, me) => A.cancelRun(w, run.id, at, me), "Run canceled.")}>Dismiss</Btn> : null}
         <Btn size="sm" tone="quiet" aria-expanded={open} onClick={() => setOpen((o) => !o)}>{open ? "Hide details" : "Details"}</Btn>
@@ -191,7 +191,7 @@ function RunCard({ run }: { run: ScoutRun }) {
             <ol className="mt-2 space-y-2.5">
               {run.tasks.map((t) => (
                 <li key={t.id} className="flex gap-2.5 text-[0.875rem]">
-                  <span aria-hidden="true" className={`mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full border ${t.status === "done" ? "border-signal bg-signal text-petrol" : "border-rule-strong"}`}>
+                  <span aria-hidden="true" className={`mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full border ${t.status === "done" ? "border-ink bg-ink text-graphite" : "border-rule-strong"}`}>
                     {t.status === "done" ? <Icon name="check" className="h-3 w-3" /> : null}
                   </span>
                   <span>
@@ -202,7 +202,7 @@ function RunCard({ run }: { run: ScoutRun }) {
               ))}
             </ol>
             <h3 className="mt-5 text-[0.8125rem] font-medium text-muted">State history</h3>
-            <ol className="mt-1.5 space-y-0.5 font-mono text-[0.75rem] text-muted">
+            <ol className="mt-1.5 space-y-0.5 tabular-nums text-[0.75rem] text-muted">
               {run.history.map((h, i) => <li key={i}>{fmtTime(h.at)} · {h.state}{h.note ? ` · ${h.note}` : ""}</li>)}
             </ol>
           </div>
@@ -211,7 +211,7 @@ function RunCard({ run }: { run: ScoutRun }) {
             <ul className="mt-2 divide-y divide-rule rounded-[var(--radius-md)] border border-rule">
               {found.map((a) => (
                 <li key={a!.id}>
-                  <Link href={`/app/opportunities?id=${a!.id}`} className="flex items-center justify-between gap-3 px-3 py-2 text-[0.875rem] hover:bg-mineral">
+                  <Link href={`/app/opportunities?id=${a!.id}`} className="flex items-center justify-between gap-3 px-3 py-2 text-[0.875rem] hover:bg-stone">
                     <span className="truncate">{a!.name}</span>
                     <TierMark q={qualOf(ws, a!.id)} />
                   </Link>
@@ -246,7 +246,7 @@ function DraftCard({ draft }: { draft: Draft }) {
   };
 
   return (
-    <motion.article layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: 24, transition: { duration: 0.18 } }} className="rounded-[var(--radius-lg)] border border-rule bg-surface">
+    <motion.article layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: 24, transition: { duration: 0.18 } }} className="rounded-[var(--radius-md)] border border-rule bg-surface">
       <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-rule px-4 py-3">
         <p className="text-[0.9375rem]"><span className="font-medium">{contact.name}</span> <span className="text-muted">· {contact.role} · {acc.name}</span></p>
         <TierMark q={q} />
@@ -260,7 +260,7 @@ function DraftCard({ draft }: { draft: Draft }) {
           {problems.length ? (
             <ul className="mt-2 space-y-0.5 text-[0.8125rem] text-danger" aria-live="polite">{problems.map((p) => <li key={p}>{p}</li>)}</ul>
           ) : (
-            <p className="mt-2 text-[0.8125rem] text-signal-ink">Passes sender, address, opt-out and honesty checks.</p>
+            <p className="mt-2 text-[0.8125rem] text-ink">Passes sender, address, opt-out and honesty checks.</p>
           )}
           {err ? <div className="mt-2"><Notice tone="danger">{err}</Notice></div> : null}
           <div className="mt-3 flex flex-wrap gap-2">
@@ -278,7 +278,7 @@ function DraftCard({ draft }: { draft: Draft }) {
             {evidence.map((e) => <li key={e.id}>{e.claim}<span className="block text-[0.75rem] text-muted">{e.source.label} · {fmtTime(e.source.retrievedAt)}</span></li>)}
           </ul>
           {withheld ? <div className="mt-3"><Notice tone="attention">A note in the import looked like instructions, so it was withheld and not used. Check the source.</Notice></div> : null}
-          <Link href={`/app/opportunities?id=${acc.id}`} className="mt-3 inline-block text-signal-ink underline underline-offset-2">Full qualification</Link>
+          <Link href={`/app/opportunities?id=${acc.id}`} className="mt-3 inline-block text-ink underline underline-offset-2">Full qualification</Link>
         </aside>
       </div>
     </motion.article>

@@ -25,7 +25,7 @@ export default function CustomersPage() {
               const last = timeline(ws, a.id).at(-1);
               return (
                 <li key={a.id}>
-                  <Link href={`/app/customers/${a.id}`} className="grid gap-1 px-4 py-3 hover:bg-mineral md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1.2fr)] md:items-center md:gap-4">
+                  <Link href={`/app/customers/${a.id}`} className="grid gap-1 px-4 py-3 hover:bg-stone md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1.2fr)] md:items-center md:gap-4">
                     <span><span className="text-[0.9375rem] font-medium">{a.name}</span><span className="block text-[0.8125rem] text-muted">{a.status === "customer" ? "Customer" : "Prospect"} · {a.category || "No category"}</span></span>
                     <span>{o ? <StageMark stage={o.stage} /> : <span className="text-[0.8125rem] text-muted">Not in pipeline</span>}</span>
                     <span className="truncate text-[0.8125rem] text-muted">{last ? `${last.summary} · ${ago(last.at)}` : "No activity"}</span>

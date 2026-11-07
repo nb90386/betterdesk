@@ -1,64 +1,138 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { PageIntro } from "@/components/PageIntro";
-import { CloseCta } from "@/components/CloseCta";
-import { ButtonLink } from "@/components/Button";
+import { ButtonLink, SampleNote, TextLink } from "@/components/site/primitives";
+import { createSampleWorkspace } from "@/lib/demo/seed";
+import { REPORTED_CHANNEL_LABEL } from "@/lib/domain/types";
+import { timeline } from "@/lib/workspace/selectors";
+import { LENSES } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Product",
-  description: "Inside BetterDesk: Today, Scout, opportunities with evidence, one customer record and timeline, an inbox for inquiries, a pipeline built around walkthroughs and proposals.",
+  title: "How Presence, Scout and Desk connect",
+  description: "One customer journey and one record: from finding a business or being found, to a booked walkthrough and a signed cleaning contract.",
   alternates: { canonical: "/product" },
 };
 
-const VIEWS = [
-  { id: "today", title: "Today", body: "Opens on what needs you, in order: drafts to approve, people waiting for a reply, proposals gone quiet, anything blocked. Then upcoming walkthroughs and the pipeline. No wall of charts.", img: "/product/today.webp", w: 960, h: 600, alt: "BetterDesk Today screen listing items that need attention, upcoming walkthroughs and pipeline counts" },
-  { id: "opportunities", title: "Opportunities, with the reasons", body: "Every business you're working, wherever it came from. Select one and the inspector shows each qualification rule, the evidence behind it, its source and date, and what's still unknown.", img: "/product/opportunities.webp", w: 700, h: 860, alt: "Opportunities list with the qualification inspector open for Juniper Lane Law" },
-  { id: "record", title: "One record per building", body: "Contacts, conversations, the walkthrough, the proposal and the outcome all live on the same record, with a timeline of every step and who took it.", img: "/product/record.webp", w: 1000, h: 760, alt: "Customer record for Juniper Lane Law with a timeline of import, qualification, approval, reply and booking" },
-  { id: "pipeline", title: "A pipeline built around walkthroughs", body: "Stages that match how commercial cleaning is sold: qualified, outreach prepared, contacted, in conversation, walkthrough scheduled, proposal, won or lost. Move a card from its stage menu; every change is recorded.", img: "/product/pipeline.webp", w: 1180, h: 620, alt: "Pipeline board with opportunities in each stage" },
-];
+const JOURNEY = [
+  ["Discover", "Scout", "Checks the businesses on your list against what you want, with the evidence and its date."],
+  ["Be discovered", "Presence", "Makes sure Google, maps and AI search can read your site and understand what you do and where."],
+  ["Qualify", "Scout", "Scores fit from facts you can see. Unknowns stay unknown; nobody guesses a building’s size."],
+  ["Respond", "Desk", "Inquiries and replies arrive in one inbox with the account’s history beside them."],
+  ["Book", "Desk", "Walkthrough times come from your calendar; the booking lands on the record."],
+  ["Win", "Desk", "Proposals and outcomes move the account through stages you can see at a glance."],
+  ["Retain", "Desk", "Customers keep their record, so check-ins and renewals start with everything you know."],
+] as const;
 
-export default function ProductPage() {
+const MODEL = [
+  ["Your company", "Service area, services, who you want, who approves outreach, sending rules."],
+  ["Account", "One business, with where it came from: your list, your website, a referral."],
+  ["Contacts and evidence", "People to talk to, and every fact Scout used, with its source and date."],
+  ["Opportunity", "The stage, the owner and the next step."],
+  ["Conversation and walkthrough", "Messages, intent, booked times."],
+  ["Timeline", "Every change, by whom (you, Scout, a simulation), in order. Nothing is rewritten."],
+  ["Tasks", "Work that came from somewhere specific, like a Presence finding, with an owner."],
+] as const;
+
+export default function Product() {
+  const ws = createSampleWorkspace(Date.parse("2026-11-03T15:00:00.000Z"));
+  const examples = ["acc_ridgeview", "acc_larkspur", "acc_alder"].map((id) => {
+    const a = ws.accounts.find((x) => x.id === id)!;
+    const o = ws.opportunities.find((x) => x.accountId === id)!;
+    return { a, o, events: timeline(ws, id).length };
+  });
+
   return (
     <>
-      <PageIntro title="Everything about a contract, in one place." aside={<ButtonLink href="/app" variant="signal">Open the sample workspace</ButtonLink>}>
-        <p>Find businesses, qualify them with evidence, introduce yourself, answer inquiries, book the walkthrough and track the proposal, without copying anything between tools.</p>
-      </PageIntro>
-      {VIEWS.map((v, i) => (
-        <section key={v.id} aria-labelledby={`${v.id}-h`} className={`${i % 2 ? "bg-mineral-2" : "bg-mineral"} py-20 md:py-28`}>
-          <div className="wrap grid gap-10 lg:grid-cols-12 lg:items-center">
-            <div className={`lg:col-span-4 ${i % 2 ? "lg:order-2 lg:col-start-9" : ""}`}>
-              <h2 id={`${v.id}-h`} className="t-title max-w-[16ch]">{v.title}</h2>
-              <p className="mt-4 max-w-[42ch] text-[1.0625rem] leading-relaxed text-ink-2">{v.body}</p>
-            </div>
-            <figure className={`lg:col-span-8 ${i % 2 ? "lg:order-1" : ""}`}>
-              <div className="overflow-hidden rounded-[var(--radius-lg)] border border-rule bg-mineral shadow-[var(--shadow-object)]">
-                <Image src={v.img} alt={v.alt} width={v.w} height={v.h} sizes="(min-width: 1024px) 60vw, 100vw" className={`h-auto w-full ${v.w < 800 ? "mx-auto max-w-[44rem]" : ""}`} />
-              </div>
-              <figcaption className="mt-3 text-[0.8125rem] text-muted">Detail from the sample workspace, captured from the running app. Fictional company and contacts. <a href="/app" className="underline underline-offset-2">Open it yourself</a>.</figcaption>
-            </figure>
-          </div>
-        </section>
-      ))}
-      <section aria-labelledby="status-h" className="border-t border-rule bg-mineral py-20 md:py-24">
-        <div className="wrap">
-          <h2 id="status-h" className="t-title">What works today, and what doesn&rsquo;t yet.</h2>
-          <table className="mt-8 w-full border-collapse text-left text-[0.9375rem]">
-            <thead><tr className="border-b border-ink"><th scope="col" className="py-3 pr-4 font-medium">Capability</th><th scope="col" className="py-3 pr-4 font-medium">Status</th><th scope="col" className="hidden py-3 font-medium md:table-cell">Notes</th></tr></thead>
+      <section className="wrap pb-16 pt-32 md:pt-40">
+        <h1 className="t-display max-w-[19ch]">Three ways to win work. One record for each customer.</h1>
+        <p className="t-lede mt-6 max-w-[60ch]">
+          Presence, Scout and Desk aren’t three subscriptions. They’re three views of the same account, so a business you found, a business that found you and a referral all end up in one place, with their source kept.
+        </p>
+        <ul className="mt-12 grid border-t border-rule-strong md:grid-cols-3">
+          {LENSES.map((l, i) => (
+            <li key={l.href} className={`py-6 md:px-6 ${i === 0 ? "md:pl-0" : "border-t border-rule md:border-l md:border-t-0"}`}>
+              <a href={l.href} className="group block">
+                <span className="text-[1.375rem] font-[600] tracking-[-0.02em] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{l.name}</span>
+                <span className="mt-1 block text-ink-2">{l.line}</span>
+                <span className="mt-3 block text-[0.8125rem] text-muted">{l.status}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="on-graphite bg-graphite-2">
+        <div className="wrap py-20 md:py-28">
+          <h2 className="t-title max-w-[20ch]">The journey, floor by floor.</h2>
+          <ol className="mt-12">
+            {JOURNEY.map(([step, lens, what], i) => (
+              <li key={step} className="grid gap-2 border-t border-rule py-5 md:grid-cols-12 md:items-baseline md:gap-6" data-reveal="stagger">
+                <span className="tabular-nums text-muted md:col-span-1">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-[1.375rem] font-[600] tracking-[-0.018em] md:col-span-3">{step}</span>
+                <span className="text-[0.875rem] text-muted md:col-span-2">{lens}</span>
+                <span className="text-ink-2 md:col-span-6">{what}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="wrap py-20 md:py-28">
+        <div className="grid gap-8 lg:grid-cols-12">
+          <h2 className="t-title max-w-[16ch] lg:col-span-5">Different doors, same record.</h2>
+          <p className="text-ink-2 lg:col-span-7">
+            Three accounts from the sample workspace. Each came in a different way, and each carries that source on its record. “How they found you” is only ever what the customer told you; BetterDesk doesn’t guess.
+          </p>
+        </div>
+        <div className="mt-10 overflow-x-auto">
+          <table className="w-full min-w-[46rem] border-collapse text-left">
+            <thead>
+              <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">
+                <th scope="col" className="py-3 pr-6 font-[560]">Account</th>
+                <th scope="col" className="py-3 pr-6 font-[560]">Came in through</th>
+                <th scope="col" className="py-3 pr-6 font-[560]">They said they found you by</th>
+                <th scope="col" className="py-3 pr-6 font-[560]">Stage</th>
+                <th scope="col" className="py-3 text-right font-[560]">Timeline entries</th>
+              </tr>
+            </thead>
             <tbody>
-              {[
-                ["Prospect list import, de-duplication, qualification with evidence", "Works in the sample workspace", "Runs in your browser on fictional data."],
-                ["Introduction drafting and approval", "Works in the sample workspace", "Template-based; only states facts from your records."],
-                ["Inbox, customer records, timeline, pipeline", "Works in the sample workspace", "Replies and delivery are simulated and labelled."],
-                ["Sending from your own mailbox", "Not available yet", "Needs Google or Microsoft connection and sender details."],
-                ["Calendar connection", "Not available yet", "Walkthroughs book onto a sample calendar for now."],
-                ["Team accounts and saved data", "Not available yet", "Database with per-company isolation is designed, not connected."],
-                ["Text messages and calls", "Off by design", "Only with documented written consent and a legal review."],
-              ].map(([a, b, c]) => <tr key={a} className="border-b border-rule align-top"><th scope="row" className="py-3.5 pr-4 font-normal">{a}</th><td className={`py-3.5 pr-4 font-medium ${b.startsWith("Works") ? "text-signal-ink" : "text-attention"}`}>{b}</td><td className="hidden py-3.5 text-muted md:table-cell">{c}</td></tr>)}
+              {examples.map(({ a, o, events }) => (
+                <tr key={a.id} className="border-b border-rule">
+                  <th scope="row" className="py-4 pr-6 font-[600]">{a.name}</th>
+                  <td className="py-4 pr-6 text-ink-2">{a.source.label}</td>
+                  <td className="py-4 pr-6 text-ink-2">{REPORTED_CHANNEL_LABEL[a.source.reportedChannel ?? "not-asked"]}</td>
+                  <td className="py-4 pr-6 text-ink-2">{o.stage.replace(/-/g, " ")}</td>
+                  <td className="py-4 text-right tabular-nums text-ink-2">{events}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
+        <SampleNote className="mt-4" />
       </section>
-      <CloseCta />
+
+      <section className="border-t border-rule bg-surface">
+        <div className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 className="t-title max-w-[14ch]">What a record holds.</h2>
+            <p className="mt-5 text-ink-2">The model behind every screen. A real backend would keep each company’s records separate and enforce it in the database.</p>
+          </div>
+          <dl className="lg:col-span-8">
+            {MODEL.map(([k, v]) => (
+              <div key={k} className="grid gap-1 border-b border-rule py-4 sm:grid-cols-[14rem_1fr] sm:gap-6">
+                <dt className="font-[600]">{k}</dt>
+                <dd className="text-ink-2">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <section className="wrap flex flex-col gap-6 py-20 md:flex-row md:items-end md:justify-between md:py-24">
+        <h2 className="t-title max-w-[18ch]">See it on a sample company.</h2>
+        <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
+          <ButtonLink href="/demo">Explore the product</ButtonLink>
+          <TextLink href="/how-it-works">Setup and support</TextLink>
+        </div>
+      </section>
     </>
   );
 }

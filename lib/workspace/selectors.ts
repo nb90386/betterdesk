@@ -23,6 +23,8 @@ export function attention(ws: Workspace, now = Date.now()): Attention[] {
   if (drafts.length) out.push({ id: "drafts", kind: "draft", title: `${drafts.length} introduction${drafts.length > 1 ? "s" : ""} waiting for your approval`, detail: drafts.slice(0, 3).map((d) => accountOfOpp(ws, d.opportunityId)?.name).join(", "), href: "/app/scout#drafts", tone: "action" });
   for (const c of ws.conversations.filter((c) => c.messages.at(-1)?.direction === "inbound")) {
     const m = c.messages.at(-1)!;
+    // A walkthrough booked after their last message means the reply was handled.
+    if (ws.events.some((e) => e.type === "appointment.booked" && e.accountId === c.accountId && e.at >= m.at)) continue;
     out.push({ id: c.id, kind: "reply", title: `${m.from} at ${account(ws, c.accountId)?.name} is waiting for a reply`, detail: m.intent === "pricing" ? "Asked about price." : m.intent === "walkthrough" ? "Asked for a walkthrough." : m.body.slice(0, 90), href: `/app/inbox?c=${c.id}`, tone: "action" });
   }
   for (const o of ws.opportunities.filter((o) => o.stage === "proposal" && now - Date.parse(o.updatedAt) > 4 * 86_400_000))

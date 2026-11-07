@@ -34,13 +34,13 @@ export default function Today() {
         {/* Primary: what needs attention */}
         <Panel title="Needs you">
           {items.length === 0 ? (
-            <Empty title="You're caught up" body="New replies, drafts to approve and stalled proposals will show up here." action={<Link href="/app/scout" className="text-[0.875rem] font-medium text-signal-ink underline underline-offset-4">Give Scout a goal</Link>} />
+            <Empty title="You're caught up" body="New replies, drafts to approve and stalled proposals will show up here." action={<Link href="/app/scout" className="text-[0.875rem] font-medium text-ink underline underline-offset-4">Give Scout a goal</Link>} />
           ) : (
             <ul className="divide-y divide-rule">
               {items.map((it) => (
                 <li key={it.id}>
-                  <Link href={it.href} className="group flex items-start gap-3 px-4 py-3.5 hover:bg-mineral">
-                    <span aria-hidden="true" className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${it.tone === "danger" ? "bg-danger" : it.tone === "attention" ? "bg-attention" : "bg-signal"}`} />
+                  <Link href={it.href} className="group flex items-start gap-3 px-4 py-3.5 hover:bg-stone">
+                    <span aria-hidden="true" className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${it.tone === "danger" ? "bg-danger" : it.tone === "attention" ? "bg-lamp" : "bg-ink"}`} />
                     <span className="min-w-0 flex-1">
                       <span className="block text-[0.9375rem] font-medium">{it.title}</span>
                       <span className="mt-0.5 block truncate text-[0.875rem] text-muted">{it.detail}</span>
@@ -55,6 +55,18 @@ export default function Today() {
 
         <div className="space-y-6">
           {/* Secondary: upcoming */}
+          <Panel title="Your website" action={<Link href="/app/presence" className="text-[0.8125rem] text-muted hover:text-ink">Presence</Link>}>
+            {ws.presenceAudits.length === 0 ? (
+              <p className="text-[0.875rem] leading-relaxed text-ink-2">No audit yet. Run the sample audit to see which fixes would help customers find you.</p>
+            ) : (
+              <>
+                <p className="text-[0.9375rem] font-[560]">{ws.presenceAudits.at(-1)!.domain}</p>
+                <p className="mt-0.5 text-[0.8125rem] text-muted">
+                  {ws.presenceAudits.at(-1)!.findings.length} findings · {ws.tasks.filter((t) => t.status === "open").length} open tasks · {ws.tasks.filter((t) => t.status === "done").length} done
+                </p>
+              </>
+            )}
+          </Panel>
           <Panel title="Upcoming walkthroughs" action={<Link href="/app/calendar" className="text-[0.8125rem] text-muted hover:text-ink">Calendar</Link>}>
             {upcoming.length === 0 ? (
               <Empty title="None booked" body="Walkthroughs you book from a conversation appear here." />
@@ -102,8 +114,8 @@ export default function Today() {
             <li key={s} className="bg-surface px-4 py-3.5">
               <p className="text-[0.75rem] text-muted">{STAGE_LABEL[s]}</p>
               <p className="mt-1 font-display text-[1.6rem] font-semibold leading-none tabular-nums">{counts[s]}</p>
-              <span aria-hidden="true" className="mt-2.5 block h-1 rounded-full bg-mineral-2">
-                <span className="block h-1 rounded-full bg-signal" style={{ width: `${(counts[s] / max) * 100}%` }} />
+              <span aria-hidden="true" className="mt-2.5 block h-1 rounded-full bg-stone-2">
+                <span className="block h-1 rounded-full bg-ink" style={{ width: `${(counts[s] / max) * 100}%` }} />
               </span>
             </li>
           ))}

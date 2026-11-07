@@ -271,3 +271,10 @@ test("inquiry provenance is only what the person reported", () => {
   const notAsked = A.receiveInquiry(ws, { business: "Southgate Clinic", name: "B", email: "b@southgate.example", zip: "80210", message: "Hello", reportedChannel: "bogus" as never }, at);
   assert.equal(notAsked.accounts.find((a) => a.name === "Southgate Clinic")!.source.reportedChannel, "not-asked");
 });
+
+test("a booked walkthrough clears the 'waiting for a reply' item for that account", () => {
+  const ws = createSampleWorkspace(NOW);
+  assert.ok(attention(ws).some((a) => a.kind === "reply" && a.title.includes("Alder")));
+  const booked = A.bookSampleSlot(ws, "opp_alder", ws.sampleSlots[0].start, at, dana);
+  assert.ok(!attention(booked).some((a) => a.kind === "reply" && a.title.includes("Alder")));
+});

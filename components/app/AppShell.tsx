@@ -9,6 +9,7 @@ import { Icon } from "./icons";
 
 const NAV = [
   { href: "/app", label: "Today", icon: "today" },
+  { href: "/app/presence", label: "Presence", icon: "presence" },
   { href: "/app/scout", label: "Scout", icon: "scout" },
   { href: "/app/opportunities", label: "Opportunities", icon: "opportunities" },
   { href: "/app/inbox", label: "Inbox", icon: "inbox" },
@@ -24,7 +25,8 @@ function useCounts() {
   if (!ready) return {} as Record<string, number>;
   const drafts = ws.drafts.filter((d) => d.approval === "pending").length;
   const inbox = ws.conversations.filter((c) => c.messages.at(-1)?.direction === "inbound").length;
-  return { "/app/scout": drafts, "/app/inbox": inbox } as Record<string, number>;
+  const tasks = ws.tasks.filter((t) => t.status === "open").length;
+  return { "/app/scout": drafts, "/app/inbox": inbox, "/app/presence": tasks } as Record<string, number>;
 }
 
 function Nav({ onNavigate }: { onNavigate?: () => void }) {
@@ -41,11 +43,11 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
               href={n.href}
               onClick={onNavigate}
               aria-current={active ? "page" : undefined}
-              className="group flex min-h-9 items-center gap-2.5 rounded-[var(--radius-sm)] px-2.5 text-[0.875rem] text-ink-2 hover:bg-mineral-2 hover:text-ink aria-[current=page]:bg-surface aria-[current=page]:font-medium aria-[current=page]:text-ink aria-[current=page]:shadow-[var(--shadow-rest)]"
+              className="group flex min-h-9 items-center gap-2.5 rounded-[var(--radius-sm)] px-2.5 text-[0.875rem] text-ink-2 hover:bg-stone-2 hover:text-ink aria-[current=page]:bg-surface aria-[current=page]:font-medium aria-[current=page]:text-ink aria-[current=page]:shadow-[var(--shadow-paper)]"
             >
-              <Icon name={n.icon} className="h-[18px] w-[18px] text-muted group-aria-[current=page]:text-signal-ink" />
+              <Icon name={n.icon} className="h-[18px] w-[18px] text-muted group-aria-[current=page]:text-ink" />
               {n.label}
-              {c ? <span className="ml-auto font-mono text-[0.75rem] text-signal-ink" aria-label={`${c} waiting`}>{c}</span> : null}
+              {c ? <span className="ml-auto text-[0.75rem] font-[600] tabular-nums text-ink" aria-label={`${c} waiting`}>{c}</span> : null}
             </Link>
           </li>
         );
@@ -58,22 +60,22 @@ function DemoBar() {
   const { reset } = useWorkspace();
   const [confirm, setConfirm] = useState(false);
   return (
-    <div className="tone-dark flex flex-wrap items-center gap-x-4 gap-y-1 bg-petrol px-4 py-2 text-[0.8125rem] text-petrol-muted">
-      <span className="font-medium text-petrol-ink">Sample workspace · DEMO</span>
+    <div className="on-graphite flex flex-wrap items-center gap-x-4 gap-y-1 bg-graphite px-4 py-2 text-[0.8125rem] text-graphite-muted">
+      <span className="font-medium text-graphite-ink">Sample workspace · DEMO</span>
       <span className="hidden sm:inline">Fictional company and contacts. Nothing is sent. Changes stay in this browser.</span>
       <span className="ml-auto flex items-center gap-3">
         {confirm ? (
           <>
-            <span className="text-petrol-ink">Reset all sample data?</span>
-            <button className="underline underline-offset-2 hover:text-petrol-ink" onClick={() => { reset(); setConfirm(false); }}>Reset</button>
-            <button className="underline underline-offset-2 hover:text-petrol-ink" onClick={() => setConfirm(false)}>Keep</button>
+            <span className="text-graphite-ink">Reset all sample data?</span>
+            <button className="underline underline-offset-2 hover:text-graphite-ink" onClick={() => { reset(); setConfirm(false); }}>Reset</button>
+            <button className="underline underline-offset-2 hover:text-graphite-ink" onClick={() => setConfirm(false)}>Keep</button>
           </>
         ) : (
-          <button className="inline-flex items-center gap-1 underline-offset-2 hover:text-petrol-ink hover:underline" onClick={() => setConfirm(true)}>
+          <button className="inline-flex items-center gap-1 underline-offset-2 hover:text-graphite-ink hover:underline" onClick={() => setConfirm(true)}>
             <Icon name="reset" className="h-3.5 w-3.5" /> Reset sample
           </button>
         )}
-        <Link href="/" className="hover:text-petrol-ink hover:underline">Back to site</Link>
+        <Link href="/" className="hover:text-graphite-ink hover:underline">Back to site</Link>
       </span>
     </div>
   );
@@ -83,7 +85,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   const { ready, ws } = useWorkspace();
   const [open, setOpen] = useState(false);
   return (
-    <div className="flex min-h-dvh flex-col bg-mineral">
+    <div className="flex min-h-dvh flex-col bg-stone">
       <DemoBar />
       <div className="flex flex-1">
         <aside className="hidden w-60 shrink-0 border-r border-rule px-3 py-4 lg:block">
@@ -106,12 +108,12 @@ function Shell({ children }: { children: React.ReactNode }) {
             </button>
           </div>
           {open ? (
-            <nav id="app-menu" aria-label="App" className="border-b border-rule bg-mineral px-3 py-3 lg:hidden">
+            <nav id="app-menu" aria-label="App" className="border-b border-rule bg-stone px-3 py-3 lg:hidden">
               <Nav onNavigate={() => setOpen(false)} />
             </nav>
           ) : null}
           <main id="main" className="mx-auto w-full max-w-[84rem] px-4 py-6 md:px-8 md:py-8">
-            {ready ? children : <div className="h-64 animate-pulse rounded-[var(--radius-lg)] bg-mineral-2" aria-label="Loading workspace" />}
+            {ready ? children : <div className="h-64 animate-pulse rounded-[var(--radius-md)] bg-stone-2" aria-label="Loading workspace" />}
           </main>
         </div>
       </div>

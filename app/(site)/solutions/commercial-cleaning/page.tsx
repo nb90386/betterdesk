@@ -1,137 +1,94 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
-import { Faq } from "@/components/Faq";
-import { CloseCta } from "@/components/CloseCta";
-import { ButtonLink, Arrow } from "@/components/Button";
+import { ButtonLink, TextLink } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
   title: "For commercial cleaning companies",
-  description: "BetterDesk is a sales and inquiry system for owner-led commercial cleaning companies: one record per building, from first note to signed contract.",
+  description: "BetterDesk is built for owner-led commercial cleaning contractors winning recurring office, medical, property-management and coworking accounts.",
   alternates: { canonical: "/solutions/commercial-cleaning" },
 };
 
-const SCATTER: [string, string][] = [
-  ["A spreadsheet of targets", "Buildings you meant to call, last touched whenever."],
-  ["Research in your notes", "Who manages it, how big it is, what the lobby looked like."],
-  ["Emails in Gmail", "The introduction, the reply, the second reply you never answered."],
-  ["Walkthroughs in a calendar", "A time and an address, with no memory of why you are going."],
-  ["Proposals in Drive", "Version four of the quote, named something close to final."],
-  ["Follow-ups in your head", "The one that matters most, and the one you will forget."],
-];
+const BUYERS = [
+  ["Property managers", "Several buildings, one decision-maker, tenant complaints they want to stop hearing.", "Scout keeps buildings and managers together, so one relationship can become several contracts."],
+  ["Offices", "An office manager juggling a cleaner who keeps missing things, often with a lease renewal coming up.", "A walkthrough-first reply that answers price questions honestly instead of guessing."],
+  ["Medical and dental practices", "Exam rooms, sharps, schedules around patient hours. Trust matters more than price.", "Fit criteria for medical work, and a Presence check that your medical-cleaning page actually says what you do."],
+  ["Coworking and flexible space", "Long hours, shared kitchens, members who notice everything.", "Desk keeps day-porter and nightly requests on one account so nothing is promised twice."],
+  ["Light industrial and warehouses", "Large floors, different rules, sometimes outside your area.", "Scout marks size and area honestly, so you skip the ones that don’t fit instead of chasing them."],
+] as const;
 
-const RULES: [string, number, string][] = [
-  ["Inside your service area", 30, "ZIP code against the area you set."],
-  ["A facility type you serve", 25, "Office, medical, property management, retail."],
-  ["Facility around your minimum size", 20, "Only when a source states the size."],
-  ["A business contact to address", 15, "A work email, not a personal one."],
-  ["Not already a customer", 10, "Checked against your customer records."],
-];
+const FIRST_MONTH = [
+  ["Week 1", "We review your website and inquiry path, set your service area, the buildings you want and who approves introductions."],
+  ["Week 2", "Your first list goes through Scout. You see who fits, who needs research and who to leave alone, with reasons."],
+  ["Week 3", "Website fixes are tasks with owners. Inquiries and replies start landing in one inbox."],
+  ["Week 4", "A working pipeline: who you’re talking to, which walkthroughs are booked, which proposals need a follow-up."],
+] as const;
 
-const NOT: [string, string][] = [
-  ["Crew scheduling", "Who cleans which building tonight."],
-  ["Payroll and time clocks", "Hours, wages and pay runs."],
-  ["Invoicing", "Billing the customers you already won."],
-  ["Inspections and quality scoring", "Walk-throughs of finished work."],
-];
-
-const FAQ = [
-  { q: "Is this a CRM?", a: "It keeps records, a pipeline and a timeline, but it is narrower than a general CRM. It is built around finding commercial buildings, qualifying them and getting to a walkthrough." },
-  { q: "Will it replace my operations software?", a: "No. Keep your operations software, such as Swept or Janitorial Manager. BetterDesk covers the part before the contract is signed." },
-  { q: "Can I try it with my own buildings?", a: "Not yet. Accounts and storage are not built. You can try the sample workspace, which uses a fictional Denver company and keeps its data in your browser." },
-  { q: "What if my list has personal emails or buildings outside my area?", a: "Scout marks them. A personal email is not drafted to, and a ZIP outside your service area scores lower. You see the reason on each record." },
-  { q: "Do I have to let it send email?", a: "Sending is off. When it is available, it would send from your own mailbox, and only after you approve each message." },
-];
-
-export default function CommercialCleaningPage() {
+export default function CommercialCleaning() {
   return (
     <>
-      <PageIntro title="Built for the owner who is also the salesperson.">
-        <p>BetterDesk is for owner-led commercial cleaning companies with 5 to 50 staff and recurring contracts: offices, medical suites, property managers, retail. It handles the selling, not the cleaning.</p>
-      </PageIntro>
-
-      <section aria-labelledby="scatter-title" className="bg-mineral py-24 md:py-32">
-        <div className="wrap grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h2 id="scatter-title" className="t-title max-w-[14ch]">Your sales are in six places.</h2>
-            <p className="mt-5 max-w-[42ch] text-[1.0625rem] leading-relaxed text-ink-2">
-              BetterDesk keeps one record per building. The research, the emails, the walkthrough time and the next step sit on that record, so you open one thing instead of six.
-            </p>
-          </div>
-          <dl className="divide-y divide-rule border-y border-rule lg:col-span-7">
-            {SCATTER.map(([k, v]) => (
-              <div key={k} className="grid gap-1 py-4 sm:grid-cols-[15rem_1fr] sm:gap-6">
-                <dt className="text-[1.0625rem] font-semibold">{k}</dt>
-                <dd className="text-[1rem] text-ink-2">{v}</dd>
-              </div>
-            ))}
-          </dl>
+      <section className="wrap pb-16 pt-32 md:pt-40">
+        <h1 className="t-display max-w-[19ch]">Built for cleaning companies that win in the walkthrough.</h1>
+        <p className="t-lede mt-6 max-w-[60ch]">
+          You probably don’t need more software. You need fewer good opportunities to slip: the building you meant to call, the form nobody answered, the proposal nobody followed up. BetterDesk is built for owner-led commercial cleaning contractors chasing recurring accounts.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
+          <ButtonLink href="/demo">Explore the product</ButtonLink>
+          <TextLink href="/contact">Request a review</TextLink>
         </div>
       </section>
 
-      <section aria-labelledby="rules-title" data-tone="dark" className="tone-dark bg-petrol py-24 md:py-32">
-        <div className="wrap grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h2 id="rules-title" className="t-title max-w-[14ch]">An example set of rules you can read.</h2>
-            <p className="mt-5 max-w-[42ch] text-[1.0625rem] leading-relaxed text-petrol-muted">
-              Scout scores a building with rules like these, set to your area and your customers. Every score comes with the reasons. When a fact is missing, the rule is marked unknown and left out of the score. Unknown is never guessed.
-            </p>
-            <ButtonLink href="/scout" variant="quiet" className="mt-6 gap-1.5 text-petrol-ink">How Scout works <Arrow className="h-3.5 w-3.5" /></ButtonLink>
-          </div>
-          <div className="lg:col-span-7">
-            <div className="panel-petrol p-5 sm:p-7">
-              <table className="w-full text-left text-[1rem]">
-                <caption className="sr-only">Example qualification rules and weights</caption>
-                <thead>
-                  <tr className="border-b border-petrol-rule text-[0.8125rem] text-petrol-muted">
-                    <th scope="col" className="pb-3 pr-4 font-medium">Rule</th>
-                    <th scope="col" className="pb-3 pr-4 text-right font-medium">Weight</th>
+      <section className="border-y border-rule bg-surface">
+        <div className="wrap py-20 md:py-24">
+          <h2 className="t-title max-w-[20ch]">Who you sell to, and what helps.</h2>
+          <p className="mt-4 max-w-[62ch] text-ink-2">Not every business in these categories wants a new cleaner. The point is to find the ones that might, and be easy to reach when they’re looking.</p>
+          <div className="mt-10 overflow-x-auto">
+            <table className="w-full min-w-[48rem] border-collapse text-left">
+              <thead>
+                <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">
+                  <th scope="col" className="w-[20%] py-3 pr-6 font-[560]">Buyer</th>
+                  <th scope="col" className="py-3 pr-6 font-[560]">What they’re dealing with</th>
+                  <th scope="col" className="py-3 font-[560]">Where BetterDesk helps</th>
+                </tr>
+              </thead>
+              <tbody>
+                {BUYERS.map(([b, pain, help]) => (
+                  <tr key={b} className="border-b border-rule align-top">
+                    <th scope="row" className="py-5 pr-6 text-[1.0625rem] font-[600]">{b}</th>
+                    <td className="py-5 pr-6 text-ink-2">{pain}</td>
+                    <td className="py-5 text-ink-2">{help}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {RULES.map(([k, w, d]) => (
-                    <tr key={k} className="border-b border-petrol-rule last:border-0">
-                      <td className="py-4 pr-4">
-                        <span className="block font-semibold text-petrol-ink">{k}</span>
-                        <span className="block text-[0.9375rem] text-petrol-muted">{d}</span>
-                      </td>
-                      <td className="tabular py-4 text-right align-top text-[1.125rem] font-semibold text-signal-bright">{w}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <p className="mt-5 border-t border-petrol-rule pt-4 text-[0.875rem] text-petrol-muted">
-                Also checked: your suppression list, before any draft is made. Example weights, which you can change in the planned service.
-              </p>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
-      <section aria-labelledby="not-title" className="bg-mineral-2 py-24 md:py-32">
-        <div className="wrap grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h2 id="not-title" className="t-title max-w-[14ch]">What BetterDesk leaves alone.</h2>
-            <p className="mt-5 max-w-[42ch] text-[1.0625rem] leading-relaxed text-ink-2">Keep your operations software. It already does these jobs, and BetterDesk is not trying to replace it.</p>
+      <section className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <h2 className="t-title max-w-[12ch]">Your first month.</h2>
+          <p className="mt-5 text-ink-2">What changes, in the order it changes. No promise of a number of new contracts; we don’t know your market better than you do.</p>
+        </div>
+        <ol className="lg:col-span-8">
+          {FIRST_MONTH.map(([w, d]) => (
+            <li key={w} className="grid gap-1 border-b border-rule py-5 sm:grid-cols-[7rem_1fr] sm:gap-6">
+              <span className="font-[600]">{w}</span>
+              <span className="text-ink-2">{d}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="on-graphite bg-graphite-2">
+        <div className="wrap grid gap-8 py-20 md:py-24 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-8">
+            <h2 className="t-title max-w-[22ch]">Other B2B service companies?</h2>
+            <p className="mt-4 max-w-[60ch] text-ink-2">Facility services, pest control and other contractors with recurring business customers can use the same workflow. We built and tested the examples for cleaning first, so that’s what this site shows.</p>
           </div>
-          <ul className="grid gap-x-10 sm:grid-cols-2 lg:col-span-7">
-            {NOT.map(([k, v]) => (
-              <li key={k} className="border-t border-rule-strong py-5">
-                <h3 className="text-[1.0625rem] font-semibold">{k}</h3>
-                <p className="mt-1 text-[1rem] text-ink-2">{v}</p>
-              </li>
-            ))}
-          </ul>
+          <div className="lg:col-span-4 lg:text-right">
+            <TextLink href="/contact" className="text-ink">Tell us what you do</TextLink>
+          </div>
         </div>
       </section>
-
-      <section aria-labelledby="faq-title" className="bg-mineral py-24 md:py-32">
-        <div className="wrap grid gap-10 lg:grid-cols-12">
-          <h2 id="faq-title" className="t-title lg:col-span-4">Questions from cleaning owners.</h2>
-          <Faq items={FAQ} className="lg:col-span-8" />
-        </div>
-      </section>
-
-      <CloseCta />
     </>
   );
 }

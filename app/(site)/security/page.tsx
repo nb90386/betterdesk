@@ -1,132 +1,75 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
-import { CloseCta } from "@/components/CloseCta";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Security and data",
-  description: "What is true about BetterDesk data today in the browser-only sample workspace, and how the production service is designed. Nothing here is a certification.",
+  description: "What this site does with the information you give it, how the website audit protects other people's networks, and what isn't built yet.",
   alternates: { canonical: "/security" },
 };
 
-const TODAY = [
-  "The sample workspace runs entirely in your browser.",
-  "There is no account and no sign-in.",
-  "No data leaves your device. The sample data is stored in your browser's local storage, and Reset sample clears it.",
-  "Nothing is sent: no email, no text, no call. Delivery, replies and the calendar are simulated and labeled.",
-  "The site is served with standard security headers.",
-];
+const DATA = [
+  ["Review request form", "Your answers are checked on our server and sent to the BetterDesk request inbox when one is connected. The site itself doesn’t keep a copy. If the inbox isn’t connected, the form tells you and nothing is sent or stored."],
+  ["Website check", "The address and details you enter are used for that one check. We fetch public pages of that site, analyse them in memory and send you the result. Nothing is stored after the response."],
+  ["Sample workspace and demo", "Everything runs in your browser on fictional data and is saved only in your browser’s local storage. “Reset the sample” clears it."],
+  ["Analytics and cookies", "This site runs no analytics, advertising or tracking scripts and sets no cookies of its own."],
+] as const;
 
-type Row = [string, "DEMO" | "PLANNED" | "BLOCKED", string];
+const AUDIT = [
+  "Only http and https on the standard ports; addresses with usernames or passwords are refused.",
+  "Every hostname is resolved first and refused if any address is private, loopback, link-local (including cloud metadata), carrier-grade NAT, multicast or reserved, in IPv4 or IPv6, including mapped forms.",
+  "The connection is made to the address that was checked, so a DNS change mid-request can’t redirect it.",
+  "Redirects are followed by hand, at most three, and each hop is checked again.",
+  "At most 6 pages, 1.5 MB per response, 8 seconds per request and about 20 seconds in total, one request at a time with a pause between.",
+  "robots.txt is respected for our own crawler name, BetterDeskPresenceAudit.",
+  "Requests are rate-limited per connection. You must confirm you own the site or are allowed to audit it.",
+] as const;
 
-const TABLE: Row[] = [
-  ["Browser-only sample data", "DEMO", "Stored in local storage on your device. Nothing is uploaded."],
-  ["Approval before any draft counts", "DEMO", "A person approves, and a check blocks misleading subject lines."],
-  ["Suppression list checked at draft time", "DEMO", "A suppressed address is not drafted to."],
-  ["Imported text treated as data", "DEMO", "Instruction-like text in an imported list is withheld, not followed."],
-  ["CSV formula neutralization", "DEMO", "Cells that start like spreadsheet formulas are defused on import."],
-  ["Suppression checked again at approval and send", "PLANNED", "Three checks in total. A match blocks the action and records why."],
-  ["Postgres with row-level security per organization", "PLANNED", "Each company's rows are visible only to that company."],
-  ["Tenant taken from the session, not the request", "PLANNED", "A request cannot name another company's ID and get its data."],
-  ["Roles: owner, sales, viewer", "PLANNED", "Each role sees and changes only what it needs to."],
-  ["Append-only audit events", "PLANNED", "Approvals and settings changes are recorded and not editable."],
-  ["Scout per-tool permissions, no send tool", "PLANNED", "Scout can read and draft. It has no way to send."],
-  ["Opt-outs honored across campaigns", "PLANNED", "One unsubscribe applies everywhere in that workspace."],
-  ["CAN-SPAM elements required before sending can be enabled", "PLANNED", "Postal address, opt-out link and sender checks must pass first."],
-  ["Sending from your own mailbox", "BLOCKED", "Needs Google or Microsoft connection. Not built."],
-  ["Texts and calls disabled", "BLOCKED", "Stay off without documented written consent for each number."],
-  ["Data-provider storage limits", "BLOCKED", "No provider is connected. When one is, we store only what its license allows."],
-  ["Database and sign-in", "BLOCKED", "A schema is drafted. Nothing is deployed."],
-];
+const NOT_YET = [
+  "Accounts and sign-in: there are none yet, so there is no customer data on our servers.",
+  "A production database with each company’s records kept separate at the database level is designed but not built.",
+  "No sending: outbound email, texts and calls are off. Scout can’t send.",
+  "No compliance certifications are claimed.",
+] as const;
 
-const NOT_CLAIMED = [
-  ["No SOC 2 report", "We have not been audited."],
-  ["No penetration test", "No outside party has tested the service."],
-  ["No legal review yet", "Our email, privacy and consent approach has not been reviewed by a lawyer."],
-];
-
-const STATE_STYLE: Record<Row[1], string> = {
-  DEMO: "text-signal-ink",
-  PLANNED: "text-ink-2",
-  BLOCKED: "text-attention",
-};
-
-export default function SecurityPage() {
+export default function Security() {
   return (
-    <>
-      <PageIntro title="Security and data, stated plainly.">
-        <p>Today, BetterDesk is a sample workspace in your browser. The production service is a design, not a running system. This page keeps those two things apart.</p>
-      </PageIntro>
+    <section className="wrap pb-24 pt-32 md:pt-40">
+      <h1 className="t-display max-w-[16ch]">Security and data, without the fine print.</h1>
+      <p className="t-lede mt-6 max-w-[58ch]">What happens to what you type here, how our website check avoids becoming a tool against other people’s networks, and what doesn’t exist yet.</p>
 
-      <section aria-labelledby="today-title" className="bg-mineral py-24 md:py-32">
-        <div className="wrap grid gap-12 lg:grid-cols-12">
-          <h2 id="today-title" className="t-title max-w-[12ch] lg:col-span-4">What is true today.</h2>
-          <ul className="divide-y divide-rule border-y border-rule lg:col-span-8">
-            {TODAY.map((t) => (
-              <li key={t} className="flex gap-4 py-4 text-[1.0625rem] leading-relaxed text-ink">
-                <span aria-hidden="true" className="mt-[0.6em] size-2 shrink-0 rounded-full bg-signal" />
-                <span className="max-w-[60ch]">{t}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <div id="data" className="mt-16 grid scroll-mt-24 gap-10 border-t border-rule-strong pt-10 lg:grid-cols-12">
+        <h2 className="t-title max-w-[12ch] lg:col-span-4">What this site does with your information.</h2>
+        <dl className="lg:col-span-8">
+          {DATA.map(([k, v]) => (
+            <div key={k} className="border-b border-rule py-5">
+              <dt className="text-[1.0625rem] font-[600]">{k}</dt>
+              <dd className="mt-1.5 max-w-[66ch] text-ink-2">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
 
-      <section aria-labelledby="design-title" className="bg-mineral-2 py-24 md:py-32">
-        <div className="wrap">
-          <div className="max-w-[60ch]">
-            <h2 id="design-title" className="t-title max-w-[18ch]">How the production service is designed.</h2>
-            <p className="mt-5 text-[1.0625rem] leading-relaxed text-ink-2">
-              DEMO means it works in the sample workspace. PLANNED means it is part of the design and not built. BLOCKED means it waits on something we have not connected.
-            </p>
-          </div>
-          <div className="mt-10 overflow-x-auto" role="region" aria-label="Security controls and their status, scrolls sideways on small screens" tabIndex={0}>
-            <table className="w-full min-w-[40rem] border-y border-rule-strong text-left">
-              <caption className="sr-only">Security and data controls, implemented or planned</caption>
-              <thead>
-                <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">
-                  <th scope="col" className="py-3 pr-6 font-medium">Control</th>
-                  <th scope="col" className="py-3 pr-6 font-medium">Status</th>
-                  <th scope="col" className="py-3 font-medium">What it means</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-rule">
-                {TABLE.map(([k, s, d]) => (
-                  <tr key={k}>
-                    <th scope="row" className="max-w-[26rem] py-4 pr-6 align-top text-[1rem] font-semibold">{k}</th>
-                    <td className={`t-mono py-4 pr-6 align-top font-semibold ${STATE_STYLE[s]}`}>{s}</td>
-                    <td className="py-4 align-top text-[1rem] text-ink-2">{d}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+      <div className="mt-20 grid gap-10 border-t border-rule-strong pt-10 lg:grid-cols-12">
+        <h2 className="t-title max-w-[12ch] lg:col-span-4">How the website check stays safe.</h2>
+        <ul className="lg:col-span-8">
+          {AUDIT.map((a) => (
+            <li key={a} className="border-b border-rule py-4 text-ink-2">{a}</li>
+          ))}
+        </ul>
+      </div>
 
-      <section aria-labelledby="claim-title" className="bg-mineral py-24 md:py-32">
-        <div className="wrap grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <h2 id="claim-title" className="t-title max-w-[12ch]">What we don&rsquo;t claim.</h2>
-          </div>
-          <div className="lg:col-span-8">
-            <dl className="grid gap-x-10 sm:grid-cols-3">
-              {NOT_CLAIMED.map(([k, v]) => (
-                <div key={k} className="border-t-2 border-ink pt-4">
-                  <dt className="text-[1.0625rem] font-semibold">{k}</dt>
-                  <dd className="mt-1 text-[1rem] text-ink-2">{v}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-10 max-w-[56ch] text-[1.0625rem] leading-relaxed text-ink-2">
-              Questions about data, or a concern to report? Write to{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`} className="text-ink underline decoration-rule-strong underline-offset-4 hover:decoration-signal">{CONTACT_EMAIL}</a>.
-            </p>
-          </div>
-        </div>
-      </section>
+      <div className="mt-20 grid gap-10 border-t border-rule-strong pt-10 lg:grid-cols-12">
+        <h2 className="t-title max-w-[12ch] lg:col-span-4">Not built yet.</h2>
+        <ul className="lg:col-span-8">
+          {NOT_YET.map((a) => (
+            <li key={a} className="border-b border-rule py-4 text-ink-2">{a}</li>
+          ))}
+        </ul>
+      </div>
 
-      <CloseCta />
-    </>
+      <p className="mt-16 max-w-[60ch] text-ink-2">
+        Found a problem? Email <a href={`mailto:${CONTACT_EMAIL}`} className="link font-[560]">{CONTACT_EMAIL}</a>. A formal privacy policy and terms will be published after legal review, before BetterDesk takes real customer data.
+      </p>
+    </section>
   );
 }

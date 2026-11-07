@@ -1,80 +1,131 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
-import { CloseCta } from "@/components/CloseCta";
-import { ScoutInspector } from "@/components/site/ScoutInspector";
+import { ButtonLink, SampleNote, StateGlyph, StatusMark, TextLink } from "@/components/site/primitives";
+import { scoutExample } from "@/lib/marketing/samples";
+import { RUN_TASKS } from "@/lib/workspace/actions";
+import { RULE_VERSION } from "@/lib/scout/qualify";
 
 export const metadata: Metadata = {
-  title: "Scout",
-  description: "Scout is BetterDesk's business-development assistant. It qualifies prospects against your rules with visible evidence and drafts introductions for your approval. It cannot send anything.",
+  title: "Scout: businesses worth contacting, with the evidence",
+  description: "Scout checks the businesses on your list against your service area and the buildings you want, shows why, and drafts introductions you approve. It never sends.",
   alternates: { canonical: "/scout" },
 };
 
-const LEVELS = [
-  ["0 · Observe", "Reads the records you've given it and summarises what's known.", "On"],
-  ["1 · Prepare", "De-duplicates lists, checks each business against your rules, drafts introductions.", "On, within the run's limits"],
-  ["2 · Recommend", "Suggests next steps and walkthrough times. A person decides.", "On"],
-  ["3 · Act", "Would send approved messages through your own mailbox.", "Off. Not built; needs your mailbox, sender details and a review"],
-];
+const NEVER = [
+  ["Send anything", "Sending isn’t one of Scout’s tools. Approval is a person’s job, and delivery needs a connected mailbox that doesn’t exist yet."],
+  ["Guess a building’s size", "If no source states the square footage, the criterion says “unknown”, and the account is marked for research."],
+  ["Write to personal addresses", "A gmail or similar address fails the contact check. No draft is written."],
+  ["Contact someone who opted out", "Suppressed addresses and domains are blocked before a draft exists, and again at approval."],
+  ["Follow instructions hidden in data", "Text in a list that reads like commands is withheld from drafting and flagged for a person."],
+  ["Move a deal backwards", "Scout only drafts for new or qualified accounts. Anything further along is left alone."],
+] as const;
 
-const STATES = ["Created", "Queued", "Running", "Waiting for approval", "Paused", "Blocked", "Failed", "Completed", "Canceled"];
-
-const GUARDS = [
-  ["Your rules, not its guesses", "Facility size, business type and contact come from a source you can see. If it isn't there, it's marked unknown."],
-  ["Imported text is data", "A note in a list can't give Scout instructions. Text that reads like instructions is withheld and flagged for you."],
-  ["No send tool", "Scout's permitted tools are read, de-duplicate, qualify and draft. Sending, calling and texting aren't among them."],
-  ["Opt-outs win", "Suppressed addresses are skipped when drafting and blocked at approval, across every run."],
-  ["Every step recorded", "Each run has an ID, a goal, a scope, a budget, its state history and the records it touched. Cancel stops it before the next step."],
-];
-
-export default function ScoutPage() {
+export default function Scout() {
+  const s = scoutExample();
+  const tierLabel = { strong: "Good fit", possible: "Worth checking", weak: "Weak fit", excluded: "Not a fit" } as const;
   return (
     <>
-      <PageIntro title="Scout does the research. You make the call.">
-        <p>Scout is the assistant inside BetterDesk. Give it a list and a goal; it qualifies each business against your rules, shows the evidence, and drafts introductions that wait for your approval.</p>
-      </PageIntro>
-
-      <section aria-labelledby="try-h" className="bg-mineral py-20 md:py-28">
-        <div className="wrap grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <h2 id="try-h" className="t-title max-w-[14ch]">Open any business and see why.</h2>
-            <p className="mt-4 max-w-[40ch] text-[1.0625rem] leading-relaxed text-ink-2">Five businesses from the fictional sample list, qualified for a Denver cleaning company that targets offices and medical buildings over 5,000 sq ft.</p>
+      <section className="wrap pb-16 pt-32 md:pt-40">
+        <StatusMark status="DEMO" />
+        <h1 className="t-display mt-5 max-w-[18ch]">Know which businesses are worth a walkthrough, and why.</h1>
+        <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:items-end">
+          <p className="t-lede max-w-[58ch] lg:col-span-8">
+            Give Scout a list you already have: a spreadsheet, an export, a building directory you’re allowed to use. It removes duplicates, checks each business against your service area and the buildings you want, and drafts a short introduction for the good fits. You approve every one.
+          </p>
+          <div className="flex flex-wrap gap-x-7 gap-y-3 lg:col-span-4 lg:justify-end">
+            <ButtonLink href="/demo">Run Scout on a sample list</ButtonLink>
           </div>
-          <div className="lg:col-span-8"><ScoutInspector /></div>
         </div>
       </section>
 
-      <section aria-labelledby="levels-h" className="border-t border-rule bg-mineral py-20 md:py-28">
-        <div className="wrap">
-          <h2 id="levels-h" className="t-title max-w-[22ch]">How much Scout is allowed to do.</h2>
-          <table className="mt-8 w-full border-collapse text-left text-[0.9375rem]">
-            <thead><tr className="border-b border-ink"><th scope="col" className="w-[18%] py-3 pr-4 font-medium">Level</th><th scope="col" className="py-3 pr-4 font-medium">What it means</th><th scope="col" className="w-[30%] py-3 font-medium">In BetterDesk today</th></tr></thead>
-            <tbody>{LEVELS.map(([l, w, s]) => <tr key={l} className="border-b border-rule align-top"><th scope="row" className="py-4 pr-4 font-semibold">{l}</th><td className="py-4 pr-4 text-ink-2">{w}</td><td className={`py-4 ${s.startsWith("Off") ? "text-attention" : "text-signal-ink"}`}>{s}</td></tr>)}</tbody>
+      <section className="border-y border-rule bg-surface">
+        <div className="wrap py-20 md:py-24">
+          <div className="grid gap-8 lg:grid-cols-12">
+            <h2 className="t-title max-w-[14ch] lg:col-span-4">Five checks, each with a reason.</h2>
+            <p className="text-ink-2 lg:col-span-8">
+              Rules version <code className="t-code">{RULE_VERSION}</code>. A score is the share of the checks that could be evaluated and passed; coverage says how much was known. Low coverage means “research this”, not “bad fit”.
+            </p>
+          </div>
+          <ul className="mt-10 border-t border-rule-strong">
+            {s.q.criteria.map((c) => (
+              <li key={c.id} className="grid gap-1 border-b border-rule py-4 md:grid-cols-12 md:gap-6">
+                <span className="font-[600] md:col-span-4">{c.label}</span>
+                <span className="text-[0.875rem] tabular-nums text-muted md:col-span-1">{c.weight}%</span>
+                <span className="text-ink-2 md:col-span-7">Example, {s.account.name}: {c.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="wrap py-20 md:py-28">
+        <div className="grid gap-8 lg:grid-cols-12">
+          <h2 className="t-title max-w-[16ch] lg:col-span-5">The sample list, checked.</h2>
+          <p className="text-ink-2 lg:col-span-7">
+            {s.rows} rows in. {s.summary.imported.length} imported, {s.summary.duplicates.map((d) => `${d.name} matched ${d.matched}`).join("; ")}, and {s.summary.withheld} note withheld. Every result below comes from the same code the workspace runs.
+          </p>
+        </div>
+        <div className="mt-10 overflow-x-auto">
+          <table className="w-full min-w-[44rem] border-collapse text-left">
+            <thead>
+              <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">
+                <th scope="col" className="py-3 pr-6 font-[560]">Business</th>
+                <th scope="col" className="py-3 pr-6 font-[560]">Result</th>
+                <th scope="col" className="py-3 pr-6 text-right font-[560]">Score</th>
+                <th scope="col" className="py-3 pr-6 text-right font-[560]">Known</th>
+                <th scope="col" className="py-3 font-[560]">Recommendation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {s.all.map((a) => (
+                <tr key={a.name} className="border-b border-rule align-top">
+                  <th scope="row" className="py-3.5 pr-6 font-[600]">{a.name}</th>
+                  <td className="whitespace-nowrap py-3.5 pr-6">{tierLabel[a.q.tier]}</td>
+                  <td className="py-3.5 pr-6 text-right tabular-nums">{a.q.score}</td>
+                  <td className="py-3.5 pr-6 text-right tabular-nums">{a.q.coverage}%</td>
+                  <td className="py-3.5 text-[0.9375rem] text-ink-2">{a.withheld ? "A note read like instructions; withheld and flagged for a person. " : ""}{a.q.recommendation}</td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
+        <SampleNote className="mt-4">Fictional businesses on reserved .example domains.</SampleNote>
       </section>
 
-      <section aria-labelledby="guards-h" data-tone="dark" className="tone-dark bg-petrol py-20 md:py-28">
-        <div className="wrap grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h2 id="guards-h" className="t-title max-w-[14ch] text-petrol-ink">Built to be checked.</h2>
-            <p className="mt-4 max-w-[40ch] text-[1.0625rem] leading-relaxed text-petrol-muted">Every run moves through explicit states, so you always know where it is and nothing can skip ahead.</p>
-            <ol className="mt-6 flex flex-wrap gap-x-3 gap-y-2 font-mono text-[0.8125rem] text-petrol-muted" aria-label="Run states">
-              {STATES.map((s, i) => <li key={s} className="flex items-center gap-3">{s}{i < STATES.length - 1 ? <span aria-hidden="true" className="h-px w-3 bg-petrol-rule" /> : null}</li>)}
-            </ol>
+      <section className="on-graphite bg-graphite-2">
+        <div className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 className="t-title max-w-[12ch]">What Scout never does.</h2>
+            <p className="mt-5 text-ink-2">These are rules in the code, covered by tests, not promises in a brochure.</p>
           </div>
-          <dl className="divide-y divide-petrol-rule rounded-[var(--radius-lg)] border border-petrol-rule bg-petrol-2 px-5 lg:col-span-7">
-            {GUARDS.map(([k, v]) => <div key={k} className="grid gap-1 py-4 sm:grid-cols-[12rem_1fr] sm:gap-5"><dt className="font-medium text-petrol-ink">{k}</dt><dd className="text-[0.9375rem] text-petrol-muted">{v}</dd></div>)}
-          </dl>
+          <ul className="lg:col-span-8">
+            {NEVER.map(([t, d]) => (
+              <li key={t} className="grid grid-cols-[1.25rem_1fr] gap-x-3 border-t border-rule py-4">
+                <StateGlyph kind="mark-x" className="mt-1.5" />
+                <div>
+                  <p className="font-[600]">{t}</p>
+                  <p className="mt-0.5 text-ink-2">{d}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      <section aria-labelledby="not-h" className="bg-mineral py-20 md:py-24">
-        <div className="wrap max-w-4xl">
-          <h2 id="not-h" className="t-title">What Scout doesn&rsquo;t do yet.</h2>
-          <p className="mt-4 text-[1.0625rem] leading-relaxed text-ink-2">In early access Scout uses rules, not an AI model, and it doesn&rsquo;t browse the web. It works on lists you import. Model-written research and drafts, and a licensed business-data source, are next; when they arrive, every claim will still carry its source, and drafts will still need your approval.</p>
+      <section className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <h2 className="t-title max-w-[14ch]">Every run, visible.</h2>
+          <p className="mt-5 max-w-[40ch] text-ink-2">A run moves through four tasks you can watch, cancel or retry. If a data source fails, the run says so and stops instead of making things up.</p>
+          <div className="mt-6"><TextLink href="/app/scout">Open Scout in the sample workspace</TextLink></div>
         </div>
+        <ol className="lg:col-span-7">
+          {RUN_TASKS.map((t, i) => (
+            <li key={t.id} className="grid grid-cols-[2rem_1fr] border-b border-rule py-4">
+              <span className="tabular-nums text-muted">{i + 1}</span>
+              <span>{t.label}</span>
+            </li>
+          ))}
+        </ol>
       </section>
-      <CloseCta title="Run Scout on the sample list." lede="Eleven fictional Denver businesses, including a duplicate, an opted-out contact, a personal email and a note that tries to give instructions. See how Scout handles each one." />
     </>
   );
 }

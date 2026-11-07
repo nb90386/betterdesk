@@ -55,7 +55,7 @@ export default function SettingsPage() {
           {INTEGRATIONS.map((i) => (
             <li key={i.name} className="grid gap-1 px-4 py-3 text-[0.875rem] md:grid-cols-[18rem_6rem_1fr] md:items-baseline md:gap-4">
               <span className="font-medium">{i.name}</span>
-              <span className={`font-mono text-[0.75rem] ${i.status === "DEMO" ? "text-signal-ink" : i.status === "BLOCKED" ? "text-attention" : "text-muted"}`}>{i.status}</span>
+              <span className={`tabular-nums text-[0.75rem] ${i.status === "DEMO" ? "text-ink" : i.status === "BLOCKED" ? "text-lamp-ink" : "text-muted"}`}>{i.status}</span>
               <span className="text-muted">{i.note}</span>
             </li>
           ))}
@@ -71,7 +71,7 @@ export default function SettingsPage() {
           </form>
           {err ? <div className="mt-2"><Notice tone="danger">{err}</Notice></div> : null}
           <ul className="mt-3 divide-y divide-rule border-t border-rule text-[0.875rem]">
-            {ws.suppressions.map((s) => <li key={s.value} className="flex justify-between gap-3 py-2"><span className="font-mono text-[0.8125rem]">{s.value}</span><span className="text-muted">{s.reason} · {fmtTime(s.at)}</span></li>)}
+            {ws.suppressions.map((s) => <li key={s.value} className="flex justify-between gap-3 py-2"><span className="tabular-nums text-[0.8125rem]">{s.value}</span><span className="text-muted">{s.reason} · {fmtTime(s.at)}</span></li>)}
           </ul>
           <p className="mt-3 text-[0.75rem] text-muted">Entries can&rsquo;t be removed here on purpose. Removing an opt-out should be a deliberate, recorded decision.</p>
         </div>

@@ -1,8 +1,6 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/site";
-
-const ROUTES = ["", "/product", "/scout", "/how-it-works", "/solutions/commercial-cleaning", "/pricing", "/security", "/demo", "/contact"];
+import { PUBLIC_ROUTES, SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ROUTES.map((r) => ({ url: `${SITE_URL}${r}`, changeFrequency: "monthly", priority: r === "" ? 1 : 0.7 }));
+  return PUBLIC_ROUTES.map((r) => ({ url: `${SITE_URL}${r}`, changeFrequency: "monthly", priority: r === "/" ? 1 : 0.7 }));
 }

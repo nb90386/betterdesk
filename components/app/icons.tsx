@@ -1,5 +1,6 @@
 /** One icon family: 20px grid, 1.5 stroke, round caps. Drawn for BetterDesk; no icon font. */
 const P: Record<string, string> = {
+  presence: "M10 3.5c3.6 0 6.5 2.9 6.5 6.5s-2.9 6.5-6.5 6.5S3.5 13.6 3.5 10M3.5 10c0-1.5.5-2.9 1.4-4M10 6.5a3.5 3.5 0 1 1-3.5 3.5M10 10h.01",
   today: "M4 7.5h12M4 4.5h12v11H4zM7.5 2.5v3M12.5 2.5v3M7 11h3",
   scout: "M9 3.5a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zM13 13l3.5 3.5M7 9h4M9 7v4",
   opportunities: "M3.5 5.5h13M3.5 10h13M3.5 14.5h8",

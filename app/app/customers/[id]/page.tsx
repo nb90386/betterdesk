@@ -63,7 +63,7 @@ export default function CustomerRecord({ params }: { params: Promise<{ id: strin
               <span aria-hidden="true" className="absolute bottom-6 left-[1.4rem] top-6 w-px bg-rule" />
               {events.map((e, i) => (
                 <motion.li key={e.id} initial={false} animate={{ opacity: 1 }} className="relative grid grid-cols-[1.25rem_1fr] gap-3 pb-4 last:pb-0">
-                  <span aria-hidden="true" className={`relative z-10 mt-1 h-2.5 w-2.5 justify-self-center rounded-full ring-4 ring-surface ${i === events.length - 1 ? "bg-signal" : e.actor.kind === "scout" ? "bg-signal/60" : e.actor.kind === "simulation" ? "bg-rule-strong" : "bg-ink"}`} />
+                  <span aria-hidden="true" className={`relative z-10 mt-1 h-2.5 w-2.5 justify-self-center rounded-full ring-4 ring-surface ${i === events.length - 1 ? "bg-ink" : e.actor.kind === "scout" ? "bg-ink/60" : e.actor.kind === "simulation" ? "bg-rule-strong" : "bg-ink"}`} />
                   <div>
                     <p className="text-[0.875rem]">{e.summary}</p>
                     <p className="text-[0.75rem] text-muted">{fmtTime(e.at)} · {e.actor.kind === "user" ? e.actor.name : ACTOR_LABEL[e.actor.kind]}{e.actor.kind === "simulation" ? " (demo)" : ""}</p>

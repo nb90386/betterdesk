@@ -71,7 +71,7 @@ function Opportunities() {
         <div className={`grid gap-6 ${sel ? "xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]" : ""}`}>
           <Panel>
             {rows.length === 0 ? (
-              <Empty title="No matches" body={ws.accounts.length <= 4 ? "Import a prospect list on the Scout page to fill this in." : "Try a different search or stage."} action={<Link href="/app/scout" className="text-[0.875rem] font-medium text-signal-ink underline underline-offset-4">Go to Scout</Link>} />
+              <Empty title="No matches" body={ws.accounts.length <= 4 ? "Import a prospect list on the Scout page to fill this in." : "Try a different search or stage."} action={<Link href="/app/scout" className="text-[0.875rem] font-medium text-ink underline underline-offset-4">Go to Scout</Link>} />
             ) : (
               <table className="w-full text-left text-[0.875rem]">
                 <caption className="sr-only">Opportunities, {rows.length} shown</caption>
@@ -85,7 +85,7 @@ function Opportunities() {
                 </thead>
                 <tbody className="divide-y divide-rule">
                   {rows.map(({ a, o, ql }) => (
-                    <tr key={a.id} className={`cursor-pointer hover:bg-mineral ${selected === a.id ? "bg-mineral" : ""}`} onClick={() => open(a.id)}>
+                    <tr key={a.id} className={`cursor-pointer hover:bg-stone ${selected === a.id ? "bg-stone" : ""}`} onClick={() => open(a.id)}>
                       <td className="px-4 py-3">
                         <button type="button" className="text-left font-medium hover:underline" aria-pressed={selected === a.id} onClick={(e) => { e.stopPropagation(); open(a.id); }}>{a.name}</button>
                         <span className="block text-[0.8125rem] text-muted">{a.category || "No category"} · {a.address.zip} · {a.source.label}</span>
@@ -114,27 +114,27 @@ function Inspector({ account, onClose }: { account: Account; onClose: () => void
   const c = contactOf(ws, account.id);
   const evidence = ws.evidence.filter((e) => e.accountId === account.id);
   return (
-    <motion.aside layout initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 16, transition: { duration: 0.15 } }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="self-start rounded-[var(--radius-lg)] border border-rule bg-surface xl:sticky xl:top-6" aria-label={`Qualification for ${account.name}`}>
+    <motion.aside layout initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 16, transition: { duration: 0.15 } }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="self-start rounded-[var(--radius-md)] border border-rule bg-surface xl:sticky xl:top-6" aria-label={`Qualification for ${account.name}`}>
       <div className="flex items-start justify-between gap-3 border-b border-rule px-4 py-3.5">
         <div>
           <h2 className="font-display text-[1.25rem] font-semibold tracking-[-0.02em]">{account.name}</h2>
           <p className="text-[0.8125rem] text-muted">{[account.address.street, account.address.zip].filter(Boolean).join(", ")} · {account.domain ?? "no website"}</p>
         </div>
-        <button onClick={onClose} className="inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-sm)] hover:bg-mineral-2" aria-label="Close inspector"><Icon name="x" className="h-4 w-4" /></button>
+        <button onClick={onClose} className="inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-sm)] hover:bg-stone-2" aria-label="Close inspector"><Icon name="x" className="h-4 w-4" /></button>
       </div>
       {ql ? (
         <div className="p-4">
           <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
             <div><p className="text-[0.75rem] text-muted">Fit</p><TierMark q={ql} /></div>
             <div><p className="text-[0.75rem] text-muted">Criteria known</p><p className="text-[0.875rem] font-medium">{ql.coverage}%</p></div>
-            <div><p className="text-[0.75rem] text-muted">Rules</p><p className="font-mono text-[0.8125rem]">{ql.ruleVersion}</p></div>
-            {ql.needsHumanReview ? <p className="text-[0.8125rem] font-medium text-attention">Needs a person to check</p> : null}
+            <div><p className="text-[0.75rem] text-muted">Rules</p><p className="tabular-nums text-[0.8125rem]">{ql.ruleVersion}</p></div>
+            {ql.needsHumanReview ? <p className="text-[0.8125rem] font-medium text-lamp-ink">Needs a person to check</p> : null}
           </div>
           <p className="mt-3 text-[0.9375rem]">{ql.recommendation}</p>
           <ul className="mt-4 divide-y divide-rule border-y border-rule">
             {ql.criteria.map((cr) => (
               <motion.li layout key={cr.id} className="grid grid-cols-[1.25rem_1fr_auto] gap-x-2.5 py-2.5 text-[0.875rem]">
-                <span aria-hidden="true" className={`mt-0.5 grid h-4 w-4 place-items-center rounded-full ${cr.result === "met" ? "bg-signal text-petrol" : cr.result === "not-met" ? "bg-rule-strong text-surface" : "border border-dashed border-rule-strong"}`}>
+                <span aria-hidden="true" className={`mt-0.5 grid h-4 w-4 place-items-center rounded-full ${cr.result === "met" ? "bg-ink text-graphite" : cr.result === "not-met" ? "bg-rule-strong text-surface" : "border border-dashed border-rule-strong"}`}>
                   {cr.result === "met" ? <Icon name="check" className="h-3 w-3" /> : cr.result === "not-met" ? <Icon name="x" className="h-2.5 w-2.5" /> : null}
                 </span>
                 <span>
@@ -154,7 +154,7 @@ function Inspector({ account, onClose }: { account: Account; onClose: () => void
         <h3 className="text-[0.8125rem] font-medium text-muted">Evidence</h3>
         <ul className="mt-2 space-y-2 text-[0.875rem]">
           {evidence.map((e) => (
-            <li key={e.id} className={e.flagged ? "text-attention" : ""}>
+            <li key={e.id} className={e.flagged ? "text-lamp-ink" : ""}>
               {e.claim}
               <span className="block text-[0.75rem] text-muted">Source: {e.source.label} · retrieved {fmtTime(e.source.retrievedAt)}</span>
             </li>
@@ -163,7 +163,7 @@ function Inspector({ account, onClose }: { account: Account; onClose: () => void
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-rule px-4 py-3 text-[0.875rem]">
         <span className="text-muted">{c ? `${c.name}${c.role ? `, ${c.role}` : ""}` : "No contact"}{o ? ` · updated ${ago(o.updatedAt)}` : ""}</span>
-        <Link href={`/app/customers/${account.id}`} className="font-medium text-signal-ink underline underline-offset-2">Open record and timeline</Link>
+        <Link href={`/app/customers/${account.id}`} className="font-medium text-ink underline underline-offset-2">Open record and timeline</Link>
       </div>
     </motion.aside>
   );

@@ -1,107 +1,80 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { PageIntro } from "@/components/PageIntro";
-import { CloseCta } from "@/components/CloseCta";
-import { Faq } from "@/components/Faq";
-import { PLANS, PRICING_STATUS, TOP_UPS } from "@/lib/site";
+import { ButtonLink, TextLink } from "@/components/site/primitives";
+import { OFFER, PRICING_STATUS } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Pricing",
-  description: "Proposed BetterDesk early-access plans for commercial cleaning companies: Essential $99, Growth $249 and Team $499 a month, with clear usage limits and no surprise overage.",
+  title: "Pricing (proposed)",
+  description: "One early-access offer for commercial cleaning companies: a guided setup and visibility review, then one monthly workspace with hard usage limits. Proposed, not yet for sale.",
   alternates: { canonical: "/pricing" },
 };
 
-const ROWS: [string, (p: (typeof PLANS)[number]) => string][] = [
-  ["People", (p) => `${p.seats}`],
-  ["Businesses researched by Scout / month", (p) => p.prospects.toLocaleString()],
-  ["Introductions drafted / month", (p) => p.drafts.toLocaleString()],
-  ["Inbound inquiries handled / month", (p) => p.conversations.toLocaleString()],
-  ["Connected mailboxes and calendars (when available)", (p) => `${p.seats}`],
-  ["Onboarding", (p) => p.onboarding],
-  ["Support", (p) => p.support],
-];
-
 const FAQ = [
-  { q: "Can I buy this today?", a: "Not yet. These are proposed early-access prices, published so you can judge whether BetterDesk is worth a conversation. Nothing on this site charges a card. If you join early access, your price is confirmed in writing first." },
-  { q: "What happens when I hit a limit?", a: "Scout pauses and tells you. Nothing is billed automatically. You can add a top-up, move up a plan, or wait for next month." },
-  { q: "What counts as a business researched?", a: "One business that Scout checks against your rules in a month, whether it ends up a good fit or not. Re-checking the same business in the same month doesn't count again." },
-  { q: "What counts as an inbound inquiry?", a: "One conversation that starts from your website form or a reply to you. Spam and wrong-number messages that BetterDesk sets aside don't count." },
-  { q: "Why not unlimited?", a: "Research and drafting have real costs. Clear limits keep the price low for small companies and stop one heavy month from turning into a surprise bill." },
-  { q: "Is there a contract?", a: "The plan is monthly. Annual billing with about two months free is proposed for later." },
-];
+  ["Why one plan instead of three?", "Most owner-led cleaning companies need the same things: be findable, have a steady list of good prospects, and answer inquiries fast. One plan is easier to judge and easier to cancel."],
+  ["Is the website check free?", "Yes, during early access. Run it on a site you own from the Presence page. The paid review adds a person, your Business Profile and your inquiry path."],
+  ["Will it get me into ChatGPT or Google’s AI answers?", "Nobody can promise that. Presence makes sure those services can read your site and understand what you do. Whether they show you depends on them."],
+  ["Do you send outreach for me?", "Not today. Scout drafts introductions you approve. Sending will need your own mailbox connected, and the rules for business email outreach still apply."],
+  ["What if I go over a limit?", "That kind of work pauses. Nothing is billed automatically. You can wait for the next month or choose a top-up."],
+] as const;
 
-export default function PricingPage() {
+export default function Pricing() {
+  const { setup, workspace, limits } = OFFER;
   return (
     <>
-      <PageIntro
-        title="Priced per company, with limits you can see."
-        aside={
-          <div className="rounded-[var(--radius-lg)] border border-petrol-rule bg-petrol-2 p-5 text-[0.9375rem]">
-            <p className="font-medium text-petrol-ink">{PRICING_STATUS}</p>
-            <p className="mt-2 text-petrol-muted">Prices are a proposal based on our cost model. They will be confirmed with early-access customers before anyone is billed.</p>
-          </div>
-        }
-      >
-        <p>Three plans, each with a set amount of research, drafting and inquiry handling. Setup help is included. Nothing runs past your limit without you.</p>
-      </PageIntro>
+      <section className="wrap pb-12 pt-32 md:pt-40">
+        <p className="text-[0.875rem] font-[560] text-lamp-ink">{PRICING_STATUS}</p>
+        <h1 className="t-display mt-4 max-w-[18ch]">One way to start. One plan after that.</h1>
+        <p className="t-lede mt-6 max-w-[58ch]">A person sets BetterDesk up around your service area and the buildings you want, then you run it month to month. These prices are proposals we’re testing with early customers.</p>
+      </section>
 
-      <section aria-labelledby="plans-h" className="bg-mineral py-20 md:py-24">
-        <div className="wrap">
-          <h2 id="plans-h" className="sr-only">Plans</h2>
-          <ol className="grid border-t-2 border-ink md:grid-cols-3">
-            {PLANS.map((p, i) => (
-              <li key={p.id} className={`relative flex flex-col py-8 md:px-7 ${i ? "border-t border-rule md:border-l md:border-t-0" : "md:pl-0"} ${i === 2 ? "md:pr-0" : ""}`}>
-                <div className="flex items-baseline justify-between gap-3">
-                  <h3 className="font-display text-[1.5rem] font-semibold tracking-[-0.025em]">{p.name}</h3>
-                  {p.featured ? <span className="text-[0.8125rem] font-medium text-signal-ink">Most companies start here</span> : null}
-                </div>
-                <p className="mt-2 min-h-[3.2em] text-[0.9375rem] leading-snug text-ink-2">{p.blurb}</p>
-                <p className="mt-6 font-display text-[3.25rem] font-semibold leading-none tracking-[-0.045em] tabular-nums">${p.price}<span className="ml-1.5 font-sans text-[1rem] font-normal tracking-normal text-muted">a month</span></p>
-                <p className="mt-2 text-[0.8125rem] text-muted">Proposed</p>
-                <ul className="mt-6 flex-1 space-y-2 border-t border-rule pt-5 text-[0.9375rem]">
-                  {p.includes.map((x) => (
-                    <li key={x} className="flex gap-2.5"><span aria-hidden="true" className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-signal" />{x}</li>
-                  ))}
-                </ul>
-                <Link href={`/contact?plan=${p.id}`} className={`press mt-8 inline-flex min-h-12 items-center justify-center rounded-[var(--radius-sm)] text-[1rem] font-[550] ${p.featured ? "bg-ink text-mineral hover:bg-ink-2" : "border border-rule-strong hover:border-ink"}`}>
-                  Ask about {p.name}
-                </Link>
-              </li>
+      <section className="wrap pb-20 md:pb-28">
+        <div className="grid border-y border-rule-strong lg:grid-cols-2">
+          {[setup, workspace].map((p, i) => (
+            <div key={p.name} className={`py-10 ${i === 0 ? "lg:pr-12" : "border-t border-rule lg:border-l lg:border-t-0 lg:pl-12"}`}>
+              <p className="text-[0.875rem] text-muted">{i === 0 ? "First" : "Then"}</p>
+              <h2 className="mt-1 text-[1.625rem] font-[600] tracking-[-0.022em]">{p.name}</h2>
+              <p className="mt-5 flex items-baseline gap-2">
+                <span className="text-[3.25rem] font-[600] leading-none tracking-[-0.04em] tabular-nums">${p.price}</span>
+                <span className="text-muted">{p.unit}, proposed</span>
+              </p>
+              <ul className="mt-7 grid gap-2.5 text-ink-2">
+                {p.includes.map((x) => (
+                  <li key={x} className="border-t border-rule pt-2.5">{x}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
+            <ButtonLink href="/contact">Request a review</ButtonLink>
+            <TextLink href="/presence#check">Run the free website check</TextLink>
+          </div>
+          <p className="max-w-[44ch] text-[0.875rem] text-muted">Larger team or several locations? Tell us in the review request and we’ll quote it plainly.</p>
+        </div>
+      </section>
+
+      <section className="border-t border-rule bg-surface">
+        <div className="wrap grid gap-12 py-20 md:py-24 lg:grid-cols-12">
+          <h2 className="t-title max-w-[12ch] lg:col-span-4">Limits, in plain words.</h2>
+          <ul className="lg:col-span-8">
+            {limits.map((l) => (
+              <li key={l} className="border-b border-rule py-4 text-ink-2">{l}</li>
             ))}
-          </ol>
-          <p className="mt-6 max-w-[70ch] text-[0.875rem] text-muted">Plan buttons open the demo request form with the plan filled in. It writes an email to us; nothing is charged or subscribed.</p>
+          </ul>
         </div>
       </section>
 
-      <section aria-labelledby="limits-h" className="border-t border-rule bg-mineral py-20 md:py-24">
-        <div className="wrap">
-          <h2 id="limits-h" className="t-title">What each plan includes.</h2>
-          <div className="mt-8 overflow-x-auto" role="region" aria-label="Plan limits, scrolls sideways on small screens" tabIndex={0}>
-            <table className="w-full min-w-[40rem] border-collapse text-left text-[0.9375rem]">
-              <thead><tr className="border-b border-ink"><th scope="col" className="w-[40%] py-3 pr-4 font-medium text-muted"><span className="sr-only">Limit</span></th>{PLANS.map((p) => <th key={p.id} scope="col" className="py-3 pr-4 font-semibold">{p.name}</th>)}</tr></thead>
-              <tbody>{ROWS.map(([k, f]) => <tr key={k} className="border-b border-rule"><th scope="row" className="py-3 pr-4 font-normal">{k}</th>{PLANS.map((p) => <td key={p.id} className="py-3 pr-4 tabular-nums">{f(p)}</td>)}</tr>)}</tbody>
-            </table>
-          </div>
-          <div className="mt-10 grid gap-8 md:grid-cols-2">
-            <div>
-              <h3 className="text-[1.0625rem] font-semibold">Top-ups, if you need more</h3>
-              <ul className="mt-3 space-y-1.5 text-[0.9375rem] text-ink-2">{TOP_UPS.map((t) => <li key={t}>{t}</li>)}</ul>
+      <section className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12">
+        <h2 className="t-title max-w-[12ch] lg:col-span-4">Questions owners ask.</h2>
+        <dl className="lg:col-span-8">
+          {FAQ.map(([q, a]) => (
+            <div key={q} className="border-b border-rule py-5">
+              <dt className="text-[1.125rem] font-[600] tracking-[-0.01em]">{q}</dt>
+              <dd className="mt-2 max-w-[64ch] text-ink-2">{a}</dd>
             </div>
-            <div>
-              <h3 className="text-[1.0625rem] font-semibold">Not included</h3>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">Prospect lists from paid data providers, text messaging and calling, and your crew, inspection or invoicing software. Keep the tools you already use for operations.</p>
-            </div>
-          </div>
-        </div>
+          ))}
+        </dl>
       </section>
-
-      <section aria-labelledby="faq-h" className="bg-mineral-2 py-20 md:py-24">
-        <div className="wrap grid gap-10 lg:grid-cols-12">
-          <h2 id="faq-h" className="t-title lg:col-span-4">Pricing questions.</h2>
-          <Faq items={FAQ} className="lg:col-span-8" />
-        </div>
-      </section>
-      <CloseCta title="Not sure which plan fits?" lede="Tell us how many buildings you go after in a month and how inquiries reach you. We'll recommend a plan, or tell you it isn't worth it yet." />
     </>
   );
 }

@@ -1,105 +1,117 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
-import { Faq } from "@/components/Faq";
-import { CloseCta } from "@/components/CloseCta";
-import { ButtonLink, Arrow } from "@/components/Button";
-import { RouteList, Status, type RouteItem } from "@/components/marketing/RouteList";
+import { ButtonLink, StatusMark, TextLink, type Status } from "@/components/site/primitives";
 
 export const metadata: Metadata = {
-  title: "How it works",
-  description: "The BetterDesk workflow from finding a building to winning and keeping the contract: who does each step, and what works today in the sample workspace.",
+  title: "Setup, support and limits",
+  description: "What you provide, what BetterDesk does, what you receive, and which parts are live, demo or not built yet.",
   alternates: { canonical: "/how-it-works" },
 };
 
-type Step = { title: string; what: string; who: string; state: "demo" | "planned"; status: string };
+const FLOW = [
+  {
+    who: "You provide",
+    items: [
+      ["Your website address", "So Presence can check what search engines and AI crawlers can read."],
+      ["Where you clean and what you sell", "Service area, services, the kinds of buildings you want and roughly how big."],
+      ["A list, if you have one", "A spreadsheet or export you’re allowed to use. Scout doesn’t scrape sites behind your back."],
+      ["Who approves", "The person who signs off introductions and owns website fixes."],
+    ],
+  },
+  {
+    who: "BetterDesk does",
+    items: [
+      ["Checks your site", "Crawler access, indexing, service and area pages, name and phone consistency, structured data that matches the page."],
+      ["Checks your list", "Removes duplicates, scores fit with evidence and dates, withholds anything suspicious."],
+      ["Drafts, never sends", "Introductions built from facts, waiting for your approval."],
+      ["Keeps one record", "Every account’s source, conversation, booking and stage on one timeline."],
+    ],
+  },
+  {
+    who: "You receive",
+    items: [
+      ["A fix list with owners", "Each website issue explained for a non-technical owner, with evidence and how to confirm the fix."],
+      ["A shortlist with reasons", "Which businesses fit, which need research, which to leave alone."],
+      ["Faster replies", "Inquiries next to their history, suggested replies that never invent a price."],
+      ["A pipeline you trust", "Who’s next, what’s booked, which proposals need a follow-up."],
+    ],
+  },
+] as const;
 
-const STEPS: Step[] = [
-  { title: "Find", what: "You bring the buildings you want: a list from your own notes, a referral sheet, a chamber directory you are allowed to use. Website inquiries land in the same records.", who: "You", state: "demo", status: "Works in the sample workspace with a sample list. A licensed data provider is planned." },
-  { title: "Qualify", what: "Scout checks each building against your criteria and shows which rules were met, which were not, and which are unknown. It does not guess a missing fact.", who: "Scout", state: "demo", status: "Works in the sample workspace." },
-  { title: "Prepare", what: "Scout drafts a short introduction from a template, using only facts already in the record. Anything it cannot support stays out.", who: "Scout", state: "demo", status: "Works in the sample workspace. Drafts come from a template, not an AI model." },
-  { title: "Approve", what: "A person reads the draft, edits it if needed and approves it. A check blocks approval for things like a subject that starts with \"Re:\" when there was no earlier thread.", who: "You", state: "demo", status: "Works in the sample workspace." },
-  { title: "Connect", what: "The approved message goes out from your own mailbox, and replies come back to the same record. Today delivery and replies are simulated and labeled as such.", who: "BetterDesk", state: "planned", status: "Simulated in the sample workspace. Real sending is off and needs a mailbox connection, not built yet." },
-  { title: "Book walkthrough", what: "When a contact asks to see the building, you pick a time and the record moves to the walkthrough stage.", who: "You", state: "demo", status: "Works in the sample workspace on a sample calendar. Google and Microsoft calendar sync is planned." },
-  { title: "Propose", what: "The record carries what you learned at the walkthrough into the proposal stage, so the quote starts from the notes, not from memory.", who: "You", state: "planned", status: "The stage exists in the sample pipeline. Proposal documents are planned." },
-  { title: "Win", what: "You mark the contract won. The prospect becomes a customer and drops out of prospecting, so nobody pitches a client you already serve.", who: "You", state: "demo", status: "Works in the sample workspace." },
-  { title: "Retain", what: "The customer record keeps the full timeline from first note to signed contract, which is where you start when it is time to check in or renew.", who: "You", state: "demo", status: "Customer records and timeline work in the sample workspace." },
+const INTEGRATIONS: [string, string, Status][] = [
+  ["Public website audit", "Reads robots.txt, sitemap and up to 6 pages of a site you own", "BETA"],
+  ["Sample workspace", "Every screen, on a fictional company, in your browser", "DEMO"],
+  ["Review request form", "Delivered to the BetterDesk inbox when it’s connected on the deployment", "BLOCKED"],
+  ["Google Search Console, Bing Webmaster Tools", "First-party search and AI-citation data, with your authorization", "PLANNED"],
+  ["Google Business Profile", "Checking your profile matches your site", "PLANNED"],
+  ["Gmail or Microsoft 365, calendars", "Reading replies, sending approved email from your mailbox, real availability", "PLANNED"],
+  ["Accounts, sign-in, saved data", "A real multi-company backend with separated data", "PLANNED"],
 ];
 
-const ONBOARDING: [string, string][] = [
-  ["Business details", "Company name, who is sending, and the address that will appear on any email."],
-  ["Service area", "The ZIP codes or counties you will drive to. Scout uses this as its first rule."],
-  ["Services", "What you offer: nightly office cleaning, medical suites, floor care, and so on."],
-  ["Ideal customer criteria", "Facility types you want, a minimum size if you have one, and the contacts worth writing to."],
-  ["Prospect list import", "A CSV of buildings you are allowed to contact. You keep the source note with it."],
-  ["Outreach preferences and approval policy", "Your template wording and who approves. In the current design a person approves every message."],
-  ["Mailbox and calendar connection", "Optional, and not available yet. Until it is, you copy approved drafts into your own email."],
-  ["Workspace review", "A look at the records Scout built, before anything is acted on."],
-];
-
-const FAQ = [
-  { q: "What can I actually use today?", a: "The sample workspace at /app. It is a fictional cleaning company in Denver. You can import the sample list, run Scout, approve drafts and move records through the pipeline. Your own data cannot be connected yet." },
-  { q: "Does Scout send anything?", a: "No. Outbound sending is off. In the sample workspace, delivery and replies are simulated and labeled. In the planned service, sending would come from your own Google or Microsoft mailbox, only after a person approves the exact message." },
-  { q: "Where does Scout find businesses?", a: "It does not search the web for you. It works on lists you bring. A licensed data provider is something we may add later; none is connected today." },
-  { q: "Is an AI model writing the emails?", a: "Not today. Drafts are filled from a template using facts in the record. An AI model is not connected. If one is added, it would stay behind the same approval step." },
-  { q: "What does it cost?", a: "Early-access pricing is proposed and not yet billable. See the pricing page for the numbers and what they are based on." },
-];
-
-export default function HowItWorksPage() {
-  const items: RouteItem[] = STEPS.map((s) => ({
-    key: s.title,
-    title: s.title,
-    body: s.what,
-    side: (
-      <dl className="space-y-2">
-        <div><dt className="t-label">Done by</dt><dd className="text-ink">{s.who}</dd></div>
-        <div><dt className="t-label">Status today</dt><dd><Status state={s.state}>{s.status}</Status></dd></div>
-      </dl>
-    ),
-  }));
-
+export default function HowItWorks() {
   return (
     <>
-      <PageIntro title="One route from a building on your list to a signed contract.">
-        <p>BetterDesk follows nine steps. Some work today in a sample workspace and some are planned. Each step below says which, and who does the work.</p>
-      </PageIntro>
+      <section className="wrap pb-16 pt-32 md:pt-40">
+        <h1 className="t-display max-w-[18ch]">What you give, what we do, what you get.</h1>
+        <p className="t-lede mt-6 max-w-[58ch]">No black box. Here’s the work on each side, how we support you, and the state of every connection, including the ones that don’t exist yet.</p>
+      </section>
 
-      <section aria-labelledby="route-title" className="bg-mineral py-24 md:py-32">
-        <div className="wrap grid gap-12 lg:grid-cols-12">
+      <section className="wrap pb-20 md:pb-28">
+        <div className="grid border-t border-rule-strong lg:grid-cols-3">
+          {FLOW.map((col, i) => (
+            <div key={col.who} className={`py-8 lg:px-8 ${i === 0 ? "lg:pl-0" : "border-t border-rule lg:border-l lg:border-t-0"}`}>
+              <h2 className="text-[1.375rem] font-[600] tracking-[-0.02em]">{col.who}</h2>
+              <dl className="mt-5">
+                {col.items.map(([k, v]) => (
+                  <div key={k} className="border-t border-rule py-3.5">
+                    <dt className="font-[600]">{k}</dt>
+                    <dd className="mt-0.5 text-[0.9375rem] text-ink-2">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-rule bg-surface">
+        <div className="wrap grid gap-12 py-20 md:py-24 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <h2 id="route-title" className="t-title max-w-[13ch] lg:sticky lg:top-28">Find to Retain, in order.</h2>
-            <p className="mt-5 max-w-[34ch] text-[1rem] text-ink-2 lg:sticky lg:top-60">A filled dot means you can try it now in the sample workspace. A hollow dot means planned.</p>
+            <h2 className="t-title max-w-[12ch]">Support from a person.</h2>
           </div>
-          <div className="lg:col-span-8"><RouteList items={items} numbered /></div>
-        </div>
-      </section>
-
-      <section aria-labelledby="start-title" className="bg-mineral-2 py-24 md:py-32">
-        <div className="wrap grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <h2 id="start-title" className="t-title max-w-[12ch]">Getting started with your own workspace.</h2>
-            <p className="mt-5 max-w-[36ch] text-[1rem] text-ink-2">This is the setup we are building toward. Accounts are not open yet, so today you can walk through it in the sample.</p>
-            <ButtonLink href="/demo" variant="quiet" className="mt-6 gap-1.5">Take the product tour <Arrow className="h-3.5 w-3.5" /></ButtonLink>
+          <div className="grid gap-6 text-ink-2 lg:col-span-8">
+            <p>Setup is done with you, not handed to you: one working session, and we do the import. After that, email support from the people building BetterDesk.</p>
+            <p>During early access we don’t publish response-time guarantees. If something breaks, we’ll tell you plainly what happened and what we changed.</p>
           </div>
-          <ol className="divide-y divide-rule border-y border-rule lg:col-span-8">
-            {ONBOARDING.map(([k, v], i) => (
-              <li key={k} className="grid gap-1 py-5 sm:grid-cols-[3rem_14rem_1fr] sm:gap-6">
-                <span className="tabular text-[0.9375rem] text-muted">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="text-[1.0625rem] font-semibold">{k}</h3>
-                <p className="max-w-[50ch] text-[1rem] leading-relaxed text-ink-2">{v}</p>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 
-      <section aria-labelledby="faq-title" className="bg-mineral py-24 md:py-32">
-        <div className="wrap grid gap-10 lg:grid-cols-12">
-          <h2 id="faq-title" className="t-title lg:col-span-4">Straight answers.</h2>
-          <Faq items={FAQ} className="lg:col-span-8" />
+      <section className="wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <h2 className="t-title max-w-[12ch]">Connections, honestly.</h2>
+          <p className="mt-5 text-ink-2">Live means it works now. Demo means it works on sample data. Planned means it isn’t built.</p>
         </div>
+        <ul className="lg:col-span-8">
+          {INTEGRATIONS.map(([t, d, s]) => (
+            <li key={t} className="grid gap-1 border-b border-rule py-4 sm:grid-cols-[1fr_9rem] sm:gap-6">
+              <div>
+                <p className="font-[600]">{t}</p>
+                <p className="mt-0.5 text-[0.9375rem] text-muted">{d}</p>
+              </div>
+              <StatusMark status={s} className="sm:justify-end" />
+            </li>
+          ))}
+        </ul>
       </section>
 
-      <CloseCta />
+      <section className="border-t border-rule">
+        <div className="wrap flex flex-col gap-6 py-20 md:flex-row md:items-end md:justify-between md:py-24">
+          <h2 className="t-title max-w-[18ch]">Try it on a sample company first.</h2>
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
+            <ButtonLink href="/demo">Explore the product</ButtonLink>
+            <TextLink href="/pricing">Proposed pricing</TextLink>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

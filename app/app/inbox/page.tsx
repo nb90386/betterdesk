@@ -44,10 +44,10 @@ function Inbox() {
                 const waiting = last.direction === "inbound";
                 return (
                   <li key={c.id}>
-                    <button type="button" onClick={() => { router.replace(`/app/inbox?c=${c.id}`, { scroll: false }); setNote(null); setErr(null); }} aria-current={c.id === selId ? "true" : undefined} className="block w-full px-4 py-3 text-left hover:bg-mineral aria-[current=true]:bg-mineral">
+                    <button type="button" onClick={() => { router.replace(`/app/inbox?c=${c.id}`, { scroll: false }); setNote(null); setErr(null); }} aria-current={c.id === selId ? "true" : undefined} className="block w-full px-4 py-3 text-left hover:bg-stone aria-[current=true]:bg-stone">
                       <span className="flex items-baseline justify-between gap-2"><span className="truncate text-[0.875rem] font-medium">{account(ws, c.accountId)?.name}</span><span className="shrink-0 text-[0.75rem] text-muted">{fmtTime(last.at)}</span></span>
                       <span className="mt-0.5 block truncate text-[0.8125rem] text-muted">{last.body}</span>
-                      <span className={`mt-1 block text-[0.75rem] ${waiting ? "font-medium text-signal-ink" : "text-muted"}`}>{waiting ? `Waiting for you · ${INTENT[last.intent ?? "needs-review"]}` : "You replied"}</span>
+                      <span className={`mt-1 block text-[0.75rem] ${waiting ? "font-medium text-ink" : "text-muted"}`}>{waiting ? `Waiting for you · ${INTENT[last.intent ?? "needs-review"]}` : "You replied"}</span>
                     </button>
                   </li>
                 );
@@ -62,9 +62,9 @@ function Inbox() {
               <div className="border-b border-rule px-4 py-3"><p className="text-[0.9375rem] font-semibold">{conv.subject}</p><p className="text-[0.8125rem] text-muted">{conv.channel === "web-form" ? "Website form" : "Email"} · {contact?.email}</p></div>
               <ol className="flex-1 space-y-3 px-4 py-4">
                 {conv.messages.map((m) => (
-                  <li key={m.id} className={`max-w-[88%] rounded-[var(--radius-md)] px-3.5 py-2.5 text-[0.875rem] leading-relaxed ${m.direction === "inbound" ? "bg-mineral-2" : "ml-auto bg-ink text-mineral"}`}>
+                  <li key={m.id} className={`max-w-[88%] rounded-[var(--radius-md)] px-3.5 py-2.5 text-[0.875rem] leading-relaxed ${m.direction === "inbound" ? "bg-stone-2" : "ml-auto bg-ink text-stone"}`}>
                     <p className="whitespace-pre-line">{m.body}</p>
-                    <p className={`mt-1 text-[0.6875rem] ${m.direction === "inbound" ? "text-muted" : "text-mineral/70"}`}>{m.from} · {fmtTime(m.at)}{m.simulated ? " · sample" : ""}{m.intent ? ` · read as: ${INTENT[m.intent]}` : ""}</p>
+                    <p className={`mt-1 text-[0.6875rem] ${m.direction === "inbound" ? "text-muted" : "text-stone/70"}`}>{m.from} · {fmtTime(m.at)}{m.simulated ? " · sample" : ""}{m.intent ? ` · read as: ${INTENT[m.intent]}` : ""}</p>
                   </li>
                 ))}
               </ol>
