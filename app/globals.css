@@ -179,20 +179,6 @@
 .bd-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--color-signal); outline-offset: 2px; }
 .bd-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--color-signal); outline-offset: 2px; }
 
-/* Grain: one static, tiny, CSS-only noise layer (no SVG filter; cheap to paint). */
-.grain { position: relative; isolation: isolate; }
-.grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.35;
-  background-image:
-    repeating-radial-gradient(circle at 17% 32%, rgb(16 18 20 / 0.018) 0 1px, transparent 1px 3px),
-    repeating-radial-gradient(circle at 73% 61%, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4px);
-}
-
 /* Ringing call: the route leaves the handset as a single expanding arc, not a glow. */
 @keyframes bd-ring { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.6); opacity: 0; } }
 .ring-arc { transform-box: fill-box; transform-origin: center; animation: bd-ring 2.2s var(--ease-out) infinite; }

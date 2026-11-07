@@ -65,7 +65,7 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
 
   const field = (k: keyof Values, label: string, props: React.InputHTMLAttributes<HTMLInputElement> = {}, optional = false) => (
     <div>
-      <label htmlFor={`${uid}-${k}`} className="flex justify-between text-[0.9rem] font-medium text-ink">
+      <label htmlFor={`${uid}-${k}`} className="flex justify-between text-[0.9375rem] font-medium text-ink">
         {label}
         {optional ? <span className="font-normal text-muted">Optional</span> : null}
       </label>
@@ -76,11 +76,11 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
         onChange={set(k)}
         aria-invalid={!!errors[k] || undefined}
         aria-describedby={errors[k] ? `${uid}-${k}-err` : undefined}
-        className={`mt-1.5 block min-h-12 w-full rounded-[var(--radius-md)] border bg-surface px-3.5 text-[1rem] text-ink outline-none transition-colors focus:border-ink ${errors[k] ? "border-signal" : "border-rule-strong"}`}
+        className={`mt-1.5 block min-h-12 w-full rounded-[var(--radius-md)] border bg-surface px-3.5 text-[1rem] text-ink transition-colors focus:border-ink ${errors[k] ? "border-signal" : "border-rule-strong"}`}
         {...props}
       />
       {errors[k] ? (
-        <p id={`${uid}-${k}-err`} className="mt-1.5 text-[0.82rem] text-signal-ink">
+        <p id={`${uid}-${k}-err`} className="mt-1.5 text-[0.8125rem] text-signal-ink">
           {errors[k]}
         </p>
       ) : null}
@@ -91,17 +91,17 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
     const body = decodeURIComponent(sent.split("&body=")[1] ?? "");
     return (
       <div className="rounded-[var(--radius-lg)] border border-rule bg-surface p-6 sm:p-8" role="status">
-        <p className="text-[0.74rem] font-medium text-muted">Almost done</p>
-        <h2 className="mt-2 text-[1.9rem] leading-tight tracking-[-0.02em] text-ink">Your email app should now be open.</h2>
-        <p className="mt-3 text-[0.98rem] leading-relaxed text-ink-2">
+        <p className="text-[0.75rem] font-medium text-muted">Almost done</p>
+        <h2 className="mt-2 text-[1.75rem] leading-tight tracking-[-0.02em] text-ink">Your email app should now be open.</h2>
+        <p className="mt-3 text-[1rem] leading-relaxed text-ink-2">
           We&rsquo;ve filled in a message to <strong>{CONTACT_EMAIL}</strong>. Nothing is sent until you press send there. If no window opened,
           copy the message below and email it to us.
         </p>
-        <pre className="mt-5 max-h-60 overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] bg-porcelain-2 p-4 font-mono text-[0.8rem] text-ink">{body}</pre>
+        <pre className="mt-5 max-h-60 overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] bg-porcelain-2 p-4 font-mono text-[0.8125rem] text-ink">{body}</pre>
         <div className="mt-5 flex flex-wrap gap-3">
           <button
             type="button"
-            className="press min-h-11 rounded-[var(--radius-sm)] bg-ink px-5 text-[0.92rem] font-medium text-porcelain"
+            className="press min-h-11 rounded-[var(--radius-sm)] bg-ink px-5 text-[0.9375rem] font-medium text-porcelain"
             onClick={async () => {
               try {
                 await navigator.clipboard.writeText(`To: ${CONTACT_EMAIL}\n\n${body}`);
@@ -113,10 +113,10 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
           >
             {copied ? "Copied" : "Copy message"}
           </button>
-          <a href={sent} className="press inline-flex min-h-11 items-center rounded-[var(--radius-sm)] border border-rule-strong px-5 text-[0.92rem] text-ink">
+          <a href={sent} className="press inline-flex min-h-11 items-center rounded-[var(--radius-sm)] border border-rule-strong px-5 text-[0.9375rem] text-ink">
             Open email again
           </a>
-          <button type="button" className="min-h-11 px-2 text-[0.92rem] text-muted underline underline-offset-4" onClick={() => setSent(null)}>
+          <button type="button" className="min-h-11 px-2 text-[0.9375rem] text-muted underline underline-offset-4" onClick={() => setSent(null)}>
             Edit details
           </button>
         </div>
@@ -134,7 +134,7 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor={`${uid}-type`} className="flex justify-between text-[0.9rem] font-medium text-ink">
+          <label htmlFor={`${uid}-type`} className="flex justify-between text-[0.9375rem] font-medium text-ink">
             Type of business <span className="font-normal text-muted">Optional</span>
           </label>
           <select id={`${uid}-type`} value={v.type} onChange={set("type")} className="mt-1.5 block min-h-12 w-full appearance-none rounded-[var(--radius-md)] border border-rule-strong bg-surface bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><path d=%22m4 6 4 4 4-4%22 fill=%22none%22 stroke=%22%2355585e%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-[length:16px] bg-[right_0.85rem_center] bg-no-repeat pl-3 pr-10 text-[1rem] text-ink focus:border-ink">
@@ -145,7 +145,7 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
           </select>
         </div>
         <div>
-          <label htmlFor={`${uid}-plan`} className="flex justify-between text-[0.9rem] font-medium text-ink">
+          <label htmlFor={`${uid}-plan`} className="flex justify-between text-[0.9375rem] font-medium text-ink">
             Plan you&rsquo;re considering <span className="font-normal text-muted">Optional</span>
           </label>
           <select id={`${uid}-plan`} value={v.plan} onChange={set("plan")} className="mt-1.5 block min-h-12 w-full appearance-none rounded-[var(--radius-md)] border border-rule-strong bg-surface bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><path d=%22m4 6 4 4 4-4%22 fill=%22none%22 stroke=%22%2355585e%22 stroke-width=%221.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>')] bg-[length:16px] bg-[right_0.85rem_center] bg-no-repeat pl-3 pr-10 text-[1rem] text-ink focus:border-ink">
@@ -159,7 +159,7 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
         </div>
       </div>
       <div>
-        <label htmlFor={`${uid}-message`} className="flex justify-between text-[0.9rem] font-medium text-ink">
+        <label htmlFor={`${uid}-message`} className="flex justify-between text-[0.9375rem] font-medium text-ink">
           How do calls and messages reach you today? <span className="font-normal text-muted">Optional</span>
         </label>
         <textarea
@@ -170,15 +170,15 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
           maxLength={2200}
           aria-invalid={!!errors.message || undefined}
           placeholder="e.g. One office line, a cell for after hours, a form on our website. Google Calendar for bookings."
-          className={`mt-1.5 block w-full rounded-[var(--radius-md)] border bg-surface px-3.5 py-3 text-[1rem] text-ink outline-none placeholder:text-muted focus:border-ink ${errors.message ? "border-signal" : "border-rule-strong"}`}
+          className={`mt-1.5 block w-full rounded-[var(--radius-md)] border bg-surface px-3.5 py-3 text-[1rem] text-ink placeholder:text-muted focus:border-ink ${errors.message ? "border-signal" : "border-rule-strong"}`}
         />
-        {errors.message ? <p className="mt-1.5 text-[0.82rem] text-signal-ink">{errors.message}</p> : null}
+        {errors.message ? <p className="mt-1.5 text-[0.8125rem] text-signal-ink">{errors.message}</p> : null}
       </div>
       <div className="flex flex-col gap-4 border-t border-rule pt-5 sm:flex-row sm:items-center sm:justify-between">
-        <p className="max-w-[44ch] text-[0.82rem] leading-relaxed text-muted">
+        <p className="max-w-[44ch] text-[0.8125rem] leading-relaxed text-muted">
           Pressing the button opens your email app with this message addressed to {CONTACT_EMAIL}. Nothing is sent until you press send there.
         </p>
-        <button type="submit" className="press min-h-12 shrink-0 rounded-[var(--radius-sm)] bg-ink px-6 text-[0.95rem] font-medium text-porcelain hover:bg-ink-2">
+        <button type="submit" className="press min-h-12 shrink-0 rounded-[var(--radius-sm)] bg-ink px-6 text-[0.9375rem] font-medium text-porcelain hover:bg-ink-2">
           Write the email
         </button>
       </div>

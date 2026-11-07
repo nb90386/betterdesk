@@ -177,3 +177,13 @@ test("header turns to graphite over the dark act", async ({ page }) => {
   });
   await expect(header).toHaveAttribute("data-dark", "true");
 });
+
+test("without JavaScript the story is still readable", async ({ browser }) => {
+  const ctx = await browser.newContext({ javaScriptEnabled: false });
+  const page = await ctx.newPage();
+  await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Every inquiry deserves an answer.");
+  await expect(page.getByText("With BetterDesk, she has a text in", { exact: false })).toBeVisible();
+  await expect(page.getByText("It offers two real openings from Marco", { exact: false }).first()).toBeVisible();
+  await ctx.close();
+});

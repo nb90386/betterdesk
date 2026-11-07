@@ -50,7 +50,7 @@ export function MissedMoment() {
                   key={i}
                   aria-current={i === beat ? "step" : undefined}
                   className={`max-w-[26ch] text-[1.0625rem] font-[550] leading-[1.18] tracking-[-0.022em] transition-[color,opacity,transform] duration-500 sm:text-[1.6rem] md:text-[2rem] [font-stretch:96%] ${
-                    i === beat ? "text-ink" : i < beat ? "text-muted" : "translate-y-2 opacity-0"
+                    i === beat ? "text-ink" : i < beat ? "text-muted" : "text-muted [.js_&]:translate-y-2 [.js_&]:opacity-0"
                   }`}
                 >
                   {i === 3 ? <span className="mr-2 inline-block h-2.5 w-2.5 -translate-y-[0.15em] rounded-full bg-signal align-middle" aria-hidden="true" /> : null}

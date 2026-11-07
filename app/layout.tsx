@@ -56,8 +56,10 @@ const orgJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${instrument.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${instrument.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh">
+        {/* Marks the page as scripted before paint, so scroll-revealed content is only hidden when JS can reveal it. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[100] focus:rounded-[8px] focus:bg-ink focus:px-4 focus:py-2 focus:text-porcelain"

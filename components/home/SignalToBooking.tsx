@@ -72,6 +72,7 @@ export function SignalToBooking({ id = "conversation", headingLevel = 2 }: { id?
   }
 
   return (
+    <>
     <section id={id} ref={ref} data-tone="dark" data-pinned aria-labelledby={`${id}-title`} className="tone-dark relative h-[520vh] bg-graphite">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         {/* Stage light: a single soft pool behind the thread, the only light in the room */}
@@ -128,6 +129,20 @@ export function SignalToBooking({ id = "conversation", headingLevel = 2 }: { id?
         ))}
       </ol>
     </section>
+      {/* Without JavaScript the stage can't advance: show the whole conversation as text instead. */}
+      <noscript>
+        <div className="tone-dark bg-graphite"><div className="wrap pb-24">
+          <ol className="max-w-2xl space-y-6 rounded-[var(--radius-lg)] bg-graphite-2 p-6">
+            {STATIONS.map((s) => (
+              <li key={s.id}>
+                <p className="t-label">{s.time} · {s.label}</p>
+                <p className="mt-1 text-graphite-ink">{s.caption}</p>
+              </li>
+            ))}
+          </ol>
+        </div></div>
+      </noscript>
+    </>
   );
 }
 
