@@ -66,8 +66,7 @@ export function TrustStrip({ className = "" }: { className?: string }) {
     <div className={`grid gap-6 rounded-[var(--radius-xl)] bg-card p-7 shadow-[var(--shadow-card)] md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-10 ${className}`}>
       <p className="display max-w-[30ch] text-[clamp(1.45rem,1.05rem+1.4vw,2.2rem)] leading-[1.12] text-ink">
         It says <span className={mark}>only what you&rsquo;ve approved</span>, hands emergencies and complaints{" "}
-        <span className={mark}>to a person</span>, starts with <span className={mark}>every reply waiting for your OK</span>, and runs{" "}
-        <span className={mark}>month to month</span>.
+        <span className={mark}>to a person</span>, starts with every reply waiting for your OK, and runs month to month.
       </p>
       <p className="max-w-[30ch] text-[0.88rem] leading-relaxed text-ink-2 md:text-right">
         When a customer asks something it hasn&rsquo;t been taught, it says it will check and passes the question on. Setup is with a real person.

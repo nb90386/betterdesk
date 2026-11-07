@@ -15,11 +15,12 @@ export const toneClass: Record<Tone, string> = {
   ink: "bg-ink text-card border-ink",
 };
 
-export function LeadJourney({ scenarioIds, compact = false, autoplay = false }: { scenarioIds?: string[]; compact?: boolean; autoplay?: boolean }) {
+export function LeadJourney({ scenarioIds, compact = false, autoplay = false, startAtEnd = false }: { scenarioIds?: string[]; compact?: boolean; autoplay?: boolean; startAtEnd?: boolean }) {
   const scenarios = scenarioIds ? SCENARIOS.filter((s) => scenarioIds.includes(s.id)) : SCENARIOS;
   const [scenarioId, setScenarioId] = useState(scenarios[0].id);
   const [mode, setMode] = useState<"with" | "without">("with");
-  const [idx, setIdx] = useState(0);
+  // startAtEnd: open on the finished thread (clamped to the last step); Replay walks it from the top.
+  const [idx, setIdx] = useState(startAtEnd ? Number.MAX_SAFE_INTEGER : 0);
   const [playing, setPlaying] = useState(false);
   const reduce = useReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);

@@ -84,12 +84,12 @@ export default function Home() {
                   Watch a sample call
                 </ButtonLink>
               </div>
-              <p className="mt-8 hidden text-[0.85rem] leading-relaxed text-night-muted lg:block">
+              <p className="mt-8 hidden text-[0.85rem] leading-relaxed text-[#c9ccd1] lg:block">
                 For plumbers, salons, clinics and shops that run on appointments. Plans from $149 a month, setup with a real person.
               </p>
             </div>
             <NightDesk />
-            <p className="text-[0.85rem] leading-relaxed text-night-muted lg:hidden">
+            <p className="text-[0.85rem] leading-relaxed text-[#c9ccd1] lg:hidden">
               For plumbers, salons, clinics and shops that run on appointments. Plans from $149 a month, setup with a real person.
             </p>
           </div>
@@ -128,18 +128,18 @@ export default function Home() {
       <TwoEndings />
 
       {/* ---------------- Interactive walkthrough (pearl, morning) ---------------- */}
-      <section className="pb-16 pt-14 md:pb-24 md:pt-20" aria-labelledby="walk-title">
+      <section className="on-night lamp-ground relative pb-16 pt-14 md:pb-24 md:pt-20" aria-labelledby="walk-title">
         <div className="container-bd">
           <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <SectionHeading id="walk-title" title="Now step through it yourself.">
-              <p>Play the missed call at Ridgeline step by step, or flip to &ldquo;Without&rdquo; and watch the same evening go differently.</p>
+              <p>Here is the finished thread. Replay it step by step, or flip to &ldquo;Without&rdquo; and watch the same evening go differently.</p>
             </SectionHeading>
             <Link href="/demo" className="reveal text-[0.95rem] font-medium text-ink underline decoration-rule-strong underline-offset-[6px] hover:decoration-ink">
               More scenarios: salon, cleaning
             </Link>
           </div>
-          <div className="reveal mt-12">
-            <LeadJourney scenarioIds={["missed-call"]} autoplay />
+          <div className="on-pearl reveal mt-12 rounded-[var(--radius-xl)] bg-card shadow-[var(--shadow-pearl-on-night)]">
+            <LeadJourney scenarioIds={["missed-call"]} startAtEnd />
           </div>
         </div>
       </section>
