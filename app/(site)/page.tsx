@@ -115,7 +115,7 @@ export default function Home() {
           <SampleNote>Real audit logic, run in your browser on the fictional Clearline site.</SampleNote>
           <div className="flex flex-wrap gap-x-7">
             <TextLink href="/product/presence#check">Check your own website</TextLink>
-            <TextLink href="/resources/ai-search-for-service-businesses">What AI search changes, plainly</TextLink>
+            <TextLink href="/resources/guides/ai-search-for-service-businesses">What AI search changes, plainly</TextLink>
           </div>
         </div>
       </section>

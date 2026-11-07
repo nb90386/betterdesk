@@ -1,23 +1,30 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { loadGuide } from "@/lib/marketing/guides";
+import { GUIDES, loadGuide } from "@/lib/marketing/guides";
 import { Markdown } from "@/lib/marketing/markdown";
 import { ButtonLink, TextLink } from "@/components/site/primitives";
 import { SITE_URL } from "@/lib/site";
 
-const SLUG = "ai-search-for-service-businesses";
+type Props = { params: Promise<{ slug: string }> };
 
-export function generateMetadata(): Metadata {
-  const g = loadGuide(SLUG);
-  return { title: g?.meta.title ?? "Guide", description: g?.meta.description, alternates: { canonical: `/resources/${SLUG}` }, openGraph: { type: "article" } };
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return GUIDES.map((g) => ({ slug: g.slug }));
 }
 
-export default function Guide() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const g = loadGuide(slug);
+  return { title: g?.meta.title ?? "Guide", description: g?.meta.description, alternates: { canonical: `/resources/guides/${slug}` }, openGraph: { type: "article" } };
+}
+
+export default async function Guide({ params }: Props) {
+  const { slug: SLUG } = await params;
   const g = loadGuide(SLUG);
   if (!g) notFound();
   const toc = g.blocks.filter((b) => b.t === "h" && b.level === 2) as { text: string; id: string }[];
   const updated = new Date(`${g.meta.updated}T12:00:00Z`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
-  const jsonLd = { "@context": "https://schema.org", "@type": "Article", headline: g.meta.title, description: g.meta.description, dateModified: g.meta.updated, author: { "@type": "Organization", name: "BetterDesk" }, mainEntityOfPage: `${SITE_URL}/resources/${SLUG}` };
+  const jsonLd = { "@context": "https://schema.org", "@type": "Article", headline: g.meta.title, description: g.meta.description, dateModified: g.meta.updated, author: { "@type": "Organization", name: "BetterDesk" }, mainEntityOfPage: `${SITE_URL}/resources/guides/${SLUG}` };
   return (
     <article className="wrap pb-24 pt-32 md:pt-40">
       <div className="grid gap-12 lg:grid-cols-12">

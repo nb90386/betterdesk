@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "motion/react";
-import { SPRING } from "@/lib/motion";
+import { FADE, SPRING } from "@/lib/motion";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { runSampleAudit } from "@/lib/presence/sample";
 import type { Finding, PresenceReport } from "@/lib/presence/types";
@@ -55,6 +56,7 @@ const path = (u: string) => {
 
 export function PresenceExplorer({ report: given, compact = false }: { report?: PresenceReport; compact?: boolean }) {
   const reduce = useReducedMotionSafe();
+  const desktop = useMediaQuery("(min-width: 1024px)");
   const report = useMemo(() => given ?? runSampleAudit(), [given]);
   const findings = compact ? report.findings.filter((f) => f.severity !== "info").slice(0, 6) : report.findings;
   const [selected, setSelected] = useState(findings[0]?.id ?? "");
@@ -73,7 +75,7 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
   };
 
   const inspector = f ? (
-    <motion.div key={f.id} initial={reduce ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0, transition: ENTER }} className="paper p-5 [overflow-wrap:anywhere] sm:p-6">
+    <motion.div key={f.id} initial={{ opacity: 0 }} animate={{ opacity: 1, transition: FADE }} className="paper p-5 [overflow-wrap:anywhere] sm:p-6">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.8125rem] text-muted">
         <span>{CATEGORY[f.category]}</span>
         <span>{SEVERITY[f.severity].label}</span>
@@ -154,10 +156,17 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
                   <button
                     type="button"
                     aria-pressed={on}
-                    onClick={() => setSelected(x.id)}
+                    onClick={(e) => {
+                      setSelected(x.id);
+                      // Below lg the inspector opens inline under the row; keep the row you tapped in view.
+                      if (!desktop) {
+                        const row = e.currentTarget;
+                        requestAnimationFrame(() => row.scrollIntoView({ block: "nearest" }));
+                      }
+                    }}
                     className="group relative isolate flex w-full items-start gap-3 py-3.5 text-left"
                   >
-                    {on ? <motion.span layoutId="finding-cursor" transition={reduce ? { duration: 0 } : SPRING.snap} className="absolute inset-y-1 -inset-x-3 -z-10 rounded-[8px] bg-paper shadow-[var(--shadow-paper)]" aria-hidden="true" /> : null}
+                    {on ? <motion.span layoutId={desktop ? "finding-cursor" : undefined} transition={reduce ? { duration: 0 } : SPRING.snap} style={{ borderRadius: 8 }} className="absolute inset-y-1 -inset-x-3 -z-10 bg-paper shadow-[var(--shadow-paper)]" aria-hidden="true" /> : null}
                     <span className="mt-[0.45rem] grid w-2 place-items-center" aria-hidden="true"><span className={SEVERITY[x.severity].mark} /></span>
                     <span className="min-w-0 flex-1">
                       <span className={`block text-[0.9688rem] leading-snug ${on ? "font-[600] text-ink" : "text-ink-2 group-hover:text-ink"}`}>{x.title}</span>
@@ -180,7 +189,7 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
 
       <div className="hidden lg:col-span-6 lg:block">
         <div className="sticky top-24">
-          <AnimatePresence mode="wait" initial={false}>{inspector}</AnimatePresence>
+          <AnimatePresence initial={false}>{inspector}</AnimatePresence>
           <div className={report.method === "live" ? "mt-5 hidden" : "mt-5"}>
             <p className="t-label">Tasks from this audit</p>
             {tasks.length === 0 ? (

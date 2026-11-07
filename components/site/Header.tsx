@@ -15,11 +15,22 @@ const MENUS = [
 type MenuId = (typeof MENUS)[number]["id"];
 
 const ENTER = SPRING.ui;
-const EXIT = SPRING.snap;
+// Exits are quicker than entrances (a system response snaps); a navigation closes them instantly.
+const EXIT = { duration: 0.14, ease: [0.23, 1, 0.32, 1] } as const;
+const POPOVER = {
+  closed: { opacity: 0, scale: 0.96, y: -4, filter: "blur(4px)" },
+  exit: (fast: boolean) => (fast ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0, scale: 0.97, y: -3, transition: EXIT }),
+};
+const SHEET = {
+  exit: (fast: boolean) => (fast ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0, y: -10, transition: EXIT }),
+};
 
 export function Header() {
   const pathname = usePathname();
   const [menu, setMenu] = useState<MenuId | null>(null); // which popover is open
+  const [navFast, setNavFast] = useState(false); // a link was activated: close instantly, don't animate over the new page
+  const openMenu = MENUS.find((m) => m.id === menu) ?? null;
+  const [anchor, setAnchor] = useState({ x: 0, w: 96 }); // the open trigger's position, captured when it's pressed
   const [sheet, setSheet] = useState(false); // mobile sheet
   const [scrolled, setScrolled] = useState(false);
   const [lastPath, setLastPath] = useState(pathname);
@@ -82,12 +93,14 @@ export function Header() {
     };
   }, [sheet]);
 
-  // Release the sheet's scroll lock before navigation starts (not after the new route commits):
-  // iOS Safari can drop a programmatic scroll-to-top while <html> is overflow:hidden.
+  // Runs in the bubble phase, after next/link has started the client navigation (closing in the capture phase
+  // unmounts the link before its handler runs, which turns the click into a full page load). It still releases
+  // the scroll lock before the new route commits: iOS Safari can drop a scroll-to-top while <html> is overflow:hidden.
   const releaseOnNavigate = (e: React.MouseEvent) => {
     if (!(e.target as HTMLElement).closest("a[href]")) return;
     document.documentElement.style.overflow = "";
     document.querySelectorAll<HTMLElement>("#main, #site-footer").forEach((el) => (el.inert = false));
+    setNavFast(true);
     setSheet(false);
     setMenu(null);
   };
@@ -97,8 +110,8 @@ export function Header() {
   return (
     <header
       data-scrolled={scrolled || sheet || undefined}
-      className={`site-bar fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-[background-color,box-shadow] duration-300 ${
-        scrolled || sheet ? "bg-stone/80 backdrop-blur-xl backdrop-saturate-150" : "bg-stone/0"
+      className={`site-bar fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-[background-color,box-shadow] duration-200 ease-[var(--ease-out)] ${
+        sheet ? "bg-stone" : scrolled ? "bg-stone/80 backdrop-blur-md backdrop-saturate-150" : "bg-stone/0"
       }`}
     >
       <div className="wrap flex h-[4.25rem] items-center gap-4 lg:gap-8">
@@ -106,13 +119,13 @@ export function Header() {
           <Logo />
         </Link>
 
-        <nav aria-label="Main" className="mr-auto hidden md:block">
+        <nav aria-label="Main" className="relative mr-auto hidden md:block">
           <ul className="flex items-center gap-1">
             {MENUS.map((m) => {
               const isOpen = menu === m.id;
               const isActive = m.items.some((it) => active(it.href));
               return (
-                <li key={m.id} className="relative">
+                <li key={m.id}>
                   <button
                     ref={(el) => {
                       triggerRefs.current[m.id] = el;
@@ -120,7 +133,11 @@ export function Header() {
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={isOpen ? popId : undefined}
-                    onClick={() => setMenu((cur) => (cur === m.id ? null : m.id))}
+                    onClick={(e) => {
+                      setNavFast(false);
+                      setAnchor({ x: e.currentTarget.offsetLeft, w: e.currentTarget.offsetWidth });
+                      setMenu((cur) => (cur === m.id ? null : m.id));
+                    }}
                     className={`inline-flex h-10 items-center gap-1.5 rounded-[var(--radius-sm)] px-3 text-[0.9375rem] transition-colors hover:text-ink ${isActive || isOpen ? "text-ink" : "text-ink-2"}`}
                   >
                     {m.label}
@@ -128,36 +145,6 @@ export function Header() {
                       <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                     </motion.svg>
                   </button>
-                  <AnimatePresence>
-                    {isOpen ? (
-                      <motion.div
-                        ref={popRef}
-                        id={popId}
-                        onClickCapture={releaseOnNavigate}
-                        initial={{ opacity: 0, scale: 0.96, y: -4, filter: "blur(4px)" }}
-                        animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)", transition: SPRING.snap }}
-                        exit={{ opacity: 0, scale: 0.97, y: -3, filter: "blur(2px)", transition: EXIT }}
-                        style={{ transformOrigin: "24px 0px" }}
-                        className="absolute left-0 top-[calc(100%+8px)] w-[26rem] rounded-[var(--radius-md)] bg-paper p-2 shadow-[var(--shadow-pop)]"
-                      >
-                        <ul>
-                          {m.items.map((it, i) => (
-                            <motion.li key={it.href} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0, transition: { ...SPRING.ui, delay: 0.03 * i } }}>
-                              {i === m.dividerAt ? <div className="mx-3 my-1.5 h-px bg-rule" aria-hidden="true" /> : null}
-                              <Link
-                                href={it.href}
-                                aria-current={active(it.href) ? "page" : undefined}
-                                className="group flex items-baseline gap-4 rounded-[var(--radius-sm)] px-3 py-2.5 hover:bg-stone-2 focus-visible:bg-stone-2"
-                              >
-                                <span className="w-[9rem] shrink-0 font-[600] text-ink">{it.label}</span>
-                                <span className="text-[0.875rem] leading-snug text-muted">{it.line}</span>
-                              </Link>
-                            </motion.li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    ) : null}
-                  </AnimatePresence>
                 </li>
               );
             })}
@@ -173,6 +160,39 @@ export function Header() {
               </li>
             ))}
           </ul>
+          <AnimatePresence custom={navFast}>
+            {openMenu ? (
+              <motion.div
+                key="popover"
+                ref={popRef}
+                id={popId}
+                custom={navFast}
+                onClick={releaseOnNavigate}
+                variants={POPOVER}
+                initial="closed"
+                animate={{ opacity: 1, scale: 1, y: 0, x: anchor.x, filter: "blur(0px)", transition: { ...SPRING.snap, x: SPRING.ui } }}
+                exit="exit"
+                style={{ transformOrigin: `${anchor.w / 2}px -8px`, x: anchor.x }}
+                className="absolute left-0 top-[calc(100%+8px)] w-[26rem] rounded-[var(--radius-md)] bg-paper p-2 shadow-[var(--shadow-pop)]"
+              >
+                <ul>
+                  {openMenu.items.map((it, i) => (
+                    <li key={it.href}>
+                      {i === openMenu.dividerAt ? <div className="mx-3 my-1.5 h-px bg-rule" aria-hidden="true" /> : null}
+                      <Link
+                        href={it.href}
+                        aria-current={active(it.href) ? "page" : undefined}
+                        className="group flex items-baseline gap-4 rounded-[var(--radius-sm)] px-3 py-2.5 hover:bg-stone-2 focus-visible:bg-stone-2"
+                      >
+                        <span className="w-[9rem] shrink-0 font-[600] text-ink">{it.label}</span>
+                        <span className="text-[0.875rem] leading-snug text-muted">{it.line}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
         </nav>
 
         <div className="ml-auto flex items-center gap-2 md:ml-0">
@@ -192,12 +212,15 @@ export function Header() {
             aria-expanded={sheet}
             aria-controls="mobile-menu"
             aria-label={sheet ? "Close menu" : "Open menu"}
-            onClick={() => setSheet((o) => !o)}
+            onClick={() => {
+              setNavFast(false);
+              setSheet((o) => !o);
+            }}
           >
             <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden="true">
               <motion.path
                 initial={false}
-                animate={{ d: sheet ? "M5 5L15 15" : "M3 7.5H17" }}
+                animate={{ d: sheet ? "M5 5L15 15" : "M3 7.5L17 7.5" }}
                 transition={ENTER}
                 stroke="currentColor"
                 strokeWidth="1.5"
@@ -205,7 +228,7 @@ export function Header() {
               />
               <motion.path
                 initial={false}
-                animate={{ d: sheet ? "M15 5L5 15" : "M3 12.5H17" }}
+                animate={{ d: sheet ? "M15 5L5 15" : "M3 12.5L17 12.5" }}
                 transition={ENTER}
                 stroke="currentColor"
                 strokeWidth="1.5"
@@ -216,25 +239,27 @@ export function Header() {
         </div>
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence custom={navFast}>
         {sheet ? (
           <motion.div
             id="mobile-menu"
+            custom={navFast}
+            variants={SHEET}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0, transition: ENTER }}
-            exit={{ opacity: 0, y: -10, transition: EXIT }}
+            exit="exit"
             className="h-[calc(100dvh-4.25rem-env(safe-area-inset-top))] pb-[env(safe-area-inset-bottom)] overflow-y-auto bg-stone md:hidden"
           >
-            <nav aria-label="Mobile" onClickCapture={releaseOnNavigate} className="wrap flex min-h-full flex-col pb-8 pt-2">
+            <nav aria-label="Mobile" onClick={releaseOnNavigate} className="wrap flex min-h-full flex-col pb-8 pt-2">
               <p className="t-label pt-4">Product</p>
               <ul className="mt-2">
-                {PRODUCT_MENU.map((m, i) => (
-                  <motion.li key={m.href} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0, transition: { ...ENTER, delay: 0.03 * i } }} className="border-b border-rule">
+                {PRODUCT_MENU.map((m) => (
+                  <li key={m.href} className="border-b border-rule">
                     <Link href={m.href} aria-current={active(m.href) ? "page" : undefined} className="flex min-h-14 flex-col justify-center py-2">
                       <span className="text-[1.25rem] font-[600] tracking-[-0.02em]">{m.label}</span>
                       <span className="text-[0.875rem] text-muted">{m.line}</span>
                     </Link>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
               <p className="t-label pt-6">Solutions</p>

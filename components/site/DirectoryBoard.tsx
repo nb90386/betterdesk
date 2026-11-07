@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, useInView } from "motion/react";
-import { SPRING } from "@/lib/motion";
+import { LayoutGroup, motion, useInView } from "motion/react";
+import { FADE, SPRING } from "@/lib/motion";
 import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { runSampleAudit } from "@/lib/presence/sample";
 
@@ -29,7 +29,7 @@ const STEPS = [
 ] as const;
 
 const MOVE = { layout: SPRING.move };
-const SWAP_IN = SPRING.ui;
+
 const LINE_GRID = "grid grid-cols-[0.75rem_1fr_auto] items-baseline gap-x-3 md:grid-cols-[0.75rem_minmax(11rem,15rem)_1fr_auto]";
 
 export function DirectoryBoard() {
@@ -84,7 +84,7 @@ export function DirectoryBoard() {
       <LayoutGroup id="directory">
         <ol aria-label="Floors, from customer at the top to first found at the bottom">
           {FLOORS.map((f) => (
-            <li key={f.n} className="grid grid-cols-[2.25rem_1fr] gap-x-3 border-b border-rule px-5 py-3.5 last:border-b-0 sm:px-7 md:grid-cols-[2.5rem_9rem_1fr]">
+            <motion.li key={f.n} layout={reduce ? undefined : "position"} transition={MOVE} className="grid grid-cols-[2.25rem_1fr] gap-x-3 border-b border-rule px-5 py-3.5 last:border-b-0 sm:px-7 md:grid-cols-[2.5rem_9rem_1fr]">
               <span className="text-[1.375rem] font-[600] leading-none tabular-nums text-muted" aria-hidden="true">{f.n}</span>
               <h3 className="mb-2 text-[0.8125rem] font-[600] text-ink md:mb-0 md:pt-0.5">
                 <span className="sr-only">Floor {f.n}: </span>
@@ -93,29 +93,32 @@ export function DirectoryBoard() {
               </h3>
               <ul className="col-start-2 flex flex-col gap-2.5 md:col-start-3 md:row-start-1">
                 {s.floor === f.n ? (
-                  <motion.li key="journey" layoutId="journey-line" transition={reduce ? { duration: 0 } : MOVE} className="relative z-10 -mx-2.5 rounded-[8px] bg-graphite-3 px-2.5 py-2 shadow-[var(--shadow-held)]">
-                    <div className={LINE_GRID}>
+                  <motion.li
+                    key={reduce ? `journey-${f.n}` : "journey"}
+                    layoutId={reduce ? undefined : "journey-line"}
+                    layout={reduce ? undefined : "position"}
+                    transition={MOVE}
+                    initial={reduce ? { opacity: 0 } : false}
+                    animate={reduce ? { opacity: 1, transition: FADE } : undefined}
+                    style={{ borderRadius: 8 }}
+                    className="relative z-10 -mx-2.5 bg-graphite-3 px-2.5 py-2 shadow-[var(--shadow-held)]"
+                  >
+                    {/* The row arrives first; what it now says lands while the spring is still closing. */}
+                    <motion.div
+                      key={step}
+                      className={LINE_GRID}
+                      initial={reduce ? false : { opacity: 0.25, filter: "blur(3px)" }}
+                      animate={{ opacity: 1, filter: "blur(0px)", transition: { ...SPRING.ui, delay: reduce ? 0 : 0.28 } }}
+                    >
                       <span className={`${s.needsYou ? "mark-lamp" : "mark-off"} self-center`} aria-hidden="true" />
                       <span className="font-[600] text-ink">Juniper Lane Law</span>
-                      <span className="relative col-start-2 row-start-2 min-h-[1.4em] min-w-0 text-[0.875rem] text-ink-2 md:col-start-3 md:row-start-1">
-                        <AnimatePresence mode="popLayout" initial={false}>
-                          <motion.span
-                            key={step}
-                            className="block"
-                            initial={reduce ? false : { opacity: 0, filter: "blur(3px)", y: 4 }}
-                            animate={{ opacity: 1, filter: "blur(0px)", y: 0, transition: { ...SWAP_IN, delay: reduce ? 0 : 0.55 } }}
-                            exit={{ opacity: 0, transition: { duration: 0.12 } }}
-                          >
-                            {s.detail}
-                          </motion.span>
-                        </AnimatePresence>
-                      </span>
+                      <span className="col-start-2 row-start-2 min-w-0 text-[0.875rem] text-ink-2 md:col-start-3 md:row-start-1">{s.detail}</span>
                       <span className={`col-start-3 row-start-1 text-right text-[0.875rem] font-[600] tabular-nums md:col-start-4 ${s.needsYou ? "text-lamp-ink" : "text-ink"}`}>{s.right}</span>
-                    </div>
+                    </motion.div>
                   </motion.li>
                 ) : null}
                 {f.lines.map((l) => (
-                  <li key={l.name} className={LINE_GRID}>
+                  <motion.li key={l.name} layout={reduce ? undefined : "position"} transition={MOVE} className={LINE_GRID}>
                     <span className="mark-off self-center" aria-hidden="true" />
                     <span className="font-[560] text-ink-2">{l.name}</span>
                     <span className="col-start-2 row-start-2 flex min-w-0 items-baseline text-[0.875rem] text-muted md:col-start-3 md:row-start-1">
@@ -123,10 +126,10 @@ export function DirectoryBoard() {
                       <span className="leader hidden md:block" aria-hidden="true" />
                     </span>
                     <span className="col-start-3 row-start-1 text-right text-[0.875rem] tabular-nums text-muted md:col-start-4">{l.right}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
-            </li>
+            </motion.li>
           ))}
         </ol>
       </LayoutGroup>

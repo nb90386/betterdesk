@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion, LayoutGroup } from "motion/react";
+import { SPRING } from "@/lib/motion";
 import { useWorkspace } from "@/lib/demo/store";
 import { STAGES, STAGE_LABEL, type Stage } from "@/lib/domain/types";
 import * as A from "@/lib/workspace/actions";
@@ -15,7 +16,7 @@ export default function PipelinePage() {
       <PageHeader title="Pipeline" lede="Stages describe the deal, not message delivery. Move a card with its stage menu; every change is recorded with who made it." />
       <p className="text-[0.8125rem] text-muted">Nine stages. Scroll sideways for Proposal, Won and Lost.</p>
       <LayoutGroup>
-        <div className="-mx-4 [mask-image:linear-gradient(to_right,black_92%,transparent)] overflow-x-auto px-4 pb-2 md:-mx-8 md:px-8" role="region" aria-label="Pipeline board, scrolls sideways" tabIndex={0}>
+        <motion.div layoutScroll className="-mx-4 [mask-image:linear-gradient(to_right,black_92%,transparent)] overflow-x-auto px-4 pb-2 md:-mx-8 md:px-8" role="region" aria-label="Pipeline board, scrolls sideways" tabIndex={0}>
           <ol className="grid min-w-[100rem] grid-cols-9 gap-3">
             {STAGES.map((s) => {
               const opps = ws.opportunities.filter((o) => o.stage === s);
@@ -26,7 +27,7 @@ export default function PipelinePage() {
                     {opps.map((o) => {
                       const a = account(ws, o.accountId)!;
                       return (
-                        <motion.li layout layoutId={o.id} key={o.id} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="rounded-[var(--radius-sm)] border border-rule bg-surface p-2.5 shadow-[var(--shadow-paper)]">
+                        <motion.li layoutId={o.id} key={o.id} transition={SPRING.move} className="rounded-[var(--radius-sm)] border border-rule bg-surface p-2.5 shadow-[var(--shadow-paper)]">
                           <Link href={`/app/customers/${a.id}`} className="block text-[0.8125rem] font-medium leading-snug hover:underline">{a.name}</Link>
                           <div className="mt-1"><TierMark q={qualOf(ws, a.id)} /></div>
                           <p className="mt-1 line-clamp-2 text-[0.75rem] text-muted">{o.nextAction}</p>
@@ -45,7 +46,7 @@ export default function PipelinePage() {
               );
             })}
           </ol>
-        </div>
+        </motion.div>
       </LayoutGroup>
     </div>
   );

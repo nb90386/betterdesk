@@ -177,7 +177,7 @@ export default function PresencePage() {
           </div>
           <div className="flex flex-wrap gap-x-7 gap-y-3 lg:col-span-5 lg:justify-end">
             <ButtonLink href="/demo">Try the demo</ButtonLink>
-            <TextLink href="/resources/ai-search-for-service-businesses">Read the plain guide</TextLink>
+            <TextLink href="/resources/guides/ai-search-for-service-businesses">Read the plain guide</TextLink>
           </div>
         </div>
       </section>

@@ -10,6 +10,10 @@ import { CONTACT_EMAIL } from "@/lib/site";
 type Phase = { kind: "editing" } | { kind: "sending" } | { kind: "sent"; id: string } | { kind: "blocked"; message: string } | { kind: "failed"; message: string };
 const EMPTY: ReviewInput = { business: "", website: "", serviceArea: "", kind: "Commercial cleaning", name: "", email: "", phone: "", pain: "", note: "", heardFrom: "", consent: false };
 const ENTER = SPRING.ui;
+const STEP = {
+  enter: (dir: number) => ({ opacity: 0, x: 16 * dir }),
+  exit: (dir: number) => ({ opacity: 0, x: -12 * dir, transition: { duration: 0.14 } }),
+};
 
 export function ReviewForm() {
   const uid = useId();
@@ -158,12 +162,15 @@ export function ReviewForm() {
         <input id={id("business") + "-hp"} tabIndex={-1} autoComplete="off" defaultValue="" />
       </div>
 
-      <AnimatePresence mode="wait" initial={false}>
+      {/* Forward: the old step leaves left and the new one arrives from the right; Back mirrors it. */}
+      <AnimatePresence mode="wait" initial={false} custom={step === 1 ? 1 : -1}>
         <motion.div
           key={step}
-          initial={reduce ? false : { opacity: 0, x: step === 1 ? 16 : -16 }}
+          custom={step === 1 ? 1 : -1}
+          variants={STEP}
+          initial={reduce ? { opacity: 0 } : "enter"}
           animate={{ opacity: 1, x: 0, transition: ENTER }}
-          exit={{ opacity: 0, x: step === 1 ? -12 : 12, transition: { duration: 0.16 } }}
+          exit="exit"
           className="mt-6 grid gap-5"
         >
           {step === 0 ? (

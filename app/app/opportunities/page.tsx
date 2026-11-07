@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LayoutGroup, motion, AnimatePresence } from "motion/react";
+import { SPRING } from "@/lib/motion";
 import { useWorkspace } from "@/lib/demo/store";
 import { STAGES, STAGE_LABEL, type Account, type Stage } from "@/lib/domain/types";
 import { contactOf, oppOf, qualOf } from "@/lib/workspace/selectors";
@@ -114,7 +115,7 @@ function Inspector({ account, onClose }: { account: Account; onClose: () => void
   const c = contactOf(ws, account.id);
   const evidence = ws.evidence.filter((e) => e.accountId === account.id);
   return (
-    <motion.aside layout initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 16, transition: { duration: 0.15 } }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="self-start rounded-[var(--radius-md)] border border-rule bg-surface xl:sticky xl:top-6" aria-label={`Qualification for ${account.name}`}>
+    <motion.aside initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 24, transition: { duration: 0.14 } }} transition={SPRING.ui} className="self-start rounded-[var(--radius-md)] border border-rule bg-surface xl:sticky xl:top-6" aria-label={`Qualification for ${account.name}`}>
       <div className="flex items-start justify-between gap-3 border-b border-rule px-4 py-3.5">
         <div>
           <h2 className="font-display text-[1.25rem] font-semibold tracking-[-0.02em]">{account.name}</h2>
@@ -133,7 +134,7 @@ function Inspector({ account, onClose }: { account: Account; onClose: () => void
           <p className="mt-3 text-[0.9375rem]">{ql.recommendation}</p>
           <ul className="mt-4 divide-y divide-rule border-y border-rule">
             {ql.criteria.map((cr) => (
-              <motion.li layout key={cr.id} className="grid grid-cols-[1.25rem_1fr_auto] gap-x-2.5 py-2.5 text-[0.875rem]">
+              <li key={cr.id} className="grid grid-cols-[1.25rem_1fr_auto] gap-x-2.5 py-2.5 text-[0.875rem]">
                 <span aria-hidden="true" className={`mt-0.5 grid h-4 w-4 place-items-center rounded-full ${cr.result === "met" ? "bg-ink text-graphite" : cr.result === "not-met" ? "bg-rule-strong text-surface" : "border border-dashed border-rule-strong"}`}>
                   {cr.result === "met" ? <Icon name="check" className="h-3 w-3" /> : cr.result === "not-met" ? <Icon name="x" className="h-2.5 w-2.5" /> : null}
                 </span>
@@ -142,7 +143,7 @@ function Inspector({ account, onClose }: { account: Account; onClose: () => void
                   <span className="block text-[0.8125rem] text-muted">{cr.detail}</span>
                 </span>
                 <span className="text-[0.75rem] text-muted">{cr.result === "met" ? "Met" : cr.result === "not-met" ? "Not met" : "Unknown"} · {cr.weight}</span>
-              </motion.li>
+              </li>
             ))}
           </ul>
           {ql.missing.length ? <p className="mt-3 text-[0.8125rem] text-muted">Missing: {ql.missing.join("; ")}. Scout does not guess these.</p> : null}

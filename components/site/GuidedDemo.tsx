@@ -4,7 +4,7 @@ import { fmtWhen } from "@/lib/format";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "motion/react";
-import { SPRING } from "@/lib/motion";
+import { FADE, SPRING } from "@/lib/motion";
 import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { useWorkspace } from "@/lib/demo/store";
 import { runSampleAudit } from "@/lib/presence/sample";
@@ -27,6 +27,11 @@ const TARGET = "Juniper Lane Law";
 const AUDIT_ID = PREPARED_AUDIT_ID;
 const ENTER = SPRING.ui;
 const MOVE = SPRING.move;
+type PanelCtx = { dir: number; handoff: boolean };
+const PANEL = {
+  enter: ({ dir, handoff }: PanelCtx) => (handoff ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 * dir }),
+  exit: ({ handoff }: PanelCtx) => (handoff ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0, filter: "blur(2px)", transition: { duration: 0.12 } }),
+};
 const fmt = (iso: string) => fmtWhen(iso);
 
 const STEPS = [
@@ -60,6 +65,13 @@ export function GuidedDemo() {
   const firstOpen = d.done.findIndex((x) => !x);
   const [picked, setPicked] = useState<number | null>(null);
   const step = picked ?? (firstOpen === -1 ? 5 : firstOpen);
+  const [shown, setShown] = useState({ step, prev: step });
+  if (shown.step !== step) setShown({ step, prev: shown.step });
+  const dir = step >= shown.prev ? 1 : -1;
+  // Approving and delivering carries the draft into the thread: the panel holds still so the object travels alone.
+  const handoff = shown.prev === 2 && step === 3;
+  // Steps 3 and 4 are the same conversation, so they share one panel that never remounts between them.
+  const panelKey = step === 3 || step === 4 ? "thread" : String(step);
   const [finding, setFinding] = useState(report.findings[0]?.id ?? "");
   const [owner, setOwner] = useState("usr_luis");
   const [error, setError] = useState("");
@@ -169,12 +181,12 @@ export function GuidedDemo() {
         return d.draft ? (
           <>
             <p className="text-ink-2">Scout wrote this from Clearline’s details and the list’s facts only. Approve it, then simulate delivery. In this demo nothing leaves your browser.</p>
-            <motion.figure layoutId={reduce ? undefined : `intro-${d.draft.id}`} transition={MOVE} className="on-stone paper mt-5 p-5">
+            <motion.figure layoutId={reduce ? undefined : `intro-${d.draft.id}`} transition={MOVE} style={{ borderRadius: 10 }} className="on-stone paper mt-5 p-5">
               <figcaption className="flex flex-wrap items-center justify-between gap-2 border-b border-rule pb-3 text-[0.8125rem] text-muted">
                 <span>To {ws.contacts.find((c) => c.id === d.draft!.contactId)?.name} · {d.draft.subject}</span>
                 <span className="font-[600] text-ink">{d.draft.approval === "approved" ? "Approved by you" : "Waiting for you"}</span>
               </figcaption>
-              <p className="mt-3 max-h-56 overflow-auto whitespace-pre-line text-[0.875rem] leading-relaxed">{d.draft.body}</p>
+              <motion.p layout="position" className="mt-3 max-h-56 overflow-auto whitespace-pre-line text-[0.875rem] leading-relaxed">{d.draft.body}</motion.p>
             </motion.figure>
             <div className="mt-4 flex flex-wrap gap-3">
               {d.draft.approval === "pending" ? (
@@ -202,9 +214,10 @@ export function GuidedDemo() {
                   key={m.id}
                   layoutId={m.direction === "outbound" && d.draft && !reduce ? `intro-${d.draft.id}` : undefined}
                   transition={MOVE}
+                  style={{ borderRadius: 10 }}
                   initial={m.direction === "inbound" && !reduce ? { opacity: 0, y: 10 } : false}
                   animate={{ opacity: 1, y: 0, transition: ENTER }}
-                  className={`rounded-[var(--radius-sm)] px-4 py-3 text-[0.875rem] leading-relaxed ${m.direction === "inbound" ? "mr-8 bg-stone-2" : "ml-8 max-h-32 overflow-hidden bg-graphite-2 text-graphite-ink"}`}
+                  className={`px-4 py-3 text-[0.875rem] leading-relaxed ${m.direction === "inbound" ? "mr-8 bg-stone-2" : "ml-8 max-h-32 overflow-hidden bg-graphite-2 text-graphite-ink"}`}
                 >
                   <p className={`mb-1 text-[0.75rem] ${m.direction === "inbound" ? "text-muted" : "text-graphite-muted"}`}>{m.from} · {fmt(m.at)} · simulated</p>
                   <p className="whitespace-pre-line">{m.body}</p>
@@ -281,10 +294,17 @@ export function GuidedDemo() {
         </button>
       </nav>
 
-      <section aria-labelledby="demo-step-title" className="lg:col-span-5">
+      <section aria-labelledby="demo-step-title" className="relative lg:col-span-5">
         <LayoutGroup id="demo">
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.div key={step} initial={reduce ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0, transition: ENTER }} exit={{ opacity: 0, transition: { duration: 0.18 } }}>
+          <AnimatePresence mode="popLayout" initial={false} custom={{ dir, handoff }}>
+            <motion.div
+              key={panelKey}
+              custom={{ dir, handoff }}
+              variants={PANEL}
+              initial={reduce ? { opacity: 0 } : "enter"}
+              animate={{ opacity: 1, y: 0, transition: reduce ? FADE : ENTER }}
+              exit="exit"
+            >
               <p className="text-[0.8125rem] text-muted">Step {step + 1} of {STEPS.length} · {STEPS[step].lens}</p>
               <h2 id="demo-step-title" className="mt-1 text-[1.625rem] font-[600] leading-tight tracking-[-0.022em]">{STEPS[step].title}</h2>
               <div className="mt-4">{panel}</div>
@@ -297,7 +317,7 @@ export function GuidedDemo() {
       <aside aria-label="What the workspace shows now" className="on-graphite board self-start p-5 lg:col-span-4">
         <p className="t-label">The record</p>
         {d.acc ? (
-          <div className="mt-2 border-b border-rule pb-4">
+          <div className="relative mt-2 border-b border-rule pb-4">
             <p className="text-[1.125rem] font-[600]">{d.acc.name}</p>
             <p className="text-[0.875rem] text-muted">Source: {d.acc.source.label}</p>
             <AnimatePresence mode="popLayout" initial={false}>
@@ -311,8 +331,8 @@ export function GuidedDemo() {
           <p className="mt-2 border-b border-rule pb-4 text-[0.9375rem] text-muted">Appears when Scout imports the list.</p>
         )}
         <p className="t-label mt-4">Today</p>
-        <ul className="mt-1">
-          <AnimatePresence initial={false}>
+        <ul className="relative mt-1">
+          <AnimatePresence initial={false} mode="popLayout">
             {items.map((a) => (
               <motion.li key={a.id} layout={reduce ? false : "position"} initial={reduce ? false : { opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0, transition: ENTER }} exit={{ opacity: 0, transition: { duration: 0.14 } }} className="border-b border-rule py-2.5 text-[0.875rem] leading-snug">
                 <span className="text-ink">{a.title}</span>

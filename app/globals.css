@@ -80,7 +80,6 @@
   /* Motion: ease-out for arrivals, ease-in-out for moves between stable positions. */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-move: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
 
   --breakpoint-xs: 25rem;
 }
@@ -255,11 +254,11 @@
 
 /* Reveal: content is visible by default; only scripted pages hide it until in view. */
 
-@keyframes bd-lamp { 0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-lamp) 16%, transparent), 0 0 12px color-mix(in srgb, var(--color-lamp) 50%, transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-lamp) 8%, transparent), 0 0 18px color-mix(in srgb, var(--color-lamp) 65%, transparent); } }
-.mark-lamp.is-live { animation: bd-lamp 2.4s var(--ease-move) infinite; }
+/* Running-work indicator only (a Scout run in progress): a compositor-only halo, never on idle UI. */
+@keyframes bd-lamp { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(2.2); opacity: 0; } }
+.mark-lamp.is-live { position: relative; }
+.mark-lamp.is-live::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--color-lamp); animation: bd-lamp 1.4s var(--ease-out) infinite; }
 
-@keyframes bd-settle { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-lamp) 45%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
-.settle-pulse { animation: bd-settle 700ms var(--ease-out) 1; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }

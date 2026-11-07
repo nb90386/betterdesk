@@ -2,7 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 
 const ROUTES = [
   "/", "/product", "/product/presence", "/product/scout", "/product/desk", "/solutions/commercial-cleaning", "/how-it-works",
-  "/demo", "/pricing", "/resources", "/resources/ai-search-for-service-businesses", "/contact", "/security",
+  "/demo", "/pricing", "/resources", "/resources/guides/ai-search-for-service-businesses", "/contact", "/security",
 ];
 const WIDTHS = [320, 390, 768, 1024, 1440, 1920];
 

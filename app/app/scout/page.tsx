@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { SPRING } from "@/lib/motion";
 import { useWorkspace } from "@/lib/demo/store";
 import { parseProspectCsv, type ParseResult } from "@/lib/scout/csv";
 import { SAMPLE_PROSPECTS_CSV } from "@/lib/demo/seed";
@@ -117,8 +118,8 @@ export default function ScoutPage() {
         {pending.length === 0 ? (
           <Panel><Empty title="Nothing to approve" body="When Scout drafts an introduction, it waits here until you approve, edit or reject it." /></Panel>
         ) : (
-          <div className="space-y-4">
-            <AnimatePresence initial={false}>{pending.map((d) => <DraftCard key={d.id} draft={d} />)}</AnimatePresence>
+          <div className="relative space-y-4">
+            <AnimatePresence initial={false} mode="popLayout">{pending.map((d) => <DraftCard key={d.id} draft={d} />)}</AnimatePresence>
           </div>
         )}
         {reviewed.length ? (
@@ -246,7 +247,7 @@ function DraftCard({ draft }: { draft: Draft }) {
   };
 
   return (
-    <motion.article layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: 24, transition: { duration: 0.18 } }} className="rounded-[var(--radius-md)] border border-rule bg-surface">
+    <motion.article layout="position" transition={SPRING.ui} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8, transition: { duration: 0.14 } }} className="rounded-[var(--radius-md)] border border-rule bg-surface">
       <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-rule px-4 py-3">
         <p className="text-[0.9375rem]"><span className="font-medium">{contact.name}</span> <span className="text-muted">· {contact.role} · {acc.name}</span></p>
         <TierMark q={q} />
