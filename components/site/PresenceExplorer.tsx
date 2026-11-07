@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { runSampleAudit } from "@/lib/presence/sample";
 import type { Finding, PresenceReport } from "@/lib/presence/types";
 import { createSampleWorkspace } from "@/lib/demo/seed";
@@ -52,7 +53,7 @@ const path = (u: string) => {
 };
 
 export function PresenceExplorer({ report: given, compact = false }: { report?: PresenceReport; compact?: boolean }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const report = useMemo(() => given ?? runSampleAudit(), [given]);
   const findings = compact ? report.findings.filter((f) => f.severity !== "info").slice(0, 6) : report.findings;
   const [selected, setSelected] = useState(findings[0]?.id ?? "");
@@ -71,7 +72,7 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
   };
 
   const inspector = f ? (
-    <motion.div key={f.id} initial={reduce ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0, transition: ENTER }} className="paper p-5 sm:p-6">
+    <motion.div key={f.id} initial={reduce ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0, transition: ENTER }} className="paper p-5 [overflow-wrap:anywhere] sm:p-6">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.8125rem] text-muted">
         <span>{CATEGORY[f.category]}</span>
         <span>{SEVERITY[f.severity].label}</span>
@@ -84,7 +85,7 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
         <div>
           <p className="t-label">What we found</p>
           <div className="mt-1.5 overflow-hidden rounded-[8px] bg-graphite-2 text-graphite-ink">
-            <p className="border-b border-graphite-rule px-3 py-2 text-[0.75rem] text-graphite-muted">{f.evidence.url}</p>
+            <p className="border-b border-graphite-rule px-3 py-2 text-[0.75rem] text-graphite-muted [overflow-wrap:anywhere]">{f.evidence.url}</p>
             {f.evidence.excerpt ? <pre className="t-code overflow-x-auto whitespace-pre-wrap break-words px-3 py-2.5 text-[#f3e3c6]">{f.evidence.excerpt}</pre> : null}
           </div>
         </div>
@@ -159,7 +160,7 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
                     <span className="mt-[0.45rem] grid w-2 place-items-center" aria-hidden="true"><span className={SEVERITY[x.severity].mark} /></span>
                     <span className="min-w-0 flex-1">
                       <span className={`block text-[0.9688rem] leading-snug ${on ? "font-[600] text-ink" : "text-ink-2 group-hover:text-ink"}`}>{x.title}</span>
-                      <span className="mt-0.5 block text-[0.8125rem] text-muted">
+                      <span className="mt-0.5 block text-[0.8125rem] text-muted [overflow-wrap:anywhere]">
                         {CATEGORY[x.category]} · {path(x.evidence.url)}
                         {taskFor(x.id) ? " · task created" : ""}
                       </span>

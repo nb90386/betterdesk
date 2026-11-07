@@ -1,7 +1,9 @@
 "use client";
 
+import { fmtWhen } from "@/lib/format";
 import { useEffect, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { createSampleWorkspace } from "@/lib/demo/seed";
 import { bookSampleSlot, replyInConversation, simulateReply, suggestReply } from "@/lib/workspace/actions";
 import { timeline } from "@/lib/workspace/selectors";
@@ -15,10 +17,10 @@ import { REPORTED_CHANNEL_LABEL, type Workspace } from "@/lib/domain/types";
 const CLOCK = Date.parse("2026-11-03T15:00:00.000Z");
 const ME = { kind: "user" as const, id: "usr_dana", name: "Dana Ortiz" };
 const ENTER = { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const };
-const fmt = (iso: string) => new Date(iso).toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/Denver" });
+const fmt = (iso: string) => fmtWhen(iso);
 
 export function DeskMoment() {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const [ws, setWs] = useState<Workspace>(() => createSampleWorkspace(CLOCK));
   const [error, setError] = useState("");
   const messages = ws.conversations.filter((c) => c.accountId === "acc_alder").flatMap((c) => c.messages).sort((a, b) => a.at.localeCompare(b.at));

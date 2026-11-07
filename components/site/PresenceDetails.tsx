@@ -8,7 +8,7 @@ export function BotAccessTable({ report }: { report: PresenceReport }) {
     <div>
       <h3 className="t-head">Who your robots.txt lets in</h3>
       <p className="mt-1 max-w-[64ch] text-[0.9375rem] text-muted">Read from {report.domain}/robots.txt. Blocking a crawler is a choice, not a mistake, as long as it’s the one you meant.</p>
-      <div className="mt-4 overflow-x-auto">
+      <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
         <table className="w-full min-w-[40rem] border-collapse text-left text-[0.9375rem]">
           <thead>
             <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">
@@ -66,7 +66,7 @@ export function SchemaDraft({ report }: { report: PresenceReport }) {
     <div>
       <h3 className="t-head">A structured-data draft, built only from what we saw</h3>
       <p className="mt-1 max-w-[70ch] text-[0.9375rem] text-muted">{report.suggestedSchema.note}</p>
-      <pre className="t-code mt-4 max-h-[26rem] overflow-auto rounded-[var(--radius-md)] bg-graphite-2 p-4 text-graphite-ink">{JSON.stringify(report.suggestedSchema.jsonLd, null, 2)}</pre>
+      <pre tabIndex={0} aria-label="Structured data draft" className="t-code mt-4 max-h-[26rem] overflow-auto rounded-[var(--radius-md)] bg-graphite-2 p-4 text-graphite-ink">{JSON.stringify(report.suggestedSchema.jsonLd, null, 2)}</pre>
       {report.suggestedSchema.omitted.length ? <p className="mt-2 text-[0.8125rem] text-muted">Left out because we couldn’t confirm them: {report.suggestedSchema.omitted.join(", ")}.</p> : null}
     </div>
   );

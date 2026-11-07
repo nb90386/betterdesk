@@ -1,8 +1,10 @@
 "use client";
 
+import { fmtWhen } from "@/lib/format";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { useWorkspace } from "@/lib/demo/store";
 import { runSampleAudit } from "@/lib/presence/sample";
 import { SAMPLE_PROSPECTS_CSV } from "@/lib/demo/seed";
@@ -24,7 +26,7 @@ const TARGET = "Juniper Lane Law";
 const AUDIT_ID = "aud_demo";
 const ENTER = { duration: 0.32, ease: [0.22, 1, 0.36, 1] as const };
 const MOVE = { duration: 0.55, ease: [0.65, 0, 0.35, 1] as const };
-const fmt = (iso: string) => new Date(iso).toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/Denver" });
+const fmt = (iso: string) => fmtWhen(iso);
 
 const STEPS = [
   { title: "Check the website", lens: "Presence" },
@@ -51,7 +53,7 @@ function derive(ws: Workspace) {
 
 export function GuidedDemo() {
   const { ws, ready, act, reset } = useWorkspace();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const report = useMemo(() => runSampleAudit(), []);
   const d = derive(ws);
   const firstOpen = d.done.findIndex((x) => !x);

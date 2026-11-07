@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { BUSINESS_KINDS, PAINS, STEP_FIELDS, formatReview, validateReview, type ReviewErrors, type ReviewInput } from "@/lib/lead/review";
 import { CONTACT_EMAIL } from "@/lib/site";
 
@@ -11,7 +12,7 @@ const ENTER = { duration: 0.26, ease: [0.22, 1, 0.36, 1] as const };
 
 export function ReviewForm() {
   const uid = useId();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const [v, setV] = useState<ReviewInput>(EMPTY);
   const [errors, setErrors] = useState<ReviewErrors>({});
   const [step, setStep] = useState<0 | 1>(0);

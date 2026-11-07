@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, useInView, useReducedMotion } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion, useInView } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 
 /**
  * Signature scene A: the building directory. One business climbs the floors from Found to Won while
@@ -28,7 +29,7 @@ const MOVE = { layout: { duration: 0.75, ease: [0.65, 0, 0.35, 1] as const } };
 const SWAP_IN = { duration: 0.32, ease: [0.22, 1, 0.36, 1] as const };
 
 export function DirectoryBoard() {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.45 });
   const [step, setStep] = useState(0);
@@ -136,7 +137,7 @@ export function DirectoryBoard() {
               {i + 1}
             </button>
           ))}
-          <button
+          {reduce ? null : <button
             type="button"
             onClick={() => {
               if (step >= STEPS.length - 1) setStep(0);
@@ -144,8 +145,8 @@ export function DirectoryBoard() {
             }}
             className="press ml-2 inline-flex h-9 items-center rounded-[6px] px-3 text-[0.8125rem] font-[600] text-ink hover:bg-graphite-3"
           >
-            {playing && step < STEPS.length - 1 && !reduce ? "Pause" : step >= STEPS.length - 1 ? "Replay" : "Play"}
-          </button>
+            {playing && step < STEPS.length - 1 ? "Pause" : step >= STEPS.length - 1 ? "Replay" : "Play"}
+          </button>}
         </div>
       </div>
     </div>

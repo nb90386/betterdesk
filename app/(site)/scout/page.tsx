@@ -64,7 +64,7 @@ export default function Scout() {
             {s.rows} rows in. {s.summary.imported.length} imported, {s.summary.duplicates.map((d) => `${d.name} matched ${d.matched}`).join("; ")}, and {s.summary.withheld} note withheld. Every result below comes from the same code the workspace runs.
           </p>
         </div>
-        <div className="mt-10 overflow-x-auto">
+        <div className="mt-10 overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
           <table className="w-full min-w-[44rem] border-collapse text-left">
             <thead>
               <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">

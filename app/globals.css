@@ -124,6 +124,8 @@
   button { cursor: pointer; }
   button:disabled { cursor: not-allowed; }
   .tabular, time { font-variant-numeric: tabular-nums; }
+  /* Grid tracks never grow to fit wide content (tables, code); that content scrolls in its own region. */
+  .grid > * { min-width: 0; }
 }
 
 @layer components {

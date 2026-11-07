@@ -95,17 +95,17 @@ export function Markdown({ blocks, skipH1 = true }: { blocks: Block[]; skipH1?: 
           if (b.level === 2) return <h2 key={i} id={b.id} className="mt-14 scroll-mt-24 text-[1.75rem] font-[600] leading-tight tracking-[-0.022em]">{inline(b.text)}</h2>;
           return <h3 key={i} id={b.id} className="mt-9 scroll-mt-24 text-[1.25rem] font-[600] tracking-[-0.014em]">{inline(b.text)}</h3>;
         }
-        if (b.t === "p") return <p key={i} className="mt-5 text-[1.0938rem] leading-[1.7] text-ink-2">{inline(b.text)}</p>;
+        if (b.t === "p") return <p key={i} className="mt-5 [overflow-wrap:anywhere] text-[1.0938rem] leading-[1.7] text-ink-2">{inline(b.text)}</p>;
         if (b.t !== "table") {
           const L = b.t === "ul" ? "ul" : "ol";
           return (
-            <L key={i} className={`mt-5 grid gap-2.5 pl-5 text-[1.0625rem] leading-[1.65] text-ink-2 ${b.t === "ul" ? "list-disc marker:text-muted" : "list-decimal marker:text-muted marker:tabular-nums"}`}>
+            <L key={i} className={`mt-5 grid [overflow-wrap:anywhere] gap-2.5 pl-5 text-[1.0625rem] leading-[1.65] text-ink-2 ${b.t === "ul" ? "list-disc marker:text-muted" : "list-decimal marker:text-muted marker:tabular-nums"}`}>
               {b.items.map((it, j) => <li key={j} className="pl-1">{inline(it)}</li>)}
             </L>
           );
         }
         return (
-          <div key={i} className="mt-7 overflow-x-auto">
+          <div key={i} className="mt-7 overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
             <table className="w-full min-w-[34rem] border-collapse text-left text-[0.9375rem]">
               <thead>
                 <tr className="border-b border-rule-strong">{b.head.map((h, j) => <th key={j} scope="col" className="py-2.5 pr-4 font-[600]">{inline(h)}</th>)}</tr>
