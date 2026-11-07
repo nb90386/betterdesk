@@ -40,7 +40,7 @@ export default function CommercialCleaning() {
         <div className="wrap py-20 md:py-24">
           <h2 className="t-title max-w-[20ch]">Who you sell to, and what helps.</h2>
           <p className="mt-4 max-w-[62ch] text-ink-2">Not every business in these categories wants a new cleaner. The point is to find the ones that might, and be easy to reach when they’re looking.</p>
-          <div className="mt-10 overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
+          <div className="mt-10 relative overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
             <table className="w-full min-w-[48rem] border-collapse text-left">
               <thead>
                 <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">

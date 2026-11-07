@@ -199,3 +199,13 @@ test("homepage without JavaScript still says who it's for and what it does", asy
   await expect(page.getByText("One Tuesday, five places to look.")).toBeVisible();
   await ctx.close();
 });
+
+test("pricing estimator responds immediately and uses the proposed math", async ({ page }) => {
+  await page.goto("/pricing");
+  const research = page.getByLabel("Businesses you’d have Scout check each month");
+  await research.fill("1000"); // 500 over the included 500 = 2 top-ups of $39
+  await page.getByLabel("Inquiries and replies each month").fill("300"); // exactly included
+  await expect(page.getByText("$327", { exact: true })).toBeVisible();
+  await research.fill("0");
+  await expect(page.getByText("$249", { exact: true }).last()).toBeVisible();
+});

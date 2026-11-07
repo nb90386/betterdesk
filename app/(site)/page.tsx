@@ -205,7 +205,7 @@ export default function Home() {
         <div className="wrap py-20 md:py-28">
           <h2 className="t-title max-w-[22ch]">Why not ChatGPT, a spreadsheet and a calendar?</h2>
           <p className="t-lede mt-5 max-w-[60ch]">You can get a long way with them, and many owners do. The trouble starts when the same customer lives in all three.</p>
-          <div className="mt-12 overflow-x-auto" tabIndex={0} role="region" aria-label="Comparison (scrolls sideways on small screens)">
+          <div className="mt-12 relative overflow-x-auto" tabIndex={0} role="region" aria-label="Comparison (scrolls sideways on small screens)">
             <table className="w-full min-w-[46rem] border-collapse text-left">
               <thead>
                 <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">

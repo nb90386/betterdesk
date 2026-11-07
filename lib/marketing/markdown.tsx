@@ -105,7 +105,7 @@ export function Markdown({ blocks, skipH1 = true }: { blocks: Block[]; skipH1?: 
           );
         }
         return (
-          <div key={i} className="mt-7 overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
+          <div key={i} className="mt-7 relative overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
             <table className="w-full min-w-[34rem] border-collapse text-left text-[0.9375rem]">
               <thead>
                 <tr className="border-b border-rule-strong">{b.head.map((h, j) => <th key={j} scope="col" className="py-2.5 pr-4 font-[600]">{inline(h)}</th>)}</tr>

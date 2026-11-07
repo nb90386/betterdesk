@@ -127,3 +127,15 @@ test("website inquiry joins the inbox and creates an opportunity", async ({ page
   await page.goto("/app/opportunities");
   await expect(page.getByRole("button", { name: "Granite Peak Orthodontics" })).toBeVisible();
 });
+
+test("workspace screens never widen the page (hidden labels stay inside scroll regions)", async ({ page }) => {
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of ["/app", "/app/presence", "/app/scout", "/app/opportunities", "/app/inbox", "/app/pipeline", "/app/calendar", "/app/customers", "/app/settings"]) {
+      await page.goto(route);
+      await expect(page.getByText("Sample workspace · DEMO")).toBeVisible();
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow, `${route} @${width}`).toBeLessThanOrEqual(0);
+    }
+  }
+});

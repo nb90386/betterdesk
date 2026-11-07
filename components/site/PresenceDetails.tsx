@@ -8,7 +8,7 @@ export function BotAccessTable({ report }: { report: PresenceReport }) {
     <div>
       <h3 className="t-head">Who your robots.txt lets in</h3>
       <p className="mt-1 max-w-[64ch] text-[0.9375rem] text-muted">Read from {report.domain}/robots.txt. Blocking a crawler is a choice, not a mistake, as long as it’s the one you meant.</p>
-      <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
+      <div className="mt-4 relative overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
         <table className="w-full min-w-[40rem] border-collapse text-left text-[0.9375rem]">
           <thead>
             <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">

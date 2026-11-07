@@ -82,7 +82,7 @@ export default function Product() {
             Three accounts from the sample workspace. Each came in a different way, and each carries that source on its record. “How they found you” is only ever what the customer told you; BetterDesk doesn’t guess.
           </p>
         </div>
-        <div className="mt-10 overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
+        <div className="mt-10 relative overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
           <table className="w-full min-w-[46rem] border-collapse text-left">
             <thead>
               <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">

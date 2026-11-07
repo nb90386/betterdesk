@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ButtonLink, TextLink } from "@/components/site/primitives";
 import { OFFER, PRICING_STATUS } from "@/lib/site";
+import { PricingEstimator } from "@/components/site/PricingEstimator";
 
 export const metadata: Metadata = {
   title: "Pricing (proposed)",
@@ -22,7 +23,7 @@ export default function Pricing() {
     <>
       <section className="wrap pb-12 pt-32 md:pt-40">
         <p className="text-[0.875rem] font-[560] text-lamp-ink">{PRICING_STATUS}</p>
-        <h1 className="t-display mt-4 max-w-[18ch]">One way to start. One plan after that.</h1>
+        <h1 className="t-display mt-4 max-w-[18ch]">Clear pricing. No guessing about usage.</h1>
         <p className="t-lede mt-6 max-w-[58ch]">A person sets BetterDesk up around your service area and the buildings you want, then you run it month to month. These prices are proposals we’re testing with early customers.</p>
       </section>
 
@@ -50,6 +51,14 @@ export default function Pricing() {
             <TextLink href="/product/presence#check">Run the free website check</TextLink>
           </div>
           <p className="max-w-[44ch] text-[0.875rem] text-muted">Larger team or several locations? Tell us in the review request and we’ll quote it plainly.</p>
+        </div>
+      </section>
+
+      <section className="wrap pb-20 md:pb-28">
+        <h2 className="t-title max-w-[20ch]">What would a month cost you?</h2>
+        <p className="mt-4 max-w-[60ch] text-ink-2">Move the sliders to your own numbers. It uses the proposed prices above.</p>
+        <div className="mt-8">
+          <PricingEstimator />
         </div>
       </section>
 

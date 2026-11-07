@@ -294,3 +294,25 @@ a, button, [role="button"], label, summary { touch-action: manipulation; }
 button, [role="button"], summary { -webkit-user-select: none; user-select: none; }
 /* iOS zooms into any field under 16px; on touch screens every field is at least 16px. */
 @media (pointer: coarse) { input, select, textarea { font-size: max(16px, 1em) !important; } }
+
+/* ---------- Range control (pricing estimator) ----------
+   Track fills to the value; a hairline tick marks what's included. The thumb tracks the pointer 1:1. */
+.bd-range { appearance: none; width: 100%; height: 32px; background: transparent; touch-action: pan-y; }
+.bd-range::-webkit-slider-runnable-track {
+  height: 4px; border-radius: 2px;
+  background:
+    linear-gradient(to right, transparent calc(var(--mark) - 1px), var(--color-ink-2) calc(var(--mark) - 1px), var(--color-ink-2) calc(var(--mark) + 1px), transparent calc(var(--mark) + 1px)),
+    linear-gradient(to right, var(--color-ink) var(--fill), var(--color-stone-3) var(--fill));
+}
+.bd-range::-moz-range-track { height: 4px; border-radius: 2px; background: var(--color-stone-3); }
+.bd-range::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--color-ink); }
+.bd-range::-webkit-slider-thumb {
+  appearance: none; margin-top: -10px; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--color-paper); box-shadow: 0 0 0 1px rgb(21 23 25 / 0.18), 0 2px 6px -1px rgb(21 23 25 / 0.3);
+  transition: transform 120ms var(--ease-out);
+}
+.bd-range::-moz-range-thumb { width: 24px; height: 24px; border: 0; border-radius: 50%; background: var(--color-paper); box-shadow: 0 0 0 1px rgb(21 23 25 / 0.18), 0 2px 6px -1px rgb(21 23 25 / 0.3); }
+.bd-range:active::-webkit-slider-thumb { transform: scale(1.08); }
+.bd-range:focus-visible { outline: none; }
+.bd-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--color-ink); outline-offset: 3px; }
+.bd-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--color-ink); outline-offset: 3px; }

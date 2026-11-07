@@ -81,7 +81,7 @@ export default function PresencePage() {
               You may hear this called SEO, local SEO and GEO (generative engine optimization). They share the same foundation. Google says it plainly: optimizing for its AI search features “is optimizing for the search experience, and thus still SEO,” and there is “no special schema.org structured data that you need to add.”
             </p>
           </div>
-          <div className="mt-12 overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
+          <div className="mt-12 relative overflow-x-auto" tabIndex={0} role="region" aria-label="Table (scrolls sideways on small screens)">
             <table className="w-full min-w-[44rem] border-collapse text-left">
               <thead>
                 <tr className="border-b border-rule-strong text-[0.8125rem] text-muted">

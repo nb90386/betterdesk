@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
       { source: "/scout", destination: "/product/scout", permanent: true },
       { source: "/presence", destination: "/product/presence", permanent: true },
       { source: "/desk", destination: "/product/desk", permanent: true },
+      { source: "/resources/ai-search-for-service-businesses", destination: "/resources/guides/ai-search-for-service-businesses", permanent: true },
       { source: "/platform", destination: "/product", permanent: false },
       { source: "/roi", destination: "/pricing", permanent: false },
       { source: "/solutions", destination: "/solutions/commercial-cleaning", permanent: false },
