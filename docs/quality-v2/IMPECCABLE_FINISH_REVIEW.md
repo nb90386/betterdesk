@@ -43,3 +43,33 @@ Against Sayable, the product artifact is not as crisp or as confident: there is 
 
 ## keep
 The lit night conversation pane settling into the pearl booking card, the exact-to-token night/pearl grounds, the 6:44 vs 6:47 split, and the "sample data" labeling on every artifact.
+
+---
+
+# Verdict pass (recaptures from commit 97c8845)
+
+Evidence: valid. desktop.png is 1440x8632 and mobile.png is 780x29332; both show the top and match their names. The blank right column of the desktop story is again the sticky stage in a full-page capture, and home-1440-mid2 shows the stage in place.
+
+## verdict
+1. Seed: partial. The reference is now inside FORM and says plainly that the roll was skipped. But the token `seed: none (unavailable)` is reserved for a roll that printed "SEED REFERENCE unavailable". This roll never ran, so the token states an outcome that did not happen, and a skipped roll stays a material finding. Either run the roll once the CLI is installed, or write the token as a skipped roll (for example `seed: none (roll skipped, brief-pinned)`) and leave it open for the founder.
+2. CtaBand overflow at 390: resolved. In mobile.png the pill and the "This morning" card sit inside the margins and the rows wrap (pass-10-sections/close-390.png).
+3. Eyebrows: partial. On the home page it is resolved: the peak labels are folded into the h3s, the industry names are in the card headings, the story times are paragraph run-ins, and "Step 2 of 8 · 6:42 PM" now sits below its h3. On the solutions page (pass-10/solutions-1440-top.png) "Home services" and "Beauty & wellness" still sit above the card headings, and "Also a fit" heads the next block. On contact, "What the call covers" in amber sits above the list.
+4. Mono as costume: partial. The uppercase mono labels and "Tech: Marco" are gone, and "Next morning" is sans. The walkthrough phone's meta lines are still mono with words in them: "BetterDesk · 6:42 PM", "Customer · 6:45 PM" and "Missed call from (512) 555-0148 · 6:42 PM" (desktop.png walkthrough, about y4300). That last one was named in the fix.
+5. Glyph icons: partial. Solutions "Read more" now shows the authored arrow (solutions-1440-top). The pricing comparison table and the ModeSwitcher check appear in no recapture, so I can only see them in source. components/HeroScene.tsx:159 still contains "Thu 8–10 AM ✓".
+6. Nav translucency: resolved. The bar is opaque in home-1440-mid2 over the walkthrough and in home-320-bottom over the footer, with no bleed-through.
+7. States and spacing: resolved. The walkthrough first state reads "Watch what happens next." next to Pause. The step-5 inbox rows wrap at 390 with no truncation (mobile.png). The desktop progress segments now sit about 45px below the intro copy and no longer read as underlines.
+8. Truth placeholders: partial. The footer shows "Privacy policy and terms: pending, not yet published." at 1440 and 390. The contact card carries a pending SMS-consent, opt-out, privacy and terms line (pass-10-sections/contact-1440.png). At 320 (home-320-bottom) the sticky CTA bar covers the footer's last lines at full scroll: "illustrations with sample data." is cut and the new privacy line is hidden under the bar. Pad the page bottom by the bar's height.
+
+Regression from the batch:
+- The story ground now warms from 6:42 to the morning, ending near rgb(31,27,22). It ends in a hard horizontal edge against the peak's #0d0e10 night half (desktop.png about y3600-3690; mobile.png at the story-to-peak boundary). The arc warms and then snaps back to night exactly at the peak. Either carry the warmed floor into the night half of the split, or fade it before the section edge.
+
+## remaining
+- Fix 1: the seed token misstates a skipped roll as an unavailable one.
+- Fix 3: eyebrows remain on solutions (the industry labels, "Also a fit") and on contact ("What the call covers").
+- Fix 4: mono wraps words in the walkthrough phone meta lines.
+- Fix 5: the ✓ in HeroScene.tsx:159 remains, and the pricing-table and ModeSwitcher checks are unseen in any capture.
+- Fix 8: the privacy placeholder is hidden under the sticky bar at 320.
+- Regression: the hard seam between the warmed story floor and the night peak.
+- Ceiling items (b) to (g) from the review round remain open and are not scored here. Founder approval of the direction is still owed.
+
+disposition: fix

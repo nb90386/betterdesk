@@ -21,7 +21,7 @@ export function TwoEndings() {
         Same call, two endings
       </h2>
       <div className="grid md:grid-cols-2">
-        <div className="on-night relative overflow-hidden bg-night">
+        <div className="on-night relative overflow-hidden bg-[linear-gradient(180deg,#221d17_0%,#141312_42%,#0d0e10_100%)]">
           <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
           <div className="relative ml-auto max-w-[640px] px-5 py-16 sm:px-8 md:py-24 lg:pl-12 lg:pr-14">
             <p className="display text-[clamp(4.2rem,2rem+8vw,8.5rem)] leading-[0.86] text-[#6f737a] tabular" aria-hidden="true">

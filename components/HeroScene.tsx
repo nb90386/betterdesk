@@ -156,7 +156,7 @@ export function HeroScene() {
               <p className="text-[0.78rem] text-muted">Offered from your calendar</p>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 <span className="rounded-md border border-handled/40 bg-handled-soft px-2 py-1 font-mono text-[0.74rem] text-handled">
-                  Thu 8–10 AM ✓
+                  Thu 8–10 AM
                 </span>
                 <span className="rounded-md border border-rule px-2 py-1 font-mono text-[0.74rem] text-muted">Thu 1–3 PM</span>
               </div>

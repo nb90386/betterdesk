@@ -20,7 +20,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           </h1>
           <p className="lede mt-6 !text-[#d4d6da]">Tell us a little about the business and we&rsquo;ll reply by email to find a time.</p>
           <div className="mt-10 border-t border-white/[0.08] pt-6">
-            <h2 className="text-[0.9rem] font-medium text-lamp">What the call covers</h2>
+            <h2 className="font-display text-[1.45rem] font-[560] tracking-[-0.02em] text-[#f7f6f3]">What the call covers</h2>
             <ol className="mt-5 space-y-5">
               {[
                 ["How work reaches you now", "Your phone line, after-hours setup, website forms and social inboxes."],

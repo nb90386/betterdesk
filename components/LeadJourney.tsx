@@ -322,7 +322,7 @@ function CtlButton({ onClick, disabled, label, children }: { onClick: () => void
 export function Bubble({ m }: { m: Message }) {
   if (m.from === "system") {
     return (
-      <p className="mx-auto w-fit rounded-full bg-paper-2 px-3 py-1 text-center font-mono text-[0.6875rem] text-muted">
+      <p className="mx-auto w-fit rounded-full bg-paper-2 px-3 py-1 text-center text-[0.74rem] text-muted tabular">
         {m.text}
         {m.meta ? ` · ${m.meta}` : ""}
       </p>
@@ -338,7 +338,7 @@ export function Bubble({ m }: { m: Message }) {
       >
         {m.text}
       </p>
-      <span className="mt-0.5 px-1 font-mono text-[0.6rem] text-faint">
+      <span className="mt-0.5 px-1 text-[0.68rem] text-faint tabular">
         {m.from === "desk" ? "BetterDesk" : m.from === "staff" ? "Your team" : "Customer"}
         {m.meta ? ` · ${m.meta}` : ""}
       </span>
@@ -356,7 +356,7 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
         </p>
         <p className="mt-1 text-[1rem] font-medium text-ink">{card.when}</p>
         <p className="text-[0.85rem] text-ink-2">{card.title}</p>
-        <p className="font-mono text-[0.7rem] text-muted">{card.detail}</p>
+        <p className="text-[0.78rem] text-muted">{card.detail}</p>
       </div>
     );
   if (card.kind === "handoff")

@@ -27,15 +27,14 @@ export default function SolutionsPage() {
       <section className="container-bd grid gap-4 py-14 md:grid-cols-2 md:py-20">
         {SOLUTIONS.map((s, i) => (
           <Link key={s.slug} href={`/solutions/${s.slug}`} className={`group rounded-[var(--radius-xl)] p-7 sm:p-9 ${i === 0 ? "bg-ink text-card" : "border border-rule bg-card text-ink"}`}>
-            <p className={`text-[0.74rem] font-medium ${i === 0 ? "text-night-muted" : "text-muted"}`}>{s.name}</p>
-            <h2 className="mt-3 font-display text-[2rem] leading-[1.08] tracking-[-0.02em]">{s.title} {s.titleEm}</h2>
+            <h2 className="font-display text-[2rem] leading-[1.08] tracking-[-0.02em]">{s.title} {s.titleEm}</h2>
             <p className={`mt-3 text-[0.95rem] leading-relaxed ${i === 0 ? "text-card/75" : "text-ink-2"}`}>{s.who.slice(0, 5).join(" · ")}</p>
             <span className="mt-8 inline-flex items-center gap-2 text-[0.92rem] font-medium">Read more <Arrow /></span>
           </Link>
         ))}
       </section>
       <section className="container-bd pb-24" aria-labelledby="others">
-        <h2 id="others" className="eyebrow">Also a fit</h2>
+        <h2 id="others" className="display text-[clamp(1.8rem,1.3rem+1.6vw,2.6rem)] text-ink">Also a fit for these businesses.</h2>
         <dl className="mt-5 divide-y divide-rule border-y border-rule">
           {OTHERS.map(([k, v]) => (
             <div key={k} className="grid gap-2 py-5 md:grid-cols-[280px_1fr]">

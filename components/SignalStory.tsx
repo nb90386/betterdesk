@@ -42,15 +42,28 @@ export function SignalStory() {
   const [active, setActive] = useState<StepId>("signal");
   const refs = useRef<(HTMLElement | null)[]>([]);
 
+  // Active step = the last step whose top has passed the viewport centre. Derived from scroll position
+  // (rAF-throttled), so jumps, reloads mid-page and deep links land on the right state.
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive((e.target as HTMLElement).dataset.step as StepId);
-      },
-      { rootMargin: "-48% 0px -48% 0px" },
-    );
-    refs.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
+    let raf = 0;
+    const pick = () => {
+      raf = 0;
+      const mid = window.innerHeight * 0.5;
+      let id: StepId = STEPS[0].id;
+      for (const el of refs.current) if (el && el.getBoundingClientRect().top < mid) id = el.dataset.step as StepId;
+      setActive(id);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(pick);
+    };
+    pick();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   const index = STEPS.findIndex((s) => s.id === active);

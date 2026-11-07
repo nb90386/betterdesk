@@ -18,14 +18,18 @@ export function StickyCta() {
     let pastTop = false;
     let ctaVisible = false;
     const update = () => setShow(pastTop && !ctaVisible);
+    const cta = document.getElementById("cta-title")?.closest("section");
     const onScroll = () => {
       const next = window.scrollY > window.innerHeight * 0.9;
-      if (next !== pastTop) {
+      // An IntersectionObserver never fires if a fast jump (End key, scrollTo) carries the closing band
+      // from below the viewport to above it, so re-derive it here too.
+      const ctaNow = cta ? cta.getBoundingClientRect().top < window.innerHeight : false;
+      if (next !== pastTop || ctaNow !== ctaVisible) {
         pastTop = next;
+        ctaVisible = ctaNow;
         update();
       }
     };
-    const cta = document.getElementById("cta-title")?.closest("section");
     const io = cta
       ? new IntersectionObserver(([e]) => {
           ctaVisible = e.isIntersecting || e.boundingClientRect.top < 0;
