@@ -90,6 +90,24 @@
   --color-handled-soft: #1b2b25;
   color: var(--color-ink);
 }
+/* Light scope inside a night band (forms, receipts): restores the pearl tokens. */
+.on-pearl {
+  --color-paper: #eeede9;
+  --color-paper-2: #e4e3de;
+  --color-paper-3: #d8d6d0;
+  --color-card: #f8f7f4;
+  --color-ink: #111214;
+  --color-ink-2: #2a2c30;
+  --color-muted: #55585e;
+  --color-faint: #5d6066;
+  --color-rule: #d3d1cb;
+  --color-rule-strong: #b7b4ad;
+  --color-signal: #9a5208;
+  --color-signal-soft: #f2e4cc;
+  --color-handled: #2c5c4c;
+  --color-handled-soft: #dde6e1;
+  color: var(--color-ink);
+}
 .on-night ::selection { background: rgb(244 169 71 / 0.35); color: #fff; }
 
 @layer base {
@@ -125,11 +143,8 @@
   * { scrollbar-color: var(--color-rule-strong) transparent; }
 }
 
-/* Night grain: only on graphite grounds, to stop gradient banding. */
-.grain-night {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
-}
+/* Night grain retired in cycle 3: SVG feTurbulence tiles caused intermittent 1–2 s unattributable raster long tasks under Lighthouse CPU throttling. */
+.grain-night { display: none; }
 
 @layer components {
   .container-bd {

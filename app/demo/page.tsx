@@ -12,13 +12,13 @@ export const metadata: Metadata = {
 export default function DemoPage() {
   return (
     <>
-      <PageHero eyebrow="Sample walkthrough" title={<>Watch one inquiry, start to finish.</>}>
+      <PageHero overlap eyebrow="Sample walkthrough" title={<>Watch one inquiry, start to finish.</>}>
         <p>
           Three common moments, played step by step. Switch between &ldquo;Without&rdquo; and &ldquo;With BetterDesk&rdquo; to compare the same evening.
           The businesses and conversations are fictional examples, not customer data.
         </p>
       </PageHero>
-      <section className="container-bd py-12 md:py-16" aria-labelledby="walk-h">
+      <section className="container-bd relative z-10 -mt-28 pb-12 md:-mt-36 md:pb-16" aria-labelledby="walk-h">
         <h2 id="walk-h" className="sr-only">Interactive walkthrough</h2>
         <LeadJourney />
         <div className="mt-10 grid gap-6 border-t border-rule pt-8 text-[0.92rem] leading-relaxed text-ink-2 md:grid-cols-3">

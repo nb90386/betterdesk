@@ -93,7 +93,7 @@ function Bubble({ from, children, delay, time, className = "" }: { from: "desk" 
         }`}
       >
         {children}
-        <span className={`ml-2 align-baseline font-mono text-[0.66rem] tabular ${desk ? "text-[#8e939a]" : "text-[#6b6e74]"}`}>{time}</span>
+        <span className={`ml-2 align-baseline font-mono text-[0.66rem] tabular ${desk ? "text-[#8e939a]" : "text-[#55585e]"}`}>{time}</span>
       </p>
     </li>
   );

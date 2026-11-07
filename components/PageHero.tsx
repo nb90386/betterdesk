@@ -3,7 +3,7 @@ export function PageHero({ eyebrow, title, children, aside, overlap = false }: {
   return (
     <section className="on-night lamp-ground relative -mt-16 overflow-hidden pt-16" aria-label={eyebrow}>
       <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className={`container-bd relative grid gap-10 pt-12 sm:pt-16 ${overlap ? "pb-40 md:pb-52" : "pb-16 md:pb-24"} ${aside ? "lg:grid-cols-[1.25fr_1fr] lg:items-end" : ""}`}>
+      <div className={`container-bd relative grid gap-10 pt-12 sm:pt-16 ${overlap ? "pb-40 md:pb-52" : "pb-16 md:pb-24"} ${aside ? "lg:grid-cols-[1.25fr_1fr] lg:items-center" : ""}`}>
         <div className="max-w-[820px]">
           <h1 className="display text-[clamp(2.5rem,1.4rem+4.2vw,5rem)] text-[#f7f6f3]">{title}</h1>
           {children ? <div className="lede mt-6 !text-[#d4d6da]">{children}</div> : null}

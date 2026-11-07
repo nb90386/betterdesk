@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ButtonLink, Arrow } from "@/components/Button";
 import { NightDesk } from "@/components/NightDesk";
 import { SignalStory } from "@/components/SignalStory";
+import { TwoEndings, TrustStrip } from "@/components/TwoEndings";
 import { LeadJourney } from "@/components/LeadJourney";
 import { SectionHeading } from "@/components/Section";
 import { PricingPlans } from "@/components/PricingPlans";
@@ -131,15 +132,18 @@ export default function Home() {
             <SignalStory />
           </div>
         </div>
-        <div className="h-40 bg-[linear-gradient(180deg,#0d0e10_0%,#2a2a28_38%,#bdb9b0_78%,#eeede9_100%)] md:h-64" aria-hidden="true" />
+        <div className="h-16 md:h-24" aria-hidden="true" />
       </section>
 
+      {/* ---------------- Peak: same call, two endings ---------------- */}
+      <TwoEndings />
+
       {/* ---------------- Interactive walkthrough (pearl, morning) ---------------- */}
-      <section className="py-16 md:py-24" aria-labelledby="walk-title">
+      <section className="pb-16 pt-14 md:pb-24 md:pt-20" aria-labelledby="walk-title">
         <div className="container-bd">
           <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
-            <SectionHeading id="walk-title" title="Same call. Two endings.">
-              <p>Step through the missed call at Ridgeline, then flip to &ldquo;Without&rdquo; and watch the same evening go differently.</p>
+            <SectionHeading id="walk-title" title="Now step through it yourself.">
+              <p>Play the missed call at Ridgeline step by step, or flip to &ldquo;Without&rdquo; and watch the same evening go differently.</p>
             </SectionHeading>
             <Link href="/demo" className="reveal text-[0.95rem] font-medium text-ink underline decoration-rule-strong underline-offset-[6px] hover:decoration-ink">
               More scenarios: salon, cleaning
@@ -205,6 +209,7 @@ export default function Home() {
           <div className="reveal mt-12">
             <PricingPlans compact />
           </div>
+          <TrustStrip className="reveal mt-4" />
         </div>
       </section>
 

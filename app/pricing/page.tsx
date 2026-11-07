@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
-import { PlanReceipt } from "@/components/HeroArtifacts";
+import { PlanPicker } from "@/components/PlanPicker";
+import { TrustStrip } from "@/components/TwoEndings";
 import { PricingPlans } from "@/components/PricingPlans";
 import { Faq } from "@/components/Faq";
 import { CtaBand } from "@/components/CtaBand";
@@ -81,7 +82,7 @@ const PRICING_FAQ = [
 export default function PricingPage() {
   return (
     <>
-      <PageHero eyebrow="Pricing" title={<>Simple plans. No seat math.</>} aside={<PlanReceipt />}>
+      <PageHero eyebrow="Pricing" title={<>Simple plans. No seat math.</>} aside={<PlanPicker />}>
         <p>Every plan includes setup, calibration and live human support. Monthly, with no annual contract.</p>
       </PageHero>
       <section className="container-bd py-14 md:py-20" aria-labelledby="plans-h">
@@ -89,6 +90,9 @@ export default function PricingPage() {
         <PricingPlans />
       </section>
 
+      <section className="container-bd pb-14" aria-label="What every plan comes with">
+        <TrustStrip />
+      </section>
       <section className="container-bd pb-20 md:pb-28" aria-labelledby="compare-title">
         <SectionHeading mark="ink" id="compare-title" title="Every plan, side by side." />
         <div className="reveal relative mt-10 overflow-x-auto rounded-[var(--radius-lg)] border border-rule bg-card" role="region" aria-label="Plan comparison table, scrolls sideways on small screens" tabIndex={0}>

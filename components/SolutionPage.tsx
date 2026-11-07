@@ -1,4 +1,4 @@
-import { Eyebrow, SectionHeading } from "./Section";
+import { SectionHeading } from "./Section";
 import { ButtonLink } from "./Button";
 import { LeadJourney } from "./LeadJourney";
 import { Faq } from "./Faq";
@@ -8,24 +8,32 @@ import type { Solution } from "@/lib/solutions";
 export function SolutionPage({ s }: { s: Solution }) {
   return (
     <>
-      <section className="border-b border-rule">
-        <div className="container-bd grid gap-10 pb-14 pt-12 sm:pt-16 md:pb-20 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+      <section className="on-night lamp-ground relative -mt-16 overflow-hidden pt-16" aria-label={`Solutions: ${s.name}`}>
+        <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="container-bd relative grid gap-10 pb-16 pt-12 sm:pt-16 md:pb-24 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <div>
-            <Eyebrow>Solutions · {s.name}</Eyebrow>
-            <h1 className="display mt-5 text-[clamp(2.6rem,1.6rem+4vw,4.9rem)] text-ink">
+            <p className="text-[0.9rem] font-medium text-lamp">{s.name}</p>
+            <h1 className="display mt-4 text-[clamp(2.6rem,1.6rem+4vw,4.9rem)] text-[#f7f6f3]">
               {s.title} {s.titleEm}
             </h1>
-            <p className="lede mt-6">{s.lede}</p>
+            <p className="lede mt-6 !text-[#d4d6da]">{s.lede}</p>
             <div className="mt-8 flex flex-wrap items-center gap-5">
-              <ButtonLink href="/contact" arrow className="group">Book a demo</ButtonLink>
+              <ButtonLink href="/contact" variant="light" arrow className="group">Book a demo</ButtonLink>
               <ButtonLink href="#walkthrough" variant="ghost">See a sample conversation</ButtonLink>
             </div>
           </div>
-          <ul className="flex flex-wrap gap-2 lg:justify-end" aria-label="Businesses this fits">
-            {s.who.map((w) => (
-              <li key={w} className="rounded-full border border-rule-strong bg-card px-3 py-1.5 text-[0.85rem] text-ink-2">{w}</li>
-            ))}
-          </ul>
+          <aside className="nd-focal stage-pane relative w-full max-w-[460px] self-center p-5 sm:p-6 lg:ml-auto" aria-label="Example rules">
+            <div className="flex items-center justify-between border-b border-white/[0.06] pb-3 text-[0.8rem]">
+              <span className="font-medium text-[#f7f6f3]">Your rules, in plain English</span>
+              <span className="text-night-muted">Examples</span>
+            </div>
+            <ul className="mt-4 space-y-2">
+              {s.rules.map((r) => (
+                <li key={r} className="rounded-[10px] bg-white/[0.04] px-3.5 py-3 text-[0.88rem] leading-snug text-[#e6e4df]">{r}</li>
+              ))}
+            </ul>
+            <p className="mt-4 text-[0.78rem] text-night-muted">You write your own during setup.</p>
+          </aside>
         </div>
       </section>
 
@@ -45,11 +53,11 @@ export function SolutionPage({ s }: { s: Solution }) {
       <section className="border-y border-rule bg-paper-2/50 py-16 md:py-24" aria-labelledby="flow-title">
         <div className="container-bd grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
           <div>
-            <SectionHeading mark="ink" id="flow-title" title={<>A workflow that sounds like your shop.</>} />
+            <SectionHeading id="flow-title" title={<>A workflow that sounds like your shop.</>} />
             <ol className="mt-10 space-y-6">
               {s.flow.map((f, i) => (
                 <li key={f.k} className="reveal grid grid-cols-[40px_1fr] gap-3 border-t border-rule pt-5">
-                  <span className="font-mono text-[0.8rem] text-muted">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="grid size-6 place-items-center rounded-full border border-rule-strong text-[0.74rem] font-medium text-ink-2 tabular">{i + 1}</span>
                   <div>
                     <h3 className="text-[1.08rem] font-semibold tracking-[-0.01em] text-ink">{f.k}</h3>
                     <p className="mt-1 text-[0.95rem] leading-relaxed text-ink-2">{f.v}</p>
@@ -58,11 +66,11 @@ export function SolutionPage({ s }: { s: Solution }) {
               ))}
             </ol>
           </div>
-          <aside className="reveal self-start rounded-[var(--radius-lg)] bg-night p-6 text-card sm:p-7" aria-label="Example rules">
-            <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-night-muted">Example rules · you write your own</p>
-            <ul className="mt-4 space-y-3">
-              {s.rules.map((r) => (
-                <li key={r} className="rounded-md border border-night-rule bg-night-2 px-3.5 py-2.5 font-mono text-[0.8rem] leading-snug text-card/90">{r}</li>
+          <aside className="reveal self-start rounded-[var(--radius-lg)] bg-card p-6 shadow-[var(--shadow-card)] sm:p-7" aria-label="Businesses this fits">
+            <p className="text-[0.9rem] font-medium text-ink">Businesses this fits</p>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {s.who.map((w) => (
+                <li key={w} className="rounded-[8px] border border-rule-strong px-3 py-1.5 text-[0.85rem] text-ink-2">{w}</li>
               ))}
             </ul>
           </aside>
