@@ -1,29 +1,31 @@
-// Usage: node scripts/shoot.mjs <baseUrl> <outDir> [paths comma-sep] [widths comma-sep] [browser]
-import { chromium, webkit, firefox } from "@playwright/test";
-import fs from "node:fs";
-const [base, out, pathsArg = "/", widthsArg = "390,1440", browserName = "chromium"] = process.argv.slice(2);
-const engines = { chromium, webkit, firefox };
-fs.mkdirSync(out, { recursive: true });
-const exe = browserName === "chromium" ? (process.env.CHROMIUM_PATH ?? `${process.env.HOME}/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell`) : undefined;
-const browser = await engines[browserName].launch(exe ? { executablePath: exe } : {});
-const report = [];
-for (const p of pathsArg.split(",")) {
-  for (const w of widthsArg.split(",").map(Number)) {
-    const ctx = await browser.newContext({ viewport: { width: w, height: w < 800 ? 844 : 900 }, deviceScaleFactor: 1, reducedMotion: process.env.MOTION === "1" ? "no-preference" : "reduce" });
-    const page = await ctx.newPage();
-    const errors = [];
-    page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
-    page.on("pageerror", (e) => errors.push(String(e)));
-    page.on("response", (r) => r.status() >= 400 && errors.push(`${r.status()} ${r.url()}`));
-    await page.goto(base + p, { waitUntil: "networkidle" });
-    await page.waitForTimeout(600);
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-    const name = `${(p === "/" ? "home" : p.slice(1).replaceAll("/", "_"))}-${w}-${browserName}`;
-    await page.screenshot({ path: `${out}/${name}.png`, fullPage: process.env.FULL !== "0" });
-    report.push({ path: p, width: w, browser: browserName, overflowPx: overflow, errors });
-    await ctx.close();
-  }
+// Screenshot helper for design review: node scripts/shoot.mjs <url> <out.png> [width=1440] [height=900] [full=0] [engine=chromium] [scrollY=0]
+// Uses the same browser locations as playwright.config.ts.
+import path from "node:path";
+import { chromium, webkit } from "@playwright/test";
+
+process.env.PLAYWRIGHT_BROWSERS_PATH ??= path.resolve(".pw-browsers");
+const [url, out, w = "1440", h = "900", full = "0", engine = "chromium", scrollY = "0"] = process.argv.slice(2);
+if (!url || !out) {
+  console.error("usage: node scripts/shoot.mjs <url> <out.png> [width] [height] [full 0|1] [chromium|webkit] [scrollY]");
+  process.exit(1);
 }
+const exe = `${process.env.HOME}/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell`;
+const browser = engine === "webkit" ? await webkit.launch() : await chromium.launch({ executablePath: process.env.CHROMIUM_PATH ?? exe });
+const page = await browser.newPage({ viewport: { width: Number(w), height: Number(h) }, deviceScaleFactor: 1 });
+await page.goto(url, { waitUntil: "networkidle" });
+await page.evaluate(() => document.fonts.ready);
+if (full === "1") {
+  // Walk the page so scroll-revealed content settles before a full capture.
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.body.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForTimeout(500);
+} else if (Number(scrollY) > 0) {
+  await page.evaluate((y) => window.scrollTo(0, y), Number(scrollY));
+  await page.waitForTimeout(700);
+}
+await page.waitForTimeout(400);
+await page.screenshot({ path: out, fullPage: full === "1" });
 await browser.close();
-fs.writeFileSync(`${out}/report-${browserName}.json`, JSON.stringify(report, null, 2));
-console.log(JSON.stringify(report.map((r) => [r.path, r.width, r.overflowPx, r.errors.length])));
+console.log("saved", out);

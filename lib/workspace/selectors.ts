@@ -12,7 +12,7 @@ export const accountOfOpp = (ws: Workspace, oppId: string) => {
   return o ? account(ws, o.accountId) : undefined;
 };
 
-export type Attention = { id: string; kind: "draft" | "reply" | "proposal" | "run" | "walkthrough"; title: string; detail: string; href: string; tone: "action" | "attention" | "danger" };
+export type Attention = { id: string; kind: "draft" | "reply" | "proposal" | "run" | "walkthrough" | "task"; title: string; detail: string; href: string; tone: "action" | "attention" | "danger" };
 
 /** What needs the owner, in priority order. Derived only from records; no invented items. */
 export function attention(ws: Workspace, now = Date.now()): Attention[] {
@@ -27,6 +27,8 @@ export function attention(ws: Workspace, now = Date.now()): Attention[] {
   }
   for (const o of ws.opportunities.filter((o) => o.stage === "proposal" && now - Date.parse(o.updatedAt) > 4 * 86_400_000))
     out.push({ id: o.id, kind: "proposal", title: `Proposal to ${account(ws, o.accountId)?.name} has had no reply for ${Math.round((now - Date.parse(o.updatedAt)) / 86_400_000)} days`, detail: o.nextAction, href: `/app/customers/${o.accountId}`, tone: "attention" });
+  for (const t of ws.tasks.filter((t) => t.status === "open" && t.origin.kind === "presence-finding" && (t.origin.severity === "high" || t.origin.severity === "medium")))
+    out.push({ id: t.id, kind: "task", title: `Website fix: ${t.title}`, detail: `Owner: ${ws.org.members.find((m) => m.id === t.ownerId)?.name ?? "Unassigned"}`, href: "/app/presence", tone: "attention" });
   return out;
 }
 

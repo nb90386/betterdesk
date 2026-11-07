@@ -4,8 +4,8 @@
  * functions server-side inside a transaction, with the tenant taken from the session, never from
  * the request body.
  */
-import type { Account, Actor, Appointment, Contact, Draft, Event, EventType, Evidence, Opportunity, ScoutRun, Stage, Workspace } from "./model.ts";
-import { STAGE_LABEL } from "../domain/types.ts";
+import type { Account, Actor, Appointment, Contact, Draft, Event, EventType, Evidence, Opportunity, PresenceAuditRecord, ReportedChannel, ScoutRun, Stage, Task, Workspace } from "./model.ts";
+import { REPORTED_CHANNEL_LABEL, STAGE_LABEL } from "../domain/types.ts";
 import { newId } from "../domain/ids.ts";
 import { isActive, transition } from "../domain/run.ts";
 import type { ProspectRow } from "../scout/csv.ts";
@@ -358,10 +358,11 @@ export function suppress(ws: Workspace, value: string, reason: "unsubscribed" | 
   return next;
 }
 
-export function receiveInquiry(ws: Workspace, form: { business: string; name: string; email: string; zip: string; message: string }, at: string) {
+export function receiveInquiry(ws: Workspace, form: { business: string; name: string; email: string; zip: string; message: string; reportedChannel?: ReportedChannel }, at: string) {
   const name = cleanText(form.business, 120);
   if (!name || !form.email.includes("@") || !/^\d{5}$/.test(form.zip)) throw new ActionError("Business, a valid email and a 5-digit ZIP are required.");
-  const src = { kind: "inbound-form" as const, label: "Website inquiry form (sample)", retrievedAt: at };
+  const reportedChannel: ReportedChannel = form.reportedChannel && form.reportedChannel in REPORTED_CHANNEL_LABEL ? form.reportedChannel : "not-asked";
+  const src = { kind: "inbound-form" as const, label: "Website inquiry form (sample)", retrievedAt: at, reportedChannel };
   const keys = matchKeys(name, form.zip, form.email.split("@")[1]);
   let acc = ws.accounts.find((a) => matchKeys(a.name, a.address.zip, a.domain).some((k) => keys.includes(k)));
   let next = ws;
@@ -372,7 +373,8 @@ export function receiveInquiry(ws: Workspace, form: { business: string; name: st
   const { intent, reason } = classifyReply(form.message);
   const msg = { id: newId("msg"), direction: "inbound" as const, from: cleanText(form.name, 80), body: cleanText(form.message, 2000), at, simulated: true, intent };
   next = { ...next, conversations: [...next.conversations, { id: newId("cnv"), accountId: acc.id, channel: "web-form", subject: `Website inquiry from ${name}`, messages: [msg], handledBy: "human" }] };
-  next = log(next, at, { kind: "simulation", id: "sim", name: "Website form (sample)" }, "inquiry.received", `Inquiry from ${msg.from} at ${name}. ${reason}`, acc.id, msg.id, { intent });
+  const heard = reportedChannel === "not-asked" ? "" : ` They said they found you through ${REPORTED_CHANNEL_LABEL[reportedChannel].toLowerCase().replace(/^an? /, "")} (their answer, not tracked).`;
+  next = log(next, at, { kind: "simulation", id: "sim", name: "Website form (sample)" }, "inquiry.received", `Inquiry from ${msg.from} at ${name}. ${reason}${heard}`, acc.id, msg.id, { intent, reportedChannel });
   let opp = oppFor(next, acc.id);
   if (!opp) {
     opp = { id: newId("opp"), accountId: acc.id, stage: "in-conversation", ownerId: ws.org.members[0].id, estimatedMonthly: null, nextAction: intent === "walkthrough" ? "Offer walkthrough times." : "Reply to the inquiry.", origin: "inbound", createdAt: at, updatedAt: at };
@@ -408,4 +410,47 @@ export function suggestReply(ws: Workspace, conversationId: string) {
   const ask = last.intent === "pricing" ? "Pricing depends on the space, the schedule and the services, so we quote after a short walkthrough rather than guessing." : last.intent === "needs-review" ? null : "Happy to help.";
   if (!ask) return { text: "", note: "Scout couldn't tell what they need. Read it and reply yourself." };
   return { text: `Hi ${first},\n\nThanks for reaching out. ${ask} I could come by ${times[0]} or ${times[1]}. Would either work?\n\n${ws.org.sender.name}\n${ws.org.sender.company}`, note: "Built from your sender details and open times. No price is quoted because none is approved." };
+}
+
+/* ---------------- Presence ---------------- */
+
+/** Stores the summary of an audit the user ran (live or sample). The audit itself is never edited here. */
+export function recordPresenceAudit(ws: Workspace, record: PresenceAuditRecord, at: string, actor: Actor) {
+  if (ws.presenceAudits.some((a) => a.id === record.id)) return ws;
+  const next = { ...ws, presenceAudits: [...ws.presenceAudits, record] };
+  const label = record.method === "sample" ? "sample audit of the fictional site" : "live audit";
+  return log(next, at, actor, "presence.audit-recorded", `Presence ${label} for ${record.domain}: ${record.pagesChecked} page${record.pagesChecked === 1 ? "" : "s"} checked, ${record.findings.length} finding${record.findings.length === 1 ? "" : "s"}.`, null, record.id, { method: record.method });
+}
+
+/** Turns one Presence finding into an owned task. Idempotent per finding: a second click returns the same task. */
+export function createTaskFromFinding(ws: Workspace, auditId: string, findingId: string, ownerId: string, at: string, actor: Actor): { ws: Workspace; taskId: string } {
+  const audit = ws.presenceAudits.find((a) => a.id === auditId);
+  const finding = audit?.findings.find((f) => f.id === findingId);
+  if (!audit || !finding) throw new ActionError("That finding is no longer in this workspace.");
+  const existing = ws.tasks.find((t) => t.origin.kind === "presence-finding" && t.origin.auditId === auditId && t.origin.findingId === findingId);
+  if (existing) return { ws, taskId: existing.id };
+  const owner = ws.org.members.find((m) => m.id === ownerId);
+  if (!owner) throw new ActionError("Choose someone in this workspace to own the task.");
+  const task: Task = {
+    id: newId("tsk"),
+    orgId: ws.org.id,
+    title: finding.title,
+    detail: `From the Presence ${audit.method} audit of ${audit.domain}. Evidence: ${finding.evidenceUrl}`,
+    ownerId,
+    status: "open",
+    origin: { kind: "presence-finding", findingId, auditId, evidenceUrl: finding.evidenceUrl, severity: finding.severity },
+    createdAt: at,
+    completedAt: null,
+  };
+  const next = log({ ...ws, tasks: [...ws.tasks, task] }, at, actor, "task.created", `Website task for ${owner.name}: ${finding.title}`, null, task.id, { findingId, auditId });
+  return { ws: next, taskId: task.id };
+}
+
+export function completeTask(ws: Workspace, taskId: string, at: string, actor: Actor) {
+  const task = ws.tasks.find((t) => t.id === taskId);
+  if (!task) throw new ActionError("Task not found.");
+  if (task.status === "done") return ws;
+  const next = { ...ws, tasks: ws.tasks.map((t) => (t.id === taskId ? { ...t, status: "done" as const, completedAt: at } : t)) };
+  // Marking a fix done never claims an outcome: the next audit is what checks it.
+  return log(next, at, actor, "task.completed", `${actor.name} marked done: ${task.title}. Run the audit again to confirm the change.`, null, taskId);
 }

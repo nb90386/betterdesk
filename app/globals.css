@@ -1,91 +1,79 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   BetterDesk V4 · "Signal Architecture"
-   Petrol for the stage, limestone for the work, one celadon signal.
-   The signal marks what is connected and alive: a route between records,
-   a live state, the next action. Solid ink is certainty.
-   See docs/v4/DESIGN-SYSTEM.md
+   BetterDesk · "The Directory"
+   Honed stone for the page, satin graphite for the directory boards
+   where the work lives, ink for certainty, one call-button lamp that
+   only ever means "this needs you". States are marks, not pills.
+   Source of truth: DESIGN.md
    ------------------------------------------------------------------ */
 @theme inline {
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-funnel), var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: var(--font-general), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-general), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-martian), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 @theme {
-  /* Limestone (the work surface) */
-  --color-mineral: #f4f5f2;
-  --color-mineral-2: #e9ece8;
-  --color-mineral-3: #dbe0dc;
-  --color-surface: #ffffff;
+  /* Stone: the page ground and the paper laid on it */
+  --color-stone: #ecebe6;
+  --color-stone-2: #e3e2dc;
+  --color-stone-3: #d9d8d1;
+  --color-surface: #f7f6f2;
+  --color-paper: #fbfbf9;
 
   /* Ink */
-  --color-ink: #0b1a1d;
-  --color-ink-2: #283a3e;
-  --color-muted: #55676a;
-  --color-rule: #dde2de;
-  --color-rule-strong: #b8c3bf;
+  --color-ink: #151719;
+  --color-ink-2: #3a3d41;
+  --color-muted: #5d6065; /* 5.3:1 on stone */
+  --color-rule: #d3d2cb; /* decorative hairline */
+  --color-rule-strong: #b5b4ac; /* separators that must read */
+  --color-field: #7f7e77; /* input strokes, ≥3:1 on stone and surface */
 
-  /* Petrol (the stage) */
-  --color-petrol: #071315;
-  --color-petrol-2: #0d1f22;
-  --color-petrol-3: #15292d;
-  --color-petrol-rule: #22393c;
-  --color-petrol-muted: #9cb2b0;
-  --color-petrol-ink: #e8f1ef;
+  /* Graphite: the directory boards */
+  --color-graphite: #17191b;
+  --color-graphite-2: #1d1f22;
+  --color-graphite-3: #2a2d31;
+  --color-graphite-rule: #36393e;
+  --color-graphite-muted: #a3a5a9; /* 6.7:1 on graphite-2 */
+  --color-graphite-ink: #eeede8;
 
-  /* Signal: celadon. signal = graphics on either ground; signal-bright = text/marks on petrol (9.6:1);
-     signal-ink = text on limestone (6.2:1). */
-  --color-signal: #2fbf9f;
-  --color-signal-bright: #7fd8c2;
-  --color-signal-ink: #0e6b5a;
-  --color-signal-wash: #dff3ec;
+  /* The lamp. lamp = the lit mark on graphite (9.4:1); lamp-ink = lamp as text/mark on stone (5.4:1). */
+  --color-lamp: #ffb547;
+  --color-lamp-ink: #8a5200;
+  --color-lamp-wash: #f6e6c8;
 
-  /* Attention and failure, used for states only */
-  --color-attention: #9a4a0b;
-  --color-attention-wash: #fbeee2;
+  /* Failure only */
   --color-danger: #b42318;
-  --color-danger-wash: #fdecea;
+  --color-danger-wash: #f8e4e1;
 
   --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
 
-  /* One key light from the upper left; on petrol, edges catch it. */
-  --shadow-rest: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 1px 2px rgb(11 26 29 / 0.06), 0 6px 16px -10px rgb(11 26 29 / 0.2);
-  --shadow-lift: 0 1px 2px rgb(11 26 29 / 0.06), 10px 24px 44px -24px rgb(11 26 29 / 0.32);
-  --shadow-object: 0 0 0 1px rgb(11 26 29 / 0.06), 4px 10px 18px -10px rgb(11 26 29 / 0.24), 22px 50px 80px -40px rgb(11 26 29 / 0.4);
-  --shadow-petrol: 0 1px 0 rgb(255 255 255 / 0.08) inset, 0 0 0 1px rgb(127 216 194 / 0.10), 16px 34px 70px -30px rgb(0 0 0 / 0.85);
+  /* One key light from above. Boards are satin: a top sheen and a long soft fall. */
+  --shadow-paper: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 1px 2px rgb(21 23 25 / 0.06), 0 10px 24px -18px rgb(21 23 25 / 0.35);
+  --shadow-board: 0 1px 0 rgb(255 255 255 / 0.07) inset, 0 0 0 1px rgb(0 0 0 / 0.25), 0 2px 4px rgb(21 23 25 / 0.12), 0 40px 80px -48px rgb(21 23 25 / 0.75);
+  --shadow-pop: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 0 0 1px rgb(21 23 25 / 0.08), 0 12px 32px -12px rgb(21 23 25 / 0.35);
 
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-travel: cubic-bezier(0.65, 0, 0.35, 1);
+  /* Motion: ease-out for arrivals, ease-in-out for moves between stable positions. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
 
   --breakpoint-xs: 25rem;
 }
 
-/* Dark scope: re-maps ink tokens so shared primitives work on petrol. */
-.tone-dark {
-  --color-ink: #e8f1ef;
-  --color-ink-2: #c9d7d5;
-  --color-muted: #9cb2b0;
-  --color-rule: #22393c;
-  --color-rule-strong: #34504f;
-  --color-surface: #0d1f22;
-  --color-signal-ink: #7fd8c2;
-  color: var(--color-ink);
-}
-
-/* Light scope inside the petrol stage (records, cards): restores the limestone ink tokens. */
-.tone-light {
-  --color-ink: #0b1a1d;
-  --color-ink-2: #283a3e;
-  --color-muted: #55676a;
-  --color-rule: #dde2de;
-  --color-rule-strong: #b8c3bf;
-  --color-surface: #ffffff;
-  --color-signal-ink: #0e6b5a;
+/* Graphite scope: re-maps the ink tokens so shared primitives work on a directory board. */
+.on-graphite {
+  --color-ink: #eeede8;
+  --color-ink-2: #cfd0cc;
+  --color-muted: #a3a5a9;
+  --color-rule: #36393e;
+  --color-rule-strong: #4a4d52;
+  --color-field: #6c6f74;
+  --color-surface: #23262a;
+  --color-paper: #2a2d31;
+  --color-lamp-ink: #ffb547;
   color: var(--color-ink);
 }
 
@@ -93,126 +81,138 @@
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
-    scroll-padding-top: 5rem;
-    background: var(--color-mineral);
+    scroll-padding-top: 5.5rem;
+    background: var(--color-stone);
     color-scheme: light;
+    scrollbar-color: var(--color-rule-strong) var(--color-stone);
   }
   body {
-    background: var(--color-mineral);
+    background: var(--color-stone);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
     line-height: 1.55;
+    font-weight: 420;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: "ss01" on, "cv11" on;
   }
-  ::selection { background: rgb(47 191 159 / 0.25); color: var(--color-ink); }
-  .tone-dark ::selection { background: rgb(127 216 194 / 0.35); color: #fff; }
-  :focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; border-radius: 2px; }
-  input, textarea, select { caret-color: var(--color-signal); }
-  a { text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
-  h1, h2, h3 { text-wrap: balance; }
+  ::selection { background: rgb(255 181 71 / 0.38); color: var(--color-ink); }
+  :focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; border-radius: 3px; }
+  .on-graphite :focus-visible { outline-color: var(--color-lamp); }
+  input, textarea, select { caret-color: var(--color-lamp-ink); }
+  a { text-underline-offset: 0.24em; text-decoration-thickness: 1px; }
+  h1, h2, h3 { text-wrap: balance; font-weight: 600; }
   p, li, dd { text-wrap: pretty; }
   button { cursor: pointer; }
   button:disabled { cursor: not-allowed; }
   .tabular, time { font-variant-numeric: tabular-nums; }
-  html { scrollbar-color: var(--color-rule-strong) var(--color-mineral); }
 }
 
 @layer components {
   .wrap {
     width: 100%;
-    max-width: 82rem;
+    max-width: 84rem;
     margin-inline: auto;
     padding-inline: 1rem;
   }
   @media (min-width: 640px) { .wrap { padding-inline: 2rem; } }
-  @media (min-width: 1280px) { .wrap { padding-inline: 3rem; } }
+  @media (min-width: 1280px) { .wrap { padding-inline: 3.5rem; } }
 
-  /* Display voice: Instrument Sans at semibold, slightly condensed, optically tightened by size. */
+  /* Type. One family (General Sans) that tightens as it grows. */
   .t-hero {
     font-family: var(--font-display);
     font-weight: 620;
-    font-size: clamp(2.5rem, 1.3rem + 4.4vw, 5.1rem);
-    line-height: 0.96;
-    letter-spacing: -0.042em;
+    font-size: clamp(2.55rem, 1.35rem + 4.6vw, 5.4rem);
+    line-height: 0.97;
+    letter-spacing: -0.038em;
   }
   .t-display {
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem);
-    line-height: 1.0;
-    letter-spacing: -0.036em;
+    font-weight: 610;
+    font-size: clamp(2.1rem, 1.3rem + 3vw, 3.9rem);
+    line-height: 1;
+    letter-spacing: -0.034em;
   }
   .t-title {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem);
-    line-height: 1.08;
-    letter-spacing: -0.028em;
+    font-size: clamp(1.55rem, 1.15rem + 1.35vw, 2.35rem);
+    line-height: 1.07;
+    letter-spacing: -0.026em;
+  }
+  .t-head {
+    font-weight: 600;
+    font-size: 1.1875rem;
+    line-height: 1.25;
+    letter-spacing: -0.012em;
   }
   .t-lede {
-    font-size: clamp(1.125rem, 1rem + 0.45vw, 1.35rem);
-    line-height: 1.45;
-    letter-spacing: -0.008em;
+    font-size: clamp(1.125rem, 1.02rem + 0.4vw, 1.3125rem);
+    line-height: 1.48;
+    letter-spacing: -0.006em;
     color: var(--color-ink-2);
-    max-width: 38ch;
+    max-width: 44ch;
   }
-  .t-small { font-size: 0.875rem; line-height: 1.45; }
-  .t-label { font-size: 0.8125rem; font-weight: 550; letter-spacing: 0.005em; color: var(--color-muted); }
-  .t-mono { font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+  .t-small { font-size: 0.9063rem; line-height: 1.5; }
+  .t-label { font-size: 0.8125rem; font-weight: 560; letter-spacing: 0.002em; color: var(--color-muted); }
+  .t-code { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.6; letter-spacing: -0.01em; }
 
-  .illustrative {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
+  /* The directory board: the product's surface. */
+  .board {
+    background: linear-gradient(180deg, #25282c 0%, #1d1f22 38%, #1a1c1f 100%);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-board);
   }
-
-  .hairline { height: 1px; background: var(--color-rule); }
-
-  /* Surfaces. One radius family; nested elements step down a size. */
-  .panel {
-    background: var(--color-surface);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-rest);
-  }
-  .panel-petrol {
-    background: linear-gradient(180deg, #13282c 0%, #0d1f22 100%);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-petrol);
+  .paper {
+    background: var(--color-paper);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-paper);
   }
 
-  .press { transition: transform 160ms var(--ease-out), background-color 200ms, color 200ms, border-color 200ms, box-shadow 200ms; }
-  .press:active:not(:disabled) { transform: scale(0.975); transition-duration: 60ms; }
+  /* Leader: the dotted run between a name and its suite in a directory line. */
+  .leader { flex: 1; min-width: 1.5rem; height: 1px; align-self: center; margin-inline: 0.75rem; background-image: linear-gradient(90deg, currentColor 1px, transparent 1px); background-size: 5px 1px; opacity: 0.28; }
+
+  /* State marks (never colored pills): lamp = needs you; tick = done; ring = waiting; dash = not now. */
+  .mark-lamp { width: 0.5625rem; height: 0.5625rem; border-radius: 50%; background: var(--color-lamp); box-shadow: 0 0 0 3px rgb(255 181 71 / 0.16), 0 0 12px rgb(255 181 71 / 0.5); flex: none; }
+  .mark-ring { width: 0.5625rem; height: 0.5625rem; border-radius: 50%; box-shadow: inset 0 0 0 1.5px currentColor; opacity: 0.55; flex: none; }
+  .mark-off { width: 0.5625rem; height: 0.5625rem; border-radius: 50%; background: currentColor; opacity: 0.22; flex: none; }
+
+  /* Press feedback, used on ordinary buttons only. */
+  .press { transition: transform 160ms var(--ease-out), background-color 180ms, color 180ms, border-color 180ms, box-shadow 180ms; }
+  .press:active:not(:disabled) { transform: scale(0.97); transition-duration: 70ms; }
+
+  /* Text link with a drawn underline. */
+  .link { text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 0.26em; transition: text-decoration-color 180ms; }
+  .link:hover { text-decoration-color: currentColor; }
+
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-field);
+    background: var(--color-paper);
+    padding: 0.625rem 0.875rem;
+    font-size: 1rem;
+    color: var(--color-ink);
+    transition: border-color 160ms, box-shadow 160ms;
+  }
+  .field::placeholder { color: #75777c; }
+  .field:hover { border-color: var(--color-ink-2); }
+  .field:focus-visible { outline: none; border-color: var(--color-ink); box-shadow: 0 0 0 3px rgb(21 23 25 / 0.14); }
+  .field[aria-invalid="true"] { border-color: var(--color-danger); }
 }
 
-/* Slider */
-.bd-range { appearance: none; height: 28px; background: transparent; width: 100%; }
-.bd-range::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(to right, var(--color-signal) var(--fill, 50%), var(--color-rule-strong) var(--fill, 50%)); }
-.bd-range::-moz-range-track { height: 2px; background: var(--color-rule-strong); }
-.bd-range::-moz-range-progress { height: 2px; background: var(--color-signal); }
-.bd-range::-webkit-slider-thumb { appearance: none; margin-top: -9px; width: 20px; height: 20px; border-radius: 50%; background: var(--color-surface); border: 1px solid var(--color-rule-strong); box-shadow: 0 1px 0 #fff inset, 2px 4px 8px -2px rgb(16 18 20 / 0.3); }
-.bd-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--color-surface); border: 1px solid var(--color-rule-strong); }
-.bd-range:focus-visible { outline: none; }
-.bd-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--color-signal); outline-offset: 2px; }
-.bd-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--color-signal); outline-offset: 2px; }
+/* Reveal: content is visible by default; only scripted pages hide it until in view. */
+.js [data-reveal] { opacity: 0; transform: translateY(14px); transition: opacity 620ms var(--ease-out), transform 720ms var(--ease-out); }
+.js [data-reveal].is-in { opacity: 1; transform: none; }
 
-/* Ringing call: the route leaves the handset as a single expanding arc, not a glow. */
-@keyframes bd-ring { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.6); opacity: 0; } }
-.ring-arc { transform-box: fill-box; transform-origin: center; animation: bd-ring 2.2s var(--ease-out) infinite; }
-.ring-arc.delay { animation-delay: 1.1s; }
-/* A lit pulse travelling the route: emissive, so it carries its own small light (drop-shadow on one path only). */
-@keyframes bd-pulse { 0% { stroke-dashoffset: 106; opacity: 0; } 8% { opacity: 1; } 85% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
-.route-pulse { stroke-dasharray: 6 100; stroke-dashoffset: 106; filter: drop-shadow(0 0 1.2px rgb(127 216 194 / 0.9)); animation: bd-pulse 3.6s var(--ease-travel) 2.4s infinite; }
-/* Hero: the two routes draw once on load, then the pulse travels the found route. */
-@keyframes bd-draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
-.hero-draw { stroke-dasharray: 100; stroke-dashoffset: 100; animation: bd-draw 1.6s var(--ease-travel) 0.3s forwards; }
-.hero-draw.delay { animation-delay: 0.6s; }
-@keyframes bd-caret { 50% { opacity: 0; } }
-.typing-dot { animation: bd-caret 1.1s steps(1) infinite; }
+@keyframes bd-lamp { 0%, 100% { box-shadow: 0 0 0 3px rgb(255 181 71 / 0.16), 0 0 12px rgb(255 181 71 / 0.5); } 50% { box-shadow: 0 0 0 5px rgb(255 181 71 / 0.08), 0 0 18px rgb(255 181 71 / 0.65); } }
+.mark-lamp.is-live { animation: bd-lamp 2.4s var(--ease-move) infinite; }
+
+@keyframes bd-settle { 0% { box-shadow: 0 0 0 0 rgb(255 181 71 / 0.45); } 100% { box-shadow: 0 0 0 10px rgb(255 181 71 / 0); } }
+.settle-pulse { animation: bd-settle 700ms var(--ease-out) 1; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  .ring-arc, .route-pulse { display: none; }
-  .hero-draw { stroke-dashoffset: 0; animation: none; }
+  .js [data-reveal] { opacity: 1; transform: none; }
 }

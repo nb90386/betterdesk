@@ -6,6 +6,7 @@ import { classifyReply } from "../../lib/scout/reply.ts";
 import { validateDraft } from "../../lib/scout/draft.ts";
 import { transition, InvalidTransition } from "../../lib/domain/run.ts";
 import * as A from "../../lib/workspace/actions.ts";
+import { attention } from "../../lib/workspace/selectors.ts";
 import type { Workspace } from "../../lib/domain/types.ts";
 
 const dana = { kind: "user" as const, id: "usr_dana", name: "Dana Ortiz" };
@@ -220,4 +221,53 @@ test("Scout never regresses deals that are further along", () => {
   assert.equal(stage("opp_ridge"), "won");
   assert.equal(done.drafts.length, 0);
   assert.equal(done.accounts.find((a) => a.id === "acc_ridgeview")!.status, "customer");
+});
+
+/* ---------------- Presence ↔ workspace ---------------- */
+
+const AUDIT = {
+  id: "aud_test",
+  domain: "clearline.example",
+  method: "sample" as const,
+  fetchedAt: at,
+  pagesChecked: 5,
+  findings: [{ id: "f_robots", title: "robots.txt blocks OAI-SearchBot", severity: "high" as const, category: "access", evidenceUrl: "https://clearline.example/robots.txt" }],
+};
+
+test("a Presence finding becomes one owned task, idempotently, and shows on Today", () => {
+  const ws = createSampleWorkspace(NOW);
+  const w1 = A.recordPresenceAudit(ws, AUDIT, at, dana);
+  assert.equal(A.recordPresenceAudit(w1, AUDIT, at, dana), w1, "recording the same audit twice is a no-op");
+  const { ws: w2, taskId } = A.createTaskFromFinding(w1, "aud_test", "f_robots", "usr_luis", at, dana);
+  const again = A.createTaskFromFinding(w2, "aud_test", "f_robots", "usr_luis", at, dana);
+  assert.equal(again.taskId, taskId);
+  assert.equal(again.ws.tasks.length, 1);
+  const task = w2.tasks[0];
+  assert.equal(task.ownerId, "usr_luis");
+  assert.equal(task.origin.kind, "presence-finding");
+  assert.ok(w2.events.some((e) => e.type === "task.created" && e.subjectId === taskId));
+  assert.ok(attention(w2).some((a) => a.kind === "task" && a.title.includes("OAI-SearchBot")));
+  assert.throws(() => A.createTaskFromFinding(w1, "aud_test", "f_robots", "usr_nobody", at, dana), /Choose someone/);
+  assert.throws(() => A.createTaskFromFinding(w1, "aud_test", "missing", "usr_luis", at, dana), /no longer/);
+});
+
+test("completing a website task never claims an outcome", () => {
+  const ws = A.recordPresenceAudit(createSampleWorkspace(NOW), AUDIT, at, dana);
+  const { ws: w, taskId } = A.createTaskFromFinding(ws, "aud_test", "f_robots", "usr_dana", at, dana);
+  const done = A.completeTask(w, taskId, at, dana);
+  const ev = done.events.at(-1)!;
+  assert.equal(ev.type, "task.completed");
+  assert.match(ev.summary, /Run the audit again/);
+  assert.doesNotMatch(ev.summary, /rank|traffic|leads|more customers/i);
+  assert.ok(!attention(done).some((a) => a.kind === "task"));
+});
+
+test("inquiry provenance is only what the person reported", () => {
+  const ws = createSampleWorkspace(NOW);
+  const asked = A.receiveInquiry(ws, { business: "Northfield Dental", name: "Ana Ruiz", email: "ana@northfield.example", zip: "80218", message: "Could someone come look at our office?", reportedChannel: "ai-assistant" }, at);
+  const acc = asked.accounts.find((a) => a.name === "Northfield Dental")!;
+  assert.equal(acc.source.reportedChannel, "ai-assistant");
+  assert.match(asked.events.find((e) => e.type === "inquiry.received" && e.accountId === acc.id)!.summary, /their answer, not tracked/);
+  const notAsked = A.receiveInquiry(ws, { business: "Southgate Clinic", name: "B", email: "b@southgate.example", zip: "80210", message: "Hello", reportedChannel: "bogus" as never }, at);
+  assert.equal(notAsked.accounts.find((a) => a.name === "Southgate Clinic")!.source.reportedChannel, "not-asked");
 });

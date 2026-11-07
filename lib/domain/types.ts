@@ -8,8 +8,23 @@
 export type Mode = "DEMO" | "SANDBOX" | "LIVE";
 export type ISODate = string;
 
-export type SourceKind = "csv-import" | "manual" | "inbound-form" | "sample-seed";
-export type Source = { kind: SourceKind; label: string; retrievedAt: ISODate };
+export type SourceKind = "csv-import" | "manual" | "inbound-form" | "referral" | "sample-seed";
+/**
+ * Where a record came from. `reportedChannel` is ONLY what the person told us ("How did you find us?"),
+ * never an inferred attribution. Unknown stays unknown.
+ */
+export type ReportedChannel = "google-search" | "google-maps" | "ai-assistant" | "bing" | "referral" | "social" | "other" | "not-asked";
+export const REPORTED_CHANNEL_LABEL: Record<ReportedChannel, string> = {
+  "google-search": "Google search",
+  "google-maps": "Google Maps",
+  "ai-assistant": "An AI assistant (ChatGPT, Gemini, Copilot…)",
+  bing: "Bing",
+  referral: "A referral",
+  social: "Social media",
+  other: "Something else",
+  "not-asked": "Not asked",
+};
+export type Source = { kind: SourceKind; label: string; retrievedAt: ISODate; reportedChannel?: ReportedChannel };
 
 export type Organization = {
   id: string;
@@ -190,7 +205,10 @@ export type EventType =
   | "opportunity.stage-changed"
   | "contact.suppressed"
   | "run.state-changed"
-  | "inquiry.received";
+  | "inquiry.received"
+  | "presence.audit-recorded"
+  | "task.created"
+  | "task.completed";
 
 export type Event = {
   id: string;
@@ -204,8 +222,31 @@ export type Event = {
   data?: Record<string, string | number | boolean | null>;
 };
 
+/** A to-do that came from somewhere specific (today: a Presence finding). Owned by one person. */
+export type Task = {
+  id: string;
+  orgId: string;
+  title: string;
+  detail: string;
+  ownerId: string;
+  status: "open" | "done";
+  origin: { kind: "presence-finding"; findingId: string; auditId: string; evidenceUrl: string; severity: "high" | "medium" | "low" | "info" } | { kind: "manual" };
+  createdAt: ISODate;
+  completedAt: ISODate | null;
+};
+
+/** The workspace keeps a summary of each Presence audit it was given; the full report lives with the audit. */
+export type PresenceAuditRecord = {
+  id: string;
+  domain: string;
+  method: "live" | "sample";
+  fetchedAt: ISODate;
+  pagesChecked: number;
+  findings: { id: string; title: string; severity: "high" | "medium" | "low" | "info"; category: string; evidenceUrl: string }[];
+};
+
 export type Workspace = {
-  version: 1;
+  version: 2;
   org: Organization;
   accounts: Account[];
   contacts: Contact[];
@@ -218,6 +259,8 @@ export type Workspace = {
   suppressions: Suppression[];
   runs: ScoutRun[];
   events: Event[];
+  tasks: Task[];
+  presenceAudits: PresenceAuditRecord[];
   /** Demo availability (no calendar connected). */
   sampleSlots: { start: ISODate; end: ISODate }[];
 };

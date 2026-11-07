@@ -58,10 +58,10 @@ export function createSampleWorkspace(now = Date.now()): Workspace {
   });
 
   const accounts: Account[] = [
-    acc("acc_ridgeview", "Ridgeview Property Group", "ridgeviewpg.example", "1700 Lincoln St", "80203", "Property management", 22000, "customer", 120 * DAY),
-    acc("acc_larkspur", "Larkspur Family Medicine", "larkspurfm.example", "3955 E Exposition Ave", "80209", "Medical office", 7800, "prospect", 18 * DAY),
+    { ...acc("acc_ridgeview", "Ridgeview Property Group", "ridgeviewpg.example", "1700 Lincoln St", "80203", "Property management", 22000, "customer", 120 * DAY), source: { kind: "referral", label: "Referral from a building manager (sample)", retrievedAt: iso(120 * DAY), reportedChannel: "referral" } },
+    { ...acc("acc_larkspur", "Larkspur Family Medicine", "larkspurfm.example", "3955 E Exposition Ave", "80209", "Medical office", 7800, "prospect", 18 * DAY), source: { kind: "inbound-form", label: "Website inquiry form (sample)", retrievedAt: iso(18 * DAY), reportedChannel: "ai-assistant" } },
     acc("acc_cobalt", "Cobalt Coworking", "cobaltcowork.example", "2655 Larimer St", "80205", "Coworking", 14000, "prospect", 9 * DAY),
-    { ...acc("acc_alder", "Alder & Finch Architects", "alderfinch.example", "1615 Platte St", "80202", "Office", 8000, "prospect", 1 * DAY), sqft: { value: 8000, source: { kind: "inbound-form", label: "Their website inquiry", retrievedAt: iso(DAY) } } },
+    { ...acc("acc_alder", "Alder & Finch Architects", "alderfinch.example", "1615 Platte St", "80202", "Office", 8000, "prospect", 1 * DAY), source: { kind: "inbound-form", label: "Website inquiry form (sample)", retrievedAt: iso(DAY), reportedChannel: "google-search" }, sqft: { value: 8000, source: { kind: "inbound-form", label: "Their website inquiry", retrievedAt: iso(DAY) } } },
   ];
   const contacts: Contact[] = [
     { id: "con_ridge", accountId: "acc_ridgeview", name: "Tom Becker", role: "Facilities director", email: "tom@ridgeviewpg.example", emailKind: "business" },
@@ -107,7 +107,7 @@ export function createSampleWorkspace(now = Date.now()): Workspace {
   ];
   const now3 = slots(now);
   return {
-    version: 1,
+    version: 2,
     org,
     accounts,
     contacts,
@@ -122,6 +122,8 @@ export function createSampleWorkspace(now = Date.now()): Workspace {
     suppressions: [{ value: "sam@mapleandmain.example", kind: "email", reason: "unsubscribed", at: iso(40 * DAY) }],
     runs: [],
     events,
+    tasks: [],
+    presenceAudits: [],
     sampleSlots: now3.filter((_, i) => i !== 6),
   };
 }
