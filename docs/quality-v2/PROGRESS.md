@@ -34,3 +34,6 @@
 - A Vercel PREVIEW is the target. Its result is recorded below.
 - Port 3917 is held by the old overnight server.
 **Final e2e (cycle 1):**     [webkit] › tests/e2e/site.spec.ts:152:1 › reduced motion: hero shows the finished scene immediately    79 passed (50.3s) 
+
+**Preview (cycle 1):** https://betterdesk-redesign-8u64w2vv1-neel-s-projects9.vercel.app. Target preview, status Ready, built from commit 3b8c4f6. It is **protected**: anonymous requests get 302 to the Vercel login. Authenticated `vercel curl` returned 200 on /, /pricing, /demo and /contact, and 404 on an unknown route. To review, sign in to Vercel as a member of `neel-s-projects9`, then open the URL. Production and betterdesk.ai were not touched.
+**Known failing test:** `reduced motion: hero shows the finished scene immediately`. It fails in one engine per run (Chromium once, WebKit twice), even with `animation: none` under reduce. Root cause is not yet identified. The test was not disabled.
