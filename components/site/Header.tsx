@@ -75,6 +75,16 @@ export function Header() {
     };
   }, [sheet]);
 
+  // Release the sheet's scroll lock before navigation starts (not after the new route commits):
+  // iOS Safari can drop a programmatic scroll-to-top while <html> is overflow:hidden.
+  const releaseOnNavigate = (e: React.MouseEvent) => {
+    if (!(e.target as HTMLElement).closest("a[href]")) return;
+    document.documentElement.style.overflow = "";
+    document.querySelectorAll<HTMLElement>("#main, #site-footer").forEach((el) => (el.inert = false));
+    setSheet(false);
+    setMenu(false);
+  };
+
   const active = (href: string) => pathname === href || pathname.startsWith(href + "/");
   const productActive = PRODUCT_MENU.some((m) => active(m.href));
 
@@ -110,6 +120,7 @@ export function Header() {
                   <motion.div
                     ref={popRef}
                     id={popId}
+                    onClickCapture={releaseOnNavigate}
                     initial={{ opacity: 0, scale: 0.95, y: -4 }}
                     animate={{ opacity: 1, scale: 1, y: 0, transition: ENTER }}
                     exit={{ opacity: 0, scale: 0.97, y: -2, transition: EXIT }}
@@ -199,7 +210,7 @@ export function Header() {
             exit={{ opacity: 0, transition: EXIT }}
             className="h-[calc(100dvh-4.25rem)] overflow-y-auto bg-stone md:hidden"
           >
-            <nav aria-label="Mobile" className="wrap flex min-h-full flex-col pb-8 pt-2">
+            <nav aria-label="Mobile" onClickCapture={releaseOnNavigate} className="wrap flex min-h-full flex-col pb-8 pt-2">
               <p className="t-label pt-4">Product</p>
               <ul className="mt-2">
                 {PRODUCT_MENU.map((m, i) => (

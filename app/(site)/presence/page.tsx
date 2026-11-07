@@ -131,7 +131,7 @@ export default function PresencePage() {
         </details>
       </section>
 
-      <section id="check" className="on-graphite bg-graphite-2 scroll-mt-20">
+      <section id="check" className="on-graphite bg-graphite-2">
         <div className="wrap py-20 md:py-28">
           <div className="mb-10 grid gap-6 lg:grid-cols-12">
             <h2 className="t-title max-w-[14ch] lg:col-span-5">Check your own website.</h2>
