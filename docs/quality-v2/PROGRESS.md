@@ -62,3 +62,21 @@
 3. Find the Lighthouse a11y 96 item. Cut mobile LCP (the headline is the likely LCP element; check font swap timing).
 4. Shorten the mobile page (about 13,000 CSS px at 390).
 5. DESIGN.md via the Impeccable documenter, plus an Impeccable finish review.
+
+## Cycle 3 (2026-11-06, night)
+**Changed (from REVIEW_PASS05 #2, #5, #7, #8, #10 and its rhythm score):**
+- **Peak** (`components/TwoEndings.tsx`): a full-bleed night/pearl split after the story. Without: 6:44, "The job goes to whoever picked up." With: 6:47, "Booked for Thursday, 8–10 AM." The minute-by-minute lists come from `lib/sample.ts`. The walkthrough heading became "Now step through it yourself."
+- **Trust strip** (home pricing and /pricing). Only existing claims: approved answers only, people for the hard ones, start supervised, no lock-in. Nothing invented (no consent policy, integrations or quotes; those need the founder).
+- **/pricing hero**: `PlanPicker`, an accessible radiogroup with a shared-layout knob (Starter/Growth/Scale). The total updates live, with a break-even line at the ROI calculator's $250 example job that links to /roi.
+- **/contact**: a night band. The agenda sits on the left and the pearl form card on the right (new `.on-pearl` token scope). Selects are now `appearance-none` with a drawn chevron, so they match the 48px inputs in WebKit.
+- **Solutions pages**: a night hero. A "Your rules, in plain English" card is the hero artifact, and the chips moved to the lower aside. The mono 01/02 markers became numbered rings.
+- **/demo**: the walkthrough overlaps the night band.
+- **PageHero**: asides centre-align with the headline.
+- **Performance root cause:** the SVG `feTurbulence` grain tiles caused intermittent 1.2–2.3 s "Unattributable" long tasks (TBT swung from 30 to 2,260 ms across identical runs). Grain retired. After: TBT 20–60 ms across 7 runs, longest task ≤155 ms.
+- A hero bubble timestamp was darkened (Lighthouse sampled it mid-fade at 2.1:1).
+
+**Evidence:** screenshots pass-07, pass-08, pass-09 and their `-sections` folders (new `scripts/capture-sections.mjs`). Lighthouse JSON is in `docs/quality-v2/perf/`.
+**Lighthouse mobile (simulated slow 4G, local prod):** home perf 92–93 (runs 4–10), a11y 96–100 (it varies because Lighthouse samples hero frames mid-animation), LCP 3.2–3.3 s, TBT 20–60 ms, CLS 0. /pricing: 93 / 100. /demo: 80 / 100 (TBT 510 ms; the three-scenario walkthrough is the next performance lead). I tried `font-display: optional`; LCP did not move (it is bound by the lab's critical-chain model), so I reverted to `swap`.
+**Tests:** typecheck ✓, lint ✓, unit 4/4 ✓, build ✓, Playwright 80/80 (Chromium + WebKit, axe on every route).
+**Impeccable:** direction contract written to `.impeccable/surfaces/app-page-tsx.md` (all 6 blocks + seed + FINISH). Detector: no findings. Finish reviewer dispatched (IMPECCABLE_FINISH_REVIEW.md).
+**Preview:** https://betterdesk-redesign-6ksoo810u-neel-s-projects9.vercel.app (Ready, commit 1dff70b, protected). Signed in, 200 on all 10 routes and 404 on unknown.

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { PlanPicker } from "@/components/PlanPicker";
+import { Check } from "@/components/NightDesk";
 import { TrustStrip } from "@/components/TwoEndings";
 import { PricingPlans } from "@/components/PricingPlans";
 import { Faq } from "@/components/Faq";
@@ -109,7 +110,7 @@ export default function PricingPage() {
             {ROWS.map((g) => (
               <tbody key={g.group}>
                 <tr>
-                  <th colSpan={4} scope="colgroup" className="bg-paper-2/60 px-5 py-2.5 font-mono text-[0.7rem] font-normal uppercase tracking-[0.08em] text-muted">
+                  <th colSpan={4} scope="colgroup" className="bg-paper-2/60 px-5 py-2.5 text-[0.74rem] font-medium text-muted">
                     {g.group}
                   </th>
                 </tr>
@@ -118,7 +119,7 @@ export default function PricingPage() {
                     <th scope="row" className="px-5 py-3 font-normal text-ink">{label}</th>
                     {cells.map((c, i) => (
                       <td key={i} className="px-4 py-3 text-ink-2">
-                        {c === true ? (<><span className="text-handled" aria-hidden="true">✓</span><span className="sr-only">Included</span></>) : c === false ? (<><span className="text-faint" aria-hidden="true">—</span><span className="sr-only">Not included</span></>) : c}
+                        {c === true ? (<><Check className="inline size-4 text-ink" /><span className="sr-only">Included</span></>) : c === false ? (<><span className="text-faint" aria-hidden="true">—</span><span className="sr-only">Not included</span></>) : c}
                       </td>
                     ))}
                   </tr>

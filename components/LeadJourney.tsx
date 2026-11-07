@@ -134,7 +134,7 @@ export function LeadJourney({ scenarioIds, compact = false, autoplay = false }: 
                   ) : null}
                   <span className="relative">
                     {s.name}
-                    <span className={`ml-2 font-mono text-[0.6875rem] uppercase tracking-[0.06em] ${active ? "text-card/70" : "text-faint"}`}>{s.industry}</span>
+                    <span className={`ml-2 text-[0.74rem] font-medium ${active ? "text-card/70" : "text-faint"}`}>{s.industry}</span>
                   </span>
                 </button>
               );
@@ -142,7 +142,7 @@ export function LeadJourney({ scenarioIds, compact = false, autoplay = false }: 
           </div>
         ) : (
           <p className="text-[0.95rem] font-medium text-ink">
-            {scenario.name} <span className="ml-2 font-mono text-[0.7rem] uppercase tracking-[0.06em] text-muted">{scenario.industry}</span>
+            {scenario.name} <span className="ml-2 text-[0.74rem] font-medium text-muted">{scenario.industry}</span>
           </p>
         )}
 
@@ -228,7 +228,7 @@ export function LeadJourney({ scenarioIds, compact = false, autoplay = false }: 
                   ))}
                 </AnimatePresence>
                 {messages.length === 0 ? <p className="pt-24 text-center text-[0.8rem] text-faint">No messages. Nobody replied.</p> : null}
-                {i === 0 ? <FirstRing label={step.label} /> : null}
+                {i === 0 ? <FirstRing label={step.label} playing={playing} /> : null}
               </div>
             </div>
           </div>
@@ -246,14 +246,14 @@ export function LeadJourney({ scenarioIds, compact = false, autoplay = false }: 
                 exit={{ opacity: 0, y: -4, transition: { duration: 0.14 } }}
                 transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
               >
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">
+                <h3 className="font-display text-[1.7rem] leading-tight tracking-[-0.02em] text-ink">{step.label}</h3>
+                <p className="mt-1.5 text-[0.8rem] text-muted">
                   Step {i + 1} of {steps.length} · {step.time}
                 </p>
-                <h3 className="mt-2 font-display text-[1.7rem] leading-tight tracking-[-0.02em] text-ink">{step.label}</h3>
                 <p className="mt-2 max-w-[46ch] text-[0.98rem] leading-relaxed text-ink-2">{step.note}</p>
                 {step.rule ? (
                   <div className="mt-4 rounded-[var(--radius-md)] border border-dashed border-rule-strong bg-paper px-4 py-3">
-                    <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">Your rule</p>
+                    <p className="text-[0.74rem] font-medium text-muted">Your rule</p>
                     <p className="mt-1 text-[0.88rem] leading-snug text-ink">{step.rule}</p>
                   </div>
                 ) : null}
@@ -362,7 +362,7 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
   if (card.kind === "handoff")
     return (
       <div className="mt-5 rounded-[var(--radius-md)] border border-amber/30 bg-amber-soft/60 p-4">
-        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-amber">Handed to {card.to}</p>
+        <p className="text-[0.74rem] font-medium text-amber">Handed to {card.to}</p>
         <p className="mt-1 text-[0.95rem] font-medium text-ink">{card.title}</p>
         <p className="text-[0.85rem] text-ink-2">{card.detail}</p>
       </div>
@@ -370,7 +370,7 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
   if (card.kind === "recap")
     return (
       <div className="mt-5 rounded-[var(--radius-md)] bg-ink p-4 text-card">
-        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-night-muted">What you see</p>
+        <p className="text-[0.74rem] font-medium text-night-muted">What you see</p>
         <ul className="mt-2 space-y-1.5">
           {card.lines.map((l) => (
             <li key={l} className="flex items-start gap-2 text-[0.88rem]">
@@ -383,7 +383,7 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
     );
   return (
     <div className="mt-5 rounded-[var(--radius-md)] border border-rule bg-paper-2 p-4">
-      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-signal">Outcome</p>
+      <p className="text-[0.74rem] font-medium text-signal">Outcome</p>
       <p className="mt-1 text-[0.95rem] font-medium text-ink">{card.title}</p>
       <p className="text-[0.85rem] text-muted">{card.detail}</p>
     </div>
@@ -391,7 +391,7 @@ function JourneyCardView({ card }: { card: JourneyCard }) {
 }
 
 /** Step one, designed: the phone at the moment the call rings out, before anything has happened. */
-function FirstRing({ label }: { label: string }) {
+function FirstRing({ label, playing }: { label: string; playing: boolean }) {
   return (
     <div className="flex flex-col items-center pt-8 text-center" aria-hidden="true">
       <svg viewBox="0 0 120 120" className="size-28 text-signal">
@@ -402,7 +402,7 @@ function FirstRing({ label }: { label: string }) {
         <path d="M52.5 51.5h4l2 5-2.6 1.7a14 14 0 0 0 6.9 6.9l1.7-2.6 5 2v4c0 1.2-1 2.2-2.2 2.1A20 20 0 0 1 50.4 53.7c-.1-1.2.9-2.2 2.1-2.2Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
       </svg>
       <p className="mt-3 text-[0.95rem] font-medium text-ink">{label}</p>
-      <p className="mt-1 max-w-[24ch] text-[0.8rem] leading-snug text-muted">Press play, or use the arrow keys, to see what happens next.</p>
+      <p className="mt-1 max-w-[24ch] text-[0.8rem] leading-snug text-muted">{playing ? "Watch what happens next." : "Press play, or use the arrow keys, to see what happens next."}</p>
     </div>
   );
 }

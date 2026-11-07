@@ -12,8 +12,7 @@ export function SolutionPage({ s }: { s: Solution }) {
         <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="container-bd relative grid gap-10 pb-16 pt-12 sm:pt-16 md:pb-24 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <div>
-            <p className="text-[0.9rem] font-medium text-lamp">{s.name}</p>
-            <h1 className="display mt-4 text-[clamp(2.6rem,1.6rem+4vw,4.9rem)] text-[#f7f6f3]">
+            <h1 className="display text-[clamp(2.6rem,1.6rem+4vw,4.9rem)] text-[#f7f6f3]">
               {s.title} {s.titleEm}
             </h1>
             <p className="lede mt-6 !text-[#d4d6da]">{s.lede}</p>

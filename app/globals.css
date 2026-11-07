@@ -60,7 +60,7 @@
   --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 2px 4px rgb(17 18 20 / 0.06), 0 28px 48px -24px rgb(17 18 20 / 0.38);
   --shadow-device: 0 0 0 1px rgb(17 18 20 / 0.1), 0 40px 70px -34px rgb(17 18 20 / 0.5), 0 14px 26px -18px rgb(17 18 20 / 0.3);
   --shadow-stage: 0 1px 0 rgb(255 255 255 / 0.07) inset, 0 0 0 1px rgb(255 255 255 / 0.045), 0 2px 3px rgb(0 0 0 / 0.5), 24px 44px 70px -30px rgb(0 0 0 / 0.85);
-  --shadow-pearl-on-night: 0 1px 0 rgb(255 255 255 / 0.95) inset, 0 2px 3px rgb(0 0 0 / 0.45), 26px 48px 80px -28px rgb(0 0 0 / 0.9), -8px -10px 40px -18px rgb(244 169 71 / 0.22);
+  --shadow-pearl-on-night: 0 1px 0 rgb(255 255 255 / 0.95) inset, -1px -1px 0 rgb(244 169 71 / 0.35), 0 2px 3px rgb(0 0 0 / 0.5), 18px 26px 34px -18px rgb(0 0 0 / 0.75), 44px 70px 110px -36px rgb(0 0 0 / 0.95), -10px -12px 44px -18px rgb(244 169 71 / 0.26);
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-travel: cubic-bezier(0.65, 0, 0.35, 1);

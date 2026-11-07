@@ -48,6 +48,9 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
         </div>
         <div className="on-pearl card-stock self-start p-5 shadow-[var(--shadow-pearl-on-night)] sm:p-8">
           <ContactForm initialPlan={plan ?? ""} />
+          <p className="mt-5 border-t border-rule pt-4 text-[0.78rem] leading-relaxed text-muted">
+            SMS consent and opt-out wording for the texts BetterDesk sends your customers: pending, confirmed with you on the setup call. Privacy policy and terms: pending.
+          </p>
         </div>
       </div>
     </section>

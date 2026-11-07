@@ -1,4 +1,5 @@
 "use client";
+import { Check } from "./NightDesk";
 
 import { useId, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -38,8 +39,8 @@ export function ModeSwitcher() {
   return (
     <div className="rounded-[var(--radius-xl)] border border-night-rule bg-night-2 p-4 shadow-[0_40px_80px_-40px_rgb(0_0_0/0.8)] sm:p-6">
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-night-muted">Reply mode</span>
-        <span className="rounded-full border border-dashed border-night-rule px-2.5 py-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-night-muted">Sample</span>
+        <span className="text-[0.74rem] font-medium text-night-muted">Reply mode</span>
+        <span className="rounded-full border border-dashed border-night-rule px-2.5 py-0.5 text-[0.74rem] font-medium text-night-muted">Sample</span>
       </div>
       <div className="mt-3 grid grid-cols-3 gap-1 rounded-[var(--radius-md)] bg-night p-1" role="group" aria-label="Reply mode">
         {MODES.map((x) => (
@@ -73,9 +74,9 @@ export function ModeSwitcher() {
           >
             <div className={`max-w-[88%] rounded-2xl rounded-bl-md px-3.5 py-2.5 text-[0.86rem] ${mode === "assisted" ? "border border-dashed border-amber/60 bg-night-3 text-card/90" : "bg-night-3 text-card"}`}>
               Yes, Saturdays 8 AM–2 PM. I can book you 10 AM–12 PM this Saturday. Want it?
-              {mode === "autonomous" ? <span className="mt-2 block font-mono text-[0.6875rem] text-handled-bright">✓ Customer said yes · Sat 10 AM booked</span> : null}
+              {mode === "autonomous" ? <span className="mt-2 block font-mono text-[0.6875rem] text-handled-bright"><Check className="mr-1 inline size-3.5 align-[-2px]" />Customer said yes · Sat 10 AM booked</span> : null}
             </div>
-            <p className={`mt-3 font-mono text-[0.7rem] uppercase tracking-[0.06em] ${m.tone === "amber" ? "text-[#e9c77b]" : "text-handled-bright"}`}>{m.outcome}</p>
+            <p className={`mt-3 text-[0.74rem] font-medium ${m.tone === "amber" ? "text-[#e9c77b]" : "text-handled-bright"}`}>{m.outcome}</p>
             <p className="mt-1 text-[0.9rem] leading-relaxed text-card/80">{m.detail}</p>
             {mode === "assisted" ? (
               <div className="mt-3 flex gap-2" aria-hidden="true">

@@ -111,7 +111,7 @@ function Schedule() {
     <div className="relative md:pt-2">
       <div className="hidden items-baseline justify-between md:flex">
         <p className="text-[0.82rem] font-medium text-[#f7f6f3]">Thursday</p>
-        <p className="font-mono text-[0.72rem] tabular text-night-muted">Tech: Marco</p>
+        <p className="text-[0.74rem] text-night-muted">Tech: Marco</p>
       </div>
       <ol className="relative mt-3 space-y-2 md:border-l md:border-white/[0.08] md:pl-4">
         {SLOTS.map((s) =>

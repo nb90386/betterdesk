@@ -10,6 +10,7 @@ const JOBS = [
   ["/contact", "main", "contact"],
   ["/solutions/home-services", "main > section:first-of-type", "solution-hero"],
   ["/demo", "main", "demo"],
+  ["/", '[aria-labelledby="cta-title"]', "close"],
 ];
 const b = await webkit.launch();
 for (const w of [1440, 390]) {

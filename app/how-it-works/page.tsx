@@ -61,7 +61,7 @@ export default function HowItWorksPage() {
                   {i + 1}
                 </span>
                 <div className="pt-0.5">
-                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">{s.when}</p>
+                  <p className="text-[0.74rem] font-medium text-muted">{s.when}</p>
                   <h3 className="mt-1 text-[1.15rem] font-semibold tracking-[-0.01em] text-ink">{s.k}</h3>
                   <p className="mt-1.5 max-w-[60ch] text-[0.96rem] leading-relaxed text-ink-2">{s.p}</p>
                 </div>

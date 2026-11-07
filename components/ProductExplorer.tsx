@@ -108,7 +108,7 @@ export function ProductExplorer() {
                     {CHANNELS.map((c) => (
                       <Chip key={c.id} active={filter === c.id} onClick={() => applyFilter(c.id)}>
                         {c.label}
-                        {c.plan ? <span className="ml-1 font-mono text-[0.6875rem] uppercase">{c.plan}+</span> : null}
+                        {c.plan ? <span className="ml-1 text-[0.74rem] font-medium">{c.plan}+</span> : null}
                       </Chip>
                     ))}
                   </div>
@@ -132,8 +132,8 @@ export function ProductExplorer() {
                               </span>
                               <span className="truncate text-[0.8rem] text-muted">{t.preview}</span>
                               <span className="flex items-center gap-2">
-                                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.05em] text-faint">{CH_LABEL[t.channel]}</span>
-                                <span className={`rounded-full border px-1.5 font-mono text-[0.6rem] uppercase ${toneClass[st.tone]}`}>{st.text}</span>
+                                <span className="text-[0.74rem] font-medium text-faint">{CH_LABEL[t.channel]}</span>
+                                <span className={`rounded-full border px-1.5 text-[0.74rem] font-medium ${toneClass[st.tone]}`}>{st.text}</span>
                               </span>
                             </button>
                           </li>
@@ -159,7 +159,7 @@ export function ProductExplorer() {
                     <li key={t.id} className="card-stock p-4">
                       <div className="flex items-center justify-between">
                         <p className="text-[0.92rem] font-medium text-ink">{t.customer}</p>
-                        <span className={`rounded-full border px-2 font-mono text-[0.6875rem] uppercase ${toneClass[STATE_LABEL[stateOf(t)].tone]}`}>
+                        <span className={`rounded-full border px-2 text-[0.74rem] font-medium ${toneClass[STATE_LABEL[stateOf(t)].tone]}`}>
                           {STATE_LABEL[stateOf(t)].text}
                         </span>
                       </div>
@@ -188,7 +188,7 @@ export function ProductExplorer() {
             {view === "recap" ? (
               <div className="grid gap-6 p-5 sm:p-7 lg:grid-cols-[1.1fr_1fr]">
                 <div className="rounded-[var(--radius-lg)] bg-night p-6 text-card">
-                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-night-muted">Weekly summary · sample week · Growth and Scale</p>
+                  <p className="text-[0.74rem] font-medium text-night-muted">Weekly summary · sample week · Growth and Scale</p>
                   <p className="mt-3 font-display text-[1.6rem] leading-snug tracking-[-0.015em]">
                     {counts.total} conversations this week. {counts.booked} on the calendar, {counts.handed} sent to your team
                     {counts.waiting ? `, ${counts.waiting} draft waiting for your OK.` : ", nothing waiting on you."}
@@ -243,11 +243,11 @@ function ThreadView({ thread, state, onApprove, approved }: { thread: Thread; st
         <div className="flex items-center justify-between gap-3 border-b border-rule pb-3">
           <div>
             <p className="text-[0.95rem] font-medium text-ink">{thread.customer}</p>
-            <p className="font-mono text-[0.6875rem] uppercase tracking-[0.05em] text-muted">
+            <p className="text-[0.74rem] font-medium text-muted">
               {CH_LABEL[thread.channel]} · {thread.received}
             </p>
           </div>
-          <span className={`rounded-full border px-2 py-0.5 font-mono text-[0.6875rem] uppercase ${toneClass[st.tone]}`}>{st.text}</span>
+          <span className={`rounded-full border px-2 py-0.5 text-[0.74rem] font-medium ${toneClass[st.tone]}`}>{st.text}</span>
         </div>
         <div className="space-y-2 py-4" role="log" aria-label={`Conversation with ${thread.customer}`}>
           {thread.messages.map((m, k) => (
@@ -258,7 +258,7 @@ function ThreadView({ thread, state, onApprove, approved }: { thread: Thread; st
               <Bubble m={{ from: "desk", text: thread.draft, meta: "sent after your approval" }} />
             ) : (
               <div className="rounded-[var(--radius-md)] border border-dashed border-amber/50 bg-amber-soft/40 p-3">
-                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-amber">Draft · waiting for your OK</p>
+                <p className="text-[0.74rem] font-medium text-amber">Draft · waiting for your OK</p>
                 <p className="mt-1 text-[0.86rem] leading-snug text-ink">{thread.draft}</p>
                 <div className="mt-3 flex gap-2">
                   <button type="button" onClick={onApprove} className="press rounded-full bg-ink px-3.5 py-1.5 text-[0.8rem] font-medium text-card hover:bg-ink-2">
@@ -272,7 +272,7 @@ function ThreadView({ thread, state, onApprove, approved }: { thread: Thread; st
         </div>
       </div>
       <aside className="border-t border-rule bg-paper/60 p-4 lg:border-l lg:border-t-0" aria-label="What BetterDesk used">
-        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">What it went on</p>
+        <p className="text-[0.74rem] font-medium text-muted">What it went on</p>
         <ul className="mt-2 space-y-2">
           {thread.knew.map((k) => (
             <li key={k} className="border-l-2 border-rule-strong pl-2.5 text-[0.8rem] leading-snug text-ink-2">
@@ -305,7 +305,7 @@ function CalendarView({ onOpen }: { onOpen: (id: string) => void }) {
         <div className="grid min-w-[560px] grid-cols-[48px_repeat(5,1fr)] text-[0.75rem]">
           <div />
           {DAYS.map((d) => (
-            <div key={d} className="border-b border-rule pb-2 text-center font-mono text-[0.6875rem] uppercase text-muted">
+            <div key={d} className="border-b border-rule pb-2 text-center text-[0.74rem] font-medium text-muted">
               {d}
             </div>
           ))}

@@ -72,9 +72,8 @@ export function SignalStory() {
               {active === s.id ? (
                 <motion.span layoutId="story-tick" className="absolute left-[-3px] hidden h-10 w-[7px] rounded-full bg-lamp lg:top-[calc(50%-1.25rem)] lg:block" aria-hidden="true" />
               ) : null}
-              <p className="font-mono text-[0.8rem] tabular text-lamp">{s.time}</p>
-              <h3 className={`display mt-2 text-[clamp(1.75rem,1.3rem+1.6vw,2.6rem)] transition-colors duration-300 ${active === s.id ? "text-[#f7f6f3]" : "text-[#f7f6f3] lg:text-silver-2"}`}>{s.title}</h3>
-              <p className="mt-4 max-w-[46ch] text-[1rem] leading-relaxed text-night-muted">{s.body}</p>
+              <h3 className={`display text-[clamp(1.75rem,1.3rem+1.6vw,2.6rem)] transition-colors duration-300 ${active === s.id ? "text-[#f7f6f3]" : "text-[#f7f6f3] lg:text-silver-2"}`}>{s.title}</h3>
+              <p className="mt-4 max-w-[46ch] text-[1rem] leading-relaxed text-night-muted"><time className={`mr-2 text-lamp tabular ${/\d/.test(s.time) ? "font-mono text-[0.86rem]" : "font-medium"}`}>{s.time}</time>{s.body}</p>
             </div>
             <div className="mt-7 lg:hidden">
               <Stage step={s.id} index={i} still />
@@ -269,10 +268,10 @@ function OwnerState() {
       </div>
       <ul className="mt-3 divide-y divide-white/[0.06] rounded-[12px] bg-white/[0.03]">
         {threads.map(([who, what, tone]) => (
-          <li key={who} className="flex items-center gap-3 px-3.5 py-3 text-[0.86rem]">
+          <li key={who} className="grid grid-cols-[0.5rem_minmax(0,1fr)] items-baseline gap-x-3 px-3.5 py-3 text-[0.86rem] sm:grid-cols-[0.5rem_8rem_minmax(0,1fr)]">
             <span className={`size-2 shrink-0 rounded-full ${tone === "handled" ? "bg-handled-bright" : tone === "lamp" ? "bg-lamp" : "bg-white/25"}`} />
-            <span className="w-32 shrink-0 truncate text-[#f7f6f3]">{who}</span>
-            <span className="min-w-0 truncate text-night-muted">{what}</span>
+            <span className="truncate text-[#f7f6f3]">{who}</span>
+            <span className="col-start-2 text-night-muted sm:col-start-3">{what}</span>
           </li>
         ))}
       </ul>

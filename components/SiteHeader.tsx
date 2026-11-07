@@ -42,7 +42,7 @@ export function SiteHeader() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="on-night sticky top-0 z-50 border-b border-white/[0.06] bg-night/[0.88] backdrop-blur-md">
+    <header className="on-night sticky top-0 z-50 border-b border-white/[0.06] bg-night">
       <div className="container-bd flex h-16 items-center justify-between gap-6">
         <Link href="/" className="rounded-md" aria-label="BetterDesk home">
           <Logo />

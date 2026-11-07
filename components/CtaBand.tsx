@@ -16,7 +16,7 @@ export function CtaBand({
       aria-labelledby="cta-title"
     >
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-lamp/60 to-transparent" aria-hidden="true" />
-      <div className="container-bd relative grid gap-12 py-20 md:py-28 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16">
+      <div className="container-bd relative grid grid-cols-[minmax(0,1fr)] gap-12 py-20 md:py-28 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16">
         <div>
           <h2 id="cta-title" className="display max-w-[15ch] text-[clamp(2.4rem,1.4rem+3.2vw,4.3rem)] text-[#f7f6f3]">
             {title}
@@ -48,17 +48,17 @@ function MorningInbox() {
   return (
     <div className="relative mx-auto w-full max-w-[440px] lg:mr-0" aria-hidden="true">
       <div className="pearl-card relative p-5 sm:p-6">
-        <div className="flex items-baseline justify-between">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3">
           <p className="font-display text-[1.35rem] font-[600] leading-none tracking-[-0.03em] text-[#111214]">This morning</p>
           <p className="text-[0.74rem] text-[#55585e]">7:52 AM · sample</p>
         </div>
         <p className="mt-2 text-[0.86rem] text-[#2a2c30]">4 conversations came in after you closed. 2 are waiting on you.</p>
         <ul className="mt-4 divide-y divide-[#dedcd6] border-y border-[#dedcd6]">
           {ROWS.map((r) => (
-            <li key={r.who} className="flex items-center gap-3 py-2.5 text-[0.86rem]">
+            <li key={r.who} className="grid grid-cols-[0.5rem_minmax(0,1fr)] items-baseline gap-x-3 py-2.5 text-[0.86rem] sm:grid-cols-[0.5rem_7.5rem_minmax(0,1fr)]">
               <span className={`size-2 shrink-0 rounded-full ${r.tone === "you" ? "bg-[#c47a12]" : "bg-[#111214]"}`} />
-              <span className="w-[7.5rem] shrink-0 truncate font-medium text-[#111214]">{r.who}</span>
-              <span className="min-w-0 truncate text-[#55585e]">{r.what}</span>
+              <span className="truncate font-medium text-[#111214]">{r.who}</span>
+              <span className="col-start-2 text-[#55585e] sm:col-start-3">{r.what}</span>
             </li>
           ))}
         </ul>

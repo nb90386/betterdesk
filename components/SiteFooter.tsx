@@ -38,6 +38,7 @@ export function SiteFooter() {
       <div className="container-bd flex flex-col gap-2 border-t border-rule py-6 text-xs text-muted sm:flex-row sm:justify-between">
         <p>© {new Date().getFullYear()} BetterDesk</p>
         <p>Conversations shown on this site are illustrations with sample data.</p>
+        <p>Privacy policy and terms: pending, not yet published.</p>
       </div>
     </footer>
   );

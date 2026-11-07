@@ -118,7 +118,7 @@ export default function Home() {
       </section>
 
       {/* ---------------- Scroll story: one conversation, five states ---------------- */}
-      <section className="on-night relative bg-night" aria-labelledby="story-title">
+      <section className="on-night relative bg-[linear-gradient(180deg,#0d0e10_0%,#111214_45%,#1a1815_80%,#221d17_100%)]" aria-labelledby="story-title">
         <div className="container-bd pt-20 md:pt-28">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
             <h2 id="story-title" className="display reveal text-[clamp(2rem,1.3rem+2.4vw,3.4rem)] text-[#f7f6f3]">
@@ -128,7 +128,7 @@ export default function Home() {
               Same evening, same caller. This is what happens between the missed call and the booked visit, and where your team stays in charge.
             </p>
           </div>
-          <div className="mt-6 lg:mt-4">
+          <div className="mt-6 lg:mt-16">
             <SignalStory />
           </div>
         </div>
@@ -161,9 +161,8 @@ export default function Home() {
           <SectionHeading id="who-title" title="Built for businesses where a missed call is a missed job." />
           <div className="mt-12 grid gap-4 lg:grid-cols-[1.25fr_1fr]">
             <Link href="/solutions/home-services" className="on-night reveal group relative overflow-hidden rounded-[var(--radius-xl)] bg-night p-7 sm:p-9">
-              <p className="text-[0.85rem] font-medium text-lamp">Home services</p>
-              <h3 className="mt-3 max-w-[18ch] font-display text-[2.1rem] leading-[1.02] tracking-[-0.03em] text-[#f7f6f3]">
-                Plumbing, HVAC, electrical, contractors.
+              <h3 className="max-w-[18ch] font-display text-[2.1rem] leading-[1.02] tracking-[-0.03em] text-[#f7f6f3]">
+                Home services: plumbing, HVAC, electrical.
               </h3>
               <p className="mt-3 max-w-[44ch] text-[0.95rem] text-night-muted">
                 Your team is on jobs all day. BetterDesk sorts emergencies from routine work, routes the urgent ones and books the rest.
@@ -174,8 +173,7 @@ export default function Home() {
               </span>
             </Link>
             <Link href="/solutions/beauty-wellness" className="reveal group relative overflow-hidden rounded-[var(--radius-xl)] bg-card p-7 shadow-[var(--shadow-card)] sm:p-9">
-              <p className="text-[0.85rem] font-medium text-signal">Beauty &amp; wellness</p>
-              <h3 className="mt-3 max-w-[16ch] font-display text-[2.1rem] leading-[1.02] tracking-[-0.03em] text-ink">Salons, spas, studios.</h3>
+              <h3 className="max-w-[16ch] font-display text-[2.1rem] leading-[1.02] tracking-[-0.03em] text-ink">Beauty and wellness: salons, spas, studios.</h3>
               <p className="mt-3 max-w-[40ch] text-[0.95rem] text-ink-2">
                 Texts and DMs pile up between clients. BetterDesk replies with availability, services and prices, and books into your system.
               </p>

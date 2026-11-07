@@ -24,11 +24,10 @@ export function TwoEndings() {
         <div className="on-night relative overflow-hidden bg-night">
           <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
           <div className="relative ml-auto max-w-[640px] px-5 py-16 sm:px-8 md:py-24 lg:pl-12 lg:pr-14">
-            <p className="text-[0.9rem] font-medium text-night-muted">Without BetterDesk</p>
-            <p className="display mt-4 text-[clamp(4.2rem,2rem+8vw,8.5rem)] leading-[0.86] text-[#6f737a] tabular" aria-hidden="true">
+            <p className="display text-[clamp(4.2rem,2rem+8vw,8.5rem)] leading-[0.86] text-[#6f737a] tabular" aria-hidden="true">
               6:44
             </p>
-            <p className="display mt-3 text-[clamp(1.8rem,1.2rem+1.8vw,2.6rem)] text-[#f7f6f3]">The job goes to whoever picked up.</p>
+            <h3 className="display mt-3 text-[clamp(1.8rem,1.2rem+1.8vw,2.6rem)] text-[#f7f6f3]">Without BetterDesk, <span className="text-[#8e939a]">the job goes to whoever picked up.</span></h3>
             <ol className="mt-8 space-y-3 border-t border-white/[0.08] pt-6">
               {WITHOUT.map(([t, v]) => (
                 <li key={t} className="grid grid-cols-[3.5rem_1fr] gap-3 text-[0.95rem]">
@@ -41,11 +40,10 @@ export function TwoEndings() {
         </div>
         <div className="relative bg-[radial-gradient(90%_80%_at_0%_0%,#fbfaf7_0%,#eeede9_60%)]">
           <div className="relative mr-auto max-w-[640px] px-5 py-16 sm:px-8 md:py-24 lg:pl-14 lg:pr-12">
-            <p className="text-[0.9rem] font-medium text-signal">With BetterDesk</p>
-            <p className="display mt-4 text-[clamp(4.2rem,2rem+8vw,8.5rem)] leading-[0.86] text-ink tabular" aria-hidden="true">
+            <p className="display text-[clamp(4.2rem,2rem+8vw,8.5rem)] leading-[0.86] text-ink tabular" aria-hidden="true">
               6:47
             </p>
-            <p className="display mt-3 text-[clamp(1.8rem,1.2rem+1.8vw,2.6rem)] text-ink">Booked for Thursday, 8&ndash;10 AM.</p>
+            <h3 className="display mt-3 text-[clamp(1.8rem,1.2rem+1.8vw,2.6rem)] text-ink">With BetterDesk, <span className="text-signal">booked for Thursday, 8&ndash;10 AM.</span></h3>
             <ol className="mt-8 space-y-3 border-t border-rule pt-6">
               {WITH.map(([t, v], i) => (
                 <li key={t + v} className="grid grid-cols-[3.5rem_1fr] gap-3 text-[0.95rem]">

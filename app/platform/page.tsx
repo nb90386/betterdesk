@@ -81,7 +81,7 @@ export default function PlatformPage() {
                 <p className="mt-2 text-[0.96rem] leading-relaxed text-ink-2">{s.p}</p>
               </div>
               <p className="self-start rounded-[var(--radius-md)] border border-dashed border-rule-strong px-4 py-3 text-[0.88rem] leading-relaxed text-ink-2">
-                <span className="mb-1 block font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-muted">Where it stops</span>
+                <span className="mb-1 block text-[0.74rem] font-medium text-muted">Where it stops</span>
                 {s.limit}
               </p>
             </li>

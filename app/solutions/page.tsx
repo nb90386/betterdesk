@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { Arrow } from "@/components/Button";
 import { SOLUTIONS } from "@/lib/solutions";
 import { CtaBand } from "@/components/CtaBand";
 
@@ -26,10 +27,10 @@ export default function SolutionsPage() {
       <section className="container-bd grid gap-4 py-14 md:grid-cols-2 md:py-20">
         {SOLUTIONS.map((s, i) => (
           <Link key={s.slug} href={`/solutions/${s.slug}`} className={`group rounded-[var(--radius-xl)] p-7 sm:p-9 ${i === 0 ? "bg-ink text-card" : "border border-rule bg-card text-ink"}`}>
-            <p className={`font-mono text-[0.7rem] uppercase tracking-[0.08em] ${i === 0 ? "text-night-muted" : "text-muted"}`}>{s.name}</p>
+            <p className={`text-[0.74rem] font-medium ${i === 0 ? "text-night-muted" : "text-muted"}`}>{s.name}</p>
             <h2 className="mt-3 font-display text-[2rem] leading-[1.08] tracking-[-0.02em]">{s.title} {s.titleEm}</h2>
             <p className={`mt-3 text-[0.95rem] leading-relaxed ${i === 0 ? "text-card/75" : "text-ink-2"}`}>{s.who.slice(0, 5).join(" · ")}</p>
-            <span className="mt-8 inline-flex items-center gap-2 text-[0.92rem] font-medium">Read more <span className="transition-transform group-hover:translate-x-1">→</span></span>
+            <span className="mt-8 inline-flex items-center gap-2 text-[0.92rem] font-medium">Read more <Arrow /></span>
           </Link>
         ))}
       </section>

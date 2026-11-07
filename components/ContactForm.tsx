@@ -91,7 +91,7 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
     const body = decodeURIComponent(sent.split("&body=")[1] ?? "");
     return (
       <div className="rounded-[var(--radius-lg)] border border-handled/30 bg-card p-6 sm:p-8" role="status">
-        <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-handled">Almost done</p>
+        <p className="text-[0.74rem] font-medium text-handled">Almost done</p>
         <h2 className="mt-2 font-display text-[1.9rem] leading-tight tracking-[-0.02em] text-ink">Your email app should now be open.</h2>
         <p className="mt-3 text-[0.98rem] leading-relaxed text-ink-2">
           We&rsquo;ve filled in a message to <strong>{CONTACT_EMAIL}</strong>. Nothing is sent until you press send there. If no window opened,
