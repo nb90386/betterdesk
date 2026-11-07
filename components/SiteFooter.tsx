@@ -9,7 +9,7 @@ export function SiteFooter() {
         <div className="md:col-span-5">
           <Logo className="text-[1.15rem]" />
           <p className="mt-5 max-w-[30ch] text-[1.0625rem] leading-snug text-ink-2">
-            From the first ring to the booked appointment, for service businesses that can&rsquo;t always pick up.
+            Find the right buildings, introduce yourself well, and keep every opportunity moving to a signed contract. Built for commercial cleaning companies.
           </p>
           <a href={`mailto:${CONTACT_EMAIL}`} className="mt-6 inline-block text-[0.9375rem] text-ink underline decoration-rule-strong underline-offset-4 hover:decoration-signal">
             {CONTACT_EMAIL}
@@ -34,7 +34,7 @@ export function SiteFooter() {
       </div>
       <div className="wrap flex flex-col gap-2 border-t border-rule py-6 text-[0.8125rem] text-muted sm:flex-row sm:justify-between">
         <p>© {new Date().getFullYear()} BetterDesk</p>
-        <p>Conversations shown on this site are illustrative samples, not customer data.</p>
+        <p>Early access. Companies, people and conversations shown on this site are fictional samples.</p>
       </div>
     </footer>
   );

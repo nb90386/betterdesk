@@ -44,9 +44,9 @@ export function StickyCta() {
       className={`fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-mineral/85 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition-transform duration-300 ease-[var(--ease-out)] md:hidden ${show ? "translate-y-0" : "translate-y-full"}`}
     >
       <div className="flex items-center gap-3">
-        <p className="min-w-0 flex-1 text-[0.875rem] leading-tight text-ink-2">See it on your own missed calls.</p>
-        <Link href="/contact" className="press inline-flex min-h-11 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[550] text-mineral">
-          Request a demo
+        <p className="min-w-0 flex-1 text-[0.875rem] leading-tight text-ink-2">Try the sample workspace. No sign-up.</p>
+        <Link href="/app" className="press inline-flex min-h-11 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[550] text-mineral">
+          Explore BetterDesk
         </Link>
       </div>
     </div>

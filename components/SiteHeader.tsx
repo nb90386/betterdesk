@@ -104,11 +104,12 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Link href="/contact" className="hidden px-2 text-[0.9375rem] text-ink-2 hover:text-ink lg:inline">Request a demo</Link>
           <Link
-            href="/contact"
-            className="press hidden min-h-10 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[550] text-mineral hover:bg-ink-2 sm:inline-flex [.tone-dark_&]:text-petrol"
+            href="/app"
+            className="press hidden min-h-10 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[550] text-mineral hover:bg-ink-2 sm:inline-flex [.tone-dark_&]:bg-signal-bright [.tone-dark_&]:text-petrol"
           >
-            Request a demo
+            Explore BetterDesk
           </Link>
           <button
             ref={buttonRef}
@@ -130,12 +131,12 @@ export function SiteHeader() {
         <div id="mobile-menu" className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-rule bg-mineral md:hidden">
           <nav aria-label="Mobile" className="wrap flex h-full flex-col pb-8 pt-4">
             <ul>
-              {[...NAV, { href: "/demo", label: "See a conversation" }].map((item) => (
+              {[...NAV, { href: "/contact", label: "Request a demo" }].map((item) => (
                 <li key={item.href} className="border-b border-rule">
                   <Link
                     href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
-                    className="flex min-h-16 items-center justify-between text-[1.6rem] font-semibold tracking-[-0.025em] text-ink [font-stretch:94%]"
+                    className="flex min-h-16 items-center justify-between font-display text-[1.6rem] font-semibold tracking-[-0.03em] text-ink"
                   >
                     {item.label}
                     <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-signal opacity-0 [[aria-current=page]_&]:opacity-100" />
@@ -144,10 +145,10 @@ export function SiteHeader() {
               ))}
             </ul>
             <div className="mt-auto pt-8">
-              <Link href="/contact" className="press flex min-h-13 items-center justify-center rounded-[var(--radius-sm)] bg-ink text-[1.05rem] font-[550] text-mineral">
-                Request a demo
+              <Link href="/app" className="press flex min-h-13 items-center justify-center rounded-[var(--radius-sm)] bg-ink text-[1.05rem] font-[550] text-mineral">
+                Explore BetterDesk
               </Link>
-              <p className="t-small mt-3 text-center text-muted">A short form. We reply by email to find a call time.</p>
+              <p className="t-small mt-3 text-center text-muted">Opens a sample workspace. No account needed; nothing is sent.</p>
             </div>
           </nav>
         </div>

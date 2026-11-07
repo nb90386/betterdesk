@@ -9,6 +9,16 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    // Retired V3 routes point to their V4 equivalents (temporary while V4 is a preview).
+    return [
+      { source: "/platform", destination: "/product", permanent: false },
+      { source: "/roi", destination: "/pricing", permanent: false },
+      { source: "/solutions", destination: "/solutions/commercial-cleaning", permanent: false },
+      { source: "/solutions/home-services", destination: "/solutions/commercial-cleaning", permanent: false },
+      { source: "/solutions/beauty-wellness", destination: "/solutions/commercial-cleaning", permanent: false },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
