@@ -1,0 +1,40 @@
+    id		dpl_Fp4xUUWthr2ZaMsikeMqkPKjhgui
+    target	preview
+    status	● Ready
+unauthenticated: 302
+200 /
+200 /product
+200 /product/presence
+200 /product/scout
+200 /product/desk
+200 /solutions/commercial-cleaning
+200 /solutions/b2b-services
+200 /how-it-works
+200 /integrations
+200 /demo
+200 /pricing
+200 /resources
+200 /resources/guides/ai-search-for-service-businesses
+200 /resources/guides/why-you-dont-show-up-in-local-search
+200 /resources/guides/commercial-cleaning-walkthrough-checklist
+200 /resources/guides/follow-up-after-a-cleaning-estimate
+200 /contact
+200 /security
+200 /about
+200 /privacy
+200 /app
+200 /app/presence
+200 /app/pipeline
+404 /nope
+200 /opengraph-image
+200 /icon.svg
+200 /sitemap.xml
+200 /robots.txt
+redirect /scout -> 308 /product/scout
+redirect /presence -> 308 /product/presence
+redirect /desk -> 308 /product/desk
+redirect /resources/ai-search-for-service-businesses -> 308 /resources/guides/ai-search-for-service-businesses
+h1: Find better accounts.Be easier to find.Book mo
+fonts preloaded: 0
+review api: "code":"delivery_not_configured"
+presence ssrf: "code":"blocked_url"
