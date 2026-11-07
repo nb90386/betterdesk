@@ -1,13 +1,12 @@
-import { Eyebrow } from "./Section";
-
+/** Subpage opening: continues the night desk header, then hands off to pearl. Eyebrow kept for the document title only. */
 export function PageHero({ eyebrow, title, children, aside }: { eyebrow: string; title: React.ReactNode; children?: React.ReactNode; aside?: React.ReactNode }) {
   return (
-    <section className="border-b border-rule">
-      <div className={`container-bd grid gap-10 pb-14 pt-12 sm:pt-16 md:pb-20 ${aside ? "lg:grid-cols-[1.3fr_1fr] lg:items-end" : ""}`}>
-        <div className="max-w-[760px]">
-          <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="display mt-5 text-[clamp(2.6rem,1.6rem+4vw,4.9rem)] text-ink">{title}</h1>
-          {children ? <div className="lede mt-6">{children}</div> : null}
+    <section className="on-night lamp-ground relative -mt-16 overflow-hidden pt-16" aria-label={eyebrow}>
+      <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className={`container-bd relative grid gap-10 pb-16 pt-12 sm:pt-16 md:pb-24 ${aside ? "lg:grid-cols-[1.25fr_1fr] lg:items-end" : ""}`}>
+        <div className="max-w-[820px]">
+          <h1 className="display text-[clamp(2.5rem,1.4rem+4.2vw,5rem)] text-[#f7f6f3]">{title}</h1>
+          {children ? <div className="lede mt-6 !text-[#d4d6da]">{children}</div> : null}
         </div>
         {aside}
       </div>

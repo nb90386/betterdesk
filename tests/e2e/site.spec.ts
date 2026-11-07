@@ -155,7 +155,8 @@ test("reduced motion: hero shows the finished scene immediately", async ({ brows
   await page.goto("/");
   const booked = page.locator("figure").getByText("Thu · 8:00–10:00 AM");
   await expect(booked).toBeVisible();
-  expect(Number(await booked.evaluate((el) => getComputedStyle(el.closest("li")!).opacity))).toBe(1);
+  // v2: the booked card (not its list row) carries the entrance animation.
+  expect(Number(await booked.evaluate((el) => getComputedStyle(el.closest(".pearl-card")!).opacity))).toBe(1);
   await ctx.close();
 });
 

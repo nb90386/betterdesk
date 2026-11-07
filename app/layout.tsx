@@ -6,13 +6,14 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { StickyCta } from "@/components/StickyCta";
 import { SITE_URL } from "@/lib/site";
 
-// Self-hosted OFL fonts, latin subset. Newsreader is a static roman display instance (opsz 72, weight 380), ~57 KB.
-const newsreader = localFont({
-  src: [{ path: "./fonts/Newsreader.woff2", style: "normal", weight: "380" }],
-  variable: "--font-newsreader",
+// Self-hosted OFL fonts, latin subset. Bricolage Grotesque variable (opsz 12–96, wght 200–800) is the display voice.
+const bricolage = localFont({
+  src: "./fonts/Bricolage.woff2",
+  weight: "200 800",
+  variable: "--font-bricolage",
   display: "swap",
-  fallback: ["Iowan Old Style", "Georgia", "serif"],
-  adjustFontFallback: "Times New Roman",
+  fallback: ["Avenir Next", "system-ui", "sans-serif"],
+  adjustFontFallback: "Arial",
 });
 const geist = localFont({ src: "./fonts/Geist.woff2", weight: "100 900", variable: "--font-geist", display: "swap" });
 const geistMono = localFont({ src: "./fonts/GeistMono.woff2", weight: "100 900", variable: "--font-geist-mono", display: "swap", preload: false });
@@ -20,7 +21,7 @@ const geistMono = localFont({ src: "./fonts/GeistMono.woff2", weight: "100 900",
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "BetterDesk · The front desk that follows through",
+    default: "BetterDesk · Every missed call, answered",
     template: "%s · BetterDesk",
   },
   description:
@@ -30,14 +31,14 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "BetterDesk",
     url: SITE_URL,
-    title: "BetterDesk · The front desk that follows through",
+    title: "BetterDesk · Every missed call, answered",
     description: "Missed calls become booked appointments, without hiring another receptionist.",
   },
   twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f3eee4",
+  themeColor: "#0d0e10",
   width: "device-width",
   initialScale: 1,
 };
@@ -53,11 +54,11 @@ const orgJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${newsreader.variable} ${geist.variable} ${geistMono.variable}`}>
-      <body className="grain min-h-dvh">
+    <html lang="en" className={`${bricolage.variable} ${geist.variable} ${geistMono.variable}`}>
+      <body className="min-h-dvh">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[100] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[100] focus:rounded-md focus:bg-lamp focus:px-4 focus:py-2 focus:text-night"
         >
           Skip to content
         </a>

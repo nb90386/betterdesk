@@ -42,7 +42,7 @@ export function SiteHeader() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="header-scrolled sticky top-0 z-50 border-b border-transparent backdrop-blur-md supports-[not(animation-timeline:scroll())]:bg-paper/90">
+    <header className="on-night sticky top-0 z-50 border-b border-white/[0.06] bg-night/[0.88] backdrop-blur-md">
       <div className="container-bd flex h-16 items-center justify-between gap-6">
         <Link href="/" className="rounded-md" aria-label="BetterDesk home">
           <Logo />
@@ -61,7 +61,7 @@ export function SiteHeader() {
                   {isActive(item.href) ? (
                     <motion.span
                       layoutId="nav-active"
-                      className="absolute inset-x-3.5 -bottom-0.5 h-px bg-signal"
+                      className="absolute inset-x-3.5 -bottom-0.5 h-px bg-lamp"
                       transition={{ type: "spring", stiffness: 500, damping: 40 }}
                     />
                   ) : null}
@@ -74,15 +74,15 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/contact"
-            className="press group hidden min-h-10 items-center gap-2 rounded-full bg-ink px-4 text-[0.9rem] font-medium text-card hover:bg-ink-2 sm:inline-flex"
+            className="press group hidden min-h-10 items-center gap-2 rounded-full bg-[#f7f6f3] px-4 text-[0.9rem] font-medium text-[#111214] shadow-[0_1px_0_#fff_inset,0_6px_18px_-8px_rgb(244_169_71/0.45)] hover:bg-white sm:inline-flex"
           >
-            <span className="size-1.5 rounded-full bg-signal-glow transition-colors group-hover:bg-handled-bright" aria-hidden="true" />
+            <span className="size-1.5 rounded-full bg-lamp transition-colors group-hover:bg-handled" aria-hidden="true" />
             Book a demo
           </Link>
           <button
             ref={buttonRef}
             type="button"
-            className="press inline-flex size-11 items-center justify-center rounded-full border border-rule-strong bg-card/70 lg:hidden"
+            className="press inline-flex size-11 items-center justify-center rounded-full border border-rule-strong bg-night-2 lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}

@@ -1,60 +1,69 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   BetterDesk design tokens · "The through-line"
-   Paper and ink, one signal colour for the unanswered moment,
-   one resolution colour for handled. Everything else is restraint.
+   BetterDesk v2 · "After hours, then morning"
+   Night graphite lit by one amber lamp; pearl for what is settled.
+   Amber is always the incoming signal. Pearl and solid ink are certainty.
+   See docs/quality-v2/ART_DIRECTION.md
    ------------------------------------------------------------------ */
 @theme inline {
-  --font-display: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
+  --font-display: var(--font-bricolage), "Avenir Next", ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 @theme {
-  /* Surfaces */
-  --color-paper: #f3eee4;
-  --color-paper-2: #ebe4d7;
-  --color-paper-3: #e2d9c9;
-  --color-card: #fbf8f2;
-  --color-night: #13161c;
-  --color-night-2: #1b1f27;
-  --color-night-3: #262b35;
+  /* Pearl (settled, daylight) */
+  --color-paper: #eeede9;
+  --color-paper-2: #e4e3de;
+  --color-paper-3: #d8d6d0;
+  --color-card: #f8f7f4;
+
+  /* Night (after hours) */
+  --color-night: #0d0e10;
+  --color-night-2: #16181b;
+  --color-night-3: #202327;
+  --color-night-rule: #2c3036;
+  --color-night-muted: #a4a8ae;
 
   /* Ink */
-  --color-ink: #15181f;
-  --color-ink-2: #2b2f38;
-  --color-muted: #5a5e6a;
-  --color-faint: #63666f;
-  --color-rule: #d8cfbf;
-  --color-rule-strong: #c4b9a5;
-  --color-night-muted: #a6a9b1;
-  --color-night-rule: #2f3440;
+  --color-ink: #111214;
+  --color-ink-2: #2a2c30;
+  --color-muted: #55585e;
+  --color-faint: #5d6066;
+  --color-rule: #d3d1cb;
+  --color-rule-strong: #b7b4ad;
 
-  /* Meaning */
-  --color-signal: #b0341a;
-  --color-signal-soft: #f4dccf;
-  --color-signal-glow: #ff7a52;
-  --color-handled: #1e5a46;
-  --color-handled-soft: #d9e7dd;
-  --color-handled-bright: #6fcf9f;
-  --color-amber: #7a520a;
-  --color-amber-soft: #f3e6c4;
+  /* Hardware */
+  --color-silver: #c9ccd1;
+  --color-silver-2: #8e939a;
 
-  /* Radii: tight for UI, softer for cards and devices */
+  /* Meaning: amber signal, settled status */
+  --color-lamp: #f4a947;
+  --color-signal: #9a5208;
+  --color-signal-soft: #f2e4cc;
+  --color-signal-glow: #f4a947;
+  --color-amber: #8a5a0c;
+  --color-amber-soft: #f2e5c9;
+  --color-handled: #2c5c4c;
+  --color-handled-soft: #dde6e1;
+  --color-handled-bright: #9fd8bb;
+
   --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-lg: 14px;
+  --radius-xl: 22px;
 
-  /* Elevation: contact shadows like card stock on a desk */
-  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 1px 2px rgb(21 24 31 / 0.06), 0 6px 18px -8px rgb(21 24 31 / 0.18);
-  --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 2px 4px rgb(21 24 31 / 0.06), 0 22px 40px -18px rgb(21 24 31 / 0.32);
-  --shadow-device: 0 0 0 1px rgb(21 24 31 / 0.08), 0 30px 60px -30px rgb(21 24 31 / 0.45), 0 12px 24px -16px rgb(21 24 31 / 0.25);
+  /* Elevation: one key light, upper left. Shadows fall down and right. */
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.85) inset, 0 1px 2px rgb(17 18 20 / 0.07), 0 10px 24px -14px rgb(17 18 20 / 0.28);
+  --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 2px 4px rgb(17 18 20 / 0.06), 0 28px 48px -24px rgb(17 18 20 / 0.38);
+  --shadow-device: 0 0 0 1px rgb(17 18 20 / 0.1), 0 40px 70px -34px rgb(17 18 20 / 0.5), 0 14px 26px -18px rgb(17 18 20 / 0.3);
+  --shadow-stage: 0 1px 0 rgb(255 255 255 / 0.07) inset, 0 0 0 1px rgb(255 255 255 / 0.045), 0 2px 3px rgb(0 0 0 / 0.5), 24px 44px 70px -30px rgb(0 0 0 / 0.85);
+  --shadow-pearl-on-night: 0 1px 0 rgb(255 255 255 / 0.95) inset, 0 2px 3px rgb(0 0 0 / 0.45), 26px 48px 80px -28px rgb(0 0 0 / 0.9), -8px -10px 40px -18px rgb(244 169 71 / 0.22);
 
-  /* Motion */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-travel: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-in-soft: cubic-bezier(0.55, 0, 0.78, 0.4);
   --duration-quick: 160ms;
   --duration-base: 220ms;
@@ -63,12 +72,32 @@
   --breakpoint-xs: 25rem;
 }
 
-/* ------------------------------------------------------------------ */
+/* Inverted scope: any subtree marked .on-night re-maps the light tokens,
+   so shared components (buttons, explorer, chips) render correctly on graphite. */
+.on-night {
+  --color-paper: #0d0e10;
+  --color-paper-2: #16181b;
+  --color-paper-3: #202327;
+  --color-ink: #f7f6f3;
+  --color-ink-2: #d4d6da;
+  --color-muted: #a4a8ae;
+  --color-faint: #9a9ea5;
+  --color-rule: #2c3036;
+  --color-rule-strong: #3d424a;
+  --color-signal: #f4a947;
+  --color-signal-soft: #3a2a14;
+  --color-handled: #9fd8bb;
+  --color-handled-soft: #1b2b25;
+  color: var(--color-ink);
+}
+.on-night ::selection { background: rgb(244 169 71 / 0.35); color: #fff; }
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     scroll-padding-top: 5rem;
+    background: var(--color-night);
   }
   body {
     background: var(--color-paper);
@@ -77,6 +106,7 @@
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    caret-color: var(--color-signal);
   }
   ::selection {
     background: var(--color-signal-soft);
@@ -87,165 +117,168 @@
     outline-offset: 3px;
     border-radius: 4px;
   }
-  h1, h2, h3 {
-    text-wrap: balance;
-  }
-  p, li, dd {
-    text-wrap: pretty;
-  }
-  button {
-    cursor: pointer;
-  }
-  button:disabled {
-    cursor: not-allowed;
-  }
+  h1, h2, h3 { text-wrap: balance; }
+  p, li, dd { text-wrap: pretty; }
+  button { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+  .tabular, time { font-variant-numeric: tabular-nums; }
+  * { scrollbar-color: var(--color-rule-strong) transparent; }
 }
 
-/* Paper grain: a tiled, very quiet noise texture baked into the page background.
-   No fixed overlay and no blend mode, so animations never force full-viewport repaints. */
-.grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.09 0 0 0 0 0.12 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
+/* Night grain: only on graphite grounds, to stop gradient banding. */
+.grain-night {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
 }
 
 @layer components {
   .container-bd {
     width: 100%;
-    max-width: 1240px;
+    max-width: 1280px;
     margin-inline: auto;
     padding-inline: 1.25rem;
   }
   @media (min-width: 640px) {
     .container-bd { padding-inline: 2rem; }
   }
+  @media (min-width: 1280px) {
+    .container-bd { padding-inline: 3rem; }
+  }
 
   .display {
     font-family: var(--font-display);
-    font-weight: 380;
-    letter-spacing: -0.022em;
-    line-height: 1.02;
+    font-weight: 540;
+    letter-spacing: -0.034em;
+    line-height: 0.98;
     font-optical-sizing: auto;
+    font-kerning: normal;
   }
-  .display em {
-    font-style: normal;
-  }
+  .display em { font-style: normal; }
   .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0;
     color: var(--color-muted);
   }
   .lede {
-    font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.22rem);
-    line-height: 1.6;
+    font-size: clamp(1.02rem, 0.96rem + 0.3vw, 1.18rem);
+    line-height: 1.58;
     color: var(--color-ink-2);
-    max-width: 60ch;
+    max-width: 58ch;
   }
   .prose-bd p + p { margin-top: 1em; }
-
-  /* Ledger rule: the through-line's quiet sibling, used as section dividers */
-  .rule-thread {
-    height: 1px;
-    background: linear-gradient(90deg, var(--color-rule-strong), var(--color-rule) 40%, transparent);
-  }
-
+  .rule-thread { height: 1px; background: var(--color-rule); }
   .card-stock {
     background: var(--color-card);
-    border: 1px solid color-mix(in oklab, var(--color-rule) 80%, white);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
   }
-
   .sample-tag {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    font-weight: 500;
     color: var(--color-muted);
-    border: 1px dashed var(--color-rule-strong);
+  }
+  .sample-tag::before {
+    content: "";
+    width: 0.4rem;
+    height: 0.4rem;
     border-radius: 999px;
-    padding: 0.2rem 0.6rem;
+    border: 1.25px solid currentColor;
   }
+  .press { transition: transform 160ms var(--ease-out-soft), background-color 200ms, color 200ms, border-color 200ms, box-shadow 200ms; }
+  .press:active:not(:disabled) { transform: scale(0.97); transition-duration: 60ms; }
 
-  /* Pressable controls: physical feedback, no tween while held */
-  .press {
-    transition: transform var(--duration-quick) var(--ease-out-soft), background-color var(--duration-quick), color var(--duration-quick), border-color var(--duration-quick), box-shadow var(--duration-quick);
+  /* Stage surfaces */
+  .stage-pane {
+    background: linear-gradient(180deg, #1b1d21 0%, #15171a 100%);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-stage);
   }
-  .press:active:not(:disabled) {
-    transform: scale(0.975);
-    transition-duration: 0ms;
+  .pearl-card {
+    background: linear-gradient(180deg, #fbfaf7 0%, #efeee9 100%);
+    color: #111214;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-pearl-on-night);
+  }
+  /* The lamp: light falling on the ground surface from upper left, not a floating blob. */
+  .lamp-ground {
+    background:
+      radial-gradient(120% 90% at 8% -10%, rgb(244 169 71 / 0.16) 0%, rgb(244 169 71 / 0.05) 32%, transparent 60%),
+      radial-gradient(90% 70% at 85% 110%, rgb(201 204 209 / 0.05) 0%, transparent 55%),
+      var(--color-night);
   }
 }
 
-/* Scroll reveals: CSS only, progressive. Content is visible when unsupported. */
+/* Reveal: content is visible by default; motion only adds travel. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .reveal {
       animation: bd-reveal linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 38%;
+      animation-range: entry 0% entry 42%;
     }
   }
   @supports (animation-timeline: scroll()) {
     .header-scrolled {
       animation: bd-header linear both;
       animation-timeline: scroll(root);
-      animation-range: 0 120px;
+      animation-range: 0 140px;
     }
   }
 }
-
-/* "booked" underline thread: drawn once, transform only */
-.booked-thread { transform-origin: left center; animation: bd-underline 900ms var(--ease-out-soft) 450ms both; }
-@keyframes bd-underline { from { transform: scaleX(0); } to { transform: none; } }
-
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: scroll()) {
-    .gutter-thread { transform-origin: top center; animation: bd-grow linear both; animation-timeline: scroll(root); }
-  }
-}
-@keyframes bd-grow { from { transform: scaleY(0); } to { transform: none; } }
-
 @keyframes bd-reveal {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; }
+  from { transform: translateY(22px); }
+  to { transform: none; }
 }
 @keyframes bd-header {
-  from { background-color: rgb(243 238 228 / 0); border-color: transparent; }
-  to { background-color: rgb(243 238 228 / 0.86); border-color: var(--color-rule); }
+  from { background-color: rgb(13 14 16 / 0); border-color: transparent; }
+  to { background-color: rgb(13 14 16 / 0.9); border-color: rgb(255 255 255 / 0.07); }
 }
 
-/* Thread drawing (hero + diagrams) */
-@keyframes bd-draw {
-  from { stroke-dashoffset: var(--len, 600); }
-  to { stroke-dashoffset: 0; }
-}
+@keyframes bd-draw { from { stroke-dashoffset: var(--len, 600); } to { stroke-dashoffset: 0; } }
 @keyframes bd-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.35; transform: scale(0.82); }
 }
 .pulse-dot { animation: bd-pulse 1.6s var(--ease-out-soft) infinite; transform-origin: center; }
-
-@keyframes bd-flow {
-  to { stroke-dashoffset: -40; }
-}
+@keyframes bd-flow { to { stroke-dashoffset: -40; } }
 .thread-flow { stroke-dasharray: 2 8; animation: bd-flow 2.4s linear infinite; }
 
-/* Hero sequence */
+/* Legacy sequence classes still used by the walkthrough */
 .hs-card { animation: hs-in 560ms var(--ease-out-soft) both; }
 .hs-seg { stroke-dasharray: 100; stroke-dashoffset: 100; animation: hs-draw 1000ms var(--ease-out-soft) both; }
 .hs-fray { animation: hs-fade 700ms ease-out both; }
 [data-paused] .hs-card, [data-paused] .hs-seg, [data-paused] .hs-fray { animation-play-state: paused; }
-@keyframes hs-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.985); }
-  to { opacity: 1; transform: none; }
-}
+@keyframes hs-in { from { opacity: 0; transform: translateY(10px) scale(0.985); } to { opacity: 1; transform: none; } }
 @keyframes hs-draw { from { stroke-dashoffset: 100; opacity: 0; } 4% { opacity: 1; } to { stroke-dashoffset: 0; opacity: 1; } }
 @keyframes hs-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------------- Night desk hero sequence ----------------
+   The resolved scene is the static state. With motion allowed, the
+   pieces arrive in story order once, then hold. */
+.nd-ring { transform-box: fill-box; transform-origin: center; animation: nd-ring 2.8s var(--ease-out-soft) infinite; }
+.nd-ring:nth-of-type(2) { animation-delay: 0.9s; }
+.nd-ring:nth-of-type(3) { animation-delay: 1.8s; }
+@keyframes nd-ring { from { transform: scale(0.35); opacity: 0.9; } to { transform: scale(1); opacity: 0; } }
+@media (prefers-reduced-motion: no-preference) {
+  .nd-in { animation: nd-in 640ms var(--ease-out-soft) both; animation-delay: var(--d, 0ms); }
+  .nd-pop { animation: nd-pop 520ms var(--ease-out-soft) both; animation-delay: var(--d, 0ms); }
+  .nd-thread { stroke-dasharray: 1; stroke-dashoffset: 1; animation: nd-draw 1100ms var(--ease-travel) forwards; animation-delay: var(--d, 0ms); }
+  .nd-settle { animation: nd-settle 900ms var(--ease-out-soft) both; animation-delay: var(--d, 0ms); }
+  .nd-typing { animation: nd-typing 900ms steps(1) both; animation-delay: var(--d, 0ms); }
+}
+@keyframes nd-in { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes nd-pop { from { opacity: 0; transform: translateY(8px) scale(0.96); } to { opacity: 1; transform: none; } }
+@keyframes nd-draw { to { stroke-dashoffset: 0; } }
+@keyframes nd-settle {
+  0% { opacity: 0; transform: translate(-28px, -40px) rotate(-4deg) scale(1.04); filter: blur(3px); }
+  60% { opacity: 1; filter: none; }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes nd-typing { 0% { opacity: 1; } 99% { opacity: 1; } 100% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -255,13 +288,15 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+  .nd-ring { display: none; }
+  .nd-in, .nd-pop, .nd-settle, .nd-thread, .nd-typing { animation: none !important; opacity: 1; transform: none; filter: none; }
 }
 
-/* Range input, styled once */
+/* Range input */
 .bd-range { appearance: none; height: 28px; background: transparent; }
 .bd-range::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: var(--color-rule); }
 .bd-range::-moz-range-track { height: 4px; border-radius: 4px; background: var(--color-rule); }
-.bd-range::-webkit-slider-thumb { appearance: none; margin-top: -9px; width: 22px; height: 22px; border-radius: 50%; background: var(--color-card); border: 2px solid var(--color-ink); box-shadow: 0 2px 6px rgb(21 24 31 / 0.2); }
+.bd-range::-webkit-slider-thumb { appearance: none; margin-top: -9px; width: 22px; height: 22px; border-radius: 50%; background: var(--color-card); border: 2px solid var(--color-ink); box-shadow: 0 2px 6px rgb(17 18 20 / 0.2); }
 .bd-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--color-card); border: 2px solid var(--color-ink); }
 .bd-range:focus-visible { outline: none; }
 .bd-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--color-signal); outline-offset: 2px; }
