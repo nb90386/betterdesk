@@ -16,13 +16,13 @@ export function Hero() {
         <div className="lg:col-span-6">
           <h1 id="hero-title" className="t-hero max-w-[11ch] text-petrol-ink">More walkthroughs. Less chasing leads.</h1>
           <p className="mt-7 max-w-[44ch] text-[clamp(1.0625rem,1rem+0.35vw,1.3rem)] leading-relaxed text-petrol-muted">
-            BetterDesk helps commercial cleaning companies find businesses worth contacting, prepare introductions you approve, answer incoming inquiries, and keep every opportunity moving to a booked walkthrough.
+            For commercial cleaning companies. BetterDesk finds businesses worth contacting, drafts introductions you approve, and keeps every lead and inquiry in one record until the walkthrough is booked.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <ButtonLink href="/app" variant="signal">Explore BetterDesk</ButtonLink>
-            <ButtonLink href="/contact" variant="secondary" className="border-petrol-rule text-petrol-ink hover:border-petrol-muted">Request a demo</ButtonLink>
+            <ButtonLink href="/app" variant="signal" className="w-full sm:w-auto">Explore the sample workspace</ButtonLink>
+            <ButtonLink href="/contact" variant="secondary" className="w-full sm:w-auto border-petrol-rule text-petrol-ink hover:border-petrol-muted">Request a demo</ButtonLink>
           </div>
-          <p className="mt-6 max-w-[50ch] text-[0.875rem] text-petrol-muted">
+          <p className="mt-6 max-w-[50ch] text-[0.9375rem] text-petrol-ink/80">
             Explore opens a sample workspace with a fictional cleaning company. No sign-up, and nothing is ever sent. Early access; proposed plans from $99 a month.
           </p>
         </div>

@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 };
 
 const VIEWS = [
-  { id: "today", title: "Today", body: "Opens on what needs you, in order: drafts to approve, people waiting for a reply, proposals gone quiet, anything blocked. Then upcoming walkthroughs and the pipeline. No wall of charts.", img: "/product/today.webp", alt: "BetterDesk Today screen listing items that need attention, upcoming walkthroughs and pipeline counts" },
-  { id: "opportunities", title: "Opportunities, with the reasons", body: "Every business you're working, wherever it came from. Select one and the inspector shows each qualification rule, the evidence behind it, its source and date, and what's still unknown.", img: "/product/opportunities.webp", alt: "Opportunities list with the qualification inspector open for Juniper Lane Law" },
-  { id: "record", title: "One record per building", body: "Contacts, conversations, the walkthrough, the proposal and the outcome all live on the same record, with a timeline of every step and who took it.", img: "/product/record.webp", alt: "Customer record for Juniper Lane Law with a timeline of import, qualification, approval, reply and booking" },
-  { id: "pipeline", title: "A pipeline built around walkthroughs", body: "Stages that match how commercial cleaning is sold: qualified, outreach prepared, contacted, in conversation, walkthrough scheduled, proposal, won or lost. Move a card from its stage menu; every change is recorded.", img: "/product/pipeline.webp", alt: "Pipeline board with opportunities in each stage" },
+  { id: "today", title: "Today", body: "Opens on what needs you, in order: drafts to approve, people waiting for a reply, proposals gone quiet, anything blocked. Then upcoming walkthroughs and the pipeline. No wall of charts.", img: "/product/today.webp", w: 960, h: 600, alt: "BetterDesk Today screen listing items that need attention, upcoming walkthroughs and pipeline counts" },
+  { id: "opportunities", title: "Opportunities, with the reasons", body: "Every business you're working, wherever it came from. Select one and the inspector shows each qualification rule, the evidence behind it, its source and date, and what's still unknown.", img: "/product/opportunities.webp", w: 700, h: 860, alt: "Opportunities list with the qualification inspector open for Juniper Lane Law" },
+  { id: "record", title: "One record per building", body: "Contacts, conversations, the walkthrough, the proposal and the outcome all live on the same record, with a timeline of every step and who took it.", img: "/product/record.webp", w: 1000, h: 760, alt: "Customer record for Juniper Lane Law with a timeline of import, qualification, approval, reply and booking" },
+  { id: "pipeline", title: "A pipeline built around walkthroughs", body: "Stages that match how commercial cleaning is sold: qualified, outreach prepared, contacted, in conversation, walkthrough scheduled, proposal, won or lost. Move a card from its stage menu; every change is recorded.", img: "/product/pipeline.webp", w: 1180, h: 620, alt: "Pipeline board with opportunities in each stage" },
 ];
 
 export default function ProductPage() {
@@ -31,10 +31,10 @@ export default function ProductPage() {
               <p className="mt-4 max-w-[42ch] text-[1.0625rem] leading-relaxed text-ink-2">{v.body}</p>
             </div>
             <figure className={`lg:col-span-8 ${i % 2 ? "lg:order-1" : ""}`}>
-              <div className="overflow-hidden rounded-[var(--radius-lg)] border border-rule bg-surface shadow-[var(--shadow-object)]">
-                <Image src={v.img} alt={v.alt} width={1600} height={1000} sizes="(min-width: 1024px) 60vw, 100vw" className="h-auto w-full" />
+              <div className="overflow-hidden rounded-[var(--radius-lg)] border border-rule bg-mineral shadow-[var(--shadow-object)]">
+                <Image src={v.img} alt={v.alt} width={v.w} height={v.h} sizes="(min-width: 1024px) 60vw, 100vw" className={`h-auto w-full ${v.w < 800 ? "mx-auto max-w-[44rem]" : ""}`} />
               </div>
-              <figcaption className="mt-3 text-[0.8125rem] text-muted">Screenshot of the sample workspace. Fictional company and contacts.</figcaption>
+              <figcaption className="mt-3 text-[0.8125rem] text-muted">Detail from the sample workspace, captured from the running app. Fictional company and contacts. <a href="/app" className="underline underline-offset-2">Open it yourself</a>.</figcaption>
             </figure>
           </div>
         </section>

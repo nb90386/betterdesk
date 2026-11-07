@@ -13,9 +13,10 @@ export default function PipelinePage() {
   return (
     <div className="space-y-6">
       <PageHeader title="Pipeline" lede="Stages describe the deal, not message delivery. Move a card with its stage menu; every change is recorded with who made it." />
+      <p className="text-[0.8125rem] text-muted">Nine stages. Scroll sideways for Proposal, Won and Lost.</p>
       <LayoutGroup>
-        <div className="-mx-4 overflow-x-auto px-4 pb-2 md:-mx-8 md:px-8" role="region" aria-label="Pipeline board, scrolls sideways" tabIndex={0}>
-          <ol className="grid min-w-[92rem] grid-cols-9 gap-3">
+        <div className="-mx-4 [mask-image:linear-gradient(to_right,black_92%,transparent)] overflow-x-auto px-4 pb-2 md:-mx-8 md:px-8" role="region" aria-label="Pipeline board, scrolls sideways" tabIndex={0}>
+          <ol className="grid min-w-[100rem] grid-cols-9 gap-3">
             {STAGES.map((s) => {
               const opps = ws.opportunities.filter((o) => o.stage === s);
               return (

@@ -7,7 +7,7 @@ import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 
 const LAST = JOURNEY.length - 1;
 /** Panel positions along the route (percent of the canvas). Alternating, descending: the opportunity travels down. */
-const POS = JOURNEY.slice(0, LAST).map((_, i) => ({ x: i % 2 ? 42 : 0, y: i * 15.5 }));
+const POS = JOURNEY.slice(0, LAST).map((_, i) => ({ x: i % 2 ? 42 : 0, y: i * 16.6 }));
 const ease = [0.16, 1, 0.3, 1] as const;
 
 /**
@@ -53,7 +53,7 @@ export function JourneyScene() {
               <p className="mt-8 min-h-[4.5rem] max-w-[38ch] text-[1.125rem] leading-relaxed text-petrol-ink" aria-live="polite">{JOURNEY[step].caption}</p>
               <p className="mt-4 text-[0.8125rem] text-petrol-muted">Sample records from the demo workspace. Choose a stage or keep scrolling.</p>
             </div>
-            <div className="relative col-span-7 h-[min(74svh,40rem)]" aria-hidden="true">
+            <div className="relative col-span-7 h-[min(80svh,46rem)]" aria-hidden="true">
               <LayoutGroup>
                 {step < LAST ? (
                   <>
@@ -64,7 +64,11 @@ export function JourneyScene() {
                       <div key={`ghost-${i}`} className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-petrol-rule" style={{ left: `${p.x + 28}%`, top: `${p.y + 7}%` }} />
                     ))}
                     {JOURNEY.slice(0, LAST).map((s, i) =>
-                      i <= step ? (
+                      i > step ? (
+                        <div key={`next-${s.id}`} className="absolute w-[56%] rounded-[var(--radius-md)] border border-dashed border-petrol-rule px-3.5 py-3 text-[0.75rem] text-petrol-muted" style={{ left: `${POS[i].x}%`, top: `${POS[i].y}%` }}>
+                          {s.label}
+                        </div>
+                      ) : i <= step ? (
                         <motion.div key={s.id} layoutId={`j-${s.id}`} initial={{ opacity: 0, y: 14, filter: "blur(6px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.55, ease }} className="absolute w-[56%]" style={{ left: `${POS[i].x}%`, top: `${POS[i].y}%` }}>
                           <Card step={s} active={i === step} />
                         </motion.div>
@@ -129,7 +133,7 @@ function Card({ step, active }: { step: (typeof JOURNEY)[number]; active: boolea
         <span className="text-petrol-muted">{step.actor}</span>
       </p>
       <p className="mt-1 text-[0.9375rem] font-medium text-petrol-ink">{step.title}</p>
-      <p className="mt-0.5 line-clamp-2 text-[0.8125rem] text-petrol-muted">{step.detail}</p>
+      <p className="mt-0.5 truncate text-[0.8125rem] text-petrol-muted">{step.detail}</p>
     </div>
   );
 }

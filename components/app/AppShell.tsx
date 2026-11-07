@@ -60,7 +60,7 @@ function DemoBar() {
   return (
     <div className="tone-dark flex flex-wrap items-center gap-x-4 gap-y-1 bg-petrol px-4 py-2 text-[0.8125rem] text-petrol-muted">
       <span className="font-medium text-petrol-ink">Sample workspace · DEMO</span>
-      <span>Fictional company and contacts. Nothing is sent. Changes stay in this browser.</span>
+      <span className="hidden sm:inline">Fictional company and contacts. Nothing is sent. Changes stay in this browser.</span>
       <span className="ml-auto flex items-center gap-3">
         {confirm ? (
           <>
