@@ -1,6 +1,6 @@
 # Founder review checkpoint after cycle 3 (not final; not approved)
 
-- **Preview:** https://betterdesk-redesign-l3hf3qstx-neel-s-projects9.vercel.app. Target preview, status Ready, commit f0d7651. It's **protected**, so sign in to Vercel (team neel-s-projects9) to view it. Anonymous requests get 302. Signed in, all 10 routes return 200 and unknown routes return 404.
+- **Preview:** https://betterdesk-redesign-jgw506r02-neel-s-projects9.vercel.app. Target preview, status Ready, commit a7368cb. It's **protected**, so sign in to Vercel (team neel-s-projects9) to view it. Anonymous requests get 302. Signed in, all 10 routes return 200 and unknown routes return 404.
 - **Production / betterdesk.ai:** untouched. No `--prod` deploy was run.
 - **Rollback:** the cycle-1 preview, https://betterdesk-redesign-8u64w2vv1-neel-s-projects9.vercel.app, and the pre-v2 preview, https://betterdesk-redesign-eaioporgk-neel-s-projects9.vercel.app, are both still live. In git, `894c13b` is the pre-v2 head.
 
