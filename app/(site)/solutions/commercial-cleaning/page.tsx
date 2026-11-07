@@ -31,8 +31,8 @@ export default function CommercialCleaning() {
           You probably don’t need more software. You need fewer good opportunities to slip: the building you meant to call, the form nobody answered, the proposal nobody followed up. BetterDesk is built for owner-led commercial cleaning contractors chasing recurring accounts.
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
-          <ButtonLink href="/demo">Explore the product</ButtonLink>
-          <TextLink href="/contact">Request a review</TextLink>
+          <ButtonLink href="/demo">Try the demo</ButtonLink>
+          <TextLink href="/contact">Get a free check</TextLink>
         </div>
       </section>
 

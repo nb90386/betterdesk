@@ -4,6 +4,9 @@
  */
 import type { Account, Contact, Conversation, Event, Evidence, Opportunity, Organization, Workspace } from "../domain/types.ts";
 import { dedupeKey } from "../scout/dedupe.ts";
+import { parseProspectCsv } from "../scout/csv.ts";
+import { createRun, importProspects, recordPresenceAudit, stepRun } from "../workspace/actions.ts";
+import { runSampleAudit } from "../presence/sample.ts";
 
 export const SAMPLE_PROSPECTS_CSV = `company,website,street,city,state,zip,category,sqft,contact name,role,email,notes
 Juniper Lane Law,juniperlanelaw.example,1550 Wynkoop St,Denver,CO,80202,Office,12000,Elena Brooks,Office administrator,elena@juniperlanelaw.example,Two floors; tenant since 2019 per listing
@@ -126,4 +129,33 @@ export function createSampleWorkspace(now = Date.now()): Workspace {
     presenceAudits: [],
     sampleSlots: now3.filter((_, i) => i !== 6),
   };
+}
+
+/**
+ * The state the homepage describes: yesterday Dana ran the sample Presence audit and Scout checked the
+ * sample list, so introductions (Juniper Lane Law among them) are waiting for approval. Built by running
+ * the real actions on the fictional data, never by hand-writing results. /app and /demo start here.
+ */
+export const PREPARED_AUDIT_ID = "aud_sample";
+export function createPreparedWorkspace(now = Date.now()): Workspace {
+  const dana = { kind: "user" as const, id: "usr_dana", name: "Dana Ortiz" };
+  const at = (msAgo: number) => new Date(now - msAgo).toISOString();
+  let ws = createSampleWorkspace(now);
+  const report = runSampleAudit(Date.parse(at(DAY + 2 * 3_600_000)));
+  ws = recordPresenceAudit(ws, {
+    id: PREPARED_AUDIT_ID,
+    domain: report.domain,
+    method: report.method,
+    fetchedAt: report.fetchedAt,
+    pagesChecked: report.pagesChecked.length,
+    findings: report.findings.map((f) => ({ id: f.id, title: f.title, severity: f.severity, category: f.category, evidenceUrl: f.evidence.url })),
+  }, report.fetchedAt, dana);
+  const parsed = parseProspectCsv(SAMPLE_PROSPECTS_CSV);
+  const t = at(DAY);
+  const imp = importProspects(ws, parsed.rows, "sample-prospects.csv", t, dana);
+  const ids = imp.ws.accounts.filter((a) => a.status === "prospect" && a.source.kind === "csv-import").map((a) => a.id);
+  const run = createRun(imp.ws, "Find offices and medical practices in our area worth a walkthrough.", ids, t, dana);
+  ws = run.ws;
+  for (let i = 0; i < 8; i++) ws = stepRun(ws, run.runId, at(DAY - (i + 1) * 60_000));
+  return ws;
 }

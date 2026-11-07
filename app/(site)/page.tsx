@@ -35,21 +35,20 @@ export default function Home() {
   return (
     <>
       {/* 1 · Promise, action, and the product at work */}
-      <section className="wrap pb-20 pt-28 md:pb-28 md:pt-36">
+      <section className="wrap pb-20 pt-28 md:pb-28 md:pt-32">
         <h1 className="t-hero">
           <span className="block">Find better accounts.</span>
           <span className="block">Be easier to find.</span>
           <span className="block">Book more walkthroughs.</span>
         </h1>
-        <div className="mt-8 grid gap-y-7 lg:mt-10 lg:grid-cols-12 lg:items-end">
-          <p className="t-lede max-w-[52ch] lg:col-span-7">
-            BetterDesk is one workspace for commercial cleaning companies. It researches businesses worth contacting, shows how your company appears in Google and AI search, and keeps every inquiry moving until the walkthrough is on the calendar.
-          </p>
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-3 lg:col-span-5 lg:justify-end">
-            <ButtonLink href="/demo">Explore the product</ButtonLink>
-            <TextLink href="/how-it-works">See how it works</TextLink>
-          </div>
+        <p className="t-lede mt-7 max-w-[46ch] lg:mt-8">
+          BetterDesk is one workspace for commercial cleaning companies. It researches businesses worth contacting, shows how your company appears in Google and AI search, and keeps every inquiry moving until the walkthrough is on the calendar.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
+          <ButtonLink href="/demo">Try the demo</ButtonLink>
+          <TextLink href="/how-it-works">See how it works</TextLink>
         </div>
+        <p className="mt-3 text-[0.875rem] text-muted">Two minutes on a sample company. No sign-up, nothing is sent.</p>
         <div className="mt-12 md:mt-14">
           <DirectoryBoard />
         </div>
@@ -201,32 +200,6 @@ export default function Home() {
         <SampleNote className="mt-6">Fictional inquiry. Replies and bookings here are simulated in your browser; nothing is sent.</SampleNote>
       </section>
 
-      {/* 6 · What you get */}
-      <section className="border-t border-rule bg-surface">
-        <div className="wrap py-20 md:py-28">
-          <h2 className="t-title max-w-[20ch]">What working with us looks like.</h2>
-          <div className="mt-12 grid border-t border-rule-strong md:grid-cols-3">
-            {[
-              ["You bring", ["Your website address and service area", "The kinds of buildings you want", "Any list of businesses you already have", "Who approves introductions"]],
-              ["We set up", ["A visibility review of your site with a fix list", "Your fit criteria and sender details", "Your first Scout list, checked and de-duplicated", "Your inbox and walkthrough times"]],
-              ["You get", ["One directory of every account and its source", "Tasks for website fixes, with owners", "Introductions ready for your approval", "Every inquiry moving to a booked walkthrough"]],
-            ].map(([h, items], i) => (
-              <div key={h as string} className={`py-7 md:px-8 ${i === 0 ? "md:pl-0" : "border-t border-rule md:border-l md:border-t-0"}`}>
-                <h3 className="t-head">{h as string}</h3>
-                <ul className="mt-4 space-y-2.5 text-[0.9688rem] text-ink-2">
-                  {(items as string[]).map((t) => (
-                    <li key={t}>{t}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          <div className="mt-6">
-            <TextLink href="/how-it-works">Setup, support and limits</TextLink>
-          </div>
-        </div>
-      </section>
-
       {/* 7 · Honest status */}
       <section className="wrap py-20 md:py-28">
         <div className="grid gap-10 lg:grid-cols-12">
@@ -254,13 +227,13 @@ export default function Home() {
           <div className="lg:col-span-7">
             <h2 className="t-display max-w-[16ch]">Start with a look at how you’re found today.</h2>
             <p className="t-lede mt-6 max-w-[50ch]">
-              Request a visibility and lead-flow review. A person reads your site and your answers and replies with what we found and whether BetterDesk fits. Early-access pricing is a proposal until we confirm it with you.
+              Ask for a free visibility and lead-flow check. A person reads your site and your answers and replies with what we found and whether BetterDesk fits. Early-access pricing is a proposal until we confirm it with you.
             </p>
           </div>
           <div className="flex flex-col justify-end gap-4 lg:col-span-5 lg:items-end">
-            <ButtonLink href="/contact">Request a review</ButtonLink>
+            <ButtonLink href="/contact">Get a free check</ButtonLink>
             <div className="flex flex-wrap gap-x-7">
-              <TextLink href="/demo">Explore the product first</TextLink>
+              <TextLink href="/demo">Try the demo first</TextLink>
               <TextLink href="/pricing">Proposed pricing</TextLink>
             </div>
           </div>

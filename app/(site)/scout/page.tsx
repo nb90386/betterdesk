@@ -25,14 +25,14 @@ export default function Scout() {
   return (
     <>
       <section className="wrap pb-16 pt-32 md:pt-40">
-        <StatusMark status="DEMO" />
-        <h1 className="t-display mt-5 max-w-[18ch]">Know which businesses are worth a walkthrough, and why.</h1>
-        <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:items-end">
-          <p className="t-lede max-w-[58ch] lg:col-span-8">
+        <h1 className="t-display max-w-[18ch]">Know which businesses are worth a walkthrough, and why.</h1>
+        <div className="mt-7 grid gap-8">
+          <p className="t-lede max-w-[56ch]">
             Give Scout a list you already have: a spreadsheet, an export, a building directory you’re allowed to use. It removes duplicates, checks each business against your service area and the buildings you want, and drafts a short introduction for the good fits. You approve every one.
           </p>
-          <div className="flex flex-wrap gap-x-7 gap-y-3 lg:col-span-4 lg:justify-end">
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
             <ButtonLink href="/demo">Run Scout on a sample list</ButtonLink>
+            <StatusMark status="DEMO" />
           </div>
         </div>
       </section>
@@ -79,7 +79,7 @@ export default function Scout() {
               {s.all.map((a) => (
                 <tr key={a.name} className="border-b border-rule align-top">
                   <th scope="row" className="py-3.5 pr-6 font-[600]">{a.name}</th>
-                  <td className="whitespace-nowrap py-3.5 pr-6">{tierLabel[a.q.tier]}</td>
+                  <td className="whitespace-nowrap py-3.5 pr-6">{a.q.recommendation.startsWith("Do not contact") ? "Do not contact" : tierLabel[a.q.tier]}</td>
                   <td className="py-3.5 pr-6 text-right tabular-nums">{a.q.score}</td>
                   <td className="py-3.5 pr-6 text-right tabular-nums">{a.q.coverage}%</td>
                   <td className="py-3.5 text-[0.9375rem] text-ink-2">{a.withheld ? "A note read like instructions; withheld and flagged for a person. " : ""}{a.q.recommendation}</td>

@@ -40,19 +40,36 @@ const SOURCES = [
 
 export default function PresencePage() {
   const sample = runSampleAudit();
+  const lead = sample.findings[0];
   return (
     <>
       <section className="wrap pb-16 pt-32 md:pb-24 md:pt-40">
-        <StatusMark status="BETA" />
-        <h1 className="t-display mt-5 max-w-[20ch]">Customers are starting their search in new places. Know where your business stands.</h1>
-        <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:items-end">
-          <p className="t-lede max-w-[56ch] lg:col-span-7">
-            Presence checks whether your website can be found and read, finds what’s missing, and gives you a practical fix list so customers can discover and contact you, whether they search Google, look at a map or ask an AI assistant.
-          </p>
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-3 lg:col-span-5 lg:justify-end">
-            <ButtonLink href="#check">Check your website</ButtonLink>
-            <TextLink href="#sample">See a sample report</TextLink>
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <h1 className="t-display max-w-[18ch]">Customers are starting their search in new places. Know where your business stands.</h1>
+            <p className="t-lede mt-7 max-w-[50ch]">
+              Presence checks whether your website can be found and read, finds what’s missing, and turns it into a fix list with owners, whether customers search Google, look at a map or ask an AI assistant.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
+              <ButtonLink href="#check">Check your website</ButtonLink>
+              <TextLink href="#sample">See a sample report</TextLink>
+              <StatusMark status="BETA" />
+            </div>
           </div>
+          {lead ? (
+            <figure className="paper p-5 lg:col-span-5" aria-label="One finding from the sample report">
+              <figcaption className="flex items-baseline justify-between gap-3 text-[0.8125rem] text-muted">
+                <span>From the sample report</span>
+                <span>clearline.example</span>
+              </figcaption>
+              <p className="mt-3 text-[1.1875rem] font-[600] leading-snug tracking-[-0.015em]">{lead.title}</p>
+              <div className="mt-3 overflow-hidden rounded-[8px] bg-graphite-2 text-graphite-ink">
+                <p className="border-b border-graphite-rule px-3 py-2 text-[0.75rem] text-graphite-muted [overflow-wrap:anywhere]">{lead.evidence.url}</p>
+                {lead.evidence.excerpt ? <pre className="t-code whitespace-pre-wrap px-3 py-2.5">{lead.evidence.excerpt}</pre> : null}
+              </div>
+              <p className="mt-3 text-[0.9375rem] text-ink-2">{lead.fix}</p>
+            </figure>
+          ) : null}
         </div>
       </section>
 
@@ -99,11 +116,19 @@ export default function PresencePage() {
           <SampleNote className="max-w-[34ch]">Clearline Commercial Cleaning and clearline.example are fictional. The site has realistic mistakes on purpose.</SampleNote>
         </div>
         <PresenceExplorer report={sample} />
-        <div className="mt-20 grid gap-16">
-          <BotAccessTable report={sample} />
+        <div className="mt-16">
           <CoverageList report={sample} />
-          <SchemaDraft report={sample} />
         </div>
+        <details className="group mt-12 border-t border-rule-strong">
+          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 text-[1.125rem] font-[600] tracking-[-0.01em] [&::-webkit-details-marker]:hidden">
+            For your web person: crawler access and a structured-data draft
+            <svg viewBox="0 0 12 12" className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M3 4.5l3 3 3-3" /></svg>
+          </summary>
+          <div className="grid gap-16 pb-6 pt-4">
+            <BotAccessTable report={sample} />
+            <SchemaDraft report={sample} />
+          </div>
+        </details>
       </section>
 
       <section id="check" className="on-graphite bg-graphite-2 scroll-mt-20">
@@ -151,7 +176,7 @@ export default function PresencePage() {
             </p>
           </div>
           <div className="flex flex-wrap gap-x-7 gap-y-3 lg:col-span-5 lg:justify-end">
-            <ButtonLink href="/demo">Explore the product</ButtonLink>
+            <ButtonLink href="/demo">Try the demo</ButtonLink>
             <TextLink href="/resources/ai-search-for-service-businesses">Read the plain guide</TextLink>
           </div>
         </div>

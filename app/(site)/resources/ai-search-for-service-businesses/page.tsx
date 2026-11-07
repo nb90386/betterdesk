@@ -23,7 +23,7 @@ export default function Guide() {
       <div className="grid gap-12 lg:grid-cols-12">
         <header className="lg:col-span-9">
           <p className="text-[0.875rem] text-muted">
-            Guide · Updated <time dateTime={g.meta.updated}>{updated}</time> · About {g.minutes} minutes
+            Updated <time dateTime={g.meta.updated}>{updated}</time>, about {g.minutes} minutes to read
           </p>
           <h1 className="t-display mt-4 max-w-[24ch]">{g.meta.title}</h1>
           <p className="t-lede mt-6 max-w-[60ch]">{g.meta.description}</p>

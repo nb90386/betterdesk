@@ -81,10 +81,10 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300 ${
-        scrolled || sheet ? "bg-stone/85 shadow-[0_1px_0_rgb(21_23_25/0.09)] backdrop-blur-xl backdrop-saturate-150" : "bg-stone/0"
+        scrolled || sheet ? "bg-stone/85 shadow-[var(--shadow-bar)] backdrop-blur-xl backdrop-saturate-150" : "bg-stone/0"
       }`}
     >
-      <div className="wrap flex h-[4.25rem] items-center gap-8">
+      <div className="wrap flex h-[4.25rem] items-center gap-4 lg:gap-8">
         <Link href="/" className="-ml-1 rounded-[6px] px-1 py-1 text-[1.06rem] text-ink" aria-label="BetterDesk home">
           <Logo />
         </Link>
@@ -136,11 +136,11 @@ export function Header() {
               </AnimatePresence>
             </li>
             {NAV.map((n) => (
-              <li key={n.href}>
+              <li key={n.href} className={n.href === "/resources" ? "hidden lg:block" : undefined}>
                 <Link
                   href={n.href}
                   aria-current={active(n.href) ? "page" : undefined}
-                  className="inline-flex h-10 items-center rounded-[6px] px-3 text-[0.9375rem] text-ink-2 transition-colors hover:text-ink aria-[current=page]:text-ink"
+                  className="inline-flex h-10 items-center whitespace-nowrap rounded-[6px] px-3 text-[0.9375rem] text-ink-2 transition-colors hover:text-ink aria-[current=page]:text-ink"
                 >
                   {n.label}
                 </Link>
@@ -151,13 +151,13 @@ export function Header() {
 
         <div className="ml-auto flex items-center gap-2 md:ml-0">
           <Link href="/contact" className="hidden h-10 items-center px-2 text-[0.9375rem] text-ink-2 hover:text-ink lg:inline-flex">
-            Request a review
+            Get a free check
           </Link>
           <Link
             href="/demo"
-            className="press hidden h-10 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[560] text-stone hover:bg-ink-2 sm:inline-flex"
+            className="press hidden h-10 items-center whitespace-nowrap rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[560] text-stone hover:bg-ink-2 sm:inline-flex"
           >
-            Explore the product
+            Try the demo
           </Link>
           <button
             ref={sheetBtn}
@@ -212,7 +212,7 @@ export function Header() {
                 ))}
               </ul>
               <ul className="mt-6">
-                {[...NAV, { href: "/contact", label: "Request a review" }, { href: "/security", label: "Security and data" }].map((n) => (
+                {[...NAV, { href: "/contact", label: "Get a free check" }, { href: "/security", label: "Security and data" }].map((n) => (
                   <li key={n.href} className="border-b border-rule">
                     <Link href={n.href} aria-current={active(n.href) ? "page" : undefined} className="flex min-h-13 items-center text-[1.125rem] font-[560]">
                       {n.label}
@@ -222,7 +222,7 @@ export function Header() {
               </ul>
               <div className="mt-auto pt-8">
                 <Link href="/demo" className="press flex min-h-13 items-center justify-center rounded-[var(--radius-sm)] bg-ink text-[1.05rem] font-[560] text-stone">
-                  Explore the product
+                  Try the demo
                 </Link>
                 <p className="mt-3 text-center text-[0.875rem] text-muted">Runs on a fictional company in your browser. Nothing is sent.</p>
               </div>

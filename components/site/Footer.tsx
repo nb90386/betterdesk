@@ -7,8 +7,8 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer id="site-footer" className="on-graphite bg-graphite">
-      <div className="wrap grid gap-14 pb-10 pt-16 md:grid-cols-12 md:pt-20">
-        <div className="md:col-span-4">
+      <div className="wrap grid gap-14 pb-10 pt-16 lg:grid-cols-12 md:pt-20">
+        <div className="lg:col-span-4">
           <Link href="/" aria-label="BetterDesk home" className="inline-block rounded-[6px] text-[1.15rem] text-ink">
             <Logo />
           </Link>
@@ -19,7 +19,7 @@ export function Footer() {
             {CONTACT_EMAIL}
           </a>
         </div>
-        <nav aria-label="Footer" className="grid gap-10 sm:grid-cols-3 md:col-span-8">
+        <nav aria-label="Footer" className="grid gap-10 sm:grid-cols-3 lg:col-span-8">
           {FOOTER.map((col) => (
             <div key={col.title}>
               <h2 className="t-label border-b border-rule pb-3">{col.title}</h2>

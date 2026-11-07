@@ -4,11 +4,12 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useWorkspace } from "@/lib/demo/store";
 import { runSampleAudit } from "@/lib/presence/sample";
+import { PREPARED_AUDIT_ID } from "@/lib/demo/seed";
 import { completeTask, createTaskFromFinding, recordPresenceAudit } from "@/lib/workspace/actions";
 import { auditRecord } from "@/components/site/PresenceExplorer";
 import { Btn, Empty, PageHeader, Panel, fmtTime } from "@/components/app/ui";
 
-const AUDIT_ID = "aud_workspace_sample";
+const AUDIT_ID = PREPARED_AUDIT_ID;
 const SEV = { high: "Fix first", medium: "Fix soon", low: "Worth fixing", info: "Note" } as const;
 
 export default function PresenceScreen() {
@@ -25,7 +26,7 @@ export default function PresenceScreen() {
     <div className="grid gap-6">
       <PageHeader
         title="Presence"
-        lede="How findable clearline.example is, and the fixes that are owned. Sample site and data; live checks of your own site run from the public Presence page."
+        lede="How findable clearline.example is, and who owns each fix. Sample site and data; check a real site from the public Presence page."
         actions={
           <>
             <Btn tone="primary" onClick={() => act((w, at, me) => recordPresenceAudit(w, { ...auditRecord(report, AUDIT_ID), fetchedAt: at }, at, me), "Sample audit recorded.")} disabled={ws.presenceAudits.some((a) => a.id === AUDIT_ID)}>
@@ -37,7 +38,7 @@ export default function PresenceScreen() {
       />
 
       <div className="grid gap-6 xl:grid-cols-12">
-        <Panel title={audit ? `Findings · ${audit.domain}` : "Findings"} className="xl:col-span-7">
+        <Panel pad title={audit ? `Findings for ${audit.domain}` : "Findings"} className="xl:col-span-7">
           {!audit ? (
             <Empty title="No audit yet" body="Run the sample audit to see how a Presence check turns into owned website tasks." />
           ) : (
@@ -74,7 +75,7 @@ export default function PresenceScreen() {
         </Panel>
 
         <div className="grid content-start gap-6 xl:col-span-5">
-          <Panel title={`Open tasks · ${open.length}`}>
+          <Panel pad title={`Open tasks (${open.length})`}>
             {open.length === 0 ? (
               <p className="text-[0.875rem] text-muted">No open website tasks.</p>
             ) : (
@@ -91,7 +92,7 @@ export default function PresenceScreen() {
               </ul>
             )}
           </Panel>
-          <Panel title="How we measure">
+          <Panel pad title="How we measure">
             <p className="text-[0.875rem] leading-relaxed text-ink-2">
               Marking a task done doesn’t claim anything changed. The next audit checks it. BetterDesk never links a website fix to a lead unless the customer tells you how they found you, and then it shows their words.
             </p>

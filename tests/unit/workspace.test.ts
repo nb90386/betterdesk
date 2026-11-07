@@ -278,3 +278,15 @@ test("a booked walkthrough clears the 'waiting for a reply' item for that accoun
   const booked = A.bookSampleSlot(ws, "opp_alder", ws.sampleSlots[0].start, at, dana);
   assert.ok(!attention(booked).some((a) => a.kind === "reply" && a.title.includes("Alder")));
 });
+
+test("prepared sample matches the homepage: audit recorded, Scout run done, Juniper Lane Law waiting for approval", async () => {
+  const { createPreparedWorkspace, PREPARED_AUDIT_ID } = await import("../../lib/demo/seed.ts");
+  const ws = createPreparedWorkspace(NOW);
+  assert.ok(ws.presenceAudits.some((a) => a.id === PREPARED_AUDIT_ID && a.findings.length > 0));
+  assert.equal(ws.runs[0].state, "waiting-approval");
+  const juniper = ws.accounts.find((a) => a.name === "Juniper Lane Law")!;
+  const opp = ws.opportunities.find((o) => o.accountId === juniper.id)!;
+  assert.equal(opp.stage, "outreach-prepared");
+  assert.ok(ws.drafts.some((d) => d.opportunityId === opp.id && d.approval === "pending" && d.delivery === "not-sent"));
+  assert.equal(ws.accounts.filter((a) => a.name === "Cobalt Coworking" || a.name === "Cobalt Coworking, LLC").length, 1, "the duplicate is still skipped");
+});

@@ -72,24 +72,31 @@ test("workflow: import, dedupe, qualify with evidence, draft, approve, simulate,
 });
 
 test("honesty check blocks a deceptive edit; reset restores the baseline", async ({ page }) => {
-  await runSampleScout(page);
+  await page.goto("/app/scout"); // the prepared sample already has drafts waiting
   const card = page.locator("article").first();
   await card.getByLabel("Subject").fill("Re: our call");
   await expect(card.getByText("Subject can't pretend to be a reply or forward.")).toBeVisible();
   await expect(card.getByRole("button", { name: /approve/i })).toBeDisabled();
   await page.getByRole("button", { name: /Reset sample/ }).click();
   await page.getByRole("button", { name: "Reset", exact: true }).click();
-  await expect(page.getByText("No runs yet")).toBeVisible();
+  // Reset restores the prepared sample: yesterday's run, drafts waiting, and the deceptive edit gone.
+  await expect(page.locator('input[value="Re: our call"]')).toHaveCount(0);
 });
 
 test("canceling a run stops it; an unavailable provider shows a useful error", async ({ page }) => {
   await page.goto("/app/scout");
-  await page.getByRole("button", { name: /Use the sample list/ }).click();
+  // New businesses (the sample list is already imported in the prepared workspace).
+  await page.locator('input[type="file"]').setInputFiles({
+    name: "new.csv",
+    mimeType: "text/csv",
+    buffer: Buffer.from("company,website,street,city,state,zip,category,sqft,contact name,role,email\nNorthgate Clinic,northgate.example,100 Main St,Denver,CO,80203,Medical office,6000,Ana Ruiz,Office manager,ana@northgate.example\nEastline Offices,eastline.example,200 Main St,Denver,CO,80206,Office,9000,Ben Cho,Facilities,ben@eastline.example\n"),
+  });
   await page.getByRole("button", { name: "Import and start Scout" }).click();
   await page.getByRole("button", { name: "Cancel run" }).click();
   await expect(page.getByText("Canceled", { exact: true })).toBeVisible();
   await page.waitForTimeout(2500);
-  await expect(page.getByText("Nothing to approve")).toBeVisible();
+  // A canceled run never drafts anything for the businesses it was given.
+  await expect(page.locator("article", { hasText: "Northgate Clinic" })).toHaveCount(0);
   await page.getByRole("button", { name: "Try it anyway" }).click();
   await expect(page.getByRole("alert").filter({ hasText: /No business-data provider is connected/ }).first()).toBeVisible();
 });

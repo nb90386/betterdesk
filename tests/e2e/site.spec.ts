@@ -159,8 +159,8 @@ test("guided demo runs the whole journey on the shared store and resets", async 
   test.setTimeout(60_000);
   await page.goto("/demo");
   await page.getByRole("button", { name: "Make it a task" }).click();
-  await page.getByRole("button", { name: "Import the list and run Scout" }).click();
-  await page.getByRole("button", { name: "Next: review the introduction" }).click({ timeout: 20_000 });
+  // The prepared sample already has yesterday's Scout run, so the demo moves straight to the introduction.
+  await expect(page.getByRole("heading", { name: "Approve the introduction" })).toBeVisible();
   await page.getByRole("button", { name: /^Approve$/ }).click();
   await page.getByRole("button", { name: "Simulate delivery" }).click();
   await page.getByRole("button", { name: "Play the sample reply" }).click();

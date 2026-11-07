@@ -46,7 +46,7 @@ export const FOOTER = [
     title: "Company",
     links: [
       { href: "/pricing", label: "Pricing" },
-      { href: "/contact", label: "Request a review" },
+      { href: "/contact", label: "Get a free check" },
       { href: "/security", label: "Security and data" },
     ],
   },

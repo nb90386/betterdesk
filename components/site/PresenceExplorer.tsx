@@ -86,7 +86,7 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
           <p className="t-label">What we found</p>
           <div className="mt-1.5 overflow-hidden rounded-[8px] bg-graphite-2 text-graphite-ink">
             <p className="border-b border-graphite-rule px-3 py-2 text-[0.75rem] text-graphite-muted [overflow-wrap:anywhere]">{f.evidence.url}</p>
-            {f.evidence.excerpt ? <pre className="t-code overflow-x-auto whitespace-pre-wrap break-words px-3 py-2.5 text-[#f3e3c6]">{f.evidence.excerpt}</pre> : null}
+            {f.evidence.excerpt ? <pre className="t-code overflow-x-auto whitespace-pre-wrap break-words px-3 py-2.5 text-graphite-ink">{f.evidence.excerpt}</pre> : null}
           </div>
         </div>
         <div>
@@ -141,7 +141,7 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
             {report.domain} <span className="font-[450] text-muted">· {report.pagesChecked.length} pages checked</span>
           </p>
           <p className="text-[0.8125rem] text-muted">
-            {report.summary.high + report.summary.medium} to fix soon · {report.summary.low} worth fixing · {report.summary.passes} done well
+            {report.summary.high + report.summary.medium} to fix soon, {report.summary.low} worth fixing, {report.summary.info} notes, {report.summary.passes} done well
           </p>
         </div>
         <LayoutGroup id="findings">
@@ -154,9 +154,9 @@ export function PresenceExplorer({ report: given, compact = false }: { report?: 
                     type="button"
                     aria-pressed={on}
                     onClick={() => setSelected(x.id)}
-                    className="group relative flex w-full items-start gap-3 py-3.5 text-left"
+                    className="group relative isolate flex w-full items-start gap-3 py-3.5 text-left"
                   >
-                    {on ? <motion.span layoutId="finding-cursor" transition={reduce ? { duration: 0 } : { duration: 0.3, ease: [0.65, 0, 0.35, 1] }} className="absolute inset-y-1 -left-3 w-[3px] rounded-full bg-ink" aria-hidden="true" /> : null}
+                    {on ? <motion.span layoutId="finding-cursor" transition={reduce ? { duration: 0 } : { duration: 0.3, ease: [0.65, 0, 0.35, 1] }} className="absolute inset-y-1 -inset-x-3 -z-10 rounded-[8px] bg-paper shadow-[var(--shadow-paper)]" aria-hidden="true" /> : null}
                     <span className="mt-[0.45rem] grid w-2 place-items-center" aria-hidden="true"><span className={SEVERITY[x.severity].mark} /></span>
                     <span className="min-w-0 flex-1">
                       <span className={`block text-[0.9688rem] leading-snug ${on ? "font-[600] text-ink" : "text-ink-2 group-hover:text-ink"}`}>{x.title}</span>

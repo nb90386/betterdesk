@@ -24,14 +24,24 @@
   --color-stone-3: #d9d8d1;
   --color-surface: #f7f6f2;
   --color-paper: #fbfbf9;
+  --color-sheet: #f7f6f2;
+  --color-sheet-paper: #fbfbf9;
 
-  /* Ink */
-  --color-ink: #151719;
-  --color-ink-2: #3a3d41;
-  --color-muted: #5d6065; /* 5.3:1 on stone */
-  --color-rule: #d3d2cb; /* decorative hairline */
-  --color-rule-strong: #b5b4ac; /* separators that must read */
-  --color-field: #7f7e77; /* input strokes, ≥3:1 on stone and surface */
+  /* Raw inks, referenced by the scopes below */
+  --color-carbon: #151719;
+  --color-carbon-2: #3a3d41;
+  --color-slate: #5d6065;
+  --color-hair: #d3d2cb;
+  --color-hair-strong: #b5b4ac;
+  --color-stroke: #7f7e77;
+
+  /* Ink (semantic; re-mapped inside .on-graphite) */
+  --color-ink: var(--color-carbon);
+  --color-ink-2: var(--color-carbon-2);
+  --color-muted: var(--color-slate); /* 5.3:1 on stone */
+  --color-rule: var(--color-hair); /* decorative hairline */
+  --color-rule-strong: var(--color-hair-strong); /* separators that must read */
+  --color-field: var(--color-stroke); /* input strokes, ≥3:1 on stone and surface */
 
   /* Graphite: the directory boards */
   --color-graphite: #17191b;
@@ -40,10 +50,15 @@
   --color-graphite-rule: #36393e;
   --color-graphite-muted: #a3a5a9; /* 6.7:1 on graphite-2 */
   --color-graphite-ink: #eeede8;
+  --color-graphite-ink-2: #cfd0cc;
+  --color-graphite-rule-strong: #4a4d52;
+  --color-graphite-field: #6c6f74;
+  --color-graphite-surface: #23262a;
 
   /* The lamp. lamp = the lit mark on graphite (9.4:1); lamp-ink = lamp as text/mark on stone (5.4:1). */
   --color-lamp: #ffb547;
-  --color-lamp-ink: #8a5200;
+  --color-lamp-deep: #8a5200;
+  --color-lamp-ink: var(--color-lamp-deep);
   --color-lamp-wash: #f6e6c8;
 
   /* Failure only */
@@ -57,6 +72,8 @@
   /* One key light from above. Boards are satin: a top sheen and a long soft fall. */
   --shadow-paper: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 1px 2px rgb(21 23 25 / 0.06), 0 10px 24px -18px rgb(21 23 25 / 0.35);
   --shadow-board: 0 1px 0 rgb(255 255 255 / 0.07) inset, 0 0 0 1px rgb(0 0 0 / 0.25), 0 2px 4px rgb(21 23 25 / 0.12), 0 40px 80px -48px rgb(21 23 25 / 0.75);
+  --shadow-bar: 0 1px 0 rgb(21 23 25 / 0.09);
+  --shadow-held: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 10px 24px -14px rgb(0 0 0 / 0.8);
   --shadow-pop: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 0 0 1px rgb(21 23 25 / 0.08), 0 12px 32px -12px rgb(21 23 25 / 0.35);
 
   /* Motion: ease-out for arrivals, ease-in-out for moves between stable positions. */
@@ -69,33 +86,34 @@
 
 /* Graphite scope: re-maps the ink tokens so shared primitives work on a directory board. */
 .on-graphite {
-  --color-ink: #eeede8;
-  --color-ink-2: #cfd0cc;
-  --color-muted: #a3a5a9;
-  --color-rule: #36393e;
-  --color-rule-strong: #4a4d52;
-  --color-field: #6c6f74;
-  --color-surface: #23262a;
-  --color-paper: #2a2d31;
-  --color-lamp-ink: #ffb547;
+  --color-ink: var(--color-graphite-ink);
+  --color-ink-2: var(--color-graphite-ink-2);
+  --color-muted: var(--color-graphite-muted);
+  --color-rule: var(--color-graphite-rule);
+  --color-rule-strong: var(--color-graphite-rule-strong);
+  --color-field: var(--color-graphite-field);
+  --color-surface: var(--color-graphite-surface);
+  --color-paper: var(--color-graphite-3);
+  --color-lamp-ink: var(--color-lamp);
   color: var(--color-ink);
 }
 
 /* Stone scope: a paper object set on a graphite board gets the light tokens back. */
 .on-stone {
-  --color-ink: #151719;
-  --color-ink-2: #3a3d41;
-  --color-muted: #5d6065;
-  --color-rule: #d3d2cb;
-  --color-rule-strong: #b5b4ac;
-  --color-field: #7f7e77;
-  --color-surface: #f7f6f2;
-  --color-paper: #fbfbf9;
-  --color-lamp-ink: #8a5200;
+  --color-ink: var(--color-carbon);
+  --color-ink-2: var(--color-carbon-2);
+  --color-muted: var(--color-slate);
+  --color-rule: var(--color-hair);
+  --color-rule-strong: var(--color-hair-strong);
+  --color-field: var(--color-stroke);
+  --color-surface: var(--color-sheet);
+  --color-paper: var(--color-sheet-paper);
+  --color-lamp-ink: var(--color-lamp-deep);
   color: var(--color-ink);
 }
 
 @layer base {
+  html, body { overflow-x: clip; }
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
@@ -114,7 +132,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  ::selection { background: rgb(255 181 71 / 0.38); color: var(--color-ink); }
+  ::selection { background: color-mix(in srgb, var(--color-lamp) 38%, transparent); color: var(--color-ink); }
   :focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; border-radius: 3px; }
   .on-graphite :focus-visible { outline-color: var(--color-lamp); }
   input, textarea, select { caret-color: var(--color-lamp-ink); }
@@ -142,7 +160,7 @@
   .t-hero {
     font-family: var(--font-display);
     font-weight: 620;
-    font-size: clamp(2.45rem, 1.2rem + 4.1vw, 4.75rem);
+    font-size: clamp(2.45rem, 1.25rem + 3.9vw, 4.6rem);
     line-height: 0.98;
     letter-spacing: -0.038em;
   }
@@ -156,9 +174,9 @@
   .t-title {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.55rem, 1.15rem + 1.35vw, 2.35rem);
-    line-height: 1.07;
-    letter-spacing: -0.026em;
+    font-size: clamp(1.7rem, 1.15rem + 1.95vw, 3rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
   }
   .t-head {
     font-weight: 600;
@@ -179,7 +197,7 @@
 
   /* The directory board: the product's surface. */
   .board {
-    background: linear-gradient(180deg, #25282c 0%, #1d1f22 38%, #1a1c1f 100%);
+    background: linear-gradient(180deg, var(--color-graphite-3) 0%, var(--color-graphite-2) 40%, var(--color-graphite) 100%);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-board);
   }
@@ -193,7 +211,7 @@
   .leader { flex: 1; min-width: 1.5rem; height: 1px; align-self: center; margin-inline: 0.75rem; background-image: linear-gradient(90deg, currentColor 1px, transparent 1px); background-size: 5px 1px; opacity: 0.28; }
 
   /* State marks (never colored pills): lamp = needs you; tick = done; ring = waiting; dash = not now. */
-  .mark-lamp { width: 0.5625rem; height: 0.5625rem; border-radius: 50%; background: var(--color-lamp); box-shadow: 0 0 0 3px rgb(255 181 71 / 0.16), 0 0 12px rgb(255 181 71 / 0.5); flex: none; }
+  .mark-lamp { width: 0.5625rem; height: 0.5625rem; border-radius: 50%; background: var(--color-lamp); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-lamp) 16%, transparent), 0 0 12px color-mix(in srgb, var(--color-lamp) 50%, transparent); flex: none; }
   .mark-ring { width: 0.5625rem; height: 0.5625rem; border-radius: 50%; box-shadow: inset 0 0 0 1.5px currentColor; opacity: 0.55; flex: none; }
   .mark-off { width: 0.5625rem; height: 0.5625rem; border-radius: 50%; background: currentColor; opacity: 0.22; flex: none; }
 
@@ -214,22 +232,30 @@
     padding: 0.625rem 0.875rem;
     font-size: 1rem;
     color: var(--color-ink);
-    transition: border-color 160ms, box-shadow 160ms;
+    transition: border-color 160ms; /* the focus ring appears instantly */
   }
-  .field::placeholder { color: #75777c; }
+  .field::placeholder { color: var(--color-muted); }
   .field:hover { border-color: var(--color-ink-2); }
-  .field:focus-visible { outline: none; border-color: var(--color-ink); box-shadow: 0 0 0 3px rgb(21 23 25 / 0.14); }
+  .field:focus-visible { outline: none; border-color: var(--color-ink); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ink) 14%, transparent); }
   .field[aria-invalid="true"] { border-color: var(--color-danger); }
+  select.field {
+    appearance: none;
+    padding-right: 2.25rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%235d6065' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 4.5l3 3 3-3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 0.75rem;
+  }
 }
 
 /* Reveal: content is visible by default; only scripted pages hide it until in view. */
 .js [data-reveal] { opacity: 0; transform: translateY(14px); transition: opacity 620ms var(--ease-out), transform 720ms var(--ease-out); }
 .js [data-reveal].is-in { opacity: 1; transform: none; }
 
-@keyframes bd-lamp { 0%, 100% { box-shadow: 0 0 0 3px rgb(255 181 71 / 0.16), 0 0 12px rgb(255 181 71 / 0.5); } 50% { box-shadow: 0 0 0 5px rgb(255 181 71 / 0.08), 0 0 18px rgb(255 181 71 / 0.65); } }
+@keyframes bd-lamp { 0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-lamp) 16%, transparent), 0 0 12px color-mix(in srgb, var(--color-lamp) 50%, transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-lamp) 8%, transparent), 0 0 18px color-mix(in srgb, var(--color-lamp) 65%, transparent); } }
 .mark-lamp.is-live { animation: bd-lamp 2.4s var(--ease-move) infinite; }
 
-@keyframes bd-settle { 0% { box-shadow: 0 0 0 0 rgb(255 181 71 / 0.45); } 100% { box-shadow: 0 0 0 10px rgb(255 181 71 / 0); } }
+@keyframes bd-settle { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-lamp) 45%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
 .settle-pulse { animation: bd-settle 700ms var(--ease-out) 1; }
 
 @media (prefers-reduced-motion: reduce) {

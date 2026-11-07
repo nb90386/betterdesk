@@ -7,7 +7,7 @@ import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { useWorkspace } from "@/lib/demo/store";
 import { runSampleAudit } from "@/lib/presence/sample";
-import { SAMPLE_PROSPECTS_CSV } from "@/lib/demo/seed";
+import { PREPARED_AUDIT_ID, SAMPLE_PROSPECTS_CSV } from "@/lib/demo/seed";
 import { parseProspectCsv } from "@/lib/scout/csv";
 import { approveDraft, bookSampleSlot, createRun, createTaskFromFinding, importProspects, recordPresenceAudit, simulateDelivery, simulateReply } from "@/lib/workspace/actions";
 import { attention, timeline } from "@/lib/workspace/selectors";
@@ -23,7 +23,7 @@ import { StateGlyph } from "./primitives";
  */
 
 const TARGET = "Juniper Lane Law";
-const AUDIT_ID = "aud_demo";
+const AUDIT_ID = PREPARED_AUDIT_ID;
 const ENTER = { duration: 0.32, ease: [0.22, 1, 0.36, 1] as const };
 const MOVE = { duration: 0.55, ease: [0.65, 0, 0.35, 1] as const };
 const fmt = (iso: string) => fmtWhen(iso);
@@ -76,7 +76,8 @@ export function GuidedDemo() {
     }
   };
 
-  if (!ready) return <div className="paper min-h-[32rem] animate-pulse" aria-busy="true" aria-label="Loading the sample workspace" />;
+  // Same reserved height before and after hydration, so loading the browser-saved state never shifts the page.
+  if (!ready) return <div className="min-h-[46rem] animate-pulse rounded-[var(--radius-md)] bg-stone-2" aria-busy="true" aria-label="Loading the sample workspace" />;
 
   const runActive = d.run ? isActive(d.run.state) : false;
   const items = attention(ws).slice(0, 6);
@@ -86,12 +87,12 @@ export function GuidedDemo() {
       case 0:
         return (
           <>
-            <p className="text-ink-2">Presence checked clearline.example (fictional, bundled with this page): {report.pagesChecked.length} pages, {report.findings.length} findings. Pick one and give it to someone.</p>
+            <p className="text-ink-2">Yesterday Presence checked clearline.example (a fictional site bundled with this page): {report.pagesChecked.length} pages, {report.findings.length} findings. Pick one and give it to someone.</p>
             <ul className="mt-5">
               {report.findings.filter((f) => f.severity === "medium" || f.severity === "high").slice(0, 4).map((f) => (
                 <li key={f.id} className="border-t border-rule">
                   <label className="flex min-h-12 cursor-pointer items-start gap-3 py-3">
-                    <input type="radio" name="finding" className="mt-1 h-4 w-4 accent-[#151719]" checked={finding === f.id} onChange={() => setFinding(f.id)} />
+                    <input type="radio" name="finding" className="mt-1 h-4 w-4 accent-ink" checked={finding === f.id} onChange={() => setFinding(f.id)} />
                     <span>
                       <span className="block font-[560]">{f.title}</span>
                       <span className="block text-[0.875rem] text-muted">{f.fix}</span>
@@ -125,7 +126,7 @@ export function GuidedDemo() {
       case 1:
         return (
           <>
-            <p className="text-ink-2">Scout imports the sample list of {parseProspectCsv(SAMPLE_PROSPECTS_CSV).rows.length} businesses, removes duplicates, checks each against Clearline’s criteria and drafts introductions for good fits. You can watch every task.</p>
+            <p className="text-ink-2">{d.run ? "Yesterday Scout worked through the sample list. Here is exactly what it did." : null} Scout imports the sample list of {parseProspectCsv(SAMPLE_PROSPECTS_CSV).rows.length} businesses, removes duplicates, checks each against Clearline’s criteria and drafts introductions for good fits. You can watch every task.</p>
             {d.run ? (
               <ol className="mt-5">
                 {d.run.tasks.map((t) => (
@@ -255,7 +256,7 @@ export function GuidedDemo() {
   })();
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+    <div className="grid min-h-[46rem] content-start gap-8 lg:grid-cols-12 lg:gap-10">
       <nav aria-label="Demo steps" className="lg:col-span-3">
         <ol className="grid grid-cols-2 gap-x-4 sm:grid-cols-3 lg:grid-cols-1">
           {STEPS.map((s, i) => {

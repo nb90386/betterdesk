@@ -27,16 +27,17 @@ export function Btn({ tone = "secondary", size = "md", className = "", ...p }: B
   return <button type="button" className={`press inline-flex items-center justify-center gap-1.5 rounded-[var(--radius-sm)] font-medium ${s} ${t} ${className}`} {...p} />;
 }
 
-export function Panel({ title, action, children, className = "" }: { title?: string; action?: ReactNode; children: ReactNode; className?: string }) {
+/** Paper panel for working content; tone="board" sets it as a graphite directory board (the product's own surface). */
+export function Panel({ title, action, children, className = "", tone = "paper", pad = false }: { title?: string; action?: ReactNode; children: ReactNode; className?: string; tone?: "paper" | "board"; pad?: boolean }) {
   return (
-    <section className={`rounded-[var(--radius-md)] border border-rule bg-surface ${className}`}>
+    <section className={`rounded-[var(--radius-md)] ${tone === "board" ? "on-graphite board" : "border border-rule bg-surface"} ${className}`}>
       {title ? (
         <div className="flex items-center justify-between gap-3 border-b border-rule px-4 py-3">
           <h2 className="text-[0.9375rem] font-semibold">{title}</h2>
           {action}
         </div>
       ) : null}
-      {children}
+      {pad ? <div className="p-4">{children}</div> : children}
     </section>
   );
 }

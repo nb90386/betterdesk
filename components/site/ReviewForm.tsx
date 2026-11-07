@@ -191,7 +191,7 @@ export function ReviewForm() {
                 <div className="mt-2 grid gap-1.5 sm:grid-cols-2" id={id("pain")} tabIndex={-1}>
                   {PAINS.map((p) => (
                     <label key={p.id} className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-[8px] border px-3 text-[0.9375rem] transition-colors ${v.pain === p.id ? "border-ink bg-surface" : "border-rule-strong hover:border-ink-2"}`}>
-                      <input type="radio" name="pain" value={p.id} checked={v.pain === p.id} onChange={set("pain")} className="h-4 w-4 accent-[#151719]" />
+                      <input type="radio" name="pain" value={p.id} checked={v.pain === p.id} onChange={set("pain")} className="h-4 w-4 accent-ink" />
                       {p.label}
                     </label>
                   ))}
@@ -209,7 +209,7 @@ export function ReviewForm() {
               {field("heardFrom", "How did you hear about us?", { optional: true })}
               <div>
                 <label className="flex cursor-pointer items-start gap-3 text-[0.9375rem]">
-                  <input id={id("consent")} type="checkbox" checked={v.consent} onChange={set("consent")} aria-invalid={errors.consent ? true : undefined} aria-describedby={errors.consent ? `${id("consent")}-err` : undefined} className="mt-1 h-4 w-4 accent-[#151719]" />
+                  <input id={id("consent")} type="checkbox" checked={v.consent} onChange={set("consent")} aria-invalid={errors.consent ? true : undefined} aria-describedby={errors.consent ? `${id("consent")}-err` : undefined} className="mt-1 h-4 w-4 accent-ink" />
                   <span>BetterDesk may contact me about this request. Nothing else, and no mailing list.</span>
                 </label>
                 {errors.consent ? <p id={`${id("consent")}-err`} className="mt-1.5 text-[0.875rem] text-danger">{errors.consent}</p> : null}

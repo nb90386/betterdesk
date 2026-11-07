@@ -43,7 +43,7 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
               href={n.href}
               onClick={onNavigate}
               aria-current={active ? "page" : undefined}
-              className="group flex min-h-9 items-center gap-2.5 rounded-[var(--radius-sm)] px-2.5 text-[0.875rem] text-ink-2 hover:bg-stone-2 hover:text-ink aria-[current=page]:bg-surface aria-[current=page]:font-medium aria-[current=page]:text-ink aria-[current=page]:shadow-[var(--shadow-paper)]"
+              className="group flex min-h-9 items-center gap-2.5 rounded-[var(--radius-sm)] px-2.5 text-[0.875rem] text-ink-2 hover:bg-stone-2 hover:text-ink aria-[current=page]:bg-stone-2 aria-[current=page]:font-[600] aria-[current=page]:text-ink"
             >
               <Icon name={n.icon} className="h-[18px] w-[18px] text-muted group-aria-[current=page]:text-ink" />
               {n.label}

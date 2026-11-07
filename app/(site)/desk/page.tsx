@@ -23,12 +23,13 @@ export default function Desk() {
     <>
       <section className="wrap pb-16 pt-32 md:pt-40">
         <h1 className="t-display max-w-[17ch]">Every inquiry answered, every walkthrough on the calendar.</h1>
-        <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:items-end">
-          <p className="t-lede max-w-[58ch] lg:col-span-8">
+        <div className="mt-7 grid gap-8">
+          <p className="t-lede max-w-[56ch]">
             When a property manager asks for a quote, the worst outcome is a slow reply. Desk keeps the inquiry, the account’s history and your open times together, so the answer is quick and the next step is never lost.
           </p>
-          <div className="lg:col-span-4 lg:text-right">
-            <ButtonLink href="/demo">Explore the product</ButtonLink>
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
+            <ButtonLink href="/demo">Try the demo</ButtonLink>
+            <TextLink href="/app/inbox">Open the sample inbox</TextLink>
           </div>
         </div>
       </section>

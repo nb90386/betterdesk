@@ -13,13 +13,13 @@ export default function Demo() {
   return (
     <>
       <section className="wrap pb-10 pt-32 md:pt-40">
-        <StatusMark status="DEMO" />
-        <h1 className="t-display mt-5 max-w-[20ch]">Run the whole journey in two minutes.</h1>
+        <h1 className="t-display max-w-[20ch]">Run the whole journey in two minutes.</h1>
         <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:items-end">
           <p className="t-lede max-w-[58ch] lg:col-span-8">
             You’re Dana, owner of Clearline Commercial Cleaning, a fictional company in Denver. Fix something on the website, let Scout check a list, approve an introduction, answer the reply and book the walkthrough. Every step updates the same record.
           </p>
-          <div className="lg:col-span-4 lg:text-right">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 lg:col-span-4 lg:justify-end">
+            <StatusMark status="DEMO" />
             <TextLink href="/app">Skip to the full workspace</TextLink>
           </div>
         </div>

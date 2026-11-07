@@ -3,7 +3,7 @@ import { ReviewForm } from "@/components/site/ReviewForm";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Request a visibility and lead-flow review",
+  title: "Get a free visibility and lead-flow check",
   description: "Tell us about your cleaning business. A person reviews how customers find you and how inquiries reach you, and replies with what we found.",
   alternates: { canonical: "/contact" },
 };
@@ -19,7 +19,7 @@ export default function Contact() {
     <section className="wrap pb-24 pt-32 md:pt-40">
       <div className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <h1 className="t-display max-w-[13ch]">Request a review.</h1>
+          <h1 className="t-display max-w-[16ch]">Get a free visibility and lead-flow check.</h1>
           <p className="t-lede mt-6">
             Tell us where you clean and what gets in the way. We’ll look at how customers find you and how inquiries reach you, and reply with what we found.
           </p>

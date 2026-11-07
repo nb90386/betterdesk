@@ -107,7 +107,7 @@ export default function HowItWorks() {
         <div className="wrap flex flex-col gap-6 py-20 md:flex-row md:items-end md:justify-between md:py-24">
           <h2 className="t-title max-w-[18ch]">Try it on a sample company first.</h2>
           <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
-            <ButtonLink href="/demo">Explore the product</ButtonLink>
+            <ButtonLink href="/demo">Try the demo</ButtonLink>
             <TextLink href="/pricing">Proposed pricing</TextLink>
           </div>
         </div>

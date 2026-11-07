@@ -23,7 +23,7 @@ export default async function OG() {
       <div style={{ width: "100%", height: "100%", display: "flex", background: "#ecebe6", color: "#151719", fontFamily: "General Sans", padding: 64, gap: 48 }}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: 560 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 32, fontWeight: 600, letterSpacing: -1 }}>
-            <svg width="38" height="38" viewBox="0 0 32 32" fill="#151719"><rect x="6" y="3" width="5" height="26" rx="1.2" /><path d="M13.5 29V13.5A15.5 15.5 0 0 1 29 29z" /></svg>
+            <svg aria-hidden="true" width="38" height="38" viewBox="0 0 32 32" fill="#151719"><rect x="6" y="3" width="5" height="26" rx="1.2" /><path d="M13.5 29V13.5A15.5 15.5 0 0 1 29 29z" /></svg>
             BetterDesk
           </div>
           <div style={{ display: "flex", flexDirection: "column", fontSize: 66, lineHeight: 1, letterSpacing: -2.6, fontWeight: 600 }}>

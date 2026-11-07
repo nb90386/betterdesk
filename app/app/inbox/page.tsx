@@ -106,7 +106,7 @@ function InquiryForm({ onDone }: { onDone: () => void }) {
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setF((x) => ({ ...x, [k]: e.target.value }));
   return (
     <Panel title="Simulate a website inquiry (demo)">
-      <form className="grid gap-3 p-4 sm:grid-cols-2" onSubmit={(e) => { e.preventDefault(); const r = act((w, at) => A.receiveInquiry(w, f, at), "Inquiry received."); if (r.ok) onDone(); else setErr(r.error); }}>
+      <form className="grid gap-3 p-4 sm:grid-cols-2" onSubmit={(e) => { e.preventDefault(); const r = act((w, at) => A.receiveInquiry(w, f, at), "Sample inquiry added to the inbox (simulated; no real message was received)."); if (r.ok) onDone(); else setErr(r.error); }}>
         {(["business", "name", "email", "zip"] as const).map((k) => (
           <label key={k} className="text-[0.8125rem]"><span className="capitalize text-muted">{k === "zip" ? "ZIP" : k}</span><input value={f[k]} onChange={set(k)} className="mt-1 block w-full rounded-[var(--radius-sm)] border border-rule-strong px-3 py-2 text-[0.875rem]" /></label>
         ))}

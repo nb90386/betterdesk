@@ -1,0 +1,304 @@
+{
+  "summary": {
+    "fails": 9,
+    "reflex": 0,
+    "warns": 23,
+    "waived": 0,
+    "rejected": 0,
+    "answered": 0,
+    "dismissed": 0,
+    "notes": 0,
+    "files": 46,
+    "render": "off"
+  },
+  "findings": [
+    {
+      "gate": "20",
+      "grade": "FAIL",
+      "tier": "floor",
+      "file": "app/globals.css",
+      "line": 1,
+      "evidence": "no Hallmark stamp on the first non-empty line of any CSS",
+      "fix": "The stamp comment is line 1 of the CSS; only @charset may precede it"
+    },
+    {
+      "gate": "48",
+      "grade": "FAIL",
+      "tier": "floor",
+      "file": "app/apple-icon.tsx",
+      "line": 9,
+      "evidence": "inline-style colour literal #1d1f22",
+      "fix": "Lift the value into the token block"
+    },
+    {
+      "gate": "48",
+      "grade": "FAIL",
+      "tier": "floor",
+      "file": "app/opengraph-image.tsx",
+      "line": 23,
+      "evidence": "inline-style colour literal #ecebe6",
+      "fix": "Lift the value into the token block"
+    },
+    {
+      "gate": "48",
+      "grade": "FAIL",
+      "tier": "floor",
+      "file": "app/opengraph-image.tsx",
+      "line": 34,
+      "evidence": "inline-style colour literal #3a3d41",
+      "fix": "Lift the value into the token block"
+    },
+    {
+      "gate": "48",
+      "grade": "FAIL",
+      "tier": "floor",
+      "file": "app/opengraph-image.tsx",
+      "line": 36,
+      "evidence": "inline-style colour literal #1d1f22",
+      "fix": "Lift the value into the token block"
+    },
+    {
+      "gate": "48",
+      "grade": "FAIL",
+      "tier": "floor",
+      "file": "app/opengraph-image.tsx",
+      "line": 37,
+      "evidence": "inline-style colour literal #a3a5a9",
+      "fix": "Lift the value into the token block"
+    },
+    {
+      "gate": "48",
+      "grade": "FAIL",
+      "tier": "floor",
+      "file": "app/opengraph-image.tsx",
+      "line": 39,
+      "evidence": "inline-style colour literal #36393e",
+      "fix": "Lift the value into the token block"
+    },
+    {
+      "gate": "48",
+      "grade": "FAIL",
+      "tier": "floor",
+      "file": "app/opengraph-image.tsx",
+      "line": 40,
+      "evidence": "inline-style colour literal #ffb547",
+      "fix": "Lift the value into the token block"
+    },
+    {
+      "gate": "48",
+      "grade": "FAIL",
+      "tier": "floor",
+      "file": "app/opengraph-image.tsx",
+      "line": 42,
+      "evidence": "inline-style colour literal #ffb547",
+      "fix": "Lift the value into the token block"
+    },
+    {
+      "gate": "49",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "components/site/DeskMoment.tsx",
+      "line": 87,
+      "evidence": "long clickable label \"Send this reply (simulated)\" without nowrap",
+      "fix": "Shorten the label or set nowrap"
+    },
+    {
+      "gate": "49",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "components/site/GuidedDemo.tsx",
+      "line": 143,
+      "evidence": "long clickable label \"Import the list and run Scout\" without nowrap",
+      "fix": "Shorten the label or set nowrap"
+    },
+    {
+      "gate": "49",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "components/site/GuidedDemo.tsx",
+      "line": 160,
+      "evidence": "long clickable label \"Next: review the introduction\" without nowrap",
+      "fix": "Shorten the label or set nowrap"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/contact/page.tsx",
+      "line": 23,
+      "evidence": "hero paragraph runs 29 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/demo/page.tsx",
+      "line": 19,
+      "evidence": "hero paragraph runs 38 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/desk/page.tsx",
+      "line": 25,
+      "evidence": "h1 runs 8 words (\"Every inquiry answered, every walkthrou…\")",
+      "fix": "Seven words or fewer, 50 characters or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/desk/page.tsx",
+      "line": 27,
+      "evidence": "hero paragraph runs 39 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/how-it-works/page.tsx",
+      "line": 54,
+      "evidence": "h1 runs 9 words (\"What you give, what we do, what you get.\")",
+      "fix": "Seven words or fewer, 50 characters or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/how-it-works/page.tsx",
+      "line": 55,
+      "evidence": "hero paragraph runs 26 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/page.tsx",
+      "line": 39,
+      "evidence": "h1 runs 10 words (\"Find better accounts. Be easier to find…\")",
+      "fix": "Seven words or fewer, 50 characters or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/page.tsx",
+      "line": 45,
+      "evidence": "hero paragraph runs 35 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/presence/page.tsx",
+      "line": 47,
+      "evidence": "h1 runs 13 words (\"Customers are starting their search in …\")",
+      "fix": "Seven words or fewer, 50 characters or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/presence/page.tsx",
+      "line": 49,
+      "evidence": "hero paragraph runs 40 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/pricing/page.tsx",
+      "line": 25,
+      "evidence": "h1 runs 8 words (\"One way to start. One plan after that.\")",
+      "fix": "Seven words or fewer, 50 characters or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/pricing/page.tsx",
+      "line": 26,
+      "evidence": "hero paragraph runs 30 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/product/page.tsx",
+      "line": 45,
+      "evidence": "h1 runs 10 words (\"Three ways to win work. One record for …\")",
+      "fix": "Seven words or fewer, 50 characters or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/product/page.tsx",
+      "line": 46,
+      "evidence": "hero paragraph runs 37 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/resources/page.tsx",
+      "line": 22,
+      "evidence": "hero paragraph runs 21 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/scout/page.tsx",
+      "line": 29,
+      "evidence": "h1 runs 9 words (\"Know which businesses are worth a walkt…\")",
+      "fix": "Seven words or fewer, 50 characters or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/scout/page.tsx",
+      "line": 31,
+      "evidence": "hero paragraph runs 46 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/security/page.tsx",
+      "line": 38,
+      "evidence": "hero paragraph runs 24 words",
+      "fix": "One sentence, twelve words or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/solutions/commercial-cleaning/page.tsx",
+      "line": 29,
+      "evidence": "h1 runs 9 words (\"Built for cleaning companies that win i…\")",
+      "fix": "Seven words or fewer, 50 characters or fewer"
+    },
+    {
+      "gate": "58",
+      "grade": "WARN",
+      "tier": "floor",
+      "file": "app/(site)/solutions/commercial-cleaning/page.tsx",
+      "line": 30,
+      "evidence": "hero paragraph runs 39 words",
+      "fix": "One sentence, twelve words or fewer"
+    }
+  ]
+}

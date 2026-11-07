@@ -13,3 +13,5 @@ next-env.d.ts
 .pw-browsers/
 .vercel
 docs/redesign/screenshots/r*/
+.jury/
+.hallmark/

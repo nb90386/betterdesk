@@ -77,7 +77,7 @@ export function PresenceAudit() {
         </div>
         <div className="lg:col-span-2">
           <label className="flex cursor-pointer items-start gap-3 text-[0.9375rem]">
-            <input id={`${uid}-auth`} type="checkbox" checked={authorized} onChange={(e) => setAuthorized(e.target.checked)} aria-invalid={problem === "auth" ? true : undefined} className="mt-1 h-4 w-4 accent-[#151719]" />
+            <input id={`${uid}-auth`} type="checkbox" checked={authorized} onChange={(e) => setAuthorized(e.target.checked)} aria-invalid={problem === "auth" ? true : undefined} className="mt-1 h-4 w-4 accent-ink" />
             <span>I own this website or I’m allowed to audit it.</span>
           </label>
           {problem === "auth" ? <p className="mt-1.5 text-[0.875rem] text-danger">{msg.auth}</p> : null}

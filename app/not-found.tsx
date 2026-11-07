@@ -6,7 +6,7 @@ import { PUBLIC_ROUTES } from "@/lib/site";
 const LABEL: Record<string, string> = {
   "/": "Home", "/product": "How it connects", "/presence": "Presence", "/scout": "Scout", "/desk": "Desk",
   "/solutions/commercial-cleaning": "For commercial cleaning", "/how-it-works": "Setup and support", "/demo": "Interactive demo",
-  "/pricing": "Pricing", "/resources": "Guides", "/resources/ai-search-for-service-businesses": "AI search, plainly", "/contact": "Request a review", "/security": "Security and data",
+  "/pricing": "Pricing", "/resources": "Guides", "/resources/ai-search-for-service-businesses": "AI search, plainly", "/contact": "Get a free check", "/security": "Security and data",
 };
 
 export default function NotFound() {
