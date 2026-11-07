@@ -133,11 +133,13 @@ export function SignalToBooking({ id = "conversation", headingLevel = 2 }: { id?
 
 function Rail({ progress, station }: { progress: MotionValue<number>; station: number }) {
   const scaleX = useTransform(progress, [0, THRESHOLDS[4]], [0, 1], { clamp: true });
+  const head = useTransform(scaleX, (v) => `calc(6px + ${v} * (100% - 12px))`);
   return (
     <div className="mt-6 lg:mt-10" aria-hidden="true">
       <div className="relative h-3">
         <span className="absolute inset-x-1.5 top-1/2 h-0.5 -translate-y-1/2 bg-graphite-rule" />
         <motion.span style={{ scaleX }} className="absolute inset-x-1.5 top-1/2 h-0.5 origin-left -translate-y-1/2 bg-signal-bright" />
+        <motion.span style={{ left: head }} className="absolute top-1/2 z-10 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_0_3px_rgb(255_106_79/0.45),0_0_14px_2px_rgb(255_106_79/0.55)]" />
         <ol className="relative flex h-full justify-between">
           {STATIONS.map((s, i) => (
             <li key={s.id} className={`block h-3 w-3 rounded-full border-2 transition-colors duration-300 ${i <= station ? "border-signal-bright bg-signal-bright" : "border-graphite-rule bg-graphite"}`} />
@@ -169,7 +171,7 @@ function Thread({ station }: { station: number }) {
           </div>
           <p className="text-[0.75rem] text-graphite-muted">Texting as {BIZ}</p>
         </div>
-        <motion.div layout className={`flex max-h-[min(34svh,24rem)] flex-col justify-end gap-2.5 overflow-hidden px-4 py-4 ${station >= 3 ? "[mask-image:linear-gradient(to_bottom,transparent_0,black_2.5rem)]" : ""} sm:max-h-[min(46svh,26rem)] sm:px-5`}>
+        <motion.div layout className={`flex ${booked ? "max-h-[min(24svh,15rem)] sm:max-h-[min(30svh,17rem)]" : "max-h-[min(34svh,24rem)] sm:max-h-[min(46svh,26rem)]"} flex-col justify-end gap-2.5 overflow-hidden px-4 py-4 ${station >= 3 ? "[mask-image:linear-gradient(to_bottom,transparent_0,black_2.5rem)]" : ""} sm:px-5`}>
           <AnimatePresence initial={false}>
             {station === 0 ? (
               <motion.div key="missed" layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-4 py-6 sm:py-10">
@@ -214,11 +216,12 @@ function Thread({ station }: { station: number }) {
         {booked ? (
           <motion.div
             key="booked"
+            layout
             initial={{ opacity: 0, y: 40, scale: 0.96, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute -bottom-4 left-2 w-[82%] sm:-bottom-6 sm:-left-10 sm:w-[64%]"
+            className="relative z-10 -mt-3 ml-3 w-[84%] sm:-ml-8 sm:w-[62%]"
           >
             <BookedCard />
           </motion.div>

@@ -125,7 +125,7 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
   }
 
   return (
-    <form noValidate onSubmit={onSubmit} className="space-y-5" aria-label="Book a demo">
+    <form noValidate onSubmit={onSubmit} className="space-y-5" aria-label="Request a demo">
       <div className="grid gap-5 sm:grid-cols-2">
         {field("name", "Your name", { autoComplete: "name", required: true })}
         {field("business", "Business name", { autoComplete: "organization", required: true })}

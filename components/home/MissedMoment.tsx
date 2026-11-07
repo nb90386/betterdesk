@@ -8,7 +8,7 @@ import { BIZ, CALLER, OWNER, STATIONS } from "@/lib/story";
 const BEATS = [
   { time: "2:14 PM", text: `${OWNER} is under a sink across town. His phone rings in his back pocket.` },
   { time: "2:14 PM", text: "It rings out. He'll see the missed call in about forty minutes." },
-  { time: "2:16 PM", text: `Without a reply, ${CALLER.first} may simply try the next plumber on the list.` },
+  { time: "2:14 PM", text: `Without a reply, ${CALLER.first} may simply try the next plumber on the list.` },
   { time: "2:14 PM", text: `With BetterDesk, she has a text in ${BIZ}'s name before she puts the phone down.` },
 ];
 
@@ -49,11 +49,11 @@ export function MissedMoment() {
                 <li
                   key={i}
                   aria-current={i === beat ? "step" : undefined}
-                  className={`max-w-[26ch] text-[1.0625rem] font-[550] leading-[1.18] tracking-[-0.022em] transition-[color,opacity] duration-500 sm:text-[1.6rem] md:text-[2rem] [font-stretch:96%] ${
-                    i === beat ? "text-ink" : i < beat ? "text-ink/30" : "text-ink/[0.14]"
-                  } ${i === 3 && beat === 3 ? "!text-ink" : ""}`}
+                  className={`max-w-[26ch] text-[1.0625rem] font-[550] leading-[1.18] tracking-[-0.022em] transition-[color,opacity,transform] duration-500 sm:text-[1.6rem] md:text-[2rem] [font-stretch:96%] ${
+                    i === beat ? "text-ink" : i < beat ? "text-muted" : "translate-y-2 opacity-0"
+                  }`}
                 >
-                  {i === 3 ? <span className={`mr-2 inline-block h-2.5 w-2.5 -translate-y-1 rounded-full align-middle transition-colors ${beat === 3 ? "bg-signal" : "bg-transparent"}`} aria-hidden="true" /> : null}
+                  {i === 3 ? <span className="mr-2 inline-block h-2.5 w-2.5 -translate-y-[0.15em] rounded-full bg-signal align-middle" aria-hidden="true" /> : null}
                   {b.text}
                 </li>
               ))}

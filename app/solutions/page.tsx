@@ -51,7 +51,7 @@ export default function SolutionsPage() {
           </dl>
         </div>
       </section>
-      <CloseCta />
+      <CloseCta compact title="Not sure it fits your kind of business?" lede="Tell us how customers reach you. We’ll tell you honestly whether BetterDesk is worth it." />
     </>
   );
 }

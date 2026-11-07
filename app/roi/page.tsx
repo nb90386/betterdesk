@@ -18,7 +18,7 @@ export default function RoiPage() {
       <section aria-label="Calculator" className="bg-porcelain pb-24 md:pb-32">
         <div className="wrap"><ValueCalculator /></div>
       </section>
-      <CloseCta />
+      <CloseCta compact title="Check the math with us." lede="Bring your numbers. If BetterDesk wouldn’t pay for itself, we’ll say so." />
     </>
   );
 }

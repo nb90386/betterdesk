@@ -37,7 +37,20 @@ const HOW_FAQ = [
 export default function HowItWorksPage() {
   return (
     <>
-      <PageIntro title="Set up with a person. Then it runs on your rules.">
+      <PageIntro
+        title="Set up with a person. Then it runs on your rules."
+        aside={
+          <div className="tone-dark rounded-[var(--radius-lg)] bg-graphite-2 p-5 shadow-[var(--shadow-object)]">
+            <p className="text-[0.8125rem] text-graphite-muted">Assisted mode · waiting for your OK</p>
+            <p className="mt-3 rounded-[var(--radius-md)] bg-graphite-3 px-3.5 py-3 text-[0.9375rem] leading-snug text-graphite-ink">Replacements depend on the unit and the venting, so we quote after a free estimate visit. Would Friday morning work?</p>
+            <div className="mt-3 flex gap-2 text-[0.875rem]" aria-hidden="true">
+              <span className="rounded-[var(--radius-sm)] bg-graphite-ink px-3 py-1.5 font-[550] text-graphite">Approve</span>
+              <span className="rounded-[var(--radius-sm)] border border-graphite-rule px-3 py-1.5 text-graphite-ink">Edit</span>
+            </div>
+            <p className="mt-4 text-[0.75rem] text-graphite-muted">Illustrative draft.</p>
+          </div>
+        }
+      >
         <p>No software project and no prompt writing. We learn how your business runs, connect what can be connected, and you approve every reply until you trust it.</p>
       </PageIntro>
 
@@ -85,7 +98,7 @@ export default function HowItWorksPage() {
           <Faq items={HOW_FAQ} className="lg:col-span-8" />
         </div>
       </section>
-      <CloseCta />
+      <CloseCta compact title="Start with one call." lede="We look at how work reaches you today and tell you plainly what would connect, before you sign up for anything." />
     </>
   );
 }

@@ -3,8 +3,8 @@ import { ContactForm } from "@/components/ContactForm";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Book a demo",
-  description: "Talk through your front desk with a person: how calls reach you today, what BetterDesk would do, and what it costs.",
+  title: "Request a demo",
+  description: "Request a demo call. Talk through your front desk with a person: how calls reach you today, what BetterDesk would do, and what it costs.",
   alternates: { canonical: "/contact" },
 };
 
@@ -23,7 +23,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       <div className="wrap relative grid gap-14 pb-24 pt-32 md:pt-40 lg:grid-cols-12 lg:gap-x-12">
         <div className="lg:col-span-5">
           <h1 id="contact-title" className="t-display max-w-[12ch]">Talk through your setup.</h1>
-          <p className="t-lede mt-6">Tell us a little about the business and we&rsquo;ll reply by email to find a time for a call.</p>
+          <p className="t-lede mt-6">Tell us a little about the business. The form writes an email to us, and we reply to find a time for a call. There&rsquo;s no online booking calendar yet.</p>
           <h2 className="t-label mt-12">What the call covers</h2>
           <ol className="relative mt-5">
             <span aria-hidden="true" className="absolute bottom-3 left-[5px] top-3 w-px bg-signal" />

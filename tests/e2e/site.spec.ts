@@ -136,7 +136,7 @@ test("contact form validates, then composes the email", async ({ page }) => {
 
 test("pricing: every plan is labelled as a proposal and links to the demo form", async ({ page }) => {
   await page.goto("/pricing");
-  await expect(page.getByText(/Proposed\. Currently published at/)).toHaveCount(3);
+  await expect(page.getByText(/Proposed price\. Today.s published price is/)).toHaveCount(3);
   for (const id of ["starter", "growth", "scale"]) await expect(page.locator(`a[href="/contact?plan=${id}"]`)).toHaveCount(1);
 });
 
@@ -162,7 +162,7 @@ test("mobile sticky CTA appears after the hero, steps aside on pinned acts and t
   await page.locator("[data-close-cta]").scrollIntoViewIfNeeded();
   await expect(bar).toHaveAttribute("aria-hidden", "true");
   await page.locator("#inbox-title").scrollIntoViewIfNeeded();
-  await bar.getByRole("link", { name: "Book a demo" }).click();
+  await bar.getByRole("link", { name: "Request a demo" }).click();
   await expect(page).toHaveURL(/\/contact$/);
   await expect(page.locator("div.fixed.bottom-0").filter({ hasText: "See it on your own missed calls." })).toHaveCount(0);
 });

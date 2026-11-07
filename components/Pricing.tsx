@@ -25,7 +25,7 @@ export function Pricing() {
               <span className="text-[0.9375rem] text-muted">a month</span>
             </p>
             <p className="mt-2 text-[0.8125rem] text-muted">
-              Proposed. Currently published at <s>${p.currentPrice}</s>.
+              Proposed price. Today&rsquo;s published price is ${p.currentPrice}.
             </p>
             <dl className="mt-6 space-y-1.5 border-y border-rule py-4 text-[0.9375rem]">
               <div className="flex justify-between gap-4"><dt className="text-ink-2">Conversations included</dt><dd className="tabular font-[550]">{p.includedConversations.toLocaleString()} / mo</dd></div>
@@ -54,7 +54,7 @@ export function Pricing() {
       <div className="mt-6 grid gap-3 border-t border-rule pt-5 text-[0.875rem] text-muted md:grid-cols-3 md:gap-7">
         <p>Every plan: setup with a person, calibration to your business, live human support. Monthly, no annual contract, cancel any time.</p>
         <p>A conversation is one customer thread in a 24-hour window, on any channel. Over the included amount: {OVERAGE_PROPOSAL} (proposed). Nothing is &ldquo;unlimited&rdquo;.</p>
-        <p>These prices are a proposal for review and are not wired to any checkout. Choosing a plan opens the demo form; nothing is charged here.</p>
+        <p>These prices are a proposal for review and are not wired to any checkout. Choosing a plan opens the demo request form; nothing is charged here.</p>
       </div>
     </div>
   );

@@ -79,7 +79,7 @@ export function SolutionPage({ s }: { s: Solution }) {
           <Faq items={s.faq} className="lg:col-span-8" />
         </div>
       </section>
-      <CloseCta />
+      <CloseCta compact title={s.slug === "beauty-wellness" ? "Bring last week’s unanswered messages." : "Bring last week’s missed calls."} lede="We’ll walk through what BetterDesk would have sent each of them, using your services, hours and rules." />
     </>
   );
 }

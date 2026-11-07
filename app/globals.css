@@ -197,10 +197,13 @@
 @keyframes bd-ring { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.6); opacity: 0; } }
 .ring-arc { transform-box: fill-box; transform-origin: center; animation: bd-ring 2.2s var(--ease-out) infinite; }
 .ring-arc.delay { animation-delay: 1.1s; }
+/* A lit pulse travelling the route: emissive, so it carries its own small light (drop-shadow on one path only). */
+@keyframes bd-pulse { 0% { stroke-dashoffset: 106; opacity: 0; } 8% { opacity: 1; } 85% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.route-pulse { stroke-dasharray: 6 100; stroke-dashoffset: 106; filter: drop-shadow(0 0 1.2px rgb(255 106 79 / 0.9)); animation: bd-pulse 3.6s var(--ease-travel) 2.4s infinite; }
 @keyframes bd-caret { 50% { opacity: 0; } }
 .typing-dot { animation: bd-caret 1.1s steps(1) infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  .ring-arc { display: none; }
+  .ring-arc, .route-pulse { display: none; }
 }

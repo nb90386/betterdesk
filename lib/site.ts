@@ -29,7 +29,7 @@ export const FOOTER = [
   },
   {
     title: "Talk to us",
-    links: [{ href: "/contact", label: "Book a demo" }],
+    links: [{ href: "/contact", label: "Request a demo" }],
   },
 ] as const;
 
@@ -85,7 +85,7 @@ export const PLANS: Plan[] = [
     bestFor: "1–3 locations, about 25–100 inquiries a week",
     includedConversations: 500,
     locations: "Up to 3 locations",
-    cta: "Book a demo",
+    cta: "Request a demo",
     featured: true,
     includes: [
       "Everything in Starter",

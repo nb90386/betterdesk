@@ -46,7 +46,7 @@ export function StickyCta() {
       <div className="flex items-center gap-3">
         <p className="min-w-0 flex-1 text-[0.875rem] leading-tight text-ink-2">See it on your own missed calls.</p>
         <Link href="/contact" className="press inline-flex min-h-11 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[550] text-porcelain">
-          Book a demo
+          Request a demo
         </Link>
       </div>
     </div>

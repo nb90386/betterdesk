@@ -30,8 +30,8 @@ export function ApprovedAnswers() {
   }, []);
   const reduce = reducePref || !wide;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.3"] });
-  const clip = useTransform(scrollYProgress, [0, 1], ["inset(38% 30% 38% 30% round 16px)", "inset(0% 0% 0% 0% round 16px)"]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1.18, 1]);
+  const clip = useTransform(scrollYProgress, [0, 1], ["inset(14% 12% 14% 12% round 16px)", "inset(0% 0% 0% 0% round 16px)"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1.06, 1]);
   const labelOpacity = useTransform(scrollYProgress, [0.55, 1], [0, 1]);
 
   return (

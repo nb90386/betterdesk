@@ -11,7 +11,7 @@ Owners and office managers of appointment-based service businesses (home service
 An AI-supported front desk: missed-call text-back, replies from owner-approved answers, intake questions, booking where a calendar is connected or handoff to staff, owner inbox. Growth/Scale add more channels, alerts and a weekly summary.
 
 ## Brand Commitments
-Human, plain B2B copy. No invented metrics, testimonials, integrations or logos. Sample data always labelled. Pricing $149/$299/$599 preserved exactly.
+Human, plain B2B copy. No invented metrics, testimonials, integrations or logos. Sample data always labelled. Published pricing is $149/$299/$599; the V3 preview shows a labelled proposal of $129/$249/$499 with included conversations (docs/v3/BUSINESS-TRUTH.md) pending founder approval. No booking calendar exists: CTAs say "Request a demo".
 
 ## Evidence on Hand
 Live-site copy only (see CLAIMS_AUDIT.md). No customer data, case studies, legal pages or integration docs.

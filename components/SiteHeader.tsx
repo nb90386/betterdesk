@@ -108,7 +108,7 @@ export function SiteHeader() {
             href="/contact"
             className="press hidden min-h-10 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[550] text-porcelain hover:bg-ink-2 sm:inline-flex [.tone-dark_&]:text-graphite"
           >
-            Book a demo
+            Request a demo
           </Link>
           <button
             ref={buttonRef}
@@ -145,9 +145,9 @@ export function SiteHeader() {
             </ul>
             <div className="mt-auto pt-8">
               <Link href="/contact" className="press flex min-h-13 items-center justify-center rounded-[var(--radius-sm)] bg-ink text-[1.05rem] font-[550] text-porcelain">
-                Book a demo
+                Request a demo
               </Link>
-              <p className="t-small mt-3 text-center text-muted">Opens a short form. We reply by email to find a time.</p>
+              <p className="t-small mt-3 text-center text-muted">A short form. We reply by email to find a call time.</p>
             </div>
           </nav>
         </div>

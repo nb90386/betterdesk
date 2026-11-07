@@ -74,7 +74,7 @@ export function ValueCalculator({ compact = false }: { compact?: boolean }) {
             <div className="flex justify-between py-3"><dt className="text-ink-2">Bookings to cover the plan</dt><dd className="tabular">{Number.isFinite(r.breakEvenBookings) ? r.breakEvenBookings : "n/a"}</dd></div>
           </dl>
           <p className="t-small mt-4 text-muted">
-            Math: {v.missed} a week × 4.33 weeks × {v.engage}% answer × {v.book}% book × {usd(v.value)}. This is an illustration from your own numbers, not a promise of results. Plan prices are the proposed V3 prices.
+            Math: {v.missed} a week × 4.33 weeks × {v.engage}% answer × {v.book}% book × {usd(v.value)}. This is an illustration from your own numbers, not a promise of results. Plan prices shown are the proposed prices.
           </p>
         </div>
       </div>

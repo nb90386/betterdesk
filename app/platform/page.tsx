@@ -101,7 +101,7 @@ export default function PlatformPage() {
       <section aria-label="Control and limits" className="border-t border-rule bg-porcelain py-24 md:py-32">
         <div className="wrap"><YouStayInCharge /></div>
       </section>
-      <CloseCta />
+      <CloseCta compact title="See it answer your own customers’ questions." lede="Send us the three questions you get every week. On the call we show BetterDesk answering them from your own information." />
     </>
   );
 }

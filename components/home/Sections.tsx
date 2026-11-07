@@ -89,17 +89,33 @@ const NEXT = [
   { k: "Setup with a person", v: "If you go ahead, we set up your answers, rules and handoffs together during onboarding. Setup is included in every plan." },
 ];
 
-/** Act V close: staged on the porcelain table with the route landing on the CTA. */
-export function CloseCta() {
+/** Act V close: staged on the porcelain table with the route landing on the CTA. Compact = one graphite line for subpages. */
+export function CloseCta({ title, lede, compact = false }: { title?: string; lede?: string; compact?: boolean } = {}) {
+  if (compact) {
+    return (
+      <section data-close-cta data-tone="dark" aria-labelledby="close-title" className="tone-dark bg-graphite">
+        <div className="wrap flex flex-col gap-8 py-20 md:flex-row md:items-end md:justify-between md:py-24">
+          <div>
+            <h2 id="close-title" className="t-title max-w-[20ch] text-graphite-ink">{title}</h2>
+            {lede ? <p className="mt-4 max-w-[52ch] text-[1.0625rem] leading-relaxed text-graphite-muted">{lede}</p> : null}
+          </div>
+          <div className="flex shrink-0 flex-col items-start gap-2 md:items-end">
+            <ButtonLink href="/contact">Request a demo</ButtonLink>
+            <p className="text-[0.8125rem] text-graphite-muted">A short form; we reply by email to find a time.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section data-close-cta aria-labelledby="close-title" className="relative overflow-hidden border-t border-rule bg-porcelain">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_80%_at_15%_0%,#ffffff_0%,transparent_60%)]" />
       <div className="wrap relative grid gap-14 py-24 md:py-32 lg:grid-cols-12 lg:gap-x-10">
         <div className="lg:col-span-6">
-          <h2 id="close-title" className="t-display max-w-[13ch]">Bring last week&rsquo;s missed calls.</h2>
-          <p className="t-lede mt-6">We&rsquo;ll walk through what BetterDesk would have sent each of them, using your hours and your prices.</p>
+          <h2 id="close-title" className="t-display max-w-[13ch]">{title ?? "Bring last week\u2019s missed calls."}</h2>
+          <p className="t-lede mt-6">{lede ?? "We\u2019ll walk through what BetterDesk would have sent each of them, using your hours and your prices."}</p>
           <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <ButtonLink href="/contact">Book a demo</ButtonLink>
+            <ButtonLink href="/contact">Request a demo</ButtonLink>
             <ButtonLink href="/pricing" variant="quiet" className="gap-1.5">Compare plans <Arrow className="h-3.5 w-3.5" /></ButtonLink>
           </div>
         </div>

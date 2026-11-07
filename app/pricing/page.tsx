@@ -97,7 +97,19 @@ const Tick = ({ v }: { v: Cell }) =>
 export default function PricingPage() {
   return (
     <>
-      <PageIntro title="Priced per business. Setup included.">
+      <PageIntro
+        title="Priced per business. Setup included."
+        aside={
+          <div>
+            <dl className="border-t-2 border-ink">
+              {[["From", "$129 a month"], ["Included", "150 conversations"], ["Setup", "With a person, every plan"], ["Contract", "Monthly, cancel any time"]].map(([k, v]) => (
+                <div key={k} className="flex justify-between border-b border-rule py-3 text-[1rem]"><dt className="text-muted">{k}</dt><dd className="font-[550]">{v}</dd></div>
+              ))}
+            </dl>
+            <p className="pt-3 text-[0.8125rem] text-muted">Proposed prices, for review.</p>
+          </div>
+        }
+      >
         <p>Three monthly plans with a set number of conversations, no seat math and no annual contract. A person sets it up with you on every plan.</p>
       </PageIntro>
       <section aria-labelledby="plans-h" className="bg-porcelain pb-24">
@@ -160,7 +172,7 @@ export default function PricingPage() {
           <Faq items={PRICING_FAQ} className="lg:col-span-8" />
         </div>
       </section>
-      <CloseCta />
+      <CloseCta title="Not sure which plan?" lede="Tell us roughly how many calls and messages you get. We’ll recommend one, or tell you it isn’t worth it yet." />
     </>
   );
 }

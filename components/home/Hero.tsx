@@ -11,6 +11,9 @@ import { BIZ, BOOKING, CALLER, STATIONS } from "@/lib/story";
  * went out (porcelain, in focus) and Thursday's schedule (behind, out of focus).
  * Depth of field is the camera: the farther the layer, the softer and slower it moves.
  */
+// Leaves the call (under the slab), runs beneath the reply, then rises in the gap to Thursday 8:00.
+const ROUTE = "M16 50 C16 68 26 74 40 74 L60 74 C66.5 74 67.6 62 67.6 19.8";
+
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotionSafe();
@@ -23,7 +26,7 @@ export function Hero() {
   const backY = useTransform(scrollYProgress, [0, 1], [0, -30]);
   const slabY = useTransform(scrollYProgress, [0, 1], [0, -90]);
   const cardY = useTransform(scrollYProgress, [0, 1], [0, -170]);
-  const backBlur = useTransform(scrollYProgress, [0, 0.6], ["blur(2.4px)", "blur(0px)"]);
+  const backBlur = useTransform(scrollYProgress, [0, 0.5], ["blur(1.2px)", "blur(0px)"]);
 
   const backX = useTransform(sx, (v) => v * -6);
   const backYp = useTransform(sy, (v) => v * -4);
@@ -61,13 +64,13 @@ export function Hero() {
             When you can&rsquo;t pick up, BetterDesk texts the caller back, follows up, and offers your real open times, so a missed call can still end in a booked appointment.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 md:mt-9">
-            <ButtonLink href="/contact">Book a demo</ButtonLink>
+            <ButtonLink href="/contact">Request a demo</ButtonLink>
             <ButtonLink href="#conversation" variant="quiet" className="gap-1.5">
               See a conversation <Arrow down className="h-3.5 w-3.5" />
             </ButtonLink>
           </div>
-          <p className="t-small mt-8 hidden max-w-[44ch] text-muted lg:block">
-            For plumbers, salons, cleaners and other businesses that run on appointments. A person sets it up with you, using your hours, prices and rules.
+          <p className="t-small mt-6 max-w-[46ch] text-muted md:mt-8">
+            For plumbers, salons, cleaners and other appointment businesses. Set up with you by a person; it only says what you approve. Plans from $129 a month (proposed).
           </p>
         </div>
 
@@ -75,10 +78,10 @@ export function Hero() {
         <div
           role="img"
           aria-label="Illustration: a missed call from Jess becomes a text reply and a Thursday 8 to 10 AM booking"
-          className="relative mx-auto h-[22rem] w-full max-w-[36rem] xs:h-[19rem] sm:h-[30rem] lg:col-span-7 lg:-mr-[6vw] lg:h-[38rem] lg:max-w-none"
+          className="relative mx-auto w-full max-w-[36rem] sm:h-[31rem] lg:col-span-7 lg:h-[37rem] lg:max-w-none"
         >
           {/* Back: Thursday's schedule, out of focus, cropped by the frame */}
-          <motion.div style={reduce ? undefined : { x: backX, y: backY, translateY: backYp, filter: backBlur }} className="absolute left-[50%] top-0 hidden w-[58%] sm:block">
+          <motion.div style={reduce ? undefined : { x: backX, y: backY, translateY: backYp, filter: backBlur }} className="absolute right-0 top-0 hidden w-[48%] sm:block">
             <div className="panel p-4 opacity-95" style={reduce ? { filter: "blur(1.5px)" } : undefined}>
               <div className="flex items-baseline justify-between border-b border-rule pb-2.5">
                 <span className="text-[0.9375rem] font-semibold">{BOOKING.day}</span>
@@ -104,7 +107,7 @@ export function Hero() {
           {/* The route: leaves the call, runs under the reply, lands on Thursday 8:00. */}
           <svg aria-hidden="true" viewBox="0 0 130 100" preserveAspectRatio="none" className="absolute inset-0 hidden h-full w-full overflow-visible sm:block">
             <motion.path
-              d="M16 50 C16 70 28 76 50 76 L104 76 C118 76 116 30 62.5 19.4"
+              d={ROUTE}
               fill="none"
               stroke="var(--color-signal)"
               strokeWidth="0.26"
@@ -113,14 +116,16 @@ export function Hero() {
               animate={{ pathLength: 1 }}
               transition={{ duration: 1.8, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
             />
+            {/* The signal itself: a short lit pulse that keeps travelling the route toward the booking. */}
+            {!reduce ? <path d={ROUTE} pathLength={100} fill="none" stroke="var(--color-signal-bright)" strokeWidth="0.7" strokeLinecap="round" className="route-pulse" /> : null}
           </svg>
 
           {/* Mid: the incoming call, a graphite slab lit from the upper left */}
-          <motion.div style={reduce ? undefined : { x: slabX, y: slabY, translateY: slabYp }} className="absolute left-0 top-0 w-[74%] sm:left-[2%] sm:top-[11%] sm:w-[46%]">
-            <div className="tone-dark relative overflow-hidden rounded-[var(--radius-lg)] bg-graphite-2 p-4 shadow-[var(--shadow-object)] sm:p-6">
+          <motion.div style={reduce ? undefined : { x: slabX, y: slabY, translateY: slabYp }} className="relative w-full sm:absolute sm:left-0 sm:top-[11%] sm:w-[45%]">
+            <div className="tone-dark relative overflow-hidden rounded-[var(--radius-lg)] bg-graphite-2 p-4 pb-9 shadow-[var(--shadow-object)] sm:p-6">
               <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgb(255_255_255/0.10)_0%,transparent_38%)]" />
               <div className="relative flex items-center justify-between gap-3 text-[0.75rem] text-graphite-muted">
-                <span className="truncate">{BIZ} · main line</span>
+                <span className="truncate">Example · {BIZ} main line</span>
                 <span className="t-mono shrink-0 text-[0.75rem]">2:14 PM</span>
               </div>
               <div className="relative mt-5 flex items-center gap-4 sm:mt-10">
@@ -141,7 +146,7 @@ export function Hero() {
           </motion.div>
 
           {/* Front: the reply that went out, in sharp focus */}
-          <motion.div style={reduce ? undefined : { x: cardX, y: cardY, translateY: cardYp }} className="absolute bottom-0 right-0 w-[86%] sm:bottom-auto sm:left-[36%] sm:right-auto sm:top-[50%] sm:w-[50%]">
+          <motion.div style={reduce ? undefined : { x: cardX, y: cardY, translateY: cardYp }} className="relative -mt-5 ml-auto w-[90%] sm:absolute sm:left-[34%] sm:top-[50%] sm:mt-0 sm:w-[52%]">
             <div className="rounded-[var(--radius-lg)] bg-surface p-4 shadow-[var(--shadow-object)] sm:p-5">
               <div className="flex items-center justify-between gap-3 text-[0.75rem] text-muted">
                 <span>Text to {CALLER.first} · sent by BetterDesk</span>
@@ -159,13 +164,10 @@ export function Hero() {
           </motion.div>
 
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-[10%] -bottom-4 h-12 rounded-[50%] bg-ink/10 blur-2xl" />
+          <p className="illustrative relative mt-4 sm:absolute sm:bottom-0 sm:left-0 sm:mt-0 sm:max-w-[30%]">Illustrative example. The business, caller and times are samples.</p>
         </div>
 
-        <p className="t-small max-w-[44ch] text-muted lg:hidden">
-          For plumbers, salons, cleaners and other businesses that run on appointments. A person sets it up with you, using your hours, prices and rules.
-        </p>
       </div>
-      <p className="illustrative wrap relative -mt-8 pb-6 lg:-mt-12 lg:text-right">Illustrative example. The business, caller and times are samples.</p>
     </section>
   );
 }

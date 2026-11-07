@@ -27,7 +27,7 @@ export default function DemoPage() {
           <p className="illustrative wrap mt-3">Sample inbox. Names, messages and rules are illustrative, not customer data.</p>
         </div>
       </section>
-      <CloseCta />
+      <CloseCta compact title="Want to see it with your business in it?" lede="We rebuild this conversation with your services, hours and service area." />
     </>
   );
 }
