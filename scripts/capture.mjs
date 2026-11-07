@@ -6,7 +6,7 @@ process.env.PLAYWRIGHT_BROWSERS_PATH ??= path.resolve(".pw-browsers");
 const [base, out] = process.argv.slice(2);
 fs.mkdirSync(out, { recursive: true });
 const exe = `${process.env.HOME}/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell`;
-const routes = ["/", "/product", "/presence", "/scout", "/desk", "/solutions/commercial-cleaning", "/how-it-works", "/demo", "/pricing", "/resources", "/resources/ai-search-for-service-businesses", "/contact", "/security", "/nope", "/app", "/app/presence"];
+const routes = ["/", "/product", "/product/presence", "/product/scout", "/product/desk", "/solutions/commercial-cleaning", "/solutions/b2b-services", "/how-it-works", "/integrations", "/demo", "/pricing", "/resources", "/resources/guides/why-you-dont-show-up-in-local-search", "/contact", "/about", "/security", "/privacy", "/nope", "/app", "/app/presence", "/app/pipeline"];
 const name = (r) => (r === "/" ? "home" : r.slice(1).replace(/\//g, "-"));
 async function settle(p) {
   await p.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } window.scrollTo(0, 0); });
@@ -24,7 +24,7 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
   }
   await ctx.close();
 }
-for (const [w, h] of [[320, 700], [768, 1024], [1024, 768], [1920, 1080]]) {
+for (const [w, h] of [[320, 700], [768, 1024], [1920, 1080]]) {
   const p = await cb.newPage({ viewport: { width: w, height: h } });
   await p.goto(base + "/", { waitUntil: "networkidle" });
   await p.waitForTimeout(500);

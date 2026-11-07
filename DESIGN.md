@@ -29,9 +29,9 @@ colors:
   danger: "#b42318"
   danger-wash: "#f8e4e1"
 typography:
-  hero: { fontFamily: "General Sans, Helvetica Neue, system-ui, sans-serif", fontSize: "clamp(2.45rem, 1.25rem + 3.9vw, 4.6rem)", fontWeight: 620, lineHeight: 0.98, letterSpacing: "-0.038em" }
-  display: { fontFamily: "General Sans, Helvetica Neue, system-ui, sans-serif", fontSize: "clamp(2.1rem, 1.3rem + 3vw, 3.9rem)", fontWeight: 610, lineHeight: 1, letterSpacing: "-0.034em" }
-  title: { fontFamily: "General Sans, Helvetica Neue, system-ui, sans-serif", fontSize: "clamp(1.7rem, 1.15rem + 1.95vw, 3rem)", fontWeight: 600, lineHeight: 1.04, letterSpacing: "-0.03em" }
+  hero: { fontFamily: "Sentient, Iowan Old Style, Georgia, serif", fontSize: "clamp(2.6rem, 1.3rem + 4.2vw, 5rem)", fontWeight: 480, lineHeight: 1, letterSpacing: "-0.026em" }
+  display: { fontFamily: "Sentient, Iowan Old Style, Georgia, serif", fontSize: "clamp(2.2rem, 1.35rem + 3.1vw, 4.1rem)", fontWeight: 480, lineHeight: 1.02, letterSpacing: "-0.022em" }
+  title: { fontFamily: "Sentient, Iowan Old Style, Georgia, serif", fontSize: "clamp(1.8rem, 1.2rem + 2vw, 3.1rem)", fontWeight: 480, lineHeight: 1.06, letterSpacing: "-0.018em" }
   head: { fontFamily: "General Sans, Helvetica Neue, system-ui, sans-serif", fontSize: "1.1875rem", fontWeight: 600, lineHeight: 1.25, letterSpacing: "-0.012em" }
   lede: { fontFamily: "General Sans, Helvetica Neue, system-ui, sans-serif", fontSize: "clamp(1.125rem, 1.02rem + 0.4vw, 1.3125rem)", fontWeight: 420, lineHeight: 1.48, letterSpacing: "-0.006em" }
   body: { fontFamily: "General Sans, Helvetica Neue, system-ui, sans-serif", fontSize: "1.0625rem", fontWeight: 420, lineHeight: 1.55 }
@@ -73,7 +73,7 @@ Density is calm on the marketing site (one idea per section, generous section pa
 
 **Key Characteristics:**
 - Stone ground, paper sheets, graphite boards; three surfaces and no more.
-- One family (General Sans, variable) that tightens as it grows; Martian Mono only for code-like evidence.
+- Two families: Sentient (serif) for display and the wordmark, General Sans for everything people read and operate; Martian Mono only for code-like evidence.
 - State is a drawn mark plus words (lamp, tick, ring, x, off-dot), never a coloured pill.
 - At most one lit lamp per view.
 - Radii 4 / 8 / 12; buttons are 8px rectangles.
@@ -81,7 +81,7 @@ Density is calm on the marketing site (one idea per section, generous section pa
 
 ### The mark
 
-A wall and an open door's swing, the symbol every walkthrough floor plan uses, set so it reads as a lowercase b. On a 32 grid: wall 5 x 26 at x=6, y=3 (corner radius 1.2); the swing is a quarter disc r=15.5 hinged at (13.5, 29). The gap between wall and swing is the door opening and must survive every size. The wordmark sits at 1.06em, weight 620, tracking -0.032em, with the mark at 1.2em and a 0.42em gap. The favicon (`app/icon.svg`) is the same mark knocked out in graphite-ink inside a graphite-2 tile (rx 7.5), scaled 0.72. Trademark clearance has NOT been performed; founder approval is pending.
+A wall and a door's half swing, drawn the way a floor plan shows a doorway, which together read as a capital D (BetterDesk, Desk). On a 32 grid: wall 4.8 x 26 at x=5, y=3 (corner radius 1.4); the swing is a half disc r=13 from (12.2, 3) to (12.2, 29). The gap between wall and swing is the door opening and must survive every size; chosen over three alternatives because it holds at 16 to 20px (docs/reinvention/screenshots/logo-board-r2.png). The wordmark is Sentient 520 at 1.12em, tracking -0.018em, with the mark at 1.1em and a 0.42em gap. The favicon (`app/icon.svg`) is the mark knocked out in graphite-ink inside a graphite-2 tile. Trademark clearance has NOT been performed; founder approval is pending.
 
 ## Colors
 
@@ -111,16 +111,16 @@ A near-achromatic warm-grey world with one amber lamp and one failure red.
 
 ## Typography
 
-**Display Font:** General Sans variable, 200 to 700 (fallback Helvetica Neue, system-ui; Arial metric adjustment). ITF Free Font License: self-host only, no subsetting or modification.
-**Body Font:** General Sans, same file.
+**Display Font:** Sentient variable, 200 to 700 (Indian Type Foundry, ITF Free Font License: self-host only, no subsetting or modification; fallback Iowan Old Style, Georgia with Times metric adjustment). Headlines h1 to h2 and the wordmark only.
+**Body Font:** General Sans variable (same licence), for text, UI, labels, numbers and small headings.
 **Label/Mono Font:** Martian Mono (OFL), loaded without preload, for code-like evidence only: robots.txt lines, JSON-LD, event IDs.
 
-**Character:** One grotesk that tightens as it grows: negative tracking scales from -0.006em at lede size to -0.038em at hero size, weights sit between 420 and 620 rather than at 400/700.
+**Character:** An editorial serif for the promise, a calm grotesk for the work. Display tracking is size-specific and gentle for a serif (-0.026em at hero, -0.018em at section size), `font-optical-sizing: auto`; text stays near 0. Display weight 480, text 420, emphasis 560 to 600. Chosen from five rendered hero directions (docs/reinvention/screenshots/type/hero-compare.png).
 
 ### Hierarchy
-- **Hero** (620, clamp 2.45rem to 4.6rem, 0.98): the homepage h1 only, set as stacked one-line sentences.
-- **Display** (610, clamp 2.1rem to 3.9rem, 1.0): route h1s, max ~18ch.
-- **Title** (600, clamp 1.7rem to 3rem, 1.04): section h2s, max ~22ch.
+- **Hero** (Sentient 480, clamp 2.6rem to 5rem, 1.0): the homepage h1 only, set as stacked one-line sentences.
+- **Display** (Sentient 480, clamp 2.2rem to 4.1rem, 1.02): route h1s, max ~18ch.
+- **Title** (Sentient 480, clamp 1.8rem to 3.1rem, 1.06): section h2s, max ~22ch.
 - **Head** (600, 1.1875rem, 1.25): h3s inside sections and cards.
 - **Lede** (420, clamp 1.125rem to 1.3125rem, 1.48, carbon-2): intro paragraphs, max 44ch (hero 46ch).
 - **Body** (420, 1.0625rem, 1.55): running text, typically 52 to 68ch.
@@ -192,11 +192,16 @@ Fixed 68px header, transparent over stone until scrolled. Logo, a Product popove
 Panels are surface fill with a hairline border and 12px radius, header row on a hairline; the "Needs you" panel is a board. Notices are 12px boxes: info (stone-2), attention (lamp-wash with lamp-deep text), danger (danger-wash, role alert). Every fictional object carries a sample caption in muted label type.
 
 ### Motion
-- **Arrivals:** ease-out (0.22, 1, 0.36, 1), 260 to 320ms for swaps and step panels; scroll reveals rise 14px over 620 to 720ms, staggered 40ms per sibling (capped at 8).
-- **Popover:** in 180ms from scale 0.95 and 4px up, origin at the trigger (24px 0); out 140ms ease-in (0.4, 0, 1, 1) to 0.97. Menu items stagger 30ms. The chevron rotates 180 degrees.
-- **Moves between stable positions:** ease-in-out (0.65, 0, 0.35, 1). Directory climb 0.8s; Presence finding-to-task 0.3s; demo draft-to-message handoff 0.55s.
-- **Lamp:** 2.4s in-out breathing on the live lamp; a single 700ms settle ring when something resolves.
-- **Reduced motion:** all CSS transitions and animations collapse to 0.01ms, reveals are shown immediately, shared-layout moves get zero duration or are not paired, autoplay and the Play button are removed, and the step buttons plus caption carry the story as a static sequence.
+Governed by the apple-design skill (installed in `.claude/skills/apple-design`). Presets live in `lib/motion.ts`; use them, never ad-hoc durations.
+- **Springs, critically damped (bounce 0), so every motion starts from the current value and can be reversed mid-flight:** `SPRING.snap` (response 0.26s) for popovers, selection plates, chevrons; `SPRING.ui` (0.34s) for panels, inspectors, messages; `SPRING.move` (0.55s) for one object travelling between regions (directory climb, draft becoming the sent message, pipeline card).
+- **Exits are quicker than entrances:** 140ms tween; a navigation closes menus and the sheet instantly (AnimatePresence `custom`).
+- **Popover:** one surface for Product and Solutions, anchored at the open trigger; materializes from scale 0.96, 4px up and 4px blur; switching menus slides it, no re-entrance; no item stagger.
+- **Shared elements only for the same object:** the directory row (position-only, neighbours glide with it, new text lands at ~0.28s), the demo draft into the thread (panel holds still during the handoff), selection plates.
+- **Press:** scale 0.97 on `:active`, 70ms down, 160ms back. Feedback starts on pointer-down.
+- **No page-wide reveals, no idle loops.** The only repeating motion is the halo on a Scout run while it is actually running (compositor-only transform + opacity).
+- **Reduced motion:** `MotionConfig reducedMotion="user"` on site and app; movement becomes short opacity cross-fades (`FADE`), autoplay and the Play control are removed, the caption and step buttons tell the same story.
+- **Material:** the header is a translucent layer (stone 80%, `backdrop-blur-md`) with a scroll-edge fade instead of a divider; solid under `prefers-reduced-transparency` and `prefers-contrast: more`; opaque while the mobile sheet is open.
+- **Evidence:** docs/v4/recordings/*.webm, docs/v4/screenshots/apple/filmstrip/, frame probe at 4x CPU in docs/v4/APPLE_MOTION_AUDIT.md.
 
 ## Do's and Don'ts
 

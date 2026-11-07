@@ -90,7 +90,14 @@ export function GuidedDemo() {
   };
 
   // Same reserved height before and after hydration, so loading the browser-saved state never shifts the page.
-  if (!ready) return <div className="min-h-[46rem] animate-pulse rounded-[var(--radius-md)] bg-stone-2" aria-busy="true" aria-label="Loading the sample workspace" />;
+  if (!ready)
+    return (
+      <div className="grid min-h-[46rem] content-start gap-8 lg:grid-cols-12 lg:gap-10" aria-busy="true" aria-label="Loading the sample workspace">
+        <div className="h-80 rounded-[var(--radius-md)] bg-stone-2 lg:col-span-3" />
+        <div className="h-[30rem] rounded-[var(--radius-md)] bg-stone-2 lg:col-span-5" />
+        <div className="h-96 rounded-[var(--radius-md)] bg-stone-2 lg:col-span-4" />
+      </div>
+    );
 
   const runActive = d.run ? isActive(d.run.state) : false;
   const items = attention(ws).slice(0, 6);

@@ -50,7 +50,7 @@ export default function Pricing() {
             <ButtonLink href="/contact">Get a free check</ButtonLink>
             <TextLink href="/product/presence#check">Run the free website check</TextLink>
           </div>
-          <p className="max-w-[44ch] text-[0.875rem] text-muted">Larger team or several locations? Tell us in the review request and we’ll quote it plainly.</p>
+          <p className="max-w-[44ch] text-[0.875rem] text-muted">Larger team or several locations? Tell us in the free check request and we’ll quote it plainly.</p>
         </div>
       </section>
 
