@@ -182,3 +182,50 @@ test("explorer: filtering away the open thread selects one that is visible", asy
   await page.getByRole("button", { name: /^Email/ }).click();
   await expect(page.getByRole("log", { name: /Omar R\./ })).toBeVisible();
 });
+
+// Regression: pearl surfaces inside the night token scope once rendered pearl-on-pearl text that axe did not flag.
+test("reply-mode switcher: every text node meets contrast in all three modes", async ({ page }) => {
+  await page.goto("/platform");
+  const section = page.locator('[aria-labelledby="control-title"]');
+  await section.scrollIntoViewIfNeeded();
+  for (const mode of ["Assisted", "Escalation", "Autonomous"]) {
+    await section.getByRole("button", { name: new RegExp(mode) }).first().click();
+    await page.waitForTimeout(350);
+    const failures = await section.evaluate((root) => {
+      // Normalise any CSS colour (rgb, oklab, color-mix…) to sRGBA through a 1×1 canvas.
+      const ctx = document.createElement("canvas").getContext("2d", { willReadFrequently: true })!;
+      const parse = (c: string) => {
+        ctx.clearRect(0, 0, 1, 1);
+        ctx.fillStyle = "#000";
+        ctx.fillStyle = c;
+        ctx.fillRect(0, 0, 1, 1);
+        const [r, g, b, a] = ctx.getImageData(0, 0, 1, 1).data;
+        return [r, g, b, a / 255];
+      };
+      const lum = ([r, g, b]: number[]) => {
+        const f = (v: number) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+        return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+      };
+      const out: string[] = [];
+      for (const el of Array.from(root.querySelectorAll<HTMLElement>("*"))) {
+        const own = Array.from(el.childNodes).some((n) => n.nodeType === 3 && n.textContent!.trim());
+        if (!own || el.getClientRects().length === 0) continue;
+        let bg: number[] | null = null;
+        for (let a: HTMLElement | null = el; a; a = a.parentElement) {
+          const cs = getComputedStyle(a);
+          if (cs.backgroundImage !== "none") break; // gradient surface: not resolvable here
+          const c = parse(cs.backgroundColor);
+          if (c[3] > 0.9) { bg = c; break; }
+        }
+        if (!bg) continue;
+        const raw = parse(getComputedStyle(el).color);
+        const fg = [0, 1, 2].map((k) => raw[k] * raw[3] + bg![k] * (1 - raw[3])); // composite text alpha over its surface
+        const [l1, l2] = [lum(fg), lum(bg)].sort((x, y) => y - x);
+        const ratio = (l1 + 0.05) / (l2 + 0.05);
+        if (ratio < 4.5) out.push(`${el.textContent!.trim().slice(0, 40)} (${ratio.toFixed(2)})`);
+      }
+      return out;
+    });
+    expect(failures, `${mode}: ${failures.join(" | ")}`).toEqual([]);
+  }
+});

@@ -1,6 +1,7 @@
 import { ButtonLink } from "./Button";
+import { LogoMark } from "./Logo";
 
-/** The close: first light. The night's conversations, sorted, waiting in the owner's inbox. */
+/** The close: first light. Last night's missed call is on this morning's route. */
 export function CtaBand({
   title = <>Wake up to bookings, <span className="text-night-muted">not voicemails.</span></>,
   secondary = { href: "/demo", label: "Or watch a sample call" },
@@ -37,32 +38,45 @@ export function CtaBand({
   );
 }
 
-const ROWS = [
-  { who: "Dana M.", what: "Booked Thu 8–10 AM", tone: "done" },
-  { who: "J. Alvarez", what: "Quote request · needs your price", tone: "you" },
-  { who: "(512) 555-0193", what: "Answered: yes, tankless units", tone: "done" },
-  { who: "K. Whitfield", what: "Handed to you · billing question", tone: "you" },
+const ROUTE = [
+  { t: "7:00", who: "Okafor", what: "Furnace tune-up" },
+  { t: "8:00", who: "Dana M.", what: "Water heater, slow leak · 78704", booked: true },
+  { t: "10:30", who: "Ruiz", what: "Drain clear" },
+  { t: "1:00", who: "Open", what: "", open: true },
 ] as const;
 
+/** The payoff of the hero: the slot that was empty at closing is on this morning's route. */
 function MorningInbox() {
   return (
     <div className="relative mx-auto w-full max-w-[440px] lg:mr-0" aria-hidden="true">
       <div className="pearl-card relative p-5 sm:p-6">
         <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-          <p className="font-display text-[1.35rem] font-[600] leading-none tracking-[-0.03em] text-[#111214]">This morning</p>
-          <p className="text-[0.74rem] text-[#55585e]">7:52 AM · sample</p>
+          <p className="font-display text-[1.35rem] font-[600] leading-none tracking-[-0.03em] text-[#111214]">Thursday · Marco&rsquo;s route</p>
+          <p className="text-[0.74rem] text-[#55585e] tabular">7:12 AM · sample</p>
         </div>
-        <p className="mt-2 text-[0.86rem] text-[#2a2c30]">4 conversations came in after you closed. 2 are waiting on you.</p>
-        <ul className="mt-4 divide-y divide-[#dedcd6] border-y border-[#dedcd6]">
-          {ROWS.map((r) => (
-            <li key={r.who} className="grid grid-cols-[0.5rem_minmax(0,1fr)] items-baseline gap-x-3 py-2.5 text-[0.86rem] sm:grid-cols-[0.5rem_7.5rem_minmax(0,1fr)]">
-              <span className={`size-2 shrink-0 rounded-full ${r.tone === "you" ? "bg-[#c47a12]" : "bg-[#111214]"}`} />
-              <span className="truncate font-medium text-[#111214]">{r.who}</span>
-              <span className="col-start-2 text-[#55585e] sm:col-start-3">{r.what}</span>
+        <ol className="mt-4 space-y-1.5">
+          {ROUTE.map((r) => (
+            <li
+              key={r.t}
+              className={`grid grid-cols-[3rem_minmax(0,1fr)] items-baseline gap-x-3 rounded-[10px] px-3 py-2.5 text-[0.86rem] ${
+                "booked" in r ? "bg-[#111214] text-[#f7f6f3]" : "open" in r ? "border border-dashed border-[#c9c6bf] text-[#6b6e74]" : "bg-[#e9e7e2] text-[#2a2c30]"
+              }`}
+            >
+              <span className={`font-mono tabular ${"booked" in r ? "text-lamp" : "text-[#55585e]"}`}>{r.t}</span>
+              <span className="min-w-0">
+                <span className="font-medium">{r.who}</span>
+                {r.what ? <span className={"booked" in r ? " text-[#c9ccd1]" : " text-[#55585e]"}> · {r.what}</span> : null}
+                {"booked" in r ? (
+                  <span className="mt-1.5 flex items-center gap-1.5 text-[0.74rem] text-lamp">
+                    <LogoMark className="size-3.5 text-[#f7f6f3]" rings={1} />
+                    Booked by text last night at 6:47 PM
+                  </span>
+                ) : null}
+              </span>
             </li>
           ))}
-        </ul>
-        <p className="mt-3 text-[0.76rem] text-[#55585e]">Every thread is in your inbox with the whole conversation attached.</p>
+        </ol>
+        <p className="mt-3 text-[0.76rem] text-[#55585e]">That 8:00 slot was empty when the office closed.</p>
       </div>
     </div>
   );

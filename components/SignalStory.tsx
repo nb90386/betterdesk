@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Check } from "./NightDesk";
+import { LogoMark } from "./Logo";
 
 type StepId = "signal" | "reply" | "ask" | "route" | "owner";
 const STEPS: { id: StepId; time: string; title: string; body: ReactNode }[] = [
@@ -152,7 +153,8 @@ function Rail({ index, calm }: { index: number; calm: boolean }) {
         />
         {RAIL.map((r, i) => (
           <li key={r} className="relative flex flex-col items-center gap-2 text-[0.72rem]">
-            <span className={`relative z-10 size-[11px] rounded-full ${i < index ? "bg-lamp" : i === index ? "bg-[#f7f6f3]" : "border border-white/20 bg-night-2"}`}>
+            <span className={`relative z-10 size-[11px] rounded-full ${i === RAIL.length - 1 && i <= index ? "!bg-night-2" : i < index ? "bg-lamp" : i === index ? "bg-[#f7f6f3]" : "border border-white/20 bg-night-2"}`}>
+              {i === RAIL.length - 1 && i <= index ? <LogoMark className="absolute left-1/2 top-1/2 size-[22px] -translate-x-[40%] -translate-y-1/2 text-[#f7f6f3]" /> : null}
               {i === index && !calm ? <motion.span layoutId="rail-halo" className="absolute -inset-[5px] rounded-full border border-lamp/60" /> : null}
             </span>
             <span className={i <= index ? "text-[#f7f6f3]" : "text-night-muted"}>{r}</span>

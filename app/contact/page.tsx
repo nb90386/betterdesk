@@ -12,7 +12,6 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
   const { plan } = await searchParams;
   return (
     <section className="on-night lamp-ground relative -mt-16 overflow-hidden pt-16" aria-labelledby="contact-title">
-      <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="container-bd relative grid gap-12 pb-24 pt-12 sm:pt-16 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
         <div>
           <h1 id="contact-title" className="display text-[clamp(2.6rem,1.6rem+4vw,4.6rem)] text-[#f7f6f3]">

@@ -3,6 +3,7 @@ import { ButtonLink, Arrow } from "@/components/Button";
 import { NightDesk } from "@/components/NightDesk";
 import { SignalStory } from "@/components/SignalStory";
 import { TwoEndings, TrustStrip } from "@/components/TwoEndings";
+import { DayRibbon } from "@/components/DayRibbon";
 import { LeadJourney } from "@/components/LeadJourney";
 import { SectionHeading } from "@/components/Section";
 import { PricingPlans } from "@/components/PricingPlans";
@@ -66,7 +67,6 @@ export default function Home() {
     <>
       {/* ---------------- Hero: 6:42 PM, after hours ---------------- */}
       <section className="on-night lamp-ground relative -mt-16 overflow-hidden pt-16" aria-labelledby="hero-title">
-        <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="container-bd relative pb-14 pt-10 sm:pt-14 lg:pb-20 lg:pt-16">
           <h1 id="hero-title" className="display max-w-[15ch] text-[clamp(2.3rem,0.9rem+5.3vw,5.6rem)] text-[#f7f6f3] lg:max-w-none">
             Every missed call, answered <span className="text-night-muted">before they call someone else.</span>
@@ -102,18 +102,7 @@ export default function Home() {
           <h2 id="moments-title" className="display reveal max-w-[18ch] text-[clamp(2rem,1.3rem+2.4vw,3.4rem)] text-[#f7f6f3]">
             The phone rings when your hands are full.
           </h2>
-          <ol className="relative mt-14 grid gap-12 md:grid-cols-3 md:gap-8">
-            <span className="absolute inset-x-0 top-[1.05rem] hidden h-px bg-gradient-to-r from-white/10 via-white/15 to-lamp/50 md:block" aria-hidden="true" />
-            {MOMENTS.map((m, i) => (
-              <li key={m.time} className="reveal relative">
-                <span className={`relative z-10 block size-[0.7rem] translate-y-[0.7rem] rounded-full ${i === 2 ? "bg-lamp" : "border border-white/30 bg-night-2"}`} aria-hidden="true" />
-                <p className="mt-6 font-display text-[2.4rem] leading-none tracking-[-0.03em] text-[#f7f6f3] tabular">{m.time}</p>
-                <p className="mt-2 text-[0.85rem] font-medium text-lamp">{m.where}</p>
-                <p className="mt-4 text-[0.95rem] leading-relaxed text-night-muted">{m.today}</p>
-                <p className="mt-3 border-t border-white/[0.08] pt-3 text-[0.95rem] leading-relaxed text-[#eceae6]">{m.after}</p>
-              </li>
-            ))}
-          </ol>
+          <DayRibbon moments={MOMENTS} />
         </div>
       </section>
 

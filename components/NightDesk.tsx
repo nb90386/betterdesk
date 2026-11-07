@@ -108,15 +108,15 @@ const SLOTS = [
 
 function Schedule() {
   return (
-    <div className="relative md:pt-2">
+    <div className="relative md:-ml-12 md:mt-10 md:rounded-[22px] md:bg-[linear-gradient(160deg,#1c1e22_0%,#121316_70%)] md:py-4 md:pl-14 md:pr-4 md:shadow-[var(--shadow-stage)]">
       <div className="hidden items-baseline justify-between md:flex">
         <p className="text-[0.82rem] font-medium text-[#f7f6f3]">Thursday</p>
         <p className="text-[0.74rem] text-night-muted">Tech: Marco</p>
       </div>
-      <ol className="relative mt-3 space-y-2 md:border-l md:border-white/[0.08] md:pl-4">
+      <ol className="relative mt-3 space-y-2">
         {SLOTS.map((s) =>
           s.kind === "booked" ? (
-            <li key={s.t} className="relative">
+            <li key={s.t} className="relative md:z-20 md:-ml-14">
               <div className="absolute inset-0 hidden items-start gap-3 nd-out rounded-[14px] border border-dashed border-lamp/40 px-3 py-2.5 text-[0.78rem] text-lamp md:flex" style={d(3100)} aria-hidden="true">
                 <span className="w-10 font-mono tabular">8:00</span>
                 <span className="flex items-center gap-2"><span className="pulse-dot size-1.5 rounded-full bg-lamp" />Holding for Dana M.</span>

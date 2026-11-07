@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
+import { FormulaCard } from "@/components/HeroArtifacts";
 import { RoiCalculator } from "@/components/RoiCalculator";
 import { CtaBand } from "@/components/CtaBand";
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 export default function RoiPage() {
   return (
     <>
-      <PageHero overlap eyebrow="ROI calculator" title={<>Do the math with your numbers.</>}>
+      <PageHero overlap aside={<FormulaCard />} eyebrow="ROI calculator" title={<>Do the math with your numbers.</>}>
         <p>Four inputs, one formula you can see. The defaults are deliberately modest; change them to match your call log and your typical job.</p>
       </PageHero>
       <section className="container-bd relative z-10 -mt-28 pb-12 md:-mt-36 md:pb-16">

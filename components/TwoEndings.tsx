@@ -22,7 +22,6 @@ export function TwoEndings() {
       </h2>
       <div className="grid md:grid-cols-2">
         <div className="on-night relative overflow-hidden bg-[linear-gradient(180deg,#221d17_0%,#141312_42%,#0d0e10_100%)]">
-          <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
           <div className="relative ml-auto max-w-[640px] px-5 py-16 sm:px-8 md:py-24 lg:pl-12 lg:pr-14">
             <p className="display text-[clamp(4.2rem,2rem+8vw,8.5rem)] leading-[0.86] text-[#6f737a] tabular" aria-hidden="true">
               6:44
@@ -60,23 +59,19 @@ export function TwoEndings() {
   );
 }
 
-/** Trust strip: only statements the product already makes (see docs/redesign/CLAIMS_AUDIT.md). */
+/** Trust statement: one composed sentence built only from claims the product already makes (docs/redesign/CLAIMS_AUDIT.md). */
 export function TrustStrip({ className = "" }: { className?: string }) {
-  const items = [
-    ["Only what you approved", "It answers from your services, hours, prices and policies, and says it will check when it doesn't know."],
-    ["People for the hard ones", "Emergencies, complaints and anything sensitive go to the person you choose."],
-    ["Start supervised", "In assisted mode every reply waits for your OK. Loosen it when you trust it."],
-    ["No lock-in", "Monthly plans, setup with a real person, cancel any time."],
-  ];
+  const mark = "underline decoration-signal/60 decoration-[0.08em] underline-offset-[0.18em]";
   return (
-    <ul className={`grid gap-px overflow-hidden rounded-[var(--radius-lg)] bg-rule sm:grid-cols-2 lg:grid-cols-4 ${className}`}>
-      {items.map(([k, v]) => (
-        <li key={k} className="bg-card p-5">
-          <span className="block h-px w-8 bg-signal" aria-hidden="true" />
-          <p className="mt-4 text-[0.98rem] font-medium text-ink">{k}</p>
-          <p className="mt-1.5 text-[0.86rem] leading-relaxed text-ink-2">{v}</p>
-        </li>
-      ))}
-    </ul>
+    <div className={`grid gap-6 rounded-[var(--radius-xl)] bg-card p-7 shadow-[var(--shadow-card)] md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-10 ${className}`}>
+      <p className="display max-w-[30ch] text-[clamp(1.45rem,1.05rem+1.4vw,2.2rem)] leading-[1.12] text-ink">
+        It says <span className={mark}>only what you&rsquo;ve approved</span>, hands emergencies and complaints{" "}
+        <span className={mark}>to a person</span>, starts with <span className={mark}>every reply waiting for your OK</span>, and runs{" "}
+        <span className={mark}>month to month</span>.
+      </p>
+      <p className="max-w-[30ch] text-[0.88rem] leading-relaxed text-ink-2 md:text-right">
+        When a customer asks something it hasn&rsquo;t been taught, it says it will check and passes the question on. Setup is with a real person.
+      </p>
+    </div>
   );
 }

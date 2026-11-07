@@ -4,6 +4,7 @@ import { ProductExplorer } from "@/components/ProductExplorer";
 import { SectionHeading } from "@/components/Section";
 import { CtaBand } from "@/components/CtaBand";
 import { ModeSwitcher } from "@/components/ModeSwitcher";
+import { ChannelBoard } from "@/components/HeroArtifacts";
 
 export const metadata: Metadata = {
   title: "Platform",
@@ -59,7 +60,7 @@ const PARTS = [
 export default function PlatformPage() {
   return (
     <>
-      <PageHero overlap eyebrow="Platform" title={<>Everything between the first ring and the booking.</>}>
+      <PageHero overlap aside={<ChannelBoard />} eyebrow="Platform" title={<>Everything between the first ring and the booking.</>}>
         <p>Click around a sample workspace for a plumbing company: the inbox, the calendar it fills, the short list of things that need a person, and the summary the owner reads.</p>
       </PageHero>
       <section className="container-bd relative z-10 -mt-28 pb-12 md:-mt-36 md:pb-16" aria-label="Sample product workspace">

@@ -11,6 +11,7 @@ const JOBS = [
   ["/solutions/home-services", "main > section:first-of-type", "solution-hero"],
   ["/demo", "main", "demo"],
   ["/", '[aria-labelledby="cta-title"]', "close"],
+  ["/", '[aria-labelledby="moments-title"]', "day-ribbon"],
   ["/", '[aria-labelledby="story-title"]', "story-to-peak"],
   ["/pricing", '[aria-labelledby="compare-title"]', "pricing-table"],
   ["/platform", '[aria-labelledby="control-title"]', "modeswitcher"],

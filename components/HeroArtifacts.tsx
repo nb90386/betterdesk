@@ -1,5 +1,8 @@
 import { Check } from "./NightDesk";
 import { PLANS } from "@/lib/site";
+import { CHANNELS } from "@/lib/sample";
+import { computeRoi, usd, WEEKS_PER_MONTH, ROI_DEFAULTS } from "@/lib/roi";
+import { LogoMark } from "./Logo";
 
 /** Pricing hero object: a printed monthly receipt for the featured plan. Every line restates published plan copy. */
 export function PlanReceipt() {
@@ -66,6 +69,71 @@ export function SetupAgenda() {
             </li>
           ))}
         </ol>
+      </div>
+    </div>
+  );
+}
+
+/** Platform hero object: every channel the plans list, converging on one inbox. Plan gating restates published pricing. */
+export function ChannelBoard() {
+  return (
+    <div className="relative mx-auto w-full max-w-[420px] lg:mr-0" aria-hidden="true">
+      <div className="nd-focal stage-pane grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 p-5">
+        <ul className="space-y-1.5">
+          {CHANNELS.map((c) => (
+            <li key={c.id} className="flex items-center justify-between gap-3 rounded-[10px] bg-white/[0.04] px-3 py-2 text-[0.84rem]">
+              <span className="text-[#f7f6f3]">{c.label}</span>
+              <span className={`text-[0.72rem] ${c.plan ? "text-lamp" : "text-night-muted"}`}>{c.plan ? "Growth and Scale" : "Every plan"}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <svg viewBox="0 0 24 120" className="h-28 w-6" aria-hidden="true">
+            {[8, 26, 44, 62, 80, 98].map((y) => (
+              <path key={y} d={`M0 ${y + 6} C 14 ${y + 6}, 10 60, 24 60`} fill="none" stroke="rgb(244 169 71 / 0.45)" strokeWidth="1" />
+            ))}
+          </svg>
+          <span className="grid size-12 place-items-center rounded-[14px] bg-[#f3f1ec]">
+            <LogoMark className="size-7 text-[#111214]" />
+          </span>
+          <span className="text-[0.74rem] font-medium text-[#f7f6f3]">One inbox</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** ROI hero object: the calculator's default assumptions, worked through on paper. */
+export function FormulaCard() {
+  const d = ROI_DEFAULTS;
+  const r = computeRoi({ missedPerWeek: d.missedPerWeek, engageRate: d.engagePct / 100, bookRate: d.bookPct / 100, jobValue: d.jobValue, planPrice: 0 });
+  const rows = [
+    [`${d.missedPerWeek} a week`, "unanswered calls, texts and forms"],
+    [`× ${WEEKS_PER_MONTH.toFixed(2)}`, "weeks in a month"],
+    [`× ${d.engagePct}%`, "would reply to a fast text"],
+    [`× ${d.bookPct}%`, "of those would book"],
+    [`× ${usd(d.jobValue)}`, "for a typical job"],
+  ];
+  return (
+    <div className="relative mx-auto w-full max-w-[380px] lg:mr-0" aria-hidden="true">
+      <div className="pearl-card p-6">
+        <p className="text-[0.78rem] font-medium text-[#55585e]">The starting numbers, worked through</p>
+        <ul className="mt-4 space-y-2">
+          {rows.map(([k, v]) => (
+            <li key={k} className="grid grid-cols-[6.5rem_1fr] items-baseline gap-3 text-[0.86rem]">
+              <span className="font-mono text-[#111214] tabular">{k}</span>
+              <span className="text-[#55585e]">{v}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-4 flex items-baseline justify-between border-t border-[#111214] pt-3">
+          <span className="text-[0.86rem] font-medium text-[#111214]">Projection</span>
+          <span className="font-display text-[2rem] leading-none tracking-[-0.03em] text-[#111214] tabular">
+            {usd(r.revenuePerMonth)}
+            <span className="ml-1 font-sans text-[0.8rem] tracking-normal text-[#55585e]">/ month</span>
+          </span>
+        </div>
+        <p className="mt-2 text-[0.76rem] text-[#55585e]">Change any of these below. It is a projection, not a promise.</p>
       </div>
     </div>
   );

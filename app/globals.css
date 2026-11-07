@@ -143,8 +143,6 @@
   * { scrollbar-color: var(--color-rule-strong) transparent; }
 }
 
-/* Night grain retired in cycle 3: SVG feTurbulence tiles caused intermittent 1–2 s unattributable raster long tasks under Lighthouse CPU throttling. */
-.grain-night { display: none; }
 
 @layer components {
   .container-bd {
@@ -208,7 +206,10 @@
 
   /* Stage surfaces */
   .stage-pane {
-    background: linear-gradient(180deg, #1b1d21 0%, #15171a 100%);
+    /* specular: the lamp catches the upper-left of every stage object, then falls off */
+    background:
+      linear-gradient(135deg, rgb(255 236 205 / 0.07) 0%, rgb(255 236 205 / 0.02) 22%, transparent 42%),
+      linear-gradient(180deg, #1b1d21 0%, #15171a 100%);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-stage);
   }
@@ -221,7 +222,8 @@
   /* Hero focal object: the lamp catches its upper-left edge. */
   .nd-focal {
     box-shadow:
-      inset 1px 1px 0 rgb(244 169 71 / 0.22),
+      inset 1px 1px 0 rgb(244 169 71 / 0.34),
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
       0 0 0 1px rgb(255 255 255 / 0.06),
       0 2px 3px rgb(0 0 0 / 0.55),
       28px 56px 90px -30px rgb(0 0 0 / 0.95),
@@ -230,7 +232,8 @@
   /* The lamp: light falling on the ground surface from upper left, not a floating blob. */
   .lamp-ground {
     background:
-      radial-gradient(120% 90% at 8% -10%, rgb(244 169 71 / 0.16) 0%, rgb(244 169 71 / 0.05) 32%, transparent 60%),
+      radial-gradient(70% 55% at 6% -6%, rgb(244 169 71 / 0.2) 0%, rgb(244 169 71 / 0.07) 38%, transparent 72%),
+      radial-gradient(120% 90% at 8% -10%, rgb(244 169 71 / 0.06) 0%, transparent 60%),
       radial-gradient(90% 70% at 85% 110%, rgb(201 204 209 / 0.05) 0%, transparent 55%),
       var(--color-night);
   }

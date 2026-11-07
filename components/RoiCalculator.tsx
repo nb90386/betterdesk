@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import { animate, useMotionValue, useReducedMotion, useTransform, motion } from "motion/react";
-import { computeRoi, usd, WEEKS_PER_MONTH } from "@/lib/roi";
+import { computeRoi, usd, WEEKS_PER_MONTH, ROI_DEFAULTS } from "@/lib/roi";
 import { PLANS } from "@/lib/site";
 
 type Field = {
@@ -25,7 +25,7 @@ const FIELDS: Field[] = [
 
 export function RoiCalculator() {
   const uid = useId();
-  const [v, setV] = useState({ missedPerWeek: 6, engagePct: 40, bookPct: 30, jobValue: 250 });
+  const [v, setV] = useState<{ missedPerWeek: number; engagePct: number; bookPct: number; jobValue: number }>({ ...ROI_DEFAULTS });
   const [raw, setRaw] = useState<Record<string, string>>({});
   const [planId, setPlanId] = useState("growth");
   const plan = PLANS.find((p) => p.id === planId)!;

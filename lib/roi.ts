@@ -1,5 +1,8 @@
 export const WEEKS_PER_MONTH = 52 / 12;
 
+/** Deliberately modest starting assumptions, shared by the calculator and the /roi hero. */
+export const ROI_DEFAULTS = { missedPerWeek: 6, engagePct: 40, bookPct: 30, jobValue: 250 } as const;
+
 export type RoiInputs = {
   /** Calls, texts and forms per week that currently go unanswered or get a slow reply. */
   missedPerWeek: number;

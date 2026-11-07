@@ -9,7 +9,6 @@ export function SolutionPage({ s }: { s: Solution }) {
   return (
     <>
       <section className="on-night lamp-ground relative -mt-16 overflow-hidden pt-16" aria-label={`Solutions: ${s.name}`}>
-        <div className="grain-night pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="container-bd relative grid gap-10 pb-16 pt-12 sm:pt-16 md:pb-24 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <div>
             <h1 className="display text-[clamp(2.6rem,1.6rem+4vw,4.9rem)] text-[#f7f6f3]">
