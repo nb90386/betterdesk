@@ -1,14 +1,14 @@
 # Final handoff (Apple Design round)
 
 ## Preview
-- **URL:** https://betterdesk-redesign-xo982rmu2-neel-s-projects9.vercel.app
-- **Deployment:** dpl_Fp4xUUWthr2ZaMsikeMqkPKjhgui, Ready, target preview, team `neel-s-projects9`, project `betterdesk-redesign`.
+- **URL:** https://betterdesk-redesign-7vzxjtu12-neel-s-projects9.vercel.app
+- **Deployment:** dpl_9i71vfUW6AD77H4xJh8YByDX39zf, Ready, target preview, team `neel-s-projects9`, project `betterdesk-redesign`.
 - **Protection:** sign in to Vercel as a team member (unauthenticated requests get 302).
 - **Production:** untouched. No `--prod`, domain, DNS, billing or env change.
 
 ## Git
 - **Branch:** `feat/betterdesk-signature-presence-rebuild`
-- **Deployed code:** `533a38d`. Docs come after it.
+- **Deployed code:** `7363032`. Docs come after it.
 - **Rollback:**
   - previous preview code: `839ceb8`;
   - V4: `cb79932`.
