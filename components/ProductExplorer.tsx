@@ -299,7 +299,7 @@ function CalendarView({ onOpen }: { onOpen: (id: string) => void }) {
     <div className="p-4 sm:p-6">
       <div className="flex items-baseline justify-between">
         <h3 className="font-display text-[1.5rem] tracking-[-0.02em] text-ink">This week</h3>
-        <p className="font-mono text-[0.6875rem] text-muted">Bookings from the sample inbox</p>
+        <p className="text-[0.78rem] text-muted">Bookings from the sample inbox</p>
       </div>
       <div className="mt-4 overflow-x-auto">
         <div className="grid min-w-[560px] grid-cols-[48px_repeat(5,1fr)] text-[0.75rem]">

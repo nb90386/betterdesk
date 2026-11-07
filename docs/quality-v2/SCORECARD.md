@@ -15,3 +15,6 @@
 | Conversion/trust | 5 | 6 | 6 | No consent, integration or proof cues (we will not invent them) |
 
 The baseline column is my own reading of the baseline screenshots. The pass-02 column is copied from REVIEW_PASS02.md.
+
+## Cycle 3 note
+No new numeric scores. The Impeccable finish review issues dispositions rather than scores: it finished at "fix" after two rounds, with 6 of 8 scored items resolved. Page rhythm should have improved with the full-bleed 6:44/6:47 peak, but no fresh scored review has confirmed it. **Founder approval is still required; nothing here is self-approved.**

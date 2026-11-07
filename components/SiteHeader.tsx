@@ -127,20 +127,18 @@ export function SiteHeader() {
                       className="flex items-center justify-between py-4 font-display text-[1.7rem] tracking-[-0.02em] aria-[current=page]:text-signal"
                     >
                       {item.label}
-                      <span className="font-mono text-xs text-faint">0{i + 1}</span>
                     </Link>
                   </motion.li>
                 ))}
                 <li>
                   <Link href="/roi" className="flex items-center justify-between py-4 font-display text-[1.7rem] tracking-[-0.02em]">
                     ROI calculator
-                    <span className="font-mono text-xs text-faint">06</span>
                   </Link>
                 </li>
               </ul>
               <Link
                 href="/contact"
-                className="press mt-8 flex min-h-12 items-center justify-center rounded-full bg-ink text-card"
+                className="press mt-8 flex min-h-12 items-center justify-center rounded-full bg-[#f7f6f3] font-medium text-[#111214]"
               >
                 Book a demo
               </Link>
