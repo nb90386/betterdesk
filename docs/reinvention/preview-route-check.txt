@@ -13,10 +13,9 @@
 200 /security
 200 /app
 200 /app/presence
-200 /app/scout
-200 /app/pipeline
 404 /nope
 200 /opengraph-image
-200 /icon.svg
 200 /sitemap.xml
-307 /platform
+200 /robots.txt
+review API: {"ok":false,"code":"delivery_not_configured","message":"Our 
+board copy present: 1
