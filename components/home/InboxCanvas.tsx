@@ -106,7 +106,7 @@ export function InboxCanvas() {
                 type="button"
                 onClick={() => setSel(i)}
                 aria-pressed={i === sel}
-                className={`flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors sm:px-5 ${i === sel ? "bg-porcelain-2" : "hover:bg-porcelain"}`}
+                className={`flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors sm:px-5 ${i === sel ? "bg-mineral-2" : "hover:bg-mineral"}`}
               >
                 <span className={`mt-2 h-2 w-2 shrink-0 rounded-full ${dot[th.state]}`} aria-hidden="true" />
                 <span className="min-w-0 flex-1">
@@ -140,7 +140,7 @@ export function InboxCanvas() {
                 <p
                   key={i}
                   className={`max-w-[85%] rounded-[var(--radius-md)] px-3.5 py-2.5 text-[0.9375rem] leading-snug ${
-                    l.from === "desk" ? "self-start bg-porcelain-2" : "self-end bg-ink text-porcelain"
+                    l.from === "desk" ? "self-start bg-mineral-2" : "self-end bg-ink text-mineral"
                   }`}
                 >
                   {l.text}

@@ -1,0 +1,54 @@
+// Usage: node scripts/v4-app-tour.mjs <baseUrl> <outDir> [width=1440]
+// Drives the sample workspace end to end in a real browser and screenshots each step.
+import { chromium } from "@playwright/test";
+import fs from "node:fs";
+
+const [base, out, wArg = "1440"] = process.argv.slice(2);
+const w = Number(wArg);
+fs.mkdirSync(out, { recursive: true });
+const browser = await chromium.launch({ executablePath: `${process.env.HOME}/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell` });
+const ctx = await browser.newContext({ viewport: { width: w, height: w < 800 ? 844 : 900 } });
+const page = await ctx.newPage();
+const errors = [];
+page.on("console", (m) => m.type() === "error" && errors.push(m.text().slice(0, 200)));
+page.on("pageerror", (e) => errors.push(String(e).slice(0, 200)));
+const shot = async (n, full = false) => { await page.waitForTimeout(450); await page.screenshot({ path: `${out}/${w}-${n}.png`, fullPage: full }); };
+
+await page.goto(`${base}/app`, { waitUntil: "networkidle" });
+await shot("01-today");
+await page.goto(`${base}/app/scout`, { waitUntil: "networkidle" });
+await page.getByRole("button", { name: /Use the sample list/ }).click();
+await shot("02-scout-list");
+await page.getByRole("button", { name: "Import and start Scout" }).click();
+await page.waitForTimeout(1200);
+await shot("03-scout-running");
+await page.getByText("Waiting for your approval").first().waitFor({ timeout: 15000 });
+await shot("04-scout-waiting", true);
+await page.getByRole("button", { name: "Approve" }).first().click();
+await page.waitForTimeout(400);
+await page.getByRole("button", { name: /Simulate delivery/ }).first().click();
+await page.goto(`${base}/app/opportunities`, { waitUntil: "networkidle" });
+await shot("05-opps");
+await page.getByRole("button", { name: "Juniper Lane Law" }).click();
+await shot("06-inspector");
+const href = await page.getByRole("link", { name: "Open record and timeline" }).getAttribute("href");
+await page.goto(`${base}${href}`, { waitUntil: "networkidle" });
+const reply = page.getByRole("button", { name: "Asks for a walkthrough" });
+if (await reply.count()) await reply.click();
+await page.waitForTimeout(300);
+const slot = page.locator("section", { hasText: "Walkthrough" }).getByRole("button").first();
+if (await slot.count()) await slot.click();
+await shot("07-record", true);
+await page.goto(`${base}/app/pipeline`, { waitUntil: "networkidle" });
+await shot("08-pipeline");
+await page.goto(`${base}/app/inbox`, { waitUntil: "networkidle" });
+await page.getByRole("button", { name: "Suggest a reply" }).click();
+await shot("09-inbox");
+await page.goto(`${base}/app/analytics`, { waitUntil: "networkidle" });
+await shot("10-analytics");
+await page.goto(`${base}/app/settings`, { waitUntil: "networkidle" });
+await shot("11-settings", true);
+await page.goto(`${base}/app`, { waitUntil: "networkidle" });
+await shot("12-today-after");
+await browser.close();
+console.log(JSON.stringify({ width: w, errors }));

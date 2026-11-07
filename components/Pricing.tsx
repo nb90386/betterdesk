@@ -44,7 +44,7 @@ export function Pricing() {
             </ul>
             <Link
               href={`/contact?plan=${p.id}`}
-              className={`press mt-8 inline-flex min-h-12 items-center justify-center rounded-[var(--radius-sm)] text-[1rem] font-[550] ${p.featured ? "bg-ink text-porcelain hover:bg-ink-2" : "border border-rule-strong hover:border-ink"}`}
+              className={`press mt-8 inline-flex min-h-12 items-center justify-center rounded-[var(--radius-sm)] text-[1rem] font-[550] ${p.featured ? "bg-ink text-mineral hover:bg-ink-2" : "border border-rule-strong hover:border-ink"}`}
             >
               {p.cta}
             </Link>

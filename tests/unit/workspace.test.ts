@@ -208,3 +208,16 @@ test("Scout cannot move pipeline stages directly", () => {
   const w = A.moveStage(ws, "opp_lark", "won", at, dana);
   assert.equal(w.opportunities.find((o) => o.id === "opp_lark")!.stage, "won");
 });
+
+test("Scout never regresses deals that are further along", () => {
+  const ws = createSampleWorkspace(NOW);
+  const ids = ws.accounts.map((a) => a.id);
+  const { ws: w2, runId } = A.createRun(ws, "Everything", ids, at, dana);
+  const done = runAll(w2, runId);
+  const stage = (id: string) => done.opportunities.find((o) => o.id === id)!.stage;
+  assert.equal(stage("opp_lark"), "proposal");
+  assert.equal(stage("opp_cobalt"), "walkthrough-scheduled");
+  assert.equal(stage("opp_ridge"), "won");
+  assert.equal(done.drafts.length, 0);
+  assert.equal(done.accounts.find((a) => a.id === "acc_ridgeview")!.status, "customer");
+});

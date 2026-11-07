@@ -89,26 +89,26 @@ const NEXT = [
   { k: "Setup with a person", v: "If you go ahead, we set up your answers, rules and handoffs together during onboarding. Setup is included in every plan." },
 ];
 
-/** Act V close: staged on the porcelain table with the route landing on the CTA. Compact = one graphite line for subpages. */
+/** Act V close: staged on the mineral table with the route landing on the CTA. Compact = one petrol line for subpages. */
 export function CloseCta({ title, lede, compact = false }: { title?: string; lede?: string; compact?: boolean } = {}) {
   if (compact) {
     return (
-      <section data-close-cta data-tone="dark" aria-labelledby="close-title" className="tone-dark bg-graphite">
+      <section data-close-cta data-tone="dark" aria-labelledby="close-title" className="tone-dark bg-petrol">
         <div className="wrap flex flex-col gap-8 py-20 md:flex-row md:items-end md:justify-between md:py-24">
           <div>
-            <h2 id="close-title" className="t-title max-w-[20ch] text-graphite-ink">{title}</h2>
-            {lede ? <p className="mt-4 max-w-[52ch] text-[1.0625rem] leading-relaxed text-graphite-muted">{lede}</p> : null}
+            <h2 id="close-title" className="t-title max-w-[20ch] text-petrol-ink">{title}</h2>
+            {lede ? <p className="mt-4 max-w-[52ch] text-[1.0625rem] leading-relaxed text-petrol-muted">{lede}</p> : null}
           </div>
           <div className="flex shrink-0 flex-col items-start gap-2 md:items-end">
             <ButtonLink href="/contact">Request a demo</ButtonLink>
-            <p className="text-[0.8125rem] text-graphite-muted">A short form; we reply by email to find a time.</p>
+            <p className="text-[0.8125rem] text-petrol-muted">A short form; we reply by email to find a time.</p>
           </div>
         </div>
       </section>
     );
   }
   return (
-    <section data-close-cta aria-labelledby="close-title" className="relative overflow-hidden border-t border-rule bg-porcelain">
+    <section data-close-cta aria-labelledby="close-title" className="relative overflow-hidden border-t border-rule bg-mineral">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_80%_at_15%_0%,#ffffff_0%,transparent_60%)]" />
       <div className="wrap relative grid gap-14 py-24 md:py-32 lg:grid-cols-12 lg:gap-x-10">
         <div className="lg:col-span-6">
@@ -125,7 +125,7 @@ export function CloseCta({ title, lede, compact = false }: { title?: string; led
             <span aria-hidden="true" className="absolute bottom-3 left-[5px] top-3 w-px bg-signal" />
             {NEXT.map((n, i) => (
               <li key={n.k} className="relative pb-6 pl-8 last:pb-0">
-                <span aria-hidden="true" className={`absolute left-0 top-[0.45em] h-[11px] w-[11px] rounded-full border-2 border-signal ${i === NEXT.length - 1 ? "bg-signal" : "bg-porcelain"}`} />
+                <span aria-hidden="true" className={`absolute left-0 top-[0.45em] h-[11px] w-[11px] rounded-full border-2 border-signal ${i === NEXT.length - 1 ? "bg-signal" : "bg-mineral"}`} />
                 <p className="text-[1.0625rem] font-semibold">{n.k}</p>
                 <p className="mt-1 text-[0.9375rem] leading-snug text-ink-2">{n.v}</p>
               </li>

@@ -7,8 +7,8 @@ import { ButtonLink, Arrow } from "@/components/Button";
 import { BIZ, BOOKING, CALLER, STATIONS } from "@/lib/story";
 
 /**
- * Act I. One lit object on a porcelain table: the incoming call (graphite), the reply that
- * went out (porcelain, in focus) and Thursday's schedule (behind, out of focus).
+ * Act I. One lit object on a mineral table: the incoming call (petrol), the reply that
+ * went out (mineral, in focus) and Thursday's schedule (behind, out of focus).
  * Depth of field is the camera: the farther the layer, the softer and slower it moves.
  */
 // Leaves the call (under the slab), runs beneath the reply, then rises in the gap to Thursday 8:00.
@@ -46,14 +46,14 @@ export function Hero() {
   const reply = STATIONS[1].lines[0];
 
   return (
-    <section ref={ref} aria-labelledby="hero-title" className="relative overflow-hidden bg-porcelain" onPointerMove={onMove} onPointerLeave={() => { px.set(0); py.set(0); }}>
+    <section ref={ref} aria-labelledby="hero-title" className="relative overflow-hidden bg-mineral" onPointerMove={onMove} onPointerLeave={() => { px.set(0); py.set(0); }}>
       {/* Window light from the upper left, falling off across the table. */}
       <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{ background: light }}
       />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-porcelain-2/70" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-mineral-2/70" />
 
       <div className="wrap relative grid min-h-[100svh] grid-cols-1 content-center gap-y-8 pb-14 pt-24 md:pt-32 lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:pb-20">
         <div className="lg:col-span-5">
@@ -120,11 +120,11 @@ export function Hero() {
             {!reduce ? <path d={ROUTE} pathLength={100} fill="none" stroke="var(--color-signal-bright)" strokeWidth="0.7" strokeLinecap="round" className="route-pulse" /> : null}
           </svg>
 
-          {/* Mid: the incoming call, a graphite slab lit from the upper left */}
+          {/* Mid: the incoming call, a petrol slab lit from the upper left */}
           <motion.div style={reduce ? undefined : { x: slabX, y: slabY, translateY: slabYp }} className="relative w-full sm:absolute sm:left-0 sm:top-[11%] sm:w-[45%]">
-            <div className="tone-dark relative overflow-hidden rounded-[var(--radius-lg)] bg-graphite-2 p-4 pb-9 shadow-[var(--shadow-object)] sm:p-6">
+            <div className="tone-dark relative overflow-hidden rounded-[var(--radius-lg)] bg-petrol-2 p-4 pb-9 shadow-[var(--shadow-object)] sm:p-6">
               <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgb(255_255_255/0.10)_0%,transparent_38%)]" />
-              <div className="relative flex items-center justify-between gap-3 text-[0.75rem] text-graphite-muted">
+              <div className="relative flex items-center justify-between gap-3 text-[0.75rem] text-petrol-muted">
                 <span className="truncate">Example · {BIZ} main line</span>
                 <span className="t-mono shrink-0 text-[0.75rem]">2:14 PM</span>
               </div>
@@ -134,14 +134,14 @@ export function Hero() {
                     <circle className="ring-arc" cx="24" cy="24" r="22" fill="none" stroke="var(--color-signal-bright)" strokeWidth="1" />
                     <circle className="ring-arc delay" cx="24" cy="24" r="22" fill="none" stroke="var(--color-signal-bright)" strokeWidth="1" />
                   </svg>
-                  <span className="grid h-full w-full place-items-center rounded-full bg-graphite-3 text-[1rem] font-semibold text-graphite-ink">JR</span>
+                  <span className="grid h-full w-full place-items-center rounded-full bg-petrol-3 text-[1rem] font-semibold text-petrol-ink">JR</span>
                 </span>
                 <div className="min-w-0">
-                  <p className="text-[1.25rem] font-semibold leading-tight tracking-[-0.02em] text-graphite-ink sm:text-[1.5rem]">{CALLER.name}</p>
-                  <p className="t-mono mt-1 text-graphite-muted">{CALLER.phone}</p>
+                  <p className="text-[1.25rem] font-semibold leading-tight tracking-[-0.02em] text-petrol-ink sm:text-[1.5rem]">{CALLER.name}</p>
+                  <p className="t-mono mt-1 text-petrol-muted">{CALLER.phone}</p>
                 </div>
               </div>
-              <p className="relative mt-5 hidden text-[0.875rem] text-graphite-muted sm:mt-12 sm:block">Incoming call. Marco is under a sink.</p>
+              <p className="relative mt-5 hidden text-[0.875rem] text-petrol-muted sm:mt-12 sm:block">Incoming call. Marco is under a sink.</p>
             </div>
           </motion.div>
 
@@ -152,7 +152,7 @@ export function Hero() {
                 <span>Text to {CALLER.first} · sent by BetterDesk</span>
                 <span className="t-mono shrink-0 text-[0.75rem]">{reply.time}</span>
               </div>
-              <p className="mt-3 rounded-[var(--radius-md)] bg-porcelain-2 px-3.5 py-3 text-[0.9375rem] leading-snug text-ink">{reply.text}</p>
+              <p className="mt-3 rounded-[var(--radius-md)] bg-mineral-2 px-3.5 py-3 text-[0.9375rem] leading-snug text-ink">{reply.text}</p>
               <div className="mt-3 flex items-center gap-2.5 border-t border-rule pt-3 text-[0.875rem]">
                 <svg viewBox="0 0 16 16" className="h-4 w-4 text-ink" aria-hidden="true">
                   <path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />

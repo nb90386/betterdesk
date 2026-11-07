@@ -8,7 +8,7 @@ import { NAV } from "@/lib/site";
 
 /**
  * Frosted only where it earns readability: the bar blurs what scrolls under it and
- * switches to graphite glass while a [data-tone=dark] act passes beneath it.
+ * switches to petrol glass while a [data-tone=dark] act passes beneath it.
  */
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -77,8 +77,8 @@ export function SiteHeader() {
       className={`group/h fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,color] duration-300 ${toneDark ? "tone-dark" : ""} ${
         scrolled || open
           ? toneDark
-            ? "bg-graphite/72 shadow-[0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl backdrop-saturate-150"
-            : "bg-porcelain/78 shadow-[0_1px_0_rgb(16_18_20/0.08)] backdrop-blur-xl backdrop-saturate-150"
+            ? "bg-petrol/72 shadow-[0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl backdrop-saturate-150"
+            : "bg-mineral/78 shadow-[0_1px_0_rgb(16_18_20/0.08)] backdrop-blur-xl backdrop-saturate-150"
           : "bg-transparent"
       }`}
     >
@@ -106,7 +106,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/contact"
-            className="press hidden min-h-10 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[550] text-porcelain hover:bg-ink-2 sm:inline-flex [.tone-dark_&]:text-graphite"
+            className="press hidden min-h-10 items-center rounded-[var(--radius-sm)] bg-ink px-4 text-[0.9375rem] font-[550] text-mineral hover:bg-ink-2 sm:inline-flex [.tone-dark_&]:text-petrol"
           >
             Request a demo
           </Link>
@@ -127,7 +127,7 @@ export function SiteHeader() {
       </div>
 
       {open ? (
-        <div id="mobile-menu" className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-rule bg-porcelain md:hidden">
+        <div id="mobile-menu" className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-rule bg-mineral md:hidden">
           <nav aria-label="Mobile" className="wrap flex h-full flex-col pb-8 pt-4">
             <ul>
               {[...NAV, { href: "/demo", label: "See a conversation" }].map((item) => (
@@ -144,7 +144,7 @@ export function SiteHeader() {
               ))}
             </ul>
             <div className="mt-auto pt-8">
-              <Link href="/contact" className="press flex min-h-13 items-center justify-center rounded-[var(--radius-sm)] bg-ink text-[1.05rem] font-[550] text-porcelain">
+              <Link href="/contact" className="press flex min-h-13 items-center justify-center rounded-[var(--radius-sm)] bg-ink text-[1.05rem] font-[550] text-mineral">
                 Request a demo
               </Link>
               <p className="t-small mt-3 text-center text-muted">A short form. We reply by email to find a call time.</p>

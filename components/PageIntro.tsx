@@ -1,10 +1,10 @@
 /**
- * Subpage opening: left-aligned title on the porcelain table, with the route arriving from the
+ * Subpage opening: left-aligned title on the mineral table, with the route arriving from the
  * left margin and landing on a point beneath the lede. Same signature as the homepage, quieter.
  */
 export function PageIntro({ title, children, aside, id = "page-title" }: { title: React.ReactNode; children?: React.ReactNode; aside?: React.ReactNode; id?: string }) {
   return (
-    <section aria-labelledby={id} className="relative overflow-hidden bg-porcelain">
+    <section aria-labelledby={id} className="relative overflow-hidden bg-mineral">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_80%_at_12%_-10%,#ffffff_0%,transparent_60%)]" />
       <div className="wrap relative grid gap-10 pb-16 pt-32 md:pb-24 md:pt-40 lg:grid-cols-12 lg:gap-x-10">
         <div className={aside ? "lg:col-span-7" : "lg:col-span-9"}>

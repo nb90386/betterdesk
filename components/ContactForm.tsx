@@ -97,11 +97,11 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
           We&rsquo;ve filled in a message to <strong>{CONTACT_EMAIL}</strong>. Nothing is sent until you press send there. If no window opened,
           copy the message below and email it to us.
         </p>
-        <pre className="mt-5 max-h-60 overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] bg-porcelain-2 p-4 font-mono text-[0.8125rem] text-ink">{body}</pre>
+        <pre className="mt-5 max-h-60 overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] bg-mineral-2 p-4 font-mono text-[0.8125rem] text-ink">{body}</pre>
         <div className="mt-5 flex flex-wrap gap-3">
           <button
             type="button"
-            className="press min-h-11 rounded-[var(--radius-sm)] bg-ink px-5 text-[0.9375rem] font-medium text-porcelain"
+            className="press min-h-11 rounded-[var(--radius-sm)] bg-ink px-5 text-[0.9375rem] font-medium text-mineral"
             onClick={async () => {
               try {
                 await navigator.clipboard.writeText(`To: ${CONTACT_EMAIL}\n\n${body}`);
@@ -178,7 +178,7 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
         <p className="max-w-[44ch] text-[0.8125rem] leading-relaxed text-muted">
           Pressing the button opens your email app with this message addressed to {CONTACT_EMAIL}. Nothing is sent until you press send there.
         </p>
-        <button type="submit" className="press min-h-12 shrink-0 rounded-[var(--radius-sm)] bg-ink px-6 text-[0.9375rem] font-medium text-porcelain hover:bg-ink-2">
+        <button type="submit" className="press min-h-12 shrink-0 rounded-[var(--radius-sm)] bg-ink px-6 text-[0.9375rem] font-medium text-mineral hover:bg-ink-2">
           Write the email
         </button>
       </div>

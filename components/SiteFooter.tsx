@@ -4,7 +4,7 @@ import { CONTACT_EMAIL, FOOTER } from "@/lib/site";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-rule bg-porcelain-2">
+    <footer className="border-t border-rule bg-mineral-2">
       <div className="wrap grid gap-12 py-16 md:grid-cols-12 md:py-20">
         <div className="md:col-span-5">
           <Logo className="text-[1.15rem]" />

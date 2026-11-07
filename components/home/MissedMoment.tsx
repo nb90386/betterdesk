@@ -22,7 +22,7 @@ export function MissedMoment() {
 
   if (reduce) {
     return (
-      <section aria-labelledby="missed-title" className="bg-porcelain-2 py-24">
+      <section aria-labelledby="missed-title" className="bg-mineral-2 py-24">
         <div className="wrap grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <h2 id="missed-title" className="t-display">The call you couldn&rsquo;t take.</h2>
@@ -39,7 +39,7 @@ export function MissedMoment() {
   }
 
   return (
-    <section ref={ref} data-pinned aria-labelledby="missed-title" className="relative h-[360vh] bg-porcelain-2">
+    <section ref={ref} data-pinned aria-labelledby="missed-title" className="relative h-[360vh] bg-mineral-2">
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
         <div className="wrap grid w-full grid-cols-1 gap-5 pt-14 sm:gap-8 lg:grid-cols-12 lg:items-center lg:gap-x-8 lg:pt-0">
           <div className="lg:col-span-6">
@@ -75,14 +75,14 @@ function CallSurface({ beat }: { beat: number }) {
   const replied = beat === 3;
   return (
     <div className="relative mx-auto w-full max-w-[30rem]">
-      <div className="tone-dark relative overflow-hidden rounded-[var(--radius-lg)] bg-graphite-2 p-5 shadow-[var(--shadow-object)] sm:p-6">
+      <div className="tone-dark relative overflow-hidden rounded-[var(--radius-lg)] bg-petrol-2 p-5 shadow-[var(--shadow-object)] sm:p-6">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgb(255_255_255/0.09)_0%,transparent_40%)]" />
-        <div className="relative flex items-center justify-between text-[0.8125rem] text-graphite-muted">
+        <div className="relative flex items-center justify-between text-[0.8125rem] text-petrol-muted">
           <span>{BIZ} · main line</span>
           <span className="t-mono">{BEATS[beat].time}</span>
         </div>
 
-        <p className="tabular relative mt-4 text-[2.25rem] font-[500] leading-none tracking-[-0.035em] text-graphite-ink sm:mt-8 sm:text-[4.25rem] [font-stretch:90%]" aria-hidden="true">{BEATS[beat].time.replace(" PM", "")}<span className="ml-1.5 text-[0.36em] font-[550] tracking-normal text-graphite-muted">PM</span></p>
+        <p className="tabular relative mt-4 text-[2.25rem] font-[500] leading-none tracking-[-0.035em] text-petrol-ink sm:mt-8 sm:text-[4.25rem] [font-stretch:90%]" aria-hidden="true">{BEATS[beat].time.replace(" PM", "")}<span className="ml-1.5 text-[0.36em] font-[550] tracking-normal text-petrol-muted">PM</span></p>
         <div className="relative mt-4 flex items-center gap-4 sm:mt-8">
           <span className="relative grid h-14 w-14 shrink-0 place-items-center">
             {ringing ? (
@@ -91,11 +91,11 @@ function CallSurface({ beat }: { beat: number }) {
                 <circle className="ring-arc delay" cx="28" cy="28" r="26" fill="none" stroke="var(--color-signal-bright)" strokeWidth="1" />
               </svg>
             ) : null}
-            <span className={`grid h-14 w-14 place-items-center rounded-full text-[1.05rem] font-semibold transition-colors duration-500 ${missed ? "bg-graphite-3 text-graphite-muted" : "bg-graphite-3 text-graphite-ink"}`}>JR</span>
+            <span className={`grid h-14 w-14 place-items-center rounded-full text-[1.05rem] font-semibold transition-colors duration-500 ${missed ? "bg-petrol-3 text-petrol-muted" : "bg-petrol-3 text-petrol-ink"}`}>JR</span>
           </span>
           <div className="min-w-0">
-            <p className="text-[1.375rem] font-semibold leading-tight tracking-[-0.02em] text-graphite-ink">{CALLER.name}</p>
-            <p className="mt-1 text-[0.9375rem] text-graphite-muted">
+            <p className="text-[1.375rem] font-semibold leading-tight tracking-[-0.02em] text-petrol-ink">{CALLER.name}</p>
+            <p className="mt-1 text-[0.9375rem] text-petrol-muted">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span key={ringing ? "r" : missed ? "m" : "t"} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.25 }} className="inline-block">
                   {ringing ? "Incoming call" : missed ? "Missed call" : "Missed call · texted back"}
@@ -137,11 +137,11 @@ function CallSurface({ beat }: { beat: number }) {
                 <p className="mt-2 text-[0.9375rem] leading-snug">{STATIONS[1].lines[0].text}</p>
               </motion.div>
             ) : beat === 2 ? (
-              <motion.p key="gone" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-4 text-[0.9375rem] text-graphite-muted">
+              <motion.p key="gone" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-4 text-[0.9375rem] text-petrol-muted">
                 No reply yet. {CALLER.first} is looking at other numbers.
               </motion.p>
             ) : missed ? (
-              <motion.p key="vm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-4 text-[0.9375rem] text-graphite-muted">
+              <motion.p key="vm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-4 text-[0.9375rem] text-petrol-muted">
                 No voicemail left.
               </motion.p>
             ) : null}

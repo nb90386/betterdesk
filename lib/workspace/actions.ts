@@ -99,6 +99,9 @@ export const RUN_TASKS = [
   { id: "handoff", label: "Hand drafts to you for approval" },
 ] as const;
 
+/** Stages where an introduction still makes sense. Anything later is left alone by Scout. */
+const EARLY: Stage[] = ["new", "qualified"];
+
 export function createRun(ws: Workspace, goal: string, accountIds: string[], at: string, actor: Actor, maxProspects = 50): { ws: Workspace; runId: string } {
   if (!goal.trim()) throw new ActionError("Give Scout a goal.");
   if (accountIds.length === 0) throw new ActionError("Import or select prospects first.");
@@ -166,7 +169,7 @@ export function stepRun(ws: Workspace, runId: string, at: string, generator: Dra
         const opp: Opportunity = { id: newId("opp"), accountId: id, stage: "qualified", ownerId: ws.org.members[0].id, estimatedMonthly: null, nextAction: q.recommendation, origin: "scout", createdAt: at, updatedAt: at };
         next = log({ ...next, opportunities: [...next.opportunities, opp] }, at, scoutActor, "opportunity.created", `Opportunity opened for ${acc.name}.`, id, opp.id);
       }
-      if (q.tier === "excluded") {
+      if (q.tier === "excluded" && !oppFor(next, id)) {
         next = { ...next, accounts: next.accounts.map((a) => (a.id === id && a.status === "prospect" ? { ...a, status: "excluded" } : a)) };
         next = log(next, at, scoutActor, "account.excluded", `${acc.name} excluded: ${q.recommendation}`, id, null);
       }
@@ -181,6 +184,8 @@ export function stepRun(ws: Workspace, runId: string, at: string, generator: Dra
       const q = next.qualifications.find((x) => x.accountId === id);
       const opp = oppFor(next, id);
       if (!q || !opp || q.tier === "excluded" || q.tier === "weak") continue;
+      // Never re-introduce a business you're already talking to, or move a deal backwards.
+      if (!EARLY.includes(opp.stage)) continue;
       const contact = next.contacts.find((c) => c.accountId === id && c.emailKind === "business");
       if (!contact) { noContact++; continue; }
       if (isSuppressed(contact.email, next.suppressions)) {
@@ -374,4 +379,33 @@ export function receiveInquiry(ws: Workspace, form: { business: string; name: st
     next = log({ ...next, opportunities: [...next.opportunities, opp] }, at, { kind: "system", id: "router", name: "Inbound router" }, "opportunity.created", `Opportunity opened from the website inquiry.`, acc.id, opp.id);
   }
   return next;
+}
+
+/** DEMO only: records your reply in a conversation as a simulated outbound message. */
+export function replyInConversation(ws: Workspace, conversationId: string, body: string, at: string, actor: Actor) {
+  if (ws.org.mode !== "DEMO") throw new ActionError("Sending is not available in this workspace.");
+  const text = body.trim();
+  if (text.length < 2) throw new ActionError("Write a reply first.");
+  const conv = ws.conversations.find((c) => c.id === conversationId);
+  if (!conv) throw new ActionError("Conversation not found.");
+  const contact = ws.contacts.find((c) => c.accountId === conv.accountId);
+  if (isSuppressed(contact?.email ?? null, ws.suppressions)) throw new ActionError("This contact opted out. Replies are blocked.");
+  const msg = { id: newId("msg"), direction: "outbound" as const, from: actor.name, body: text.slice(0, 5000), at, simulated: true };
+  let next: Workspace = { ...ws, conversations: ws.conversations.map((c) => (c.id === conversationId ? { ...c, messages: [...c.messages, msg], handledBy: "human" } : c)) };
+  next = log(next, at, actor, "delivery.simulated", `${actor.name} replied to ${accountName(ws, conv.accountId)} (simulated; nothing was sent).`, conv.accountId, msg.id);
+  const opp = oppFor(next, conv.accountId);
+  if (opp) next = { ...next, opportunities: next.opportunities.map((o) => (o.id === opp.id ? { ...o, nextAction: "Wait for their answer.", updatedAt: at } : o)) };
+  return next;
+}
+
+/** Suggested reply built only from the business's own settings and open times. Never invents a price. */
+export function suggestReply(ws: Workspace, conversationId: string) {
+  const conv = ws.conversations.find((c) => c.id === conversationId);
+  const last = conv?.messages.filter((m) => m.direction === "inbound").at(-1);
+  if (!conv || !last) return null;
+  const first = last.from.split(" ")[0];
+  const times = ws.sampleSlots.slice(0, 2).map((s) => new Date(s.start).toLocaleString("en-US", { weekday: "long", hour: "numeric", minute: "2-digit", timeZone: "America/Denver" }));
+  const ask = last.intent === "pricing" ? "Pricing depends on the space, the schedule and the services, so we quote after a short walkthrough rather than guessing." : last.intent === "needs-review" ? null : "Happy to help.";
+  if (!ask) return { text: "", note: "Scout couldn't tell what they need. Read it and reply yourself." };
+  return { text: `Hi ${first},\n\nThanks for reaching out. ${ask} I could come by ${times[0]} or ${times[1]}. Would either work?\n\n${ws.org.sender.name}\n${ws.org.sender.company}`, note: "Built from your sender details and open times. No price is quoted because none is approved." };
 }
