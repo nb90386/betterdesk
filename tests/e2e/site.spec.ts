@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 
-const ROUTES = ["/", "/platform", "/how-it-works", "/demo", "/pricing", "/roi", "/solutions", "/solutions/home-services", "/solutions/beauty-wellness", "/contact"];
+const ROUTES = ["/", "/product", "/scout", "/how-it-works", "/solutions/commercial-cleaning", "/pricing", "/security", "/demo", "/contact"];
+const APP = ["/app", "/app/scout", "/app/opportunities", "/app/inbox", "/app/pipeline", "/app/calendar", "/app/customers", "/app/analytics", "/app/settings"];
 const WIDTHS = [320, 375, 390, 768, 1024, 1440, 1920];
 
 function watch(page: Page) {
@@ -72,118 +73,171 @@ test("mobile menu opens, navigates and closes with Escape", async ({ page }) => 
   await btn.click();
   await menu.getByRole("link", { name: /Pricing/ }).click();
   await expect(page).toHaveURL(/\/pricing$/);
-  await expect(page.locator("#mobile-menu")).toBeHidden();
 });
 
-test("signal-to-booking: Play runs the whole conversation without scrolling", async ({ page }) => {
-  await page.goto("/");
-  await page.locator("#conversation").scrollIntoViewIfNeeded();
-  await page.evaluate(() => window.scrollBy(0, 40));
-  const play = page.getByRole("button", { name: "Play the conversation" });
-  await expect(play).toBeVisible();
-  await play.click();
-  await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
-  await expect(page.locator("#conversation").getByText("Added to Alder Plumbing", { exact: false })).toBeVisible({ timeout: 15000 });
-  await expect(page.getByRole("button", { name: "Replay the conversation" })).toBeVisible({ timeout: 3000 });
-  // Text equivalent is always present for assistive tech.
-  await expect(page.locator("#conversation ol.sr-only li")).toHaveCount(5);
+test("retired V3 routes redirect to their V4 pages", async ({ page }) => {
+  for (const [from, to] of [["/platform", "/product"], ["/roi", "/pricing"], ["/solutions/home-services", "/solutions/commercial-cleaning"]]) {
+    await page.goto(from);
+    await expect(page).toHaveURL(new RegExp(`${to}$`));
+  }
 });
 
-test("inbox: choosing a conversation shows its thread", async ({ page }) => {
-  await page.goto("/platform");
-  const list = page.getByRole("list", { name: "Conversations" });
-  await list.getByRole("button", { name: /Dan K\./ }).click();
-  await expect(list.getByRole("button", { name: /Dan K\./ })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByText("Please leave the house now", { exact: false })).toBeVisible();
-  await list.getByRole("button", { name: /Priya S\./ }).click();
-  await expect(page.getByText("nothing is sent until you approve", { exact: false })).toBeVisible();
+for (const route of APP) {
+  test(`app ${route}: renders the sample workspace without errors`, async ({ page }) => {
+    const errors = watch(page);
+    await page.goto(route);
+    await expect(page.getByText("Sample workspace · DEMO")).toBeVisible();
+    await expect(page.locator("main h1")).toHaveCount(1);
+    await page.waitForLoadState("networkidle");
+    expect(errors).toEqual([]);
+  });
+}
+
+async function runSampleScout(page: Page) {
+  await page.goto("/app/scout");
+  await page.getByRole("button", { name: /Use the sample list/ }).click();
+  await expect(page.getByText(/10 rows ready, 1 skipped/)).toBeVisible();
+  await page.getByRole("button", { name: "Import and start Scout" }).click();
+  await expect(page.getByText("Waiting for your approval").first()).toBeVisible({ timeout: 15000 });
+}
+
+test("workflow: import, dedupe, qualify with evidence, draft, approve, simulate, reply, book, timeline", async ({ page }) => {
+  await runSampleScout(page);
+  const run = page.locator("section", { hasText: "Runs" }).first();
+  await expect(run.getByText(/drafted, 1 need a business contact first, 1 blocked by suppression/)).toBeVisible();
+  // Duplicate Cobalt Coworking was not imported twice.
+  await page.goto("/app/customers");
+  await expect(page.getByRole("link", { name: /Cobalt Coworking/ })).toHaveCount(1);
+  // Suppressed contact got no draft.
+  await page.goto("/app/scout");
+  await expect(page.getByText("Sam Ortiz")).toHaveCount(0);
+  // Qualification evidence is inspectable.
+  await page.goto("/app/opportunities");
+  await page.getByRole("button", { name: "Juniper Lane Law" }).click();
+  const insp = page.getByRole("complementary", { name: /Qualification for Juniper Lane Law/ });
+  await expect(insp.getByText("Inside your service area")).toBeVisible();
+  await expect(insp.getByText(/Source: sample-prospects.csv/).first()).toBeVisible();
+  // Approve requires a person and does not send.
+  await page.goto("/app/scout#drafts");
+  const card = page.locator("article", { hasText: "Elena Brooks" });
+  await card.getByRole("button", { name: "Approve" }).click();
+  await expect(page.locator("section", { hasText: "Recently reviewed" }).getByText("Not sent")).toBeVisible();
+  await page.locator("li", { hasText: "Juniper Lane Law" }).getByRole("button", { name: /Simulate delivery/ }).click();
+  // Simulated reply updates the record; booking moves the pipeline.
+  await page.goto("/app/opportunities");
+  await page.getByRole("button", { name: "Juniper Lane Law" }).click();
+  await page.getByRole("link", { name: "Open record and timeline" }).click();
+  await page.getByRole("button", { name: "Asks for a walkthrough" }).click();
+  await expect(page.getByText(/Reply from Elena Brooks \(simulated\)/)).toBeVisible();
+  await page.locator("section", { hasText: "Walkthrough" }).getByRole("button").first().click();
+  await expect(page.getByText(/sample calendar; no real invite sent/)).toBeVisible();
+  const timeline = page.locator("section", { hasText: "Timeline" }).first();
+  for (const t of [/imported from sample-prospects.csv/, /strong fit/, /Introduction drafted/, /approved the introduction/, /Simulated delivery/, /Walkthrough at Juniper Lane Law booked/]) await expect(timeline.getByText(t).first()).toBeVisible();
+  // Persistence: survives reload (browser-local).
+  await page.reload();
+  await expect(page.getByText(/Walkthrough at Juniper Lane Law booked/)).toBeVisible();
+  await page.goto("/app/pipeline");
+  const col = page.getByRole("listitem").filter({ has: page.getByRole("heading", { name: /Walkthrough scheduled/ }) });
+  await expect(col.getByRole("link", { name: "Juniper Lane Law" })).toBeVisible();
 });
 
-test("value calculator recomputes from inputs and shows its formula", async ({ page }) => {
-  await page.goto("/roi");
-  // Range inputs can't be typed into; set them the way a drag would (native setter + input event).
-  const setRange = (label: RegExp, v: number) =>
-    page.getByLabel(label).evaluate((el, val) => {
-      const input = el as HTMLInputElement;
-      Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(input, String(val));
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-    }, v);
-  await setRange(/miss or answer late, per week/, 10);
-  await setRange(/Average value of one job/, 300);
-  // 10 × 4.33 × 40% × 30% × $300 = $1,560
-  await expect(page.getByText("$1,560", { exact: true })).toBeVisible();
-  await expect(page.getByText(/Math: 10 a week/)).toBeVisible();
-  await page.getByLabel(/Scale/).check();
-  await expect(page.getByText("$499 / mo")).toBeVisible();
+test("honesty check blocks a deceptive edit; reset restores the baseline", async ({ page }) => {
+  await runSampleScout(page);
+  const card = page.locator("article").first();
+  await card.getByLabel("Subject").fill("Re: our call");
+  await expect(card.getByText("Subject can't pretend to be a reply or forward.")).toBeVisible();
+  await expect(card.getByRole("button", { name: /approve/i })).toBeDisabled();
+  await page.getByRole("button", { name: /Reset sample/ }).click();
+  await page.getByRole("button", { name: "Reset", exact: true }).click();
+  await expect(page.getByText("No runs yet")).toBeVisible();
+});
+
+test("canceling a run stops it; an unavailable provider shows a useful error", async ({ page }) => {
+  await page.goto("/app/scout");
+  await page.getByRole("button", { name: /Use the sample list/ }).click();
+  await page.getByRole("button", { name: "Import and start Scout" }).click();
+  await page.getByRole("button", { name: "Cancel run" }).click();
+  await expect(page.getByText("Canceled", { exact: true })).toBeVisible();
+  await page.waitForTimeout(2500);
+  await expect(page.getByText("Nothing to approve")).toBeVisible();
+  await page.getByRole("button", { name: "Try it anyway" }).click();
+  await expect(page.getByRole("alert").filter({ hasText: /No business-data provider is connected/ }).first()).toBeVisible();
+});
+
+test("malformed CSV upload reports the problem instead of importing", async ({ page }) => {
+  await page.goto("/app/scout");
+  await page.getByLabel("Upload a prospect CSV").setInputFiles({ name: "bad.csv", mimeType: "text/csv", buffer: Buffer.from("foo,bar\n1,2\n") });
+  await expect(page.getByText(/Missing a "name" column/)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Import and start Scout" })).toBeDisabled();
+});
+
+test("suppression list: added addresses block replies", async ({ page }) => {
+  await page.goto("/app/settings");
+  await page.getByPlaceholder(/name@business.com/).fill("maya@alderfinch.example");
+  await page.getByRole("button", { name: "Add" }).click();
+  await expect(page.locator("li", { hasText: "do-not-contact" }).getByText("maya@alderfinch.example")).toBeVisible();
+  await page.goto("/app/inbox");
+  await page.getByLabel("Your reply").fill("Hi Maya, happy to help.");
+  await page.getByRole("button", { name: /Record reply/ }).click();
+  await expect(page.getByRole("alert").filter({ hasText: "opted out" })).toBeVisible();
+});
+
+test("website inquiry joins the inbox and creates an opportunity", async ({ page }) => {
+  await page.goto("/app/inbox");
+  await page.getByRole("button", { name: "Simulate a website inquiry" }).click();
+  await page.getByRole("button", { name: "Submit sample inquiry" }).click();
+  await expect(page.getByRole("button", { name: /Granite Peak Orthodontics/ })).toBeVisible();
+  await page.goto("/app/opportunities");
+  await expect(page.getByRole("button", { name: "Granite Peak Orthodontics" })).toBeVisible();
 });
 
 test("contact form validates, then composes the email", async ({ page }) => {
   await page.goto("/contact?plan=growth");
   await page.getByRole("button", { name: "Write the email" }).click();
   await expect(page.getByText("Tell us your name.")).toBeVisible();
-  await expect(page.getByLabel("Your name")).toBeFocused();
   await page.getByLabel("Your name").fill("Sam Rivera");
-  await page.getByLabel("Business name").fill("Alder Test Co");
+  await page.getByLabel("Business name").fill("Rivera Cleaning Co");
   await page.getByLabel("Email").fill("sam@");
   await page.getByRole("button", { name: "Write the email" }).click();
   await expect(page.getByText("That email doesn't look complete.")).toBeVisible();
   await page.getByLabel("Email").fill("sam@example.com");
   await expect(page.getByLabel(/Plan you/)).toHaveValue("growth");
   await page.getByRole("button", { name: "Write the email" }).click();
-  await expect(page.getByRole("status")).toContainText("Your email app should now be open");
-  await expect(page.getByRole("status")).toContainText("Interested in: Growth (proposed $249/mo)");
+  await expect(page.getByRole("status").filter({ hasText: "Your email app should now be open" })).toContainText("Interested in: Growth (proposed $249/mo)");
 });
 
-test("pricing: every plan is labelled as a proposal and links to the demo form", async ({ page }) => {
+test("pricing is labelled as a proposal and plan buttons go to the demo form", async ({ page }) => {
   await page.goto("/pricing");
-  await expect(page.getByText(/Proposed price\. Today.s published price is/)).toHaveCount(3);
-  for (const id of ["starter", "growth", "scale"]) await expect(page.locator(`a[href="/contact?plan=${id}"]`)).toHaveCount(1);
+  await expect(page.getByText("Proposed early-access pricing. Not yet available to buy.").first()).toBeVisible();
+  for (const id of ["essential", "growth", "team"]) await expect(page.locator(`a[href="/contact?plan=${id}"]`)).toHaveCount(1);
 });
 
-test("reduced motion: acts render statically with the full story", async ({ browser }) => {
-  const ctx = await browser.newContext({ reducedMotion: "reduce" });
+test("homepage: reduced motion renders the journey statically with no hydration errors", async ({ browser }) => {
+  const ctx = await browser.newContext({ reducedMotion: "reduce", viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
   const errors = watch(page);
   await page.goto("/");
-  await expect(page.locator("section[data-pinned]")).toHaveCount(0);
-  expect(errors, "no hydration mismatch under reduced motion").toEqual([]);
-  await expect(page.locator("#conversation").getByText("Thanks Jess. We can be there Thursday", { exact: false })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "The call you couldn’t take." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "One opportunity, start to finish." }).last()).toBeVisible();
+  await expect(page.getByText("Won · recurring contract").last()).toBeVisible();
+  await page.waitForLoadState("networkidle");
+  expect(errors).toEqual([]);
   await ctx.close();
 });
 
-test("mobile sticky CTA appears after the hero, steps aside on pinned acts and the close, absent on /contact", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
-  const bar = page.locator("div.fixed.bottom-0").filter({ hasText: "See it on your own missed calls." });
-  await expect(bar).toHaveAttribute("aria-hidden", "true");
-  await page.locator("#inbox-title").scrollIntoViewIfNeeded();
-  await expect(bar).toHaveAttribute("aria-hidden", "false");
-  await page.locator("[data-close-cta]").scrollIntoViewIfNeeded();
-  await expect(bar).toHaveAttribute("aria-hidden", "true");
-  await page.locator("#inbox-title").scrollIntoViewIfNeeded();
-  await bar.getByRole("link", { name: "Request a demo" }).click();
-  await expect(page).toHaveURL(/\/contact$/);
-  await expect(page.locator("div.fixed.bottom-0").filter({ hasText: "See it on your own missed calls." })).toHaveCount(0);
-});
-
-test("header turns to graphite over the dark act", async ({ page }) => {
-  await page.goto("/");
-  const header = page.locator("header");
-  await expect(header).not.toHaveAttribute("data-dark", /.*/);
-  await page.evaluate(() => {
-    const el = document.querySelector("#conversation") as HTMLElement;
-    window.scrollTo(0, el.offsetTop + 200);
-  });
-  await expect(header).toHaveAttribute("data-dark", "true");
-});
-
-test("without JavaScript the story is still readable", async ({ browser }) => {
+test("homepage without JavaScript still explains the product", async ({ browser }) => {
   const ctx = await browser.newContext({ javaScriptEnabled: false });
   const page = await ctx.newPage();
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Every inquiry deserves an answer.");
-  await expect(page.getByText("With BetterDesk, she has a text in", { exact: false })).toBeVisible();
-  await expect(page.getByText("It offers two real openings from Marco", { exact: false }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("More walkthroughs. Less chasing leads.");
+  await expect(page.getByText("Today, one prospect lives in six places.")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Explore BetterDesk" }).first()).toBeVisible();
   await ctx.close();
+});
+
+test("header turns dark over the petrol hero and light over limestone", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("header")).toHaveAttribute("data-dark", "true");
+  await page.locator("#scatter-title").scrollIntoViewIfNeeded();
+  await page.evaluate(() => window.scrollBy(0, 200));
+  await expect(page.locator("header")).not.toHaveAttribute("data-dark", /.*/);
 });

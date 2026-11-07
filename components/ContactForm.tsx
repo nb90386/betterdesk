@@ -76,11 +76,11 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
         onChange={set(k)}
         aria-invalid={!!errors[k] || undefined}
         aria-describedby={errors[k] ? `${uid}-${k}-err` : undefined}
-        className={`mt-1.5 block min-h-12 w-full rounded-[var(--radius-md)] border bg-surface px-3.5 text-[1rem] text-ink transition-colors focus:border-ink ${errors[k] ? "border-signal" : "border-rule-strong"}`}
+        className={`mt-1.5 block min-h-12 w-full rounded-[var(--radius-md)] border bg-surface px-3.5 text-[1rem] text-ink transition-colors focus:border-ink ${errors[k] ? "border-danger" : "border-rule-strong"}`}
         {...props}
       />
       {errors[k] ? (
-        <p id={`${uid}-${k}-err`} className="mt-1.5 text-[0.8125rem] text-signal-ink">
+        <p id={`${uid}-${k}-err`} className="mt-1.5 text-[0.8125rem] text-danger">
           {errors[k]}
         </p>
       ) : null}
@@ -91,13 +91,12 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
     const body = decodeURIComponent(sent.split("&body=")[1] ?? "");
     return (
       <div className="rounded-[var(--radius-lg)] border border-rule bg-surface p-6 sm:p-8" role="status">
-        <p className="text-[0.75rem] font-medium text-muted">Almost done</p>
-        <h2 className="mt-2 text-[1.75rem] leading-tight tracking-[-0.02em] text-ink">Your email app should now be open.</h2>
+        <h2 className="t-title">Your email app should now be open.</h2>
         <p className="mt-3 text-[1rem] leading-relaxed text-ink-2">
           We&rsquo;ve filled in a message to <strong>{CONTACT_EMAIL}</strong>. Nothing is sent until you press send there. If no window opened,
           copy the message below and email it to us.
         </p>
-        <pre className="mt-5 max-h-60 overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] bg-mineral-2 p-4 font-mono text-[0.8125rem] text-ink">{body}</pre>
+        <pre className="t-mono mt-5 max-h-60 overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] bg-mineral-2 p-4 text-ink">{body}</pre>
         <div className="mt-5 flex flex-wrap gap-3">
           <button
             type="button"
@@ -170,9 +169,9 @@ export function ContactForm({ initialPlan = "" }: { initialPlan?: string }) {
           maxLength={2200}
           aria-invalid={!!errors.message || undefined}
           placeholder="e.g. One office line, a cell for after hours, a form on our website. Google Calendar for bookings."
-          className={`mt-1.5 block w-full rounded-[var(--radius-md)] border bg-surface px-3.5 py-3 text-[1rem] text-ink placeholder:text-muted focus:border-ink ${errors.message ? "border-signal" : "border-rule-strong"}`}
+          className={`mt-1.5 block w-full rounded-[var(--radius-md)] border bg-surface px-3.5 py-3 text-[1rem] text-ink placeholder:text-muted focus:border-ink ${errors.message ? "border-danger" : "border-rule-strong"}`}
         />
-        {errors.message ? <p className="mt-1.5 text-[0.8125rem] text-signal-ink">{errors.message}</p> : null}
+        {errors.message ? <p className="mt-1.5 text-[0.8125rem] text-danger">{errors.message}</p> : null}
       </div>
       <div className="flex flex-col gap-4 border-t border-rule pt-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-[44ch] text-[0.8125rem] leading-relaxed text-muted">
