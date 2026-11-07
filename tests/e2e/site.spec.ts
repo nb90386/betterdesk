@@ -1,9 +1,8 @@
 import { test, expect, type Page } from "@playwright/test";
+import { PUBLIC_ROUTES } from "../../lib/site";
 
-const ROUTES = [
-  "/", "/product", "/product/presence", "/product/scout", "/product/desk", "/solutions/commercial-cleaning", "/how-it-works",
-  "/demo", "/pricing", "/resources", "/resources/guides/ai-search-for-service-businesses", "/contact", "/security",
-];
+// Every public route, from the same list the sitemap uses, so new pages can't escape these checks.
+const ROUTES: string[] = [...PUBLIC_ROUTES];
 const WIDTHS = [320, 390, 768, 1024, 1440, 1920];
 
 function watch(page: Page) {

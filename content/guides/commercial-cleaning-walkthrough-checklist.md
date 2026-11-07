@@ -161,7 +161,7 @@ Assumptions protect both sides. If something changes, you have a clear basis for
 
 ### Set the follow-up date before you send it
 
-Put the follow-up on your calendar the moment the proposal goes out. Our guide to [following up after a cleaning estimate](/resources/follow-up-after-a-cleaning-estimate) covers what to say and when to stop.
+Put the follow-up on your calendar the moment the proposal goes out. Our guide to [following up after a cleaning estimate](/resources/guides/follow-up-after-a-cleaning-estimate) covers what to say and when to stop.
 
 ## Worked example: Clearline Commercial Cleaning (fictional)
 

@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { PUBLIC_ROUTES } from "../../lib/site";
 
-const ROUTES = ["/", "/product", "/product/presence", "/product/scout", "/product/desk", "/how-it-works", "/solutions/commercial-cleaning", "/pricing", "/security", "/demo", "/contact", "/resources", "/resources/guides/ai-search-for-service-businesses", "/app", "/app/presence", "/app/scout", "/app/opportunities", "/app/inbox", "/app/pipeline", "/app/customers", "/app/settings"];
+const ROUTES: string[] = [...PUBLIC_ROUTES, "/app", "/app/presence", "/app/scout", "/app/opportunities", "/app/inbox", "/app/pipeline", "/app/customers", "/app/settings"];
 
 for (const route of ROUTES) {
   for (const width of [390, 1440]) {
