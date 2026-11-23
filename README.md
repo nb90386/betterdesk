@@ -102,7 +102,7 @@ Versions are the ones resolved in `package-lock.json`.
 - ESLint 9.39.5 with `eslint-config-next` 16.4.5
 - Playwright 1.65.0 with `@axe-core/playwright` 4.14.0 for e2e and accessibility tests
 - Unit tests use Node's built-in test runner (`node --test`) against `.ts` files directly
-- Fonts are self-hosted in `app/fonts/` with their license files: General Sans, Sentient and Martian Mono
+- Fonts: General Sans (UI and text) and Sentient (display) are Indian Type Foundry fonts whose license forbids redistributing the files, so they load from the official Fontshare API as variable fonts (`app/layout.tsx`). Martian Mono (OFL) is self-hosted in `app/fonts/` with its license. The Open Graph image (`app/opengraph-image.tsx`) uses `next/og`'s bundled default font.
 
 ### Layout
 
@@ -167,7 +167,7 @@ None are required for local development. The code reads these:
 | `npm run typecheck` | `tsc --noEmit` | Clean |
 | `npm run lint` | `eslint .` | Clean |
 | `npm run test:e2e` | `playwright test` (Chromium and WebKit) | Not run |
-| `npm run build` | `next build` | Not run |
+| `npm run build` | `next build` | Passed (after the Fontshare change); home page also checked in headless Chromium at 1440px and 390px: both fonts load, no console errors, no horizontal overflow |
 
 Notes for e2e:
 
@@ -194,7 +194,7 @@ Notes for e2e:
 - **The live audit only inspects the target site's own pages.** It does not measure actual rankings or AI-assistant answers.
 - **Pricing is a proposal.** No billing exists.
 - **The privacy notice is marked as a draft.**
-- **`next build` and the Playwright suites were not run for this README.**
+- **The Playwright suites were not run for this README.** `next build` passed on 2026-11-22.
 
 ## Project docs
 
@@ -206,3 +206,7 @@ Notes for e2e:
 - `docs/reinvention/QA_MATRIX.md` and `docs/reinvention/FINAL_REPORT.md`: QA and rebuild records for the current round.
 - `docs/v4/SCOUT-ARCHITECTURE.md`, `docs/v4/SECURITY-AND-COMPLIANCE.md`, `docs/v4/schema.sql`: earlier-round architecture, security notes and the unconnected database schema.
 - `docs/v3/`, `docs/redesign/`, `docs/quality-v2/`: records from earlier rounds. Parts of them describe an earlier version of the product and are superseded by `PRODUCT.md`.
+
+## Repository history
+
+On 2026-11-22 this repository's history was rewritten before it was made public. Every commit on every branch had the ITF font files (General Sans, Sentient, Satoshi, Switzer, Zodiak), local agent configuration (`.claude/`, `.impeccable/`, `skills-lock.json`) and two internal prompt/baseline documents removed. Older `feat/*` branches still reference the removed font files, so they won't build as-is. The default branch loads the fonts from Fontshare instead.

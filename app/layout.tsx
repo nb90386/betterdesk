@@ -3,26 +3,16 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { SITE_URL, CONTACT_EMAIL } from "@/lib/site";
 
-// General Sans (Indian Type Foundry, ITF Free Font License 2.0: self-hosting permitted, no subsetting or modification)
-// carries UI and text. Martian Mono (OFL) is only for code-like evidence: robots.txt lines,
-// JSON-LD and event IDs.
-const general = localFont({
-  src: "./fonts/GeneralSans-Variable.woff2",
-  weight: "200 700",
-  variable: "--font-general",
-  display: "swap",
-  fallback: ["Helvetica Neue", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
-  adjustFontFallback: "Arial",
-});
-// Sentient (ITF, same licence terms) is the display voice: headlines and the wordmark only.
-const sentient = localFont({
-  src: "./fonts/Sentient-Variable.woff2",
-  weight: "200 700",
-  variable: "--font-sentient",
-  display: "swap",
-  fallback: ["Iowan Old Style", "Georgia", "serif"],
-  adjustFontFallback: "Times New Roman",
-});
+// General Sans (UI and text) and Sentient (headlines and the wordmark) are Indian Type Foundry fonts under the
+// ITF Free Font License, which forbids redistributing the font files (including in a public repository).
+// They are therefore loaded from the official Fontshare API instead of being committed. Martian Mono (OFL)
+// stays self-hosted and is only for code-like evidence: robots.txt lines, JSON-LD and event IDs.
+// One stylesheet per family: the API returns only the first family of a combined request. `@1` is the
+// variable font (weights 200-700), which the type scale needs for in-between weights such as 420 and 480.
+const FONTSHARE_CSS = [
+  "https://api.fontshare.com/v2/css?f[]=general-sans@1&display=swap",
+  "https://api.fontshare.com/v2/css?f[]=sentient@1&display=swap",
+];
 const martian = localFont({ src: "./fonts/MartianMono-Variable.woff2", weight: "100 800", variable: "--font-martian", display: "swap", preload: false });
 
 const TITLE = "BetterDesk · Find better accounts. Be easier to find. Book more walkthroughs.";
@@ -61,7 +51,14 @@ const orgJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${general.variable} ${sentient.variable} ${martian.variable}`} suppressHydrationWarning>
+    <html lang="en" className={martian.variable} suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        {FONTSHARE_CSS.map((href) => (
+          <link key={href} rel="stylesheet" href={href} />
+        ))}
+      </head>
       <body className="min-h-dvh">
         {/* Marks the page as scripted before paint, so scroll-revealed content is only hidden when JS can reveal it. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />

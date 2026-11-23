@@ -11,6 +11,12 @@
    only ever means "this needs you". States are marks, not pills.
    Source of truth: DESIGN.md
    ------------------------------------------------------------------ */
+/* General Sans and Sentient come from the Fontshare API (see app/layout.tsx); the fallbacks keep metrics close. */
+:root {
+  --font-general: "General Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-sentient: "Sentient", "Iowan Old Style", "Times New Roman", serif;
+}
+
 @theme inline {
   --font-sans: var(--font-general), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: var(--font-sentient), "Iowan Old Style", Georgia, serif;
